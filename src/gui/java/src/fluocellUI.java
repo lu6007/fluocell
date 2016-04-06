@@ -1299,6 +1299,6 @@ public class fluocellUI extends javax.swing.JFrame {
     
     
     private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon/FluocellIcon.png"))); //genaration of fluocll icon
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/pic/fluocell_icon.png"))); //genaration of fluocll icon
     }
 }
