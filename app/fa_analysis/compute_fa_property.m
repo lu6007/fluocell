@@ -121,14 +121,16 @@ if ~exist(strcat(data.path, 'output/data.mat'), 'file'),
             yfp = medfilt2(temp); clear temp;
 
             % cell_bw;
-            cell_bw_ii = imread(strcat(output_path, 'cell_bw.',index),'tiff');
-            clear old_cell_bw; old_cell_bw = uint16(cell_bw_ii);           
+%             cell_bw_ii = imread(strcat(output_path, 'cell_bw.',index),'tiff');
+            temp_cell_bw = load([output_path, 'cell_bw.',index, '.mat']);
+            cell_bw_ii = temp_cell_bw.cell_bw;
+            clear old_cell_bw; old_cell_bw{1} = uint16(cell_bw_ii);           
             % Take the out-most layer and quantify there.
             %[bd_layer, label_layer] = divide_layer(old_cell_bw, num_layers);
             [bd_layer, label_layer] = divide_layer(old_cell_bw, num_layers, ...
             'method', 2);
 
-            cell_bw{i} = (label_layer==1); 
+            cell_bw{i} = (label_layer{1}==1); 
             % mask with fans
             if isfield(data,'num_fans'),
                 if data.num_fans>0,
@@ -167,8 +169,8 @@ if ~exist(strcat(data.path, 'output/data.mat'), 'file'),
             average_pixel_fa(i) = sum(temp)/num_fas(i);
             clear temp;
             average_intensity_fa(i) = sum(sum(double(pax).*in_fa_mask)/total_pixel_fa(i));
-            total_pax_intensity(i) = sum(sum(double(pax).*double(old_cell_bw)));
-            average_pax_intensity(i) = total_pax_intensity(i)/sum(sum(double(old_cell_bw)));
+            total_pax_intensity(i) = sum(sum(double(pax).*double(old_cell_bw{1})));
+            average_pax_intensity(i) = total_pax_intensity(i)/sum(sum(double(old_cell_bw{1})));
             total_intensity_fa(i) = sum(sum(double(pax).*in_fa_mask));
             portion_pixel_fa(i) = total_pixel_fa(i)/sum(sum(cell_bw{i}));
             

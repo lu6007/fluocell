@@ -73,9 +73,10 @@ if ~exist(cell_info_file),
                mask_bw = get_background(uint16(im{i}), strcat(data.path, 'output/mask.mat'));
            else
                mask_bw = [];
-           end;            
+           end;  
+           % 1/5/2016 should use detect_cell instead of get_cell_edge
         [bd, bw] = get_cell_edge(im{i}, 'brightness_factor', bf,...
-            'smoothing_factor', sf,'threshold', th,'show_figure',0,'mask_bw', mask_bw);
+           'threshold', th,'show_figure',0,'mask_bw', mask_bw);
         if isempty(bd),
             continue,
         end;
@@ -181,7 +182,7 @@ temp = cell_info(image_index); clear cell_info;
 cell_info = temp; clear temp;
 % 3D plot
 figure('color', 'w'); hold on;
-set(gca, 'FontSize', 16, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',2);
+set(gca, 'FontSize',12, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',2);
 for i = 1:5:length(time),
     plot3(time(i)*ones(size(distance)), distance, cell_info(i).intensity, 'LineWidth', 2);
 end;
@@ -191,12 +192,12 @@ az = -31; el = 48; view(az,el);
 
 % surface
 intensity_matrix = cat(2, cell_info.intensity); % put the intensity in rows 
-figure('color','w'); set(gca, 'FontSize', 16, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
+figure('color','w'); set(gca, 'FontSize', 12, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
 axis([-10 40 0 1 0.3 2.5 0 2]);
 set(gca,'YTick', [0; 0.5; 1], 'XTick', [-10; [0:20: 80]']);
 surface(time,distance,intensity_matrix,'EdgeColor','none'); % surface plotting
 shading interp;
-colorbar('Box', 'off', 'FontSize', 16, 'FontWeight', 'bold','LineWidth', 2,...
+colorbar('Box', 'off', 'FontSize', 12, 'FontWeight', 'bold','LineWidth', 2,...
     'YTick', [ 0; 0.5; 1.0; 1.5; 2.0]);
 im_title= regexprep(cell_name, '_', '\\_');
 title(im_title); %xlabel('Time (min)'); ylabel('Relative Distance to Junction');

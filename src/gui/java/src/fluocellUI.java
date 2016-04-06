@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import matlabcontrol.*;
+import java.awt.Toolkit;
 
 public class fluocellUI extends javax.swing.JFrame {
 
@@ -21,6 +22,7 @@ public class fluocellUI extends javax.swing.JFrame {
      */
     public fluocellUI() {
         initComponents();
+        setIcon(); //generation of fluocel icon
     }
 
     /**
@@ -1294,4 +1296,9 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JTextField timeFrame;
     private javax.swing.JMenu tools;
     // End of variables declaration//GEN-END:variables
+    
+    
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon/FluocellIcon.png"))); //genaration of fluocll icon
+    }
 }

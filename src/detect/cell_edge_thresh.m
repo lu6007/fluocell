@@ -1,7 +1,7 @@
 % For the fluorescent image of membrane targeted biosensors 
 % such as lyn-Src biosensor, we can just use Atsu's method to find cell edge.
 % Right now this program only detect one cell.
-% function [bd, bw] = get_cell_edge(im, brightness_factor);
+% function [bd, bw] =cell_edge_thresh(img, varargin);
 
 function bd = cell_edge_thresh(img, varargin)
 % set up the parameter values by input

@@ -15,9 +15,9 @@
 
 function overlay_image_track(data, frame_with_track, varargin)
     parameter = {'mode', 'image_index', 'track_index','load_file', 'save_file',...
-        'output_prefix'};
-    default_value = {1, data.image_index, [], 0, 0, 'fa_track'};
-    [mode, image_index, track_index, load_file, save_file, output_prefix]= ...
+        'output_prefix', 'file_type'};
+    default_value = {1, data.image_index, [], 0, 0, 'fa_track', 'cell'};
+    [mode, image_index, track_index, load_file, save_file, output_prefix, file_type]= ...
         parse_parameter(parameter, default_value, varargin);
 
     pattern = data.index_pattern{2};
@@ -41,7 +41,12 @@ function overlay_image_track(data, frame_with_track, varargin)
 
     % load fa_bw    
     first_index_pattern = sprintf(pattern, data.image_index(1));
-    first_file = strcat(data.path, data.first_file);
+    switch file_type
+        case 'cell'
+            first_file = data.first_file;
+        case 'fa'
+            first_file = strcat(data.path, data.first_file);
+    end
     screen_size = get(0,'ScreenSize');
     load my_hsv.mat;
     for k = 1:length(image_index), 
@@ -55,9 +60,21 @@ function overlay_image_track(data, frame_with_track, varargin)
             imshow(im);
             clear im;
         else %if ~exist(output_file, 'file'),
-           fa_file = strcat(data.path, 'output/fa_', index, '.mat');
-           fa_result = load(fa_file);
-           fa_bw = fa_result.fa_bw;
+%            fa_file = strcat(data.path, 'output/fa_', index, '.mat');
+%            fa_result = load(fa_file);
+%            fa_bw = fa_result.fa_bw;
+           % For different file type, use a switch method, Lexie on
+           % 01/08/2016
+           switch file_type
+               case 'cell'
+                   object_file = strcat(data.path, 'output/cell_bw.', index, '.mat');
+                   object_result = load(object_file);
+                   object_bw = object_result.cell_bw;
+               case 'fa'
+                   object_file = strcat(data.path, 'output/fa_', index, '.mat');
+                   object_result = load(object_file);
+                   object_bw = fa_result.object_bw;
+           end
             if mode ==1,
                 im_file = regexprep(first_file,first_index_pattern, index);
                 temp = imread(im_file);
@@ -81,7 +98,7 @@ function overlay_image_track(data, frame_with_track, varargin)
             % now overlay with a cross and the track number.
             % save image  
             figure('Position',[1 1 screen_size(4) screen_size(4)],'color', 'w');
-            set(gca, 'FontSize', 16, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
+            set(gca, 'FontSize',16, 'FontWeight', 'bold','Box', 'off', 'LineWidth', 2);
         %    im_imd = get_imd_image(im_ratio, double(im_fak)+factor*double(im_pax),...
         %          'ratio_bound', ratio_bound, 'intensity_bound', intensity_bound);
             if mode ==1,
@@ -127,7 +144,7 @@ function overlay_image_track(data, frame_with_track, varargin)
                 %     clear text_str; text_str = num2str(frame_with_track(k).fa_index);
                 %     text(centroid(:,1)+5, centroid(:,2), text_str, 'color', 'y');
                 end; % if num_traks>0
-            set(gca, 'FontSize', 32, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
+            set(gca, 'FontSize', 32, 'FontWeight', 'bold','Box', 'off', 'LineWidth', 2);
             if ~isempty(image_axis)
                 axis(image_axis); 
             end;
@@ -143,7 +160,7 @@ function overlay_image_track(data, frame_with_track, varargin)
                 clear F;
             end;
             clear index im_ratio;
-            clear output_file fak_fa_file fak_result pax_fa_file pax_result fa_bw text_str;
+            clear output_file fak_fa_file fak_result pax_fa_file pax_result object_bw text_str;
             clear im_imd  centroid h this_track_index;
     %     % Double check the index numbers by drawing the images with FA index.
     %     clear centroid;

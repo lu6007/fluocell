@@ -32,7 +32,7 @@ display(sprintf('Cell Name : %s',data.cell_name));
 
 parameter = {'load_file', 'save_file'};
 default = {1, 0};
-[load_file save_file]= parse_parameter(parameter, default, varargin);
+[load_file, save_file]= parse_parameter(parameter, default, varargin);
 
 file_name = strcat(data.path, 'output/track.mat');
 
@@ -71,37 +71,38 @@ kalmanFunctions.timeReverse = 'kalmanReverseLinearMotion';
 %% General tracking parameters
 
 %Gap closing time window
-gapCloseParam.timeWindow = 3; %10;
+gapCloseParam.timeWindow = 10; %10;
 
 %Flag for merging and splitting
 gapCloseParam.mergeSplit = 1;
 
 %Minimum track segment length used in the gap closing, merging and
 %splitting step
-gapCloseParam.minTrackLen = 2;
+gapCloseParam.minTrackLen = 2; %2
 
 %--------------------------------------------------------------------------
 
 %% Cost function specific parameters: Frame-to-frame linking
 
 %Flag for linear motion
-parameters.linearMotion = 1;
+parameters.linearMotion = 0; %1;
 
 %Search radius lower limit
-parameters.minSearchRadius = 2;
+parameters.minSearchRadius = 2; %2
+
 
 %Search radius upper limit
 if isfield(data,'track_max_search_radius'),
     parameters.maxSearchRadius = data.track_max_search_radius;
 else
-    parameters.maxSearchRadius = 20; % 2 %20;
+    parameters.maxSearchRadius = 20; % 2 %20; % 20 is original value in the program
 end;
 
 %Standard deviation multiplication factor
-parameters.brownStdMult = 3;
+parameters.brownStdMult = 3; %3
 
 %Flag for using local density in search radius estimation
-parameters.useLocalDensity = 1;
+parameters.useLocalDensity = 1; %1
 
 %Number of past frames used in nearest neighbor calculation
 parameters.nnWindow = gapCloseParam.timeWindow;
@@ -124,17 +125,17 @@ parameters.nnWindow = costMatrices(1).parameters.nnWindow;
 
 %Gap length (frames) at which f(gap) (in search radius definition) reaches its
 %plateau
-parameters.timeReachConfB = 2;
+parameters.timeReachConfB = 2; %2
 
 %Amplitude ratio lower and upper limits
-parameters.ampRatioLimit = [0.5 4];% [0.1 10]; %
+parameters.ampRatioLimit = [0.5 4];% [0.5 4]; %
 
 %Minimum length (frames) for track segment analysis
-parameters.lenForClassify = 5;
+parameters.lenForClassify = 5; %5
 
 %Standard deviation multiplication factor along preferred direction of
 %motion
-parameters.linStdMult = 3*ones(gapCloseParam.timeWindow,1);
+parameters.linStdMult = 3*ones(gapCloseParam.timeWindow,1); %3
 
 %Gap length (frames) at which f'(gap) (in definition of search radius
 %parallel to preferred direction of motion) reaches its plateau
@@ -142,7 +143,7 @@ parameters.timeReachConfL = gapCloseParam.timeWindow;
 
 %Maximum angle between the directions of motion of two linear track
 %segments that are allowed to get linked
-parameters.maxAngleVV = 45;
+parameters.maxAngleVV = 45; %45
 
 %Store parameters for function call
 costMatrices(2).parameters = parameters;
@@ -167,8 +168,8 @@ probDim = 2;
 
 %% tracking function call
 
-[tracksFinal,kalmanInfoLink,errFlag] = trackCloseGapsKalman(movieInfo,...
-    costMatrices,gapCloseParam,kalmanFunctions,probDim,saveResults,verbose);
+[tracksFinal, kalmanInfoLink, errFlag] = trackCloseGapsKalman(movieInfo,...
+    costMatrices, gapCloseParam, kalmanFunctions, probDim, saveResults, verbose);
 
 %--------------------------------------------------------------------------
 

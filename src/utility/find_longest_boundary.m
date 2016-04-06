@@ -4,7 +4,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function bd = find_longest_boundary(bw)
-[bd_all, ~] = bwboundaries(bw, 8, 'noholes');
+[bd_all, label] = bwboundaries(bw, 8, 'noholes');
 max_length = 0;
 index = 0;
 for i = 1:length(bd_all),
@@ -18,7 +18,7 @@ end;
 % [max_area index] = max(area);
 if index>0,
     bd = bd_all{index};
-else
+else,
     bd = [];
 end;
 return;

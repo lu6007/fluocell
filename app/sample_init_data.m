@@ -4,7 +4,7 @@ root = '..\..\data\';
 switch name,
     case 'src_pax',
         % General parameters
-        data.path = strcat(root, 'fluocell\10_24_08_Src_fret_pax\');
+        data.path = strcat(root, '10_24_08_Src_fret_pax\');
         data.index_pattern = {'001', '%03d'};
         data.image_index = 1:10;
         switch function_name
@@ -12,7 +12,7 @@ switch name,
                 % Making Movie
                 % For the data.first_file, user needs to adjust it to their
                 % own path and file name.
-                data.first_file = 'output\0.3-0.8\ratio.001.tiff';
+                data.first_file = 'output\0.3-0.8\ratio001.tiff';
                 data.file_name = strcat(data.path,'output\fret.avi');
             %case 'detect_cell',
             case 'batch_detect_cell',
@@ -25,6 +25,7 @@ switch name,
                 data.subtract_background = 1;
                 data.median_filter = 1;
                 data.threshold = 0.04; % for cell_detection;
+                data.brightness_factor = 1.0;
                 data.with_smoothing = 1;
                 data.need_mask = 0;
                 data.pdgf_between_frame = [5; 6];

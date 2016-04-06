@@ -62,10 +62,9 @@ for i = 1:num_sheets,
             clear time value;
         end;
     case 2, % read the format time ratio ratio ratio
-        num_cells = size(data,2)-1;
         exp{i}.name = sheet_name{i};
         exp{i}.time = data(:,1);
-        exp{i}.ratio = data(:,2:num_cells);        
+        exp{i}.ratio = data(:,2:end);        
     end; % switch method
 end; % for i = 1:num_sheets,
 

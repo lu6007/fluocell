@@ -3,10 +3,12 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
 function [bd, bw] = detect_cell(im, varargin)
-parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor'};
-default_value = {'atsu',1, 9, 1.0};
-[method, with_smoothing, smoothing_factor, brightness_factor] =...
+parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor', 'multiple_region', 'min_area'};
+default_value = {'atsu',1, 9, 1.0, 0, 500};
+[method, with_smoothing, smoothing_factor, brightness_factor, multiple_region, min_area] =...
     parse_parameter(parameter_name, default_value, varargin);
+
+%
 switch method,
     case 'atsu',
         pn = {'threshold','mask_bw','show_figure'};
@@ -17,7 +19,8 @@ switch method,
 %         [bd, ~] = get_cell_edge(im, 'brightness_factor', bf, 'threshold', th,...
 %             'smoothing_factor', sf, 'show_figure', show_figure,'mask_bw', mask_bw);
         [bd, ~, th] = get_cell_edge(im, 'brightness_factor', bf, ...
-            'smoothing_factor', sf, 'show_figure', show_figure,'mask_bw', mask_bw);
+            'show_figure', show_figure, 'mask_bw', mask_bw, 'multiple_region', multiple_region,...
+            'min_area', min_area);
     case 'kmean',         
         p = {'num_cluster'};
         d = {3};
@@ -38,8 +41,13 @@ switch method,
             rad_y,'width_factor',wf,'brightness_factor',bf);
 end;
 
-[bw,bd] = clean_up_boundary(im, bd, with_smoothing,...
+[bw, bd] = clean_up_boundary(im, bd, with_smoothing,...
     smoothing_factor);
-bd = bd{1};
+%temp = bw; clear bw; bw{1} = temp;
+
+% Lexie on 10/19/2015
+if ~multiple_region
+    bd = bd{1};
+end
 
 return;

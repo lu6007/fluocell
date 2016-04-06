@@ -33,14 +33,15 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function [bd_layer, label_layer, c]= divide_layer(cell_bw, num_layers,varargin)
-parameter_name = {'method', 'xylabel'};
+function [bd_layer, label_layer]= divide_layer(cell_bw, num_layers,varargin)
+parameter_name = {'xylabel'};
 % method 1 - relative distance to the centroid
 % method 2 - distance transformation to the extracellular space
-default_value = { 2,'reverse'};
-[method, xylabel] = parse_parameter(parameter_name, default_value, varargin);
-% bd_layer= cell(num_objects, num_layers)
-bd_layer = cell(num_layers, 1);
+default_value = {'reverse'};
+[xylabel] = parse_parameter(parameter_name, default_value, varargin);
+num_objects = length(cell_bw);
+bd_layer = cell(num_objects, num_layers);
+% bd_layer = cell(num_layers, 1);
 % we can remove method in the comments and the program 12/9/2015
 % if method == 1,
 %     % Compute the boundarys for the layers.
@@ -77,24 +78,27 @@ bd_layer = cell(num_layers, 1);
 % Multiple detections with num_objects
 % label_layer = cell(num_objects, 1);
 % for j = 1:num_objects
-    im = bwdist(~cell_bw);
+for j = 1 : num_objects
+    im = bwdist(~cell_bw{j});
     max_v = max(max(im))+1;
-    label_layer = floor(im/max_v*num_layers)+double(cell_bw);
+    label_layer{j} = floor(im/max_v*num_layers)+double(cell_bw{j});
     for i = 1:num_layers,
-        bd = bw2bd(label_layer>=i);
-        
-        bd_layer{i} = bd{1};
+        bd = bw2bd(label_layer{j} >= i);  
+        bd_layer{j, i} = bd{1};
         clear bd;
     end;
+end
     % need to update c for later, not needed for method = 2
 c = 0;
 % end;
 
 if strcmp(xylabel, 'normal'),
-    temp = cell(num_layers,1);
-    for i = 1:n,
-        temp{i} = [bd_layer{i}(:,2), bd_layer{i}(:,1)];
-    end;
+    temp = cell(num_objects, num_layers);
+    for j = 1 : num_objects
+        for i = 1 : num_layers,
+            temp{j, i} = [bd_layer{j, i}(:,2), bd_layer{j, i}(:,1)];
+        end;
+    end
     clear bd_layer;
     bd_layer = temp; clear temp;
 end;

@@ -16,19 +16,24 @@ default_value = {'draggable',1}; % 'draggable', 'undraggable', etc
         temp{1} = this_poly; clear this_poly;
         this_poly = temp;
     else
-        num_polygons = length(this_poly);
+        num_polygons = size(this_poly, 2);
+        num_objects = size(this_poly, 1);
     end;
     
     v_str = version;
     if str2double(v_str(13:16))<2008 || num_polygons>1 ||...
             ~strcmp(type, 'draggable'),
         % lower than 2008a or more than 1 polygons or not draggable
-        for i = 1:num_polygons,
-            plot(this_poly{i}(:,1), this_poly{i}(:,2), color, 'LineWidth', 4);
-            t = text(this_poly{i}(1,1), this_poly{i}(1,2), num2str(i));
-            set(t, 'Color', 'y', 'FontSize',16, 'FontWeight', 'Bold');
-            clear t;
-        end;
+        for j = 1 : num_objects,
+            for i = 1:num_polygons,
+                plot(this_poly{j, i}(:,1), this_poly{j, i}(:,2), color, 'LineWidth', 4);
+                if num_polygons > 1
+                    t = text(this_poly{j, i}(1,1), this_poly{j, i}(1,2), num2str(i));
+                    set(t, 'Color', 'y', 'FontSize',16, 'FontWeight', 'Bold');
+                    clear t;
+                end
+            end;
+        end
         %new_poly = [];
     else % higher than 2008a && only 1 polygon && draggable
         h = impoly(gca, this_poly{1});
