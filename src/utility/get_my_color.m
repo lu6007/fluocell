@@ -8,6 +8,7 @@ my_color.colormap.hsv = result.my_hsv;
 
 my_color.gray = [0.8 0.8 0.8];
 my_color.dark_red = [216 41 0]/255;
+my_color.dark_purple = [125 46 141]/255;
 my_color.dark_blue = [20 43 140]/255;
 my_color.light_pink = [255 153 200]/255;
 my_color.light_blue = [185 212 244]/255;

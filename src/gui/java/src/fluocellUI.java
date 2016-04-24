@@ -111,8 +111,12 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
 
-        BrightnessFactorLabel.setText("BrightnessFactor");
+        BrightnessFactorLabel.setLabelFor(BrightnessFactorLabel);
+        BrightnessFactorLabel.setText("Brightness Factor");
+        BrightnessFactorLabel.setToolTipText("");
 
+        brightnessFactor.setText("1.0");
+        brightnessFactor.setToolTipText("");
         brightnessFactor.setName(""); // NOI18N
         brightnessFactor.setPreferredSize(new java.awt.Dimension(60, 30));
         brightnessFactor.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +154,7 @@ public class fluocellUI extends javax.swing.JFrame {
                     .addComponent(applyMask)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(BrightnessFactorLabel)
+                        .addComponent(BrightnessFactorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(brightnessFactor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -174,6 +178,9 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addGap(0, 15, Short.MAX_VALUE))
         );
 
+        BrightnessFactorLabel.getAccessibleContext().setAccessibleName("BrightnessFactor");
+        BrightnessFactorLabel.getAccessibleContext().setAccessibleDescription("");
+
         javax.swing.GroupLayout chooseThresholdLayout = new javax.swing.GroupLayout(chooseThreshold.getContentPane());
         chooseThreshold.getContentPane().setLayout(chooseThresholdLayout);
         chooseThresholdLayout.setHorizontalGroup(
@@ -181,7 +188,7 @@ public class fluocellUI extends javax.swing.JFrame {
             .addGroup(chooseThresholdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         chooseThresholdLayout.setVerticalGroup(
             chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
