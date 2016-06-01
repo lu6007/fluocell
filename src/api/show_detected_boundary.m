@@ -32,10 +32,13 @@ end;
 if ~isfield(data, 'min_area')
     data.min_area = 500;
 end;
+if ~isfield(data, 'segment_method')
+    data.segment_method = 0;
+end;
 % If the file already exists, we can load the cell_bw files. 
 [data.cell_bd, data.cell_bw] = detect_cell(uint16(im), 'brightness_factor', data.brightness_factor, ...
        'show_figure', 1, 'mask_bw', data.mask_bw, 'multiple_region', data.multiple_region, ...
-       'min_area', data.min_area);
+       'min_area', data.min_area, 'segment_method', data.segment_method);
 
 clear mask_bw;
 

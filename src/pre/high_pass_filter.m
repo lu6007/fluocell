@@ -14,7 +14,7 @@ method = parse_parameter(parameter_name, default_value, varargin);
 
 middle = floor((filter_size-1)/2)+1;
 high_pass_filter = -1./(filter_size*filter_size)*ones(filter_size, filter_size);
-high_pass_filter(middle, middle) = high_pass_filter(middle, middle)+1;
+high_pass_filter(middle, middle) = high_pass_filter(middle, middle)+1; 
 pad_size = floor((filter_size-1)/2);
 im_pad = padarray(im, [pad_size, pad_size], 'symmetric');
 im_new = filter2(high_pass_filter, im_pad,'valid');

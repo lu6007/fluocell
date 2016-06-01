@@ -10,10 +10,9 @@ function [bd, bw, threshold] = get_cell_edge(im, varargin)
 % or the default values.
 % 10/14/2015 Lexie - add new parameter multiple_region to detect more one object
 parameter_name = {'brightness_factor', ...
-    'with_smoothing', 'smoothing_factor', 'min_area','threshold', 'mask_bw', 'multiple_region'};
-default_value = {1.0, 1, 9, 500, 0, [], 0};
-[brightness_factor, ...
-    with_smoothing,  smoothing_factor,  min_area, threshold, mask_bw, multiple_region]...
+    'min_area','threshold', 'mask_bw', 'multiple_region', 'segment_method'};
+default_value = {1.0, 500, 0, [], 0, 0};
+[brightness_factor, min_area, threshold, mask_bw, multiple_region, segment_method]...
     = parse_parameter(parameter_name, default_value, varargin);
 
 % for molly's data, Lexie on 10/15/2015
@@ -39,6 +38,13 @@ bw_image = im2bw( im, threshold*brightness_factor);
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
 
+
+% Apply different segmentation methods
+temp_im_bw = bw_image;
+clear bw_image
+bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
+
+
 % if ~isempty(mask_bw),
 %     bw_image = bw_image.*mask_bw;
 % end;
@@ -58,17 +64,9 @@ if isempty(boundaries),
    return;
 end;
 
-% % remove the holes on the mask if there are any
-% [m, n] = size(bw_image); clear bw_image;
-% bw_image = poly2mask(boundaries(:,2), boundaries(:,1), m,n);
-
 bd = boundaries;
 bw = bw_image;
 clear bw_image;
-
-% [bw bd] = clean_up_boundary(im, boundaries, with_smoothing,...
-%     smoothing_factor);
-
 
 % if show_figure,
 %     % set(gca, 'FontSize', 12,'Box', 'off', 'LineWidth',2);

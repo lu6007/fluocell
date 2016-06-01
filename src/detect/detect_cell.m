@@ -3,9 +3,9 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
 function [bd, bw] = detect_cell(im, varargin)
-parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor', 'multiple_region', 'min_area'};
-default_value = {'atsu',1, 9, 1.0, 0, 500};
-[method, with_smoothing, smoothing_factor, brightness_factor, multiple_region, min_area] =...
+parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor', 'multiple_region', 'min_area', 'segment_method'};
+default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
+[method, with_smoothing, smoothing_factor, brightness_factor, multiple_region, min_area, segment_method] =...
     parse_parameter(parameter_name, default_value, varargin);
 
 %
@@ -20,7 +20,7 @@ switch method,
 %             'smoothing_factor', sf, 'show_figure', show_figure,'mask_bw', mask_bw);
         [bd, ~, th] = get_cell_edge(im, 'brightness_factor', bf, ...
             'show_figure', show_figure, 'mask_bw', mask_bw, 'multiple_region', multiple_region,...
-            'min_area', min_area);
+            'min_area', min_area, 'segment_method', segment_method);
     case 'kmean',         
         p = {'num_cluster'};
         d = {3};
