@@ -2,7 +2,16 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function im = my_imread(file_name, data)
+% >> fluocell_data.image_type = 'z-stack';
+% %% insert these lines at >>> 1 >>>
+% if ~isfield(data,'image_type'), 
+%     im = imread(file_name);
+% elseif strcmp(data.image_type,'z-stack'),
+%      im = imread(file_name, data.index),
+% end;
+% 
     if exist(file_name, 'file') == 2,
+        % insert >>> 1 >>>
         im = imread(file_name);
         % Lexie on 1/22/2015
         % temperory solve the jpg format problem.

@@ -94,7 +94,8 @@ public class fluocellUI extends javax.swing.JFrame {
         batchUpdate = new javax.swing.JMenuItem();
 
         chooseThreshold.setAlwaysOnTop(true);
-        chooseThreshold.setMinimumSize(new java.awt.Dimension(400, 175));
+        chooseThreshold.setMinimumSize(new java.awt.Dimension(800, 200));
+        chooseThreshold.setPreferredSize(new java.awt.Dimension(800, 200));
 
         ThesholdLabel.setText("Threshold");
 
@@ -188,17 +189,18 @@ public class fluocellUI extends javax.swing.JFrame {
             .addGroup(chooseThresholdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         chooseThresholdLayout.setVerticalGroup(
             chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(chooseThresholdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
-        batchUpdateImage.setMinimumSize(new java.awt.Dimension(205, 150));
+        batchUpdateImage.setMinimumSize(new java.awt.Dimension(300, 150));
+        batchUpdateImage.setPreferredSize(new java.awt.Dimension(300, 150));
 
         jLabel4.setText("Image Index");
 
@@ -222,14 +224,16 @@ public class fluocellUI extends javax.swing.JFrame {
         batchUpdateImageLayout.setHorizontalGroup(
             batchUpdateImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(batchUpdateImageLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(batchUpdateImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                .addGroup(batchUpdateImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(batchUpdateImageLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(imageIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                        .addComponent(imageIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(batchUpdateImageLayout.createSequentialGroup()
+                        .addGap(55, 55, 55)
+                        .addComponent(jButton1)))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         batchUpdateImageLayout.setVerticalGroup(
             batchUpdateImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +244,7 @@ public class fluocellUI extends javax.swing.JFrame {
                     .addComponent(imageIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         folderChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
@@ -317,8 +321,7 @@ public class fluocellUI extends javax.swing.JFrame {
         jLabel1.setText("Index");
 
         indexSpinner.setFont(indexSpinner.getFont());
-        indexSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
-        indexSpinner.setOpaque(false);
+        indexSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         indexSpinner.setPreferredSize(new java.awt.Dimension(58, 30));
         indexSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {

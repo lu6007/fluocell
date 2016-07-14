@@ -1,8 +1,8 @@
 % scale by magnification
 % Input: pixel
 % Output: um
-% 40x magnification 1 pixel = 1/2.56 micro meter.
-% 100x magnification 1 pixel = 1/6.4 micro meter.
+% 40x magnification 1 pixel = 1/2.56 micrometer.
+% 100x magnification 1 pixel = 1/6.4 micrometer.
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function p = scale_by_magnification(p_old, magnification)

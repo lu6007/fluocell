@@ -12,7 +12,7 @@
 % Hela-WT1 t1, t5, t9
 root = 'E:\data\2014\qin_peng\';
 p = '1111\WTH3K9\3\p2\dconv9\';
-z_dist = 1.0*15; % 1um *15 pixel/micron
+z_dist = 1.0*15; % 1um *15 pixel/um
 image_index = (11:31)';
 iso_value = 450;%550;
 surface_file = 't1surface';
@@ -62,7 +62,7 @@ ratio_im = compute_ratio(fret_im, cfp_im, 'shift', intensity_base);
 intensity_im = 1/(1+ratio_factor)*fret_im+ratio_factor/(1+ratio_factor)*cfp_im; 
 intensity_bound = [1 1023];
 
-%% output files
+%% output files for 3dview(?)
 for i = 1:num_frames,
     j = image_index(i);
     j_str = sprintf(data.index_pattern{2},j);
