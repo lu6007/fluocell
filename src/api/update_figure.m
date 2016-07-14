@@ -55,6 +55,31 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             end
 
             clear first_channel_im second_channel_im im_3 ratio_im;
+
+        case 'FRET-Intensity-2',
+            first_channel_im = preprocess(data.im{1}, data);
+            second_channel_im = preprocess(data.im{2}, data);
+            im_3 = preprocess(data.im{3}, data);
+            im_4 = preprocess(data.im{4}, data);
+            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3,
+                data.third_channel_im =  im_3;
+            end
+            % file{4} -> ratio_im -> im{4} -> data.f(1)
+            [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
+                data.file{4}, data.f(1));
+            data.im{5} = ratio_im;
+            
+            if show_figure_option,
+                figure(data.f(2)); my_imagesc(second_channel_im); 
+                axis off; my_title(data.channel_pattern{2}, data.index);
+                figure(data.f(3)); my_imagesc(im_3);
+                axis off; my_title(data.channel_pattern{3}, data.index);
+                figure(data.f(4)); my_imagesc(im_4);
+                axis off; my_title(data.channel_pattern{4}, data.index);
+            end
+
+            clear first_channel_im second_channel_im im_3 im_4 ratio_im;
+
         case 'FRET-DIC',
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
@@ -116,25 +141,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             clear first_channel_im second_channel_im ratio_im;
 
-        case 'Intensity',
-            second_channel_im = data.im{1};
-            if show_figure_option
-                figure(data.f(1)); my_imagesc(second_channel_im); 
-                axis off; my_title('Intensity',data.index);
-            end
-            if isfield(data,'quantify_roi') && data.quantify_roi,
-                data = quantify_region_of_interest(data, second_channel_im);
-            end;
-            clear second_channel_im;
-            
-            if ~exist(data.file{2}, 'file') &&...
-                isfield(data, 'save_processed_image')&& data.save_processed_image,                
-                im = imscale(data.im{1}, 0, 1, caxis);
-                figure(data.f(1)); imwrite(im, data.file{2}, 'tiff','compression', 'none');
-                clear im;
-             end;
-
-       case 'Intensity-Processing',
+       case 'Intensity',
             second_channel_im = data.im{1};
             figure(data.f(1)); imagesc(second_channel_im); 
             axis off; my_title('Intensity',data.index);
@@ -163,7 +170,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 clear fr im;
              end;
              clear second_channel_im;
-        case 'Intensity-DIC-Processing',
+        case 'Intensity-DIC',
             figure(data.f(1)); my_imagesc(data.im{1}); 
             axis off; my_title('Intensity',data.index);
             figure(data.f(2)); 

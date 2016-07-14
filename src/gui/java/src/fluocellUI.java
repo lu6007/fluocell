@@ -37,11 +37,11 @@ public class fluocellUI extends javax.swing.JFrame {
         chooseThreshold = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         ThesholdLabel = new javax.swing.JLabel();
-        threshold = new javax.swing.JTextField();
         BrightnessFactorLabel = new javax.swing.JLabel();
         brightnessFactor = new javax.swing.JTextField();
         showBoundary = new javax.swing.JCheckBox();
         applyMask = new javax.swing.JCheckBox();
+        threshold = new javax.swing.JTextField();
         batchUpdateImage = new javax.swing.JFrame();
         jLabel4 = new javax.swing.JLabel();
         imageIndex = new javax.swing.JTextField();
@@ -99,19 +99,6 @@ public class fluocellUI extends javax.swing.JFrame {
 
         ThesholdLabel.setText("Threshold");
 
-        threshold.setName(""); // NOI18N
-        threshold.setPreferredSize(new java.awt.Dimension(60, 30));
-        threshold.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                thresholdFocusLost(evt);
-            }
-        });
-        threshold.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                thresholdActionPerformed(evt);
-            }
-        });
-
         BrightnessFactorLabel.setLabelFor(BrightnessFactorLabel);
         BrightnessFactorLabel.setText("Brightness Factor");
         BrightnessFactorLabel.setToolTipText("");
@@ -120,14 +107,14 @@ public class fluocellUI extends javax.swing.JFrame {
         brightnessFactor.setToolTipText("");
         brightnessFactor.setName(""); // NOI18N
         brightnessFactor.setPreferredSize(new java.awt.Dimension(60, 30));
-        brightnessFactor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                brightnessFactorActionPerformed(evt);
-            }
-        });
         brightnessFactor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 brightnessFactorFocusLost(evt);
+            }
+        });
+        brightnessFactor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brightnessFactorActionPerformed(evt);
             }
         });
 
@@ -145,24 +132,39 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
 
+        threshold.setText("(Optional)");
+        threshold.setName(""); // NOI18N
+        threshold.setPreferredSize(new java.awt.Dimension(60, 30));
+        threshold.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                thresholdFocusLost(evt);
+            }
+        });
+        threshold.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thresholdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BrightnessFactorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(brightnessFactor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(ThesholdLabel)
+                .addGap(18, 18, 18)
+                .addComponent(threshold, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(showBoundary)
-                    .addComponent(applyMask)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(BrightnessFactorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(brightnessFactor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ThesholdLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(threshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 34, Short.MAX_VALUE))
+                    .addComponent(applyMask))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +191,7 @@ public class fluocellUI extends javax.swing.JFrame {
             .addGroup(chooseThresholdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         chooseThresholdLayout.setVerticalGroup(
             chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +316,7 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
 
-        mainControl.setBorder(javax.swing.BorderFactory.createTitledBorder("Main Control"));
+        mainControl.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Main Control", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
         mainControl.setFocusable(false);
         mainControl.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
 
@@ -329,7 +331,7 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
 
-        protocol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FRET", "FRET-Intensity", "FRET-DIC", "FRET-Intensity-DIC", "Intensity", "Intensity-Processing", "Intensity-DIC-Processing", "FLIM", "STED" }));
+        protocol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FRET", "FRET-Intensity", "FRET-Intensity-2", "FRET-DIC", "FRET-Intensity-DIC", "Intensity", "Intensity-DIC", "FLIM", "STED" }));
         protocol.setPreferredSize(new java.awt.Dimension(100, 20));
         protocol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,6 +356,11 @@ public class fluocellUI extends javax.swing.JFrame {
         intensity.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 intensityFocusLost(evt);
+            }
+        });
+        intensity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                intensityActionPerformed(evt);
             }
         });
 
@@ -449,7 +456,7 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
-        fileNamePattern.setBorder(javax.swing.BorderFactory.createTitledBorder("File Name Pattern"));
+        fileNamePattern.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "File Name Pattern", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
 
         jLabel6.setText("First Channel Pattern");
 
@@ -539,7 +546,7 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        processingOptions.setBorder(javax.swing.BorderFactory.createTitledBorder("Processing Options"));
+        processingOptions.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Processing Options", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
 
         cropImage.setText("Crop Image");
         cropImage.addActionListener(new java.awt.event.ActionListener() {
@@ -711,7 +718,7 @@ public class fluocellUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(processingOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(mainControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         pack();
@@ -1116,6 +1123,10 @@ public class fluocellUI extends javax.swing.JFrame {
     private void thresholdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thresholdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_thresholdActionPerformed
+
+    private void intensityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intensityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_intensityActionPerformed
  
     private void readFile() throws MatlabInvocationException {
         try {

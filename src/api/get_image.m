@@ -229,6 +229,22 @@ switch data.protocol;
         data.file{4} = strcat(fret_file, '.', 'tiff');
         data.file{5} = 'tiff';
 
+     case 'FRET-Intensity-2', 
+        data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
+            data.channel_pattern{2});
+        data.file{3} = regexprep(data.file{1}, data.channel_pattern{1}, ...
+            data.channel_pattern{3});
+        data.file{4} = regexprep(data.file{1}, data.channel_pattern{1}, ...
+            data.channel_pattern{4});
+
+        for i = 1:4,
+            data.im{i} = my_imread(data.file{i}, data);
+        end;
+        % ratio_image_file and file_type
+        fret_file = get_fret_file(data, data.file{1});
+        data.file{5} = strcat(fret_file, '.', 'tiff');
+        data.file{6} = 'tiff';
+
     case 'FRET-DIC',
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
@@ -282,17 +298,11 @@ switch data.protocol;
        data.file{3} = strcat(fret_file, '.', 'tiff');
        data.file{4} = 'tiff';
         
-    case  'Intensity',
-        if exist(data.file{1}, 'file')==2,
-            data.im{1} = imread(data.file{1});
-        else
-            display(sprintf('%s : %s\n', data.file{1}, 'This file does not exist!'));
-        end; % if exist(data.file{1}, 'file')==2,            
-    case 'Intensity-Processing',
+    case 'Intensity',
         data.file{2} = strcat(data.output_path, 'processed_im', index_str, '.tiff');
         data.file{3} = 'tiff';
         data.im{1} = my_imread(data.file{1}, data);
-    case 'Intensity-DIC-Processing',
+    case 'Intensity-DIC',
         % There is someproblem with the long path string with this, so
         % replace with the statements below instead
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...

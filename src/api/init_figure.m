@@ -15,6 +15,11 @@ switch data.protocol,
 %         if ~isfield(data,'is_channel1_over_channel2'),
 %             data.is_channel1_over_channel2 = 1;
 %         end;
+    case 'FRET-Intensity-2',
+        num_figures = 4;
+%         if ~isfield(data,'is_channel1_over_channel2'),
+%             data.is_channel1_over_channel2 = 1;
+%         end;
     case 'FRET-DIC',
         num_figures = 3;
 %         if ~isfield(data,'is_channel1_over_channel2'),
@@ -28,10 +33,8 @@ switch data.protocol,
     case {'FLIM', 'STED'}, 
         num_figures = 2;
     case 'Intensity',
-        num_figures = 1;
-    case 'Intensity-Processing',
         num_figures = 2;
-    case 'Intensity-DIC-Processing',
+    case 'Intensity-DIC',
         num_figures = 3;
 end;
 data.num_figures = num_figures;
