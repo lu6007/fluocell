@@ -1,6 +1,7 @@
 % initialize data  for the various applications.
 function data = sample_init_data(name, function_name)
-root = '..\..\data\fluocell\';
+% replace the root variable in line 4 with the location of fluocell_data\ folder
+root = '..\..\data\fluocell_sample\';
 switch name,
     case 'src_pax',
         % General parameters
