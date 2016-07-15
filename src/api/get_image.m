@@ -257,7 +257,6 @@ switch data.protocol;
         fret_file = get_fret_file(data, data.file{1});
         data.file{4} = strcat(fret_file, '.', 'tiff');
         data.file{5} = 'tiff';
-            
 
     case 'FRET-Intensity-DIC',
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
@@ -312,6 +311,7 @@ switch data.protocol;
 %         data.file{2} = strcat(data.path, temp); clear temp;
         data.file{3} = strcat(data.output_path, 'processed_im', index_str, '.tiff');
         data.file{4} = 'tiff';
+        data.file{5} = strcat(data.output_path, 'dic_im', index_str,'.tiff');
         for i = 1:2,
             data.im{i} = my_imread(data.file{i}, data);
         end;

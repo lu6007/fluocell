@@ -193,8 +193,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 figure(data.f(3)); im = imscale(data.im{3}, 0, 1, caxis);
                 imwrite(im, data.file{3}, 'tiff','compression', 'none');
                 clear im;
-             end;
-
+                
+                % added by Kathy for Lei on 7/15/2016
+                % to allow saving DIC images
+                % >> fluocell_data.save_processed_image = 2
+                if data.save_processed_image ==2, % save the DIC image
+                    figure(data.f(2)); im = imscale(data.im{2}, 0, 1, caxis);
+                    imwrite(im, data.file{5}, 'tiff', 'compression', 'none');
+                    clear im;
+                end; 
+             end; %i if ~exist(data.file{3}, 'file')&&...
 
     end; %switch data.protocol
     
