@@ -1021,7 +1021,7 @@ public class fluocellUI extends javax.swing.JFrame {
                                                 .build();
                 factory = new MatlabProxyFactory(options);
                 } 
-            // If MATLAB path is specified in default.properties, launch from 
+            // If MATLAB path is specified in default.property, launch from 
             // that location
             } else {
                 if (matlabLocation.length() > 1) {
@@ -1132,7 +1132,7 @@ public class fluocellUI extends javax.swing.JFrame {
         try {
             // Import parameters from properties file
             Properties default_read = new Properties();
-            default_read.load(new FileInputStream("default.properties"));
+            default_read.load(new FileInputStream("default.property"));
             imageIndexPattern = default_read.getProperty("imageIndexPattern");
             timeFrame.setText(imageIndexPattern);
             firstChannelPattern = default_read.getProperty("firstChannelPattern");
@@ -1177,7 +1177,7 @@ public class fluocellUI extends javax.swing.JFrame {
             default_write.setProperty("drivenFactorValue",drivenFactor.getText());
             default_write.setProperty("defaultDataLocation", default_path);
             default_write.setProperty("matlablocation", matlabLocation);
-            default_write.store(new FileOutputStream("default.properties"), null);
+            default_write.store(new FileOutputStream("default.property"), null);
         } catch (IOException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         }
