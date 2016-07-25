@@ -121,8 +121,13 @@ if data.quantify_roi == 2 || data.quantify_roi == 3,
     end;
     
     for i = 1 : num_objects
-%         data.cell_size{i}(data.index) = sum(sum(uint16(obj{i})));
-        data.cell_size{i}(data.index) = cell_prop(i).Area;
+%         %%% Kathy bug fix 07/22/2016
+%         if num_objects ==1,
+%             data.cell_size(data.index) = cell_prop(1).Area;
+%         else
+            %data.cell_size{i}(data.index) = sum(sum(uint16(obj{i})));
+            data.cell_size{i}(data.index) = cell_prop(i).Area;
+%        end
     end
     % need to save cell_bw in a file somewhere
     clear num_objects cell_label cell_prop; % The value of num_objects changed later
