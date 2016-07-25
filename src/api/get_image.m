@@ -1,6 +1,7 @@
 % function data = get_image(data,new_first_file)
 % This is the file I/O interface of Fluocell
 % Get image from files depending on different protols
+% Initialize the result data structure. 
 % When enabled, the get_image function also load background, the
 % cropping rectangle, or the mask. 
 % Initialize the global variable fluocell_data_roi_move
@@ -112,43 +113,35 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
     % Lexie on 03/11, change the name temp to be num_points and also use
     % mas instead of length as Kathy suggested
 %     if ~isfield(data,'value'),
-    if ~isfield(data,'ratio'),  % value is removed so it's changed to be ratio instead. Lexie on 12/21/2015
+    if ~isfield(data,'ratio'),  
         if ~isfield(data, 'image_index') || max(data.image_index) <= 200
             num_points = 200;
         elseif isfield(data, 'image_index') && max(data.image_index) > 200,
             num_points = max(data.image_index);
         end
+        
+        %%% Kathy 07/22/2016 need to concile the cases of 1 or n cells; and
+        %%% 1 roi or n rois. 
+        
         % Change all the initial data strcuture to be cells to fit the
-        % multiple tracking and multiple layers
-%             data.time = Inf*ones(num_points, 2);
-%             data.value{1} = Inf*ones(num_points, 3);
-%             data.ratio{1, 1} = Inf*ones(num_points, num_rois);
-%             data.channel1{1} = Inf*ones(num_points, num_rois);
-%             data.channel2{1} = Inf*ones(num_points, num_rois);
-%             data.channel1_bg = Inf*ones(num_points, 1);
-%             data.channel2_bg = Inf*ones(num_points, 1);
-%             data.cell_size{1, 1}  = Inf*ones(num_points,1); 
-
-            % As Kathy suggested, initiate all the data with appropriate
-            % cell type and < 20 objects, not initiate value; Lexie on 12/16/2015
+        % multiple tracking and multiple layer functions
             data.time = Inf*ones(num_points, 2);
+            data.value{1} = Inf*ones(num_points, 3);
+            
+            % kathy 07/24/2016 trying to fix the problem of slow
+            % quantification, but did not work.
+            % kept these changes to be compatible with
+            % quantify_region_of_interest() functions. 
+            % data.ratio{1, 1} = Inf*ones(num_points, num_rois);
+            % data.cell_size{1, 1}  = Inf*ones(num_points,1); 
+            data.ratio{1} = Inf*ones(num_points, num_rois);
+            data.cell_size{1} = Inf*ones(num_points, 1);
+            % end 07/24/2016
+            
+            data.channel1{1} = Inf*ones(num_points, num_rois);
+            data.channel2{1} = Inf*ones(num_points, num_rois);
             data.channel1_bg = Inf*ones(num_points, 1);
             data.channel2_bg = Inf*ones(num_points, 1);
-            temp{1} = Inf*ones(num_points, num_rois);
-            data.ratio= repmat(temp, 1, 20); 
-            data.channel1 = repmat(temp, 1, 20); 
-            data.channel2 = repmat(temp, 1, 20); clear temp
-            temp{1} = Inf*ones(num_points, 1);
-            data.cell_size  = repmat(temp, 1, 20); clear temp
-            
-%             data.time = Inf*ones(num_points, 2);
-%             data.value = Inf*ones(num_points, 3);
-%             data.ratio = Inf*ones(num_points, num_rois);
-%             data.channel1 = Inf*ones(num_points, num_rois);
-%             data.channel2 = Inf*ones(num_points, num_rois);
-%             data.channel1_bg = Inf*ones(num_points, 1);
-%             data.channel2_bg = Inf*ones(num_points, 1);
-%             data.cell_size = Inf*ones(num_points,1); 
 
         % two column for time
         % one columns for value
