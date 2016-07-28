@@ -1,0 +1,21 @@
+#Wed Jul 27 10:18:59 PDT 2016
+
+matlablocation=/Applications/MATLAB_R2016a.app/bin/matlab
+
+imageIndexPattern={'t1', 't%d'}
+
+firstChannelPattern=cfp
+
+intensityValue=[1 400]
+
+fretRatioValue=[0.5 1.5]
+
+secondChannelPattern=fret
+
+thirdChannelPattern=w3mCherry
+
+defaultDataLocation=/Users/kevinli/Desktop/fluocell-current/app/fluocell_sample/
+
+drivenFactorValue=
+
+fourthChannelPattern=w4DIC1
