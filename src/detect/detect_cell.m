@@ -46,7 +46,7 @@ end;
 %temp = bw; clear bw; bw{1} = temp;
 
 % Lexie on 10/19/2015
-if ~multiple_region
+if ~multiple_object
     bd = bd{1};
 end
 
