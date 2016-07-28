@@ -94,10 +94,10 @@ if data.quantify_roi == 2 || data.quantify_roi == 3,
             delete(temp_file_tiff); clear temp_file_tiff
             save(temp_file_mat, 'cell_bw');
         else
-            if ~isfield(data, 'multiple_region') || ~data.multiple_region
+            if ~isfield(data, 'multiple_object') || ~data.multiple_object
                 [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1);
             else
-                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1, 'multiple_region', data.multiple_region);
+                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1, 'multiple_object', data.multiple_object);
             end
             % save cell_bw file to be mat file instead of tiff, Lexie on
             % 12/14/2015

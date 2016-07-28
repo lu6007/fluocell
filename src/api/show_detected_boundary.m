@@ -26,8 +26,8 @@ if isfield(data,'cell_bw'),
     data = rmfield(temp,'cell_bd'); clear temp;           
 end;
 
-if ~isfield(data, 'multiple_region') || ~data.multiple_region 
-    data.multiple_region = 0;
+if ~isfield(data, 'multiple_object') || ~data.multiple_object 
+    data.multiple_object = 0;
 end;
 if ~isfield(data, 'min_area')
     data.min_area = 500;
@@ -37,7 +37,7 @@ if ~isfield(data, 'segment_method')
 end;
 % If the file already exists, we can load the cell_bw files. 
 [data.cell_bd, data.cell_bw] = detect_cell(uint16(im), 'brightness_factor', data.brightness_factor, ...
-       'show_figure', 1, 'mask_bw', data.mask_bw, 'multiple_region', data.multiple_region, ...
+       'show_figure', 1, 'mask_bw', data.mask_bw, 'multiple_object', data.multiple_object, ...
        'min_area', data.min_area, 'segment_method', data.segment_method);
 
 clear mask_bw;
@@ -45,7 +45,7 @@ clear mask_bw;
 if show_figure,
     hold on;
     % For Molly's data on multiple region detection, Lexie on 10/19/2015
-    if ~isfield(data, 'multiple_region') || ~data.multiple_region 
+    if ~isfield(data, 'multiple_object') || ~data.multiple_object 
         plot(data.cell_bd(:,2),data.cell_bd(:,1),'r', 'LineWidth',2);
     else
         for n = 1 : length(data.cell_bd)
