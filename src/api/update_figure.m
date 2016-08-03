@@ -7,16 +7,6 @@ function data= update_figure(data)
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
-% move to get_image 09/03/2014
-%     if isfield(data, 'need_apply_mask') && data.need_apply_mask,
-%         file_name = strcat(data.output_path, 'mask.mat');
-%         if ~isfield(data, 'mask'),
-%             % Correct the title for mask selection
-%             temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
-%             data.mask = temp{1}; clear temp;
-%         end;
-%     end;
-
     switch data.protocol,
         case 'FRET',
             first_channel_im = preprocess(data.im{1}, data);

@@ -39,9 +39,17 @@ parameter_name = {'xylabel'};
 % method 2 - distance transformation to the extracellular space
 default_value = {'reverse'};
 [xylabel] = parse_parameter(parameter_name, default_value, varargin);
+
+iscell_cell_bw = iscell(cell_bw);
+% Make cell_bw a cell and keep backward compatibility
+if ~iscell_cell_bw,
+    temp{1} = cell_bw; clear cell_bw;
+    cell_bw = temp;
+end;
+
 num_objects = length(cell_bw);
 bd_layer = cell(num_objects, num_layers);
-% bd_layer = cell(num_layers, 1);
+label_layer = cell(num_objects, 1); 
 % we can remove method in the comments and the program 12/9/2015
 % if method == 1,
 %     % Compute the boundarys for the layers.
@@ -76,8 +84,6 @@ bd_layer = cell(num_objects, num_layers);
 % Then we use the function bw2bd() to calculate the boundaryies.
 %
 % Multiple detections with num_objects
-% label_layer = cell(num_objects, 1);
-% for j = 1:num_objects
 for j = 1 : num_objects
     im = bwdist(~cell_bw{j});
     max_v = max(max(im))+1;
@@ -107,4 +113,11 @@ end;
 % for i = 1:n, 
 %     plot(bd_layer{i}(:,2), bd_layer{i}(:,1), 'w');
 % end;
+
+if ~iscell_cell_bw, % backward compatible 
+    temp = bd_layer{1}; clear bd_layer;
+    bd_layer = temp; clear temp;
+    temp = label_layer{1}; clear label_layer;
+    label_layer = temp; clear temp;
+end;
 return;

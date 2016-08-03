@@ -16,14 +16,13 @@ if exist(mi_file_name, 'file') && load_file,
 else
 
 % load fa_bw
-    
     pattern = data.index_pattern{2};
     first_index_pattern = sprintf(pattern, data.image_index(1));
     
     switch file_type,
         case 'cell'
             first_file = data.first_file;
-            second_file = data.file{2};
+            % second_file = data.file{2};
         case 'fa'
              first_file = strcat(data.path, data.first_file);
     end
@@ -35,17 +34,19 @@ else
     c = cell(num_frames, num_fields);
     
     for k = 1:num_frames, 
-        i = data.image_index(k);
-        index = sprintf(pattern, i);
+        data.index = data.image_index(k);
+        data = get_image(data, 0);
+        
+        index_str = sprintf(pattern, data.index);
 % For different file types, there are different mat files correspondingly.
 % Lexie on 1/4/2016
         switch file_type,
             case 'cell',
-                file_name = strcat(data.path, 'output\cell_bw.', index, '.mat');
+                file_name = strcat(data.path, 'output\cell_bw.', index_str, '.mat');
                 result = load(file_name);
                 object_bw = result.cell_bw;
             case 'fa',
-                file_name = strcat(data.path, 'YFP_fa_', index, '.mat');
+                file_name = strcat(data.path, 'YFP_fa_', index_str, '.mat');
                 result = load(file_name);
                 object_bw = result.fa_bw;
         end
@@ -80,10 +81,10 @@ else
         % For tracking in ratiometric case
         switch file_type
             case 'cell'
-                first_file_path = regexprep(first_file, first_index_pattern, index);
-                second_file_path = regexprep(second_file, first_index_pattern, index);
-                im_object_1 = imread(first_file_path);
-                im_object_2 = imread(second_file_path);
+%                 first_file_path = regexprep(first_file, first_index_pattern, index);
+%                 second_file_path = regexprep(second_file, first_index_pattern, index);
+                im_object_1 = imread(data.file{1});
+                im_object_2 = imread(data.file{2});
                 im_object = im_object_1 + im_object_2;
 %                 im_object = min(im_object_1 + im_object_2, 2^16-1);
                 clear im_object_1 im_object_2 first_file_path second_file_path;

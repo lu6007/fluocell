@@ -21,7 +21,9 @@ end;
 % pattern = data.index_pattern{2}; 
 index_str = sprintf(data.index_pattern{2}, data.index);
 if new_first_file
-    data.first_file = strcat(data.path, data.prefix, data.postfix);
+    %% Kathy commented to fix a bug with quanty 08/03/2016
+    %% This line may be need for some backward compatibility reasons though.
+    % data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
 else
     num_matching = length(regexp(data.first_file, data.index_pattern{1}));
@@ -112,17 +114,13 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
     % experiments
     % Lexie on 03/11, change the name temp to be num_points and also use
     % mas instead of length as Kathy suggested
-%     if ~isfield(data,'value'),
-    if ~isfield(data,'ratio'),  
+    if ~isfield(data,'ratio') || new_first_file,  
         if ~isfield(data, 'image_index') || max(data.image_index) <= 200
             num_points = 200;
         elseif isfield(data, 'image_index') && max(data.image_index) > 200,
             num_points = max(data.image_index);
         end
-        
-        %%% Kathy 07/22/2016 need to concile the cases of 1 or n cells; and
-        %%% 1 roi or n rois. 
-        
+                
         % Change all the initial data strcuture to be cells to fit the
         % multiple tracking and multiple layer functions
             data.time = Inf*ones(num_points, 2);
