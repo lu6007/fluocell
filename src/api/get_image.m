@@ -23,7 +23,7 @@ index_str = sprintf(data.index_pattern{2}, data.index);
 if new_first_file
     %% Kathy commented to fix a bug with quanty 08/03/2016
     %% This line may be need for some backward compatibility reasons though.
-    % data.first_file = strcat(data.path, data.prefix, data.postfix);
+    data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
 else
     num_matching = length(regexp(data.first_file, data.index_pattern{1}));
