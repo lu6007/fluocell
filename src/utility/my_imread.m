@@ -2,7 +2,6 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function im = my_imread(file_name, data)
-% >> fluocell_data.image_type = 'z-stack';
     if exist(file_name, 'file') == 2,
         if ~isfield(data,'image_type'), 
             im = imread(file_name);
@@ -14,9 +13,18 @@ function im = my_imread(file_name, data)
 %                 im = im;
             end
         elseif strcmp(data.image_type,'z-stack'),
-            im = imread(file_name,data.z_index);
+            %try-catch to check for valid user input of the z-index value. -Shannon 8/23/2016
+            try
+                im = imread(file_name,data.z_index);
+            catch exception
+                if (strcmp(exception.identifier, 'MATLAB:imagesci:rtifc:invalidDirIndex'))
+                    im = [];
+                    disp('Function my_imread() warning: Please check the range of the z-index.'); 
+                else
+                    throw(exception)
+                end
+            end
         end;
-%         im = imread(file_name);
         
     else
         im = [];
