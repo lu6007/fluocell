@@ -1,6 +1,6 @@
 % function data = batch_update_figure(data)
 
-% Copyright: Shaoying Lu and Yingxiao Wang 2011
+% Copyright: Shaoying Lu, Shannon Laub and Yingxiao Wang 2011
 
 function data = batch_update_figure(data)
 %Store initial index value for later retrieval for consistency.
@@ -14,7 +14,7 @@ if isfield(data, 'ratio'),
     data = rmfield(data, 'cell_size');
 end
 
-% Option for parallel processing. - Shannon 8/10/2016
+%% Option for parallel processing. - Shannon 8/10/2016
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
     % loop through the row vector image_index
@@ -101,5 +101,6 @@ else %Parallel processing enabled.
     
 end %End of batch data processing and collection of data output.
 
+%%
 data.index = temp; % return data.index to the initial value for consistency.
 return;

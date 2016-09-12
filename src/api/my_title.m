@@ -1,7 +1,7 @@
 % add a tail containing the string form of index
 % into all the titles
 
-% Copyright: Shaoying Lu and Yingxiao Wang 2014
+% Copyright: Shaoying Lu, Shannon Laub and Yingxiao Wang 2014
 function my_title(title_name, index, varargin)
 %Enabled possible display of z-index for the title. - Shannon 8/24/2016
 parameter_name = {'data'};
