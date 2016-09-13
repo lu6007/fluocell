@@ -25,6 +25,17 @@ if new_first_file
     %% This line may be need for some backward compatibility reasons though.
     data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
+    
+    %When viewing z-stacks: (i.e. organoids)
+    %Alternative possible optimization to try-catch in my_imread() for checking 
+    %if user has selected too large of a z-stack index.
+    %Assumes all time points have the same number of z-indices.
+    %Incomplete. Note use of imfinfo to get number of pages in TIFF file/z-stack.
+%     if isfield(data,'image_type') && strcmp(data.image_type,'z-stack')
+%        file_info = imfinfo(data.file{1});
+%        data.num_z_indices = length(file_info);
+%     end
+    % - Shannon 8/23/2016
 else
     num_matching = length(regexp(data.first_file, data.index_pattern{1}));
     data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...

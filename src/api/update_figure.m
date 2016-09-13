@@ -21,7 +21,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             % Lexie on 3/2/2015
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im ratio_im;
@@ -39,9 +39,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
-                axis off; my_title(data.channel_pattern{3}, data.index);
+                axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im im_3 ratio_im;
@@ -61,11 +61,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
-                axis off; my_title(data.channel_pattern{3}, data.index);
+                axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
                 figure(data.f(4)); my_imagesc(im_4);
-                axis off; my_title(data.channel_pattern{4}, data.index);
+                axis off; my_title(data.channel_pattern{4}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im im_3 im_4 ratio_im;
@@ -80,10 +80,10 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(data.im{3});
                 colormap gray; 
-                axis off; my_title('DIC', data.index);
+                axis off; my_title('DIC', data.index, 'data', data);
             end
         case 'FRET-Intensity-DIC',
             first_channel_im = preprocess(data.im{1}, data);
@@ -96,12 +96,12 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
-                axis off; my_title(data.channel_pattern{3}, data.index);
+                axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
                 figure(data.f(4)); my_imagesc(data.im{4});
                 colormap gray; 
-                axis off; my_title('DIC', data.index);
+                axis off; my_title('DIC', data.index, 'data', data);
                 clear first_channel_im second_channel_im im_3 ratio_im;
             end
         case 'FLIM',
@@ -114,7 +114,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             data.im{3} = flim_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-            axis off; my_title(data.channel_pattern{2}, data.index);
+            axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
          case 'STED',
@@ -127,17 +127,17 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             data.im{3} = sted_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-            axis off; my_title(data.channel_pattern{2}, data.index);
+            axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
 
        case 'Intensity',
             second_channel_im = data.im{1};
             figure(data.f(1)); imagesc(second_channel_im); 
-            axis off; my_title('Intensity',data.index);
+            axis off; my_title('Intensity',data.index, 'data', data);
             data.im{2}  = preprocess(data.im{1}, data); 
             figure(data.f(2)); my_imagesc(data.im{2}); 
-            axis off; my_title('Processed',data.index);
+            axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary,
                 data = show_detected_boundary(data.im{2}, data); 
@@ -162,16 +162,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
              clear second_channel_im;
         case 'Intensity-DIC',
             figure(data.f(1)); my_imagesc(data.im{1}); 
-            axis off; my_title('Intensity',data.index);
+            axis off; my_title('Intensity',data.index, 'data', data);
             figure(data.f(2)); 
             my_imagesc(data.im{2});
             colormap gray; 
-            axis off; my_title('DIC',data.index);
+            axis off; my_title('DIC',data.index, 'data', data);
             data.im{3} = preprocess(data.im{1}, data); 
             figure(data.f(3));
             my_imagesc(data.im{3});
             imagesc(data.im{3}); caxis(data.intensity_bound);
-            axis off; my_title('Processed',data.index);
+            axis off; my_title('Processed',data.index, 'data', data);
 
             %show_detected_boundary(data.im{3}, data, data.f(3));
             if isfield(data,'quantify_roi') && data.quantify_roi,

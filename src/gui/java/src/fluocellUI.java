@@ -46,6 +46,11 @@ public class fluocellUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         imageIndex = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        threeDimensionDialog = new javax.swing.JFrame();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        zindexSpinner = new javax.swing.JSpinner();
+        zindexEnableCheckBox = new javax.swing.JCheckBox();
         folderChooser = new javax.swing.JFileChooser();
         figureChooser = new javax.swing.JFileChooser();
         fileChooser = new javax.swing.JFileChooser();
@@ -92,6 +97,7 @@ public class fluocellUI extends javax.swing.JFrame {
         tools = new javax.swing.JMenu();
         adjustBrightnessFactor = new javax.swing.JMenuItem();
         batchUpdate = new javax.swing.JMenuItem();
+        threeDimension = new javax.swing.JMenuItem();
 
         chooseThreshold.setAlwaysOnTop(true);
         chooseThreshold.setMinimumSize(new java.awt.Dimension(800, 200));
@@ -247,6 +253,68 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
+        threeDimensionDialog.setMinimumSize(new java.awt.Dimension(650, 300));
+        threeDimensionDialog.setPreferredSize(new java.awt.Dimension(650, 300));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Z-Stack Index"));
+
+        jLabel12.setText("Index");
+
+        zindexSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        zindexSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                zindexSpinnerStateChanged(evt);
+            }
+        });
+
+        zindexEnableCheckBox.setText("Enable reading of z-stack");
+        zindexEnableCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zindexEnableCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zindexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(zindexEnableCheckBox)
+                .addContainerGap(235, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(zindexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zindexEnableCheckBox))
+                .addContainerGap(173, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout threeDimensionDialogLayout = new javax.swing.GroupLayout(threeDimensionDialog.getContentPane());
+        threeDimensionDialog.getContentPane().setLayout(threeDimensionDialogLayout);
+        threeDimensionDialogLayout.setHorizontalGroup(
+            threeDimensionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(threeDimensionDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        threeDimensionDialogLayout.setVerticalGroup(
+            threeDimensionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(threeDimensionDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         folderChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
 
         fileChooser.setDialogTitle("Choose MATLAB executable or script");
@@ -321,7 +389,7 @@ public class fluocellUI extends javax.swing.JFrame {
         jLabel1.setText("Index");
 
         indexSpinner.setFont(indexSpinner.getFont());
-        indexSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        indexSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         indexSpinner.setPreferredSize(new java.awt.Dimension(58, 30));
         indexSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -684,6 +752,14 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
         tools.add(batchUpdate);
+
+        threeDimension.setText("3D");
+        threeDimension.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                threeDimensionActionPerformed(evt);
+            }
+        });
+        tools.add(threeDimension);
 
         jMenuBar1.add(tools);
 
@@ -1119,6 +1195,40 @@ public class fluocellUI extends javax.swing.JFrame {
     private void intensityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intensityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_intensityActionPerformed
+
+    private void threeDimensionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeDimensionActionPerformed
+        threeDimensionDialog.setVisible(true);
+    }//GEN-LAST:event_threeDimensionActionPerformed
+
+    private void zindexSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_zindexSpinnerStateChanged
+        if (file_opened) {
+            try {
+                proxy.setVariable("z_index", zindexSpinner.getValue());
+                proxy.eval("fluocell_data.z_index = z_index;");
+                proxy.eval("fluocell_data = get_image(fluocell_data,0);");
+                proxy.eval("fluocell_data = update_figure(fluocell_data);");
+            } catch (MatlabInvocationException ex) {
+                Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_zindexSpinnerStateChanged
+
+    private void zindexEnableCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zindexEnableCheckBoxActionPerformed
+        if (zindexEnableCheckBox.isSelected()) {
+            try{
+                proxy.eval("fluocell_data.image_type = 'z-stack';");
+            } catch (MatlabInvocationException ex) {
+                Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+           try{
+                proxy.eval("fluocell_data = rmfield(fluocell_data,'image_type');");
+            } catch (MatlabInvocationException ex) {
+                Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+    }//GEN-LAST:event_zindexEnableCheckBoxActionPerformed
  
     private void readFile() throws MatlabInvocationException {
         try {
@@ -1281,6 +1391,7 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1294,6 +1405,7 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSubtractBackground;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel mainControl;
     private javax.swing.JMenuItem openFigure;
@@ -1305,9 +1417,13 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JTextField secondChannel;
     private javax.swing.JCheckBox showBoundary;
     private javax.swing.JTextField thirdChannel;
+    private javax.swing.JMenuItem threeDimension;
+    private javax.swing.JFrame threeDimensionDialog;
     private javax.swing.JTextField threshold;
     private javax.swing.JTextField timeFrame;
     private javax.swing.JMenu tools;
+    private javax.swing.JCheckBox zindexEnableCheckBox;
+    private javax.swing.JSpinner zindexSpinner;
     // End of variables declaration//GEN-END:variables
     
     
