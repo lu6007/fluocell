@@ -201,28 +201,6 @@ if (isfield(data, 'show_figure') && data.show_figure == 1)...
     roi_file = strcat(data.output_path, 'roi.mat');
     draw_polygon(gca, roi_poly, 'red', roi_file, 'type', roi_type);
 end
-%
-% data.value, data.ratio etc were initialized in get_image()
-% data.value(data.index,1) = compute_average_value(ratio, roi_bw{1});
-% data.value(data.index,2) = compute_average_value(cfp, roi_bw{1});
-% data.value(data.index,3) = compute_average_value(yfp, roi_bw{1});
-%
-% for i = 1:num_layers,
-%     data.ratio(data.index, i) = compute_average_value(ratio, roi_bw{i});
-%     data.channel1(data.index, i) = compute_average_value(cfp, roi_bw{i});
-%     data.channel2(data.index, i) = compute_average_value(yfp, roi_bw{i});
-% end;
-
-% For multiple tracking and multiple layers, Lexie on 12/10/2015
-% if there is only roi_bw instead of cell_bw
-
-% remove the calculation of value from the fluocell_data, Lexie on
-% 12/16/2015
-% for j = 1 : num_rois
-%     data.value{j}(data.index, 1) = compute_average_value(ratio, roi_bw{j});
-%     data.value{j}(data.index, 2) = compute_average_value(cfp, roi_bw{j});
-%     data.value{j}(data.index, 3) = compute_average_value(yfp, roi_bw{j});
-% end
 
 for j = 1 : num_rois
     for i = 1:num_layers,

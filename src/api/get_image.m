@@ -6,8 +6,7 @@
 % cropping rectangle, or the mask. 
 % Initialize the global variable fluocell_data_roi_move
 
-
-% Copyright: Shaoying Lu and Yingxiao Wang 2011
+% Copyright: Shaoying Lu, Lexie Qin Qin and Yingxiao Wang 2011-2016
 
 function data = get_image(data,new_first_file)
 % A global variable spans all the functions where this variable is declared
@@ -21,8 +20,6 @@ end;
 % pattern = data.index_pattern{2}; 
 index_str = sprintf(data.index_pattern{2}, data.index);
 if new_first_file
-    %% Kathy commented to fix a bug with quanty 08/03/2016
-    %% This line may be need for some backward compatibility reasons though.
     data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
 else
@@ -65,7 +62,7 @@ if isfield(data,'subtract_background') && data.subtract_background,
     %im = imread(data.file{1})
     bg_file = strcat(data.output_path, 'background.mat');
     if exist(bg_file, 'file'),
-        temp_poly = load(bg_file);
+        % temp_poly = load(bg_file);
         [temp.bw{1}, temp.poly{1}] = get_background(im, bg_file);
 %         temp = load(bg_file); % with no bg and bw field inside
         data.bg_bw = temp.bw{1};
@@ -99,7 +96,7 @@ elseif isfield(data, 'crop_image') && ~data.crop_image...
 end
 
 
-% Initialize data.time, data.value, data.ratio, data.donor, data.acceptor
+% Initialize data.time, data.ratio, data.donor, data.acceptor
 % set data.num_rois, and data.roi_poly
 
 clear im_size
@@ -113,7 +110,7 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
     % Lexie on 03/02/2015 default size might unavailable for long time
     % experiments
     % Lexie on 03/11, change the name temp to be num_points and also use
-    % mas instead of length as Kathy suggested
+    % max instead of length as Kathy suggested
     if ~isfield(data,'ratio') || new_first_file,  
         if ~isfield(data, 'image_index') || max(data.image_index) <= 200
             num_points = 200;
@@ -124,17 +121,10 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
         % Change all the initial data strcuture to be cells to fit the
         % multiple tracking and multiple layer functions
             data.time = Inf*ones(num_points, 2);
-            data.value{1} = Inf*ones(num_points, 3);
             
-            % kathy 07/24/2016 trying to fix the problem of slow
-            % quantification, but did not work.
-            % kept these changes to be compatible with
-            % quantify_region_of_interest() functions. 
-            % data.ratio{1, 1} = Inf*ones(num_points, num_rois);
-            % data.cell_size{1, 1}  = Inf*ones(num_points,1); 
+            % data.ratio{num_objects, 1}(num_frames, num_rois)
             data.ratio{1} = Inf*ones(num_points, num_rois);
             data.cell_size{1} = Inf*ones(num_points, 1);
-            % end 07/24/2016
             
             data.channel1{1} = Inf*ones(num_points, num_rois);
             data.channel2{1} = Inf*ones(num_points, num_rois);
@@ -145,7 +135,7 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
         % one columns for value
     end;
     % if there is a cropped image, load the image and ROI on the cropped
-    % on, Lexie on 02/20/2015
+    % one, Lexie on 02/20/2015
     if isfield(data, 'crop_image') && data.crop_image,
         if ~isfield(data,'rectangle'),
             data.rectangle = get_rectangle(im, strcat(data.path, 'output/rectangle.mat'));
@@ -200,7 +190,17 @@ switch data.protocol;
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
         for i = 1:2,
+            % slow version
             data.im{i} = my_imread(data.file{i}, data);
+            
+%             % fast version, Kathy 08/06/2016
+%             if exist(data.file{i}, 'file'),
+%                 data.im{i} = imread(data.file{i});
+%             else
+%                 display(sprintf('%s : %s\n', file_name, 'This file does not exist!'));
+%                 data.im{i} = []; 
+%             end;
+
         end;
         % ratio_image_file and file_type
        fret_file = get_fret_file(data, data.file{1});

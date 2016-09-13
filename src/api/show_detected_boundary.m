@@ -57,9 +57,7 @@ end;
 
 index_str = sprintf(data.index_pattern{2}, data.index);
 output_file = strcat(data.output_path, 'cell_bw.', index_str);
-% Lexie on 10/13/2015, options for saving cell_bw files
-% Lexie on 12/10/2015, save cell_bw file as mat file
-if (isfield(data, 'save_file') && data.save_file) || ~isfield(data, 'save_file'),
+if(isfield(data,'save_processed_image')&& data.save_processed_image)
     cell_bw = data.cell_bw;
     save([output_file, '.mat'], 'cell_bw');
     clear cell_bw

@@ -11,28 +11,33 @@
 
 % Author: Shaoying Lu , shaoying.lu@gmail.com
 % Date: 03/24/2016
-function seq_array = get_seq_array(file_name, varargin )
+function [seq_array, total_num_seqs] = get_seq_array(file_name, varargin )
 parameter_name = {'start_seq', 'num_seqs', 'start_code', 'num_codes', ...
-    'get_info'};
-default_value = {1, 1e3, 40, 21, false}; 
-[start_seq, num_seqs, start_code, num_codes, get_info] = ...
+    'get_info','select_good_sequence'};
+default_value = {1, 1e3, 1, 1, false, 0}; 
+[start_seq, num_seqs, start_code, num_codes, get_info, select_good_sequence] = ...
     parse_parameter(parameter_name, default_value, varargin);
-
-end_seq = start_seq+ num_seqs - 1;
-% start_code = 40; num_codes = 21;
-end_code = start_code + num_codes -1;
-code_index = start_code:end_code;
 
 % read the library and check sequence
 if get_info,
     info = fastqinfo(file_name);
     display(sprintf('Number of squences is %d.', info.NumberOfEntries));
+    total_num_seqs = info.NumberOfEntries;
     clear info; 
+else
+    total_num_seqs = 0;
 end;
+
+end_seq = start_seq+ num_seqs - 1;
+% start_code = 40; num_codes = 21;
+end_code = start_code + num_codes -1;
+code_index = start_code:end_code;
 % [header, seq_cell, score] = fastqread(library_file, 'blockread', [start_seq end_seq]);
 [~, seq_cell, ~] = fastqread(file_name, 'blockread', [start_seq end_seq]);
-num_seqs = size(seq_cell, 2); 
-good_seq = true(1, num_seqs);
+
+temp = char(seq_cell); clear seq_cell;
+seq_array_all = temp(:, code_index); clear temp good_seq;
+
 % Align the sequence
 % But Alignment is too slow. So skip alignment for now. 
 %primer = 'AAGCCGGGTTCTGGTGAGGGTTCTGAGAAGATCNNNNNNNNNTAC';
@@ -48,14 +53,22 @@ good_seq = true(1, num_seqs);
 % %             end;
 % %         end;
 % end;
-temp = char(seq_cell); clear seq_cell;
-seq_array_all = temp(good_seq, code_index); clear temp good_seq;
-num_Ns = sum(seq_array_all == 'N', 2); 
-good_seq = (num_Ns<=5); clear num_Ns;
-seq_array = seq_array_all(good_seq, :);
-display(sprintf('There are %d good sequences. ', sum(good_seq)));
 
-clear good_seq num_ns;
+if select_good_sequence == 1,
+    num_Ns = sum(seq_array_all == 'N', 2); 
+    good_seq = (num_Ns<=5); clear num_Ns;
+    seq_array = seq_array_all(good_seq, :);
+    display(sprintf('There are %d good sequences. ', sum(good_seq)));
+    clear good_seq;
+elseif select_good_sequence == 2,
+%      seq_cell = cellstr(seq_array_all); 
+%      tac_location = strfind(seq_cell, 'TAC');
+     seq_array = seq_array_all;
+else
+    seq_array = seq_array_all;
+end
+clear seq_array_all;
+
 % seqlogo(seq_array);
 
 return;

@@ -216,7 +216,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image),
-                draw_polygon(gca, data.bg_poly, 'yellow', file_name);
+                    draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', 'draggable');
             end;  
         end;
 
