@@ -1,3 +1,5 @@
+% >> lib_name = 'LIB03', 'fyn_low_fret', or 'fyn_high_fret' etc
+% >> data =seq_init_data( lib_name);
 function data = seq_init_data( lib_name )
 root = 'E:/data/2015/mint_1029/';
 data.lib_name = lib_name;

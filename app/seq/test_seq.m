@@ -21,7 +21,7 @@ parameter_default = {0, data.num_seqs, 0, 1};
 
 output = true;
 count_sanger = false;
-output_num_seqs = 100;
+output_num_seqs = 10;
 
 %% Load sequences
 % Initialize library information

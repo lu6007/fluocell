@@ -166,29 +166,42 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
 end;
 
 % Load the mask if needed. 
+% If data.need_apply_mask == 1,2,3, load mask from 'mask.mat', selected
+% from channels 1, 2, or 3
+% If data.need_apply_mask == 4, load mask from existing files with
+% 'data.mask_pattern' and changing indices. 
 if isfield(data, 'need_apply_mask') && data.need_apply_mask,
-    file_name = strcat(data.output_path, 'mask.mat');
-    if ~isfield(data, 'mask'),
-        % Correct the title for mask selection
-        % temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
-            % Lexie on 10/28/2015
-            if data.need_apply_mask == 1,
-                temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
-            elseif data.need_apply_mask == 2,
-                data.file{2} = regexprep(data.file{2}, data.channel_pattern{2}, data.channel_pattern{2});
-                temp_im = imread(data.file{2});
-                temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
-                clear temp_im
-            elseif data.need_apply_mask == 3,
-                data.file{3} = regexprep(data.file{3}, data.channel_pattern{3}, data.channel_pattern{3});
-                temp_im = imread(data.file{3});
-                temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
-                clear temp_im
-            else
-                temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
-            end   
-        data.mask = temp{1}; clear temp;
-    end;
+    switch data.need_apply_mask,
+        case {1, 2, 3}
+            file_name = strcat(data.output_path, 'mask.mat');
+            if ~isfield(data, 'mask'),
+                % Correct the title for mask selection
+                % temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
+                    % Lexie on 10/28/2015
+                    % Kathy : problematic implementation for case 2 and 3,
+                    % 09/19/2016
+                    if data.need_apply_mask == 1,
+                        temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
+                    elseif data.need_apply_mask == 2,
+                        data.file{2} = regexprep(data.file{1}, data.channel_pattern{1}, data.channel_pattern{2});
+                        temp_im = imread(data.file{2});
+                        temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
+                        clear temp_im
+                    elseif data.need_apply_mask == 3,
+                        data.file{3} = regexprep(data.file{1}, data.channel_pattern{1}, data.channel_pattern{3});
+                        temp_im = imread(data.file{3});
+                        temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
+                        clear temp_im
+                    else
+                        temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
+                    end   
+                data.mask = temp{1}; clear temp;
+            end; % if ~isfield(data, 'mask'),
+        case 4
+            mask_file = regexprep(data.file{1}, data.channel_pattern{1}, data.mask_pattern);
+            temp = imread(mask_file);
+            data.mask = logical(temp); clear temp;
+    end; % switch data.need_apply_mask, 
 end;
 clear im;
 

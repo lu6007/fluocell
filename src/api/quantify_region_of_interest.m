@@ -141,9 +141,14 @@ switch data.quantify_roi,
         roi_poly = data.roi_poly;
         % Since there is no cell_bw file, calculate the num_rois based on
         % roi_bw, Lexie on 12/15/2015
-        if ~exist('cell_bw', 'var')
+        % if ~exist('cell_bw', 'var')
             num_rois = length(roi_bw);
-        end
+        % end
+        if isfield(data,'need_apply_mask') && data.need_apply_mask ==4,
+            for i = 1:num_rois,
+                roi_bw{i} = roi_bw{i}.*data.mask;
+            end;
+        end;
     case 2, % move roi while tracking cell
         % use the centroid of the cell to track rois
         prop = regionprops(obj{1});
