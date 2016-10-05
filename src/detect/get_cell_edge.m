@@ -8,15 +8,15 @@
 function [bd, bw, threshold] = get_cell_edge(im, varargin)
 % set up the parameter values by input
 % or the default values.
-% 10/14/2015 Lexie - add new parameter multiple_region to detect more one object
+% 10/14/2015 Lexie - add new parameter multiple_object to detect more one object
 parameter_name = {'brightness_factor', ...
-    'min_area','threshold', 'mask_bw', 'multiple_region', 'segment_method'};
+    'min_area','threshold', 'mask_bw', 'multiple_object', 'segment_method'};
 default_value = {1.0, 500, 0, [], 0, 0};
-[brightness_factor, min_area, threshold, mask_bw, multiple_region, segment_method]...
+[brightness_factor, min_area, threshold, mask_bw, multiple_object, segment_method]...
     = parse_parameter(parameter_name, default_value, varargin);
 
 % for molly's data, Lexie on 10/15/2015
-if multiple_region,
+if multiple_object,
     threshold = my_graythresh(uint16(im));
 end
 
@@ -52,7 +52,7 @@ bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
 % Lexie and Shirley on 10/13/2015
 % option to have multiple detections
 
-if ~multiple_region,
+if ~multiple_object,
     boundaries{1} = find_longest_boundary(bw_image);
 else
     [boundaries, ~] = bwboundaries(bw_image, 8, 'noholes');

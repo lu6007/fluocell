@@ -7,16 +7,6 @@ function data= update_figure(data)
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
-% move to get_image 09/03/2014
-%     if isfield(data, 'need_apply_mask') && data.need_apply_mask,
-%         file_name = strcat(data.output_path, 'mask.mat');
-%         if ~isfield(data, 'mask'),
-%             % Correct the title for mask selection
-%             temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
-%             data.mask = temp{1}; clear temp;
-%         end;
-%     end;
-
     switch data.protocol,
         case 'FRET',
             first_channel_im = preprocess(data.im{1}, data);
@@ -31,7 +21,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             % Lexie on 3/2/2015
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im ratio_im;
@@ -49,9 +39,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
-                axis off; my_title(data.channel_pattern{3}, data.index);
+                axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im im_3 ratio_im;
@@ -71,11 +61,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
-                axis off; my_title(data.channel_pattern{3}, data.index);
+                axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
                 figure(data.f(4)); my_imagesc(im_4);
-                axis off; my_title(data.channel_pattern{4}, data.index);
+                axis off; my_title(data.channel_pattern{4}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im im_3 im_4 ratio_im;
@@ -90,10 +80,10 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(data.im{3});
                 colormap gray; 
-                axis off; my_title('DIC', data.index);
+                axis off; my_title('DIC', data.index, 'data', data);
             end
         case 'FRET-Intensity-DIC',
             first_channel_im = preprocess(data.im{1}, data);
@@ -106,12 +96,12 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if show_figure_option,
                 figure(data.f(2)); my_imagesc(second_channel_im); 
-                axis off; my_title(data.channel_pattern{2}, data.index);
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
-                axis off; my_title(data.channel_pattern{3}, data.index);
+                axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
                 figure(data.f(4)); my_imagesc(data.im{4});
                 colormap gray; 
-                axis off; my_title('DIC', data.index);
+                axis off; my_title('DIC', data.index, 'data', data);
                 clear first_channel_im second_channel_im im_3 ratio_im;
             end
         case 'FLIM',
@@ -124,7 +114,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             data.im{3} = flim_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-            axis off; my_title(data.channel_pattern{2}, data.index);
+            axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
          case 'STED',
@@ -137,17 +127,17 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             data.im{3} = sted_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-            axis off; my_title(data.channel_pattern{2}, data.index);
+            axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
 
        case 'Intensity',
             second_channel_im = data.im{1};
             figure(data.f(1)); imagesc(second_channel_im); 
-            axis off; my_title('Intensity',data.index);
+            axis off; my_title('Intensity',data.index, 'data', data);
             data.im{2}  = preprocess(data.im{1}, data); 
             figure(data.f(2)); my_imagesc(data.im{2}); 
-            axis off; my_title('Processed',data.index);
+            axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary,
                 data = show_detected_boundary(data.im{2}, data); 
@@ -172,16 +162,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
              clear second_channel_im;
         case 'Intensity-DIC',
             figure(data.f(1)); my_imagesc(data.im{1}); 
-            axis off; my_title('Intensity',data.index);
+            axis off; my_title('Intensity',data.index, 'data', data);
             figure(data.f(2)); 
             my_imagesc(data.im{2});
             colormap gray; 
-            axis off; my_title('DIC',data.index);
+            axis off; my_title('DIC',data.index, 'data', data);
             data.im{3} = preprocess(data.im{1}, data); 
             figure(data.f(3));
             my_imagesc(data.im{3});
             imagesc(data.im{3}); caxis(data.intensity_bound);
-            axis off; my_title('Processed',data.index);
+            axis off; my_title('Processed',data.index, 'data', data);
 
             %show_detected_boundary(data.im{3}, data, data.f(3));
             if isfield(data,'quantify_roi') && data.quantify_roi,
@@ -193,8 +183,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 figure(data.f(3)); im = imscale(data.im{3}, 0, 1, caxis);
                 imwrite(im, data.file{3}, 'tiff','compression', 'none');
                 clear im;
-             end;
-
+                
+                % added by Kathy for Lei on 7/15/2016
+                % to allow saving DIC images
+                % >> fluocell_data.save_processed_image = 2
+                if data.save_processed_image ==2, % save the DIC image
+                    figure(data.f(2)); im = imscale(data.im{2}, 0, 1, caxis);
+                    imwrite(im, data.file{5}, 'tiff', 'compression', 'none');
+                    clear im;
+                end; 
+             end; %i if ~exist(data.file{3}, 'file')&&...
 
     end; %switch data.protocol
     
@@ -218,7 +216,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image),
-                draw_polygon(gca, data.bg_poly, 'yellow', file_name);
+                    draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', 'draggable');
             end;  
         end;
 

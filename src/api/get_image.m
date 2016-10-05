@@ -1,12 +1,12 @@
 % function data = get_image(data,new_first_file)
 % This is the file I/O interface of Fluocell
 % Get image from files depending on different protols
+% Initialize the result data structure. 
 % When enabled, the get_image function also load background, the
 % cropping rectangle, or the mask. 
 % Initialize the global variable fluocell_data_roi_move
 
-
-% Copyright: Shaoying Lu and Yingxiao Wang 2011
+% Copyright: Shaoying Lu, Lexie Qin Qin and Yingxiao Wang 2011-2016
 
 function data = get_image(data,new_first_file)
 % A global variable spans all the functions where this variable is declared
@@ -22,6 +22,17 @@ index_str = sprintf(data.index_pattern{2}, data.index);
 if new_first_file
     data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
+    
+    %When viewing z-stacks: (i.e. organoids)
+    %Alternative possible optimization to try-catch in my_imread() for checking 
+    %if user has selected too large of a z-stack index.
+    %Assumes all time points have the same number of z-indices.
+    %Incomplete. Note use of imfinfo to get number of pages in TIFF file/z-stack.
+%     if isfield(data,'image_type') && strcmp(data.image_type,'z-stack')
+%        file_info = imfinfo(data.file{1});
+%        data.num_z_indices = length(file_info);
+%     end
+    % - Shannon 8/23/2016
 else
     num_matching = length(regexp(data.first_file, data.index_pattern{1}));
     data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
@@ -62,7 +73,7 @@ if isfield(data,'subtract_background') && data.subtract_background,
     %im = imread(data.file{1})
     bg_file = strcat(data.output_path, 'background.mat');
     if exist(bg_file, 'file'),
-        temp_poly = load(bg_file);
+        % temp_poly = load(bg_file);
         [temp.bw{1}, temp.poly{1}] = get_background(im, bg_file);
 %         temp = load(bg_file); % with no bg and bw field inside
         data.bg_bw = temp.bw{1};
@@ -96,7 +107,7 @@ elseif isfield(data, 'crop_image') && ~data.crop_image...
 end
 
 
-% Initialize data.time, data.value, data.ratio, data.donor, data.acceptor
+% Initialize data.time, data.ratio, data.donor, data.acceptor
 % set data.num_rois, and data.roi_poly
 
 clear im_size
@@ -110,51 +121,32 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
     % Lexie on 03/02/2015 default size might unavailable for long time
     % experiments
     % Lexie on 03/11, change the name temp to be num_points and also use
-    % mas instead of length as Kathy suggested
-%     if ~isfield(data,'value'),
-    if ~isfield(data,'ratio'),  % value is removed so it's changed to be ratio instead. Lexie on 12/21/2015
+    % max instead of length as Kathy suggested
+    if ~isfield(data,'ratio') || new_first_file,  
         if ~isfield(data, 'image_index') || max(data.image_index) <= 200
             num_points = 200;
         elseif isfield(data, 'image_index') && max(data.image_index) > 200,
             num_points = max(data.image_index);
         end
+                
         % Change all the initial data strcuture to be cells to fit the
-        % multiple tracking and multiple layers
-%             data.time = Inf*ones(num_points, 2);
-%             data.value{1} = Inf*ones(num_points, 3);
-%             data.ratio{1, 1} = Inf*ones(num_points, num_rois);
-%             data.channel1{1} = Inf*ones(num_points, num_rois);
-%             data.channel2{1} = Inf*ones(num_points, num_rois);
-%             data.channel1_bg = Inf*ones(num_points, 1);
-%             data.channel2_bg = Inf*ones(num_points, 1);
-%             data.cell_size{1, 1}  = Inf*ones(num_points,1); 
-
-            % As Kathy suggested, initiate all the data with appropriate
-            % cell type and < 20 objects, not initiate value; Lexie on 12/16/2015
+        % multiple tracking and multiple layer functions
             data.time = Inf*ones(num_points, 2);
+            
+            % data.ratio{num_objects, 1}(num_frames, num_rois)
+            data.ratio{1} = Inf*ones(num_points, num_rois);
+            data.cell_size{1} = Inf*ones(num_points, 1);
+            
+            data.channel1{1} = Inf*ones(num_points, num_rois);
+            data.channel2{1} = Inf*ones(num_points, num_rois);
             data.channel1_bg = Inf*ones(num_points, 1);
             data.channel2_bg = Inf*ones(num_points, 1);
-            temp{1} = Inf*ones(num_points, num_rois);
-            data.ratio= repmat(temp, 1, 20); 
-            data.channel1 = repmat(temp, 1, 20); 
-            data.channel2 = repmat(temp, 1, 20); clear temp
-            temp{1} = Inf*ones(num_points, 1);
-            data.cell_size  = repmat(temp, 1, 20); clear temp
-            
-%             data.time = Inf*ones(num_points, 2);
-%             data.value = Inf*ones(num_points, 3);
-%             data.ratio = Inf*ones(num_points, num_rois);
-%             data.channel1 = Inf*ones(num_points, num_rois);
-%             data.channel2 = Inf*ones(num_points, num_rois);
-%             data.channel1_bg = Inf*ones(num_points, 1);
-%             data.channel2_bg = Inf*ones(num_points, 1);
-%             data.cell_size = Inf*ones(num_points,1); 
 
         % two column for time
         % one columns for value
     end;
     % if there is a cropped image, load the image and ROI on the cropped
-    % on, Lexie on 02/20/2015
+    % one, Lexie on 02/20/2015
     if isfield(data, 'crop_image') && data.crop_image,
         if ~isfield(data,'rectangle'),
             data.rectangle = get_rectangle(im, strcat(data.path, 'output/rectangle.mat'));
@@ -174,29 +166,42 @@ if isfield(data, 'quantify_roi') && data.quantify_roi,
 end;
 
 % Load the mask if needed. 
+% If data.need_apply_mask == 1,2,3, load mask from 'mask.mat', selected
+% from channels 1, 2, or 3
+% If data.need_apply_mask == 4, load mask from existing files with
+% 'data.mask_pattern' and changing indices. 
 if isfield(data, 'need_apply_mask') && data.need_apply_mask,
-    file_name = strcat(data.output_path, 'mask.mat');
-    if ~isfield(data, 'mask'),
-        % Correct the title for mask selection
-        % temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
-            % Lexie on 10/28/2015
-            if data.need_apply_mask == 1,
-                temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
-            elseif data.need_apply_mask == 2,
-                data.file{2} = regexprep(data.file{2}, data.channel_pattern{2}, data.channel_pattern{2});
-                temp_im = imread(data.file{2});
-                temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
-                clear temp_im
-            elseif data.need_apply_mask == 3,
-                data.file{3} = regexprep(data.file{3}, data.channel_pattern{3}, data.channel_pattern{3});
-                temp_im = imread(data.file{3});
-                temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
-                clear temp_im
-            else
-                temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
-            end   
-        data.mask = temp{1}; clear temp;
-    end;
+    switch data.need_apply_mask,
+        case {1, 2, 3}
+            file_name = strcat(data.output_path, 'mask.mat');
+            if ~isfield(data, 'mask'),
+                % Correct the title for mask selection
+                % temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
+                    % Lexie on 10/28/2015
+                    % Kathy : problematic implementation for case 2 and 3,
+                    % 09/19/2016
+                    if data.need_apply_mask == 1,
+                        temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
+                    elseif data.need_apply_mask == 2,
+                        data.file{2} = regexprep(data.file{1}, data.channel_pattern{1}, data.channel_pattern{2});
+                        temp_im = imread(data.file{2});
+                        temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
+                        clear temp_im
+                    elseif data.need_apply_mask == 3,
+                        data.file{3} = regexprep(data.file{1}, data.channel_pattern{1}, data.channel_pattern{3});
+                        temp_im = imread(data.file{3});
+                        temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
+                        clear temp_im
+                    else
+                        temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
+                    end   
+                data.mask = temp{1}; clear temp;
+            end; % if ~isfield(data, 'mask'),
+        case 4
+            mask_file = regexprep(data.file{1}, data.channel_pattern{1}, data.mask_pattern);
+            temp = imread(mask_file);
+            data.mask = logical(temp); clear temp;
+    end; % switch data.need_apply_mask, 
 end;
 clear im;
 
@@ -209,7 +214,17 @@ switch data.protocol;
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
         for i = 1:2,
+            % slow version
             data.im{i} = my_imread(data.file{i}, data);
+            
+%             % fast version, Kathy 08/06/2016
+%             if exist(data.file{i}, 'file'),
+%                 data.im{i} = imread(data.file{i});
+%             else
+%                 display(sprintf('%s : %s\n', file_name, 'This file does not exist!'));
+%                 data.im{i} = []; 
+%             end;
+
         end;
         % ratio_image_file and file_type
        fret_file = get_fret_file(data, data.file{1});
@@ -257,7 +272,6 @@ switch data.protocol;
         fret_file = get_fret_file(data, data.file{1});
         data.file{4} = strcat(fret_file, '.', 'tiff');
         data.file{5} = 'tiff';
-            
 
     case 'FRET-Intensity-DIC',
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
@@ -312,6 +326,7 @@ switch data.protocol;
 %         data.file{2} = strcat(data.path, temp); clear temp;
         data.file{3} = strcat(data.output_path, 'processed_im', index_str, '.tiff');
         data.file{4} = 'tiff';
+        data.file{5} = strcat(data.output_path, 'dic_im', index_str,'.tiff');
         for i = 1:2,
             data.im{i} = my_imread(data.file{i}, data);
         end;

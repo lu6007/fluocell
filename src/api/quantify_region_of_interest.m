@@ -18,7 +18,7 @@
 function data = quantify_region_of_interest(data, ratio, cfp, yfp, varargin)
 parameter_name = {'save_bw_file'};
 default_value = {0};
-[save_bw_file] =parse_parameter(parameter_name, default_value, varargin);
+[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
 %Lexie on 3/10/2015 make the show_figure option work for both situations,
 %w/o show_figure field
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
@@ -94,10 +94,10 @@ if data.quantify_roi == 2 || data.quantify_roi == 3,
             delete(temp_file_tiff); clear temp_file_tiff
             save(temp_file_mat, 'cell_bw');
         else
-            if ~isfield(data, 'multiple_region') || ~data.multiple_region
+            if ~isfield(data, 'multiple_object') || ~data.multiple_object
                 [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1);
             else
-                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1, 'multiple_region', data.multiple_region);
+                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1, 'multiple_object', data.multiple_object);
             end
             % save cell_bw file to be mat file instead of tiff, Lexie on
             % 12/14/2015
@@ -121,8 +121,13 @@ if data.quantify_roi == 2 || data.quantify_roi == 3,
     end;
     
     for i = 1 : num_objects
-%         data.cell_size{i}(data.index) = sum(sum(uint16(obj{i})));
-        data.cell_size{i}(data.index) = cell_prop(i).Area;
+%         %%% Kathy bug fix 07/22/2016
+%         if num_objects ==1,
+%             data.cell_size(data.index) = cell_prop(1).Area;
+%         else
+            %data.cell_size{i}(data.index) = sum(sum(uint16(obj{i})));
+            data.cell_size{i}(data.index) = cell_prop(i).Area;
+%        end
     end
     % need to save cell_bw in a file somewhere
     clear num_objects cell_label cell_prop; % The value of num_objects changed later
@@ -136,9 +141,14 @@ switch data.quantify_roi,
         roi_poly = data.roi_poly;
         % Since there is no cell_bw file, calculate the num_rois based on
         % roi_bw, Lexie on 12/15/2015
-        if ~exist('cell_bw', 'var')
+        % if ~exist('cell_bw', 'var')
             num_rois = length(roi_bw);
-        end
+        % end
+        if isfield(data,'need_apply_mask') && data.need_apply_mask ==4,
+            for i = 1:num_rois,
+                roi_bw{i} = roi_bw{i}.*data.mask;
+            end;
+        end;
     case 2, % move roi while tracking cell
         % use the centroid of the cell to track rois
         prop = regionprops(obj{1});
@@ -160,7 +170,7 @@ switch data.quantify_roi,
             for i = 1:min(num_rois, length(data.roi_bw)),
                 % shift bw by c_diff
                 bw_shift = circshift(data.roi_bw{i}, [c_diff(2), c_diff(1)]);
-                roi_bw{i} = bw_shift.*cell_bw;  % multiply by cell_bw to make sure ratio is calculatied inside detected object
+                roi_bw{i} = bw_shift.*cell_bw;  % multiply by cell_bw to make sure ratio is calculated inside detected object
                 % shift the boundary by c_diff
                 roi_poly{i} = data.roi_poly{i}+ones(size(data.roi_poly{i}))*[c_diff(1),0; 0, c_diff(2)];
                 clear bw_shift;
@@ -196,36 +206,36 @@ if (isfield(data, 'show_figure') && data.show_figure == 1)...
     roi_file = strcat(data.output_path, 'roi.mat');
     draw_polygon(gca, roi_poly, 'red', roi_file, 'type', roi_type);
 end
-%
-% data.value, data.ratio etc were initialized in get_image()
-% data.value(data.index,1) = compute_average_value(ratio, roi_bw{1});
-% data.value(data.index,2) = compute_average_value(cfp, roi_bw{1});
-% data.value(data.index,3) = compute_average_value(yfp, roi_bw{1});
-%
-% for i = 1:num_layers,
-%     data.ratio(data.index, i) = compute_average_value(ratio, roi_bw{i});
-%     data.channel1(data.index, i) = compute_average_value(cfp, roi_bw{i});
-%     data.channel2(data.index, i) = compute_average_value(yfp, roi_bw{i});
-% end;
 
-% For multiple tracking and multiple layers, Lexie on 12/10/2015
-% if there is only roi_bw instead of cell_bw
+%% Modified the following for loop to shrink area of quantification. - Shannon 8/4/2016
+for i = 1 : num_rois
+    for j = 1:num_layers,
+        %Modified to try to shrink the area that needs to be computed. - Shannon 8/4/2016
+%         data.ratio{j}(data.index, i) = compute_average_value(ratio, roi_bw{j,i});
+%         data.channel1{j}(data.index, i) = compute_average_value(cfp, roi_bw{j,i});
+%         data.channel2{j}(data.index, i) = compute_average_value(yfp, roi_bw{j,i});
 
-% remove the calculation of value from the fluocell_data, Lexie on
-% 12/16/2015
-% for j = 1 : num_rois
-%     data.value{j}(data.index, 1) = compute_average_value(ratio, roi_bw{j});
-%     data.value{j}(data.index, 2) = compute_average_value(cfp, roi_bw{j});
-%     data.value{j}(data.index, 3) = compute_average_value(yfp, roi_bw{j});
-% end
-
-for j = 1 : num_rois
-    for i = 1:num_layers,
-        data.ratio{j}(data.index, i) = compute_average_value(ratio, roi_bw{j, i});
-        data.channel1{j}(data.index, i) = compute_average_value(cfp, roi_bw{j, i});
-        data.channel2{j}(data.index, i) = compute_average_value(yfp, roi_bw{j, i});
+        %BoundingBox retrieves the upper left coordinates and the 
+        %length and width of a rectangle bounding the region of interest.
+        stat = regionprops(roi_bw{i,j},'BoundingBox');
+        %Use fix to ensure values are greater than 0, but less than the max value.
+        boundingBox = fix(stat.BoundingBox - 1) + 1; %[x_ul,y_ul,x_width,y_width]
+        %Shrink the widths in case the BoundingBox is the entire width of the image.
+        boundingBox(3:4) = boundingBox(3:4)-1;
+        %Calculating coordinates of the bottom right corner.
+        brCorner = [boundingBox(1) + boundingBox(3), boundingBox(2) + boundingBox(4)];%[x_br,y_br]
+        yBound = boundingBox(2):brCorner(2); %y_ul:y_br
+        xBound = boundingBox(1):brCorner(1); %x_ul:x_br
+        %Using (yBound,xBound) since the image's matrix is stored as (col,row) 
+        %i.e. (y-reversed,x) instead of (x,y).
+        boundedRoiBw = roi_bw{i,j}(yBound,xBound);
+        
+        data.ratio{i}(data.index, j) = compute_average_value(ratio(yBound,xBound), boundedRoiBw);
+        data.channel1{i}(data.index, j) = compute_average_value(cfp(yBound,xBound), boundedRoiBw);
+        data.channel2{i}(data.index, j) = compute_average_value(yfp(yBound,xBound), boundedRoiBw);
     end;
 end
+%%
     
 % quantify background
 if isfield(data, 'subtract_background') && data.subtract_background,

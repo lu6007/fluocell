@@ -46,6 +46,11 @@ public class fluocellUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         imageIndex = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        threeDimensionDialog = new javax.swing.JFrame();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        zindexSpinner = new javax.swing.JSpinner();
+        zindexEnableCheckBox = new javax.swing.JCheckBox();
         folderChooser = new javax.swing.JFileChooser();
         figureChooser = new javax.swing.JFileChooser();
         fileChooser = new javax.swing.JFileChooser();
@@ -92,10 +97,10 @@ public class fluocellUI extends javax.swing.JFrame {
         tools = new javax.swing.JMenu();
         adjustBrightnessFactor = new javax.swing.JMenuItem();
         batchUpdate = new javax.swing.JMenuItem();
+        threeDimension = new javax.swing.JMenuItem();
 
         chooseThreshold.setAlwaysOnTop(true);
         chooseThreshold.setMinimumSize(new java.awt.Dimension(800, 200));
-        chooseThreshold.setPreferredSize(new java.awt.Dimension(800, 200));
 
         ThesholdLabel.setText("Threshold");
 
@@ -202,7 +207,6 @@ public class fluocellUI extends javax.swing.JFrame {
         );
 
         batchUpdateImage.setMinimumSize(new java.awt.Dimension(300, 150));
-        batchUpdateImage.setPreferredSize(new java.awt.Dimension(300, 150));
 
         jLabel4.setText("Image Index");
 
@@ -247,6 +251,68 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(48, Short.MAX_VALUE))
+        );
+
+        threeDimensionDialog.setMinimumSize(new java.awt.Dimension(650, 300));
+        threeDimensionDialog.setPreferredSize(new java.awt.Dimension(650, 300));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Z-Stack Index"));
+
+        jLabel12.setText("Index");
+
+        zindexSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        zindexSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                zindexSpinnerStateChanged(evt);
+            }
+        });
+
+        zindexEnableCheckBox.setText("Enable reading of z-stack");
+        zindexEnableCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zindexEnableCheckBoxActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zindexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(zindexEnableCheckBox)
+                .addContainerGap(235, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(zindexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zindexEnableCheckBox))
+                .addContainerGap(173, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout threeDimensionDialogLayout = new javax.swing.GroupLayout(threeDimensionDialog.getContentPane());
+        threeDimensionDialog.getContentPane().setLayout(threeDimensionDialogLayout);
+        threeDimensionDialogLayout.setHorizontalGroup(
+            threeDimensionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(threeDimensionDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        threeDimensionDialogLayout.setVerticalGroup(
+            threeDimensionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(threeDimensionDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         folderChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
@@ -402,16 +468,13 @@ public class fluocellUI extends javax.swing.JFrame {
                                     .addGroup(mainControlLayout.createSequentialGroup()
                                         .addGap(8, 8, 8)
                                         .addComponent(jLabel3))
-                                    .addComponent(intensity, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(mainControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(fretRatio, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(mainControlLayout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(protocol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(48, 48, 48))
+                                    .addComponent(intensity, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                                .addGroup(mainControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(mainControlLayout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(57, 57, 57))
+                                    .addComponent(fretRatio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(mainControlLayout.createSequentialGroup()
                                 .addGroup(mainControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(mainControlLayout.createSequentialGroup()
@@ -420,11 +483,14 @@ public class fluocellUI extends javax.swing.JFrame {
                                         .addComponent(indexSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(timeFrame, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainControlLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addContainerGap())
+                    .addGroup(mainControlLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(protocol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainControlLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         mainControlLayout.setVerticalGroup(
             mainControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,7 +519,7 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(drivenFactor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         fileNamePattern.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "File Name Pattern", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
@@ -516,7 +582,7 @@ public class fluocellUI extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(firstChannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(thirdChannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(fileNamePatternLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(secondChannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -597,43 +663,39 @@ public class fluocellUI extends javax.swing.JFrame {
             .addGroup(processingOptionsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(applyFilter)
-                    .addComponent(cropImage)
                     .addGroup(processingOptionsLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabelQuantification)))
-                .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(processingOptionsLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addComponent(jLabelSubtractBackground)
                         .addGap(18, 18, 18)
                         .addComponent(comboBoxSubtractBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(applyFilter)
                     .addGroup(processingOptionsLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveImage)
-                            .addComponent(comboBoxQuantification, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 33, Short.MAX_VALUE))
+                            .addComponent(cropImage)
+                            .addComponent(jLabelQuantification))
+                        .addGap(69, 69, 69)
+                        .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(saveImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboBoxQuantification, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         processingOptionsLayout.setVerticalGroup(
             processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(processingOptionsLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(applyFilter)
                     .addComponent(jLabelSubtractBackground)
-                    .addComponent(comboBoxSubtractBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(comboBoxSubtractBackground, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addComponent(applyFilter)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cropImage)
                     .addComponent(saveImage))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(processingOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelQuantification)
-                    .addGroup(processingOptionsLayout.createSequentialGroup()
-                        .addComponent(comboBoxQuantification, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                        .addGap(3, 3, 3)))
-                .addContainerGap())
+                    .addComponent(comboBoxQuantification, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13))
         );
 
         file.setText("File");
@@ -691,6 +753,14 @@ public class fluocellUI extends javax.swing.JFrame {
         });
         tools.add(batchUpdate);
 
+        threeDimension.setText("3D");
+        threeDimension.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                threeDimensionActionPerformed(evt);
+            }
+        });
+        tools.add(threeDimension);
+
         jMenuBar1.add(tools);
 
         setJMenuBar(jMenuBar1);
@@ -701,9 +771,9 @@ public class fluocellUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(mainControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(mainControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(fileNamePattern, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(processingOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -711,14 +781,12 @@ public class fluocellUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(fileNamePattern, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(processingOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(mainControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(fileNamePattern, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(processingOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(mainControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1021,7 +1089,7 @@ public class fluocellUI extends javax.swing.JFrame {
                                                 .build();
                 factory = new MatlabProxyFactory(options);
                 } 
-            // If MATLAB path is specified in default.properties, launch from 
+            // If MATLAB path is specified in default.property, launch from 
             // that location
             } else {
                 if (matlabLocation.length() > 1) {
@@ -1127,12 +1195,46 @@ public class fluocellUI extends javax.swing.JFrame {
     private void intensityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intensityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_intensityActionPerformed
+
+    private void threeDimensionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threeDimensionActionPerformed
+        threeDimensionDialog.setVisible(true);
+    }//GEN-LAST:event_threeDimensionActionPerformed
+
+    private void zindexSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_zindexSpinnerStateChanged
+        if (file_opened) {
+            try {
+                proxy.setVariable("z_index", zindexSpinner.getValue());
+                proxy.eval("fluocell_data.z_index = z_index;");
+                proxy.eval("fluocell_data = get_image(fluocell_data,0);");
+                proxy.eval("fluocell_data = update_figure(fluocell_data);");
+            } catch (MatlabInvocationException ex) {
+                Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_zindexSpinnerStateChanged
+
+    private void zindexEnableCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zindexEnableCheckBoxActionPerformed
+        if (zindexEnableCheckBox.isSelected()) {
+            try{
+                proxy.eval("fluocell_data.image_type = 'z-stack';");
+            } catch (MatlabInvocationException ex) {
+                Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else {
+           try{
+                proxy.eval("fluocell_data = rmfield(fluocell_data,'image_type');");
+            } catch (MatlabInvocationException ex) {
+                Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+    }//GEN-LAST:event_zindexEnableCheckBoxActionPerformed
  
     private void readFile() throws MatlabInvocationException {
         try {
             // Import parameters from properties file
             Properties default_read = new Properties();
-            default_read.load(new FileInputStream("default.properties"));
+            default_read.load(new FileInputStream("default.property"));
             imageIndexPattern = default_read.getProperty("imageIndexPattern");
             timeFrame.setText(imageIndexPattern);
             firstChannelPattern = default_read.getProperty("firstChannelPattern");
@@ -1177,7 +1279,7 @@ public class fluocellUI extends javax.swing.JFrame {
             default_write.setProperty("drivenFactorValue",drivenFactor.getText());
             default_write.setProperty("defaultDataLocation", default_path);
             default_write.setProperty("matlablocation", matlabLocation);
-            default_write.store(new FileOutputStream("default.properties"), null);
+            default_write.store(new FileOutputStream("default.property"), null);
         } catch (IOException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1289,6 +1391,7 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1302,6 +1405,7 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSubtractBackground;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel mainControl;
     private javax.swing.JMenuItem openFigure;
@@ -1313,9 +1417,13 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JTextField secondChannel;
     private javax.swing.JCheckBox showBoundary;
     private javax.swing.JTextField thirdChannel;
+    private javax.swing.JMenuItem threeDimension;
+    private javax.swing.JFrame threeDimensionDialog;
     private javax.swing.JTextField threshold;
     private javax.swing.JTextField timeFrame;
     private javax.swing.JMenu tools;
+    private javax.swing.JCheckBox zindexEnableCheckBox;
+    private javax.swing.JSpinner zindexSpinner;
     // End of variables declaration//GEN-END:variables
     
     

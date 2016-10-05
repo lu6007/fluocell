@@ -1,6 +1,7 @@
 % test multiple_comparison
 
-%
+
+% Copyright: Shaoying (Kathy) Lu , shaoying.lu@gmail.com
 group_name = {'MS      ', 'MS_GdCI3', 'MS+BAPTA', 'MS+CytoD', 'MS+Noc  ', 'MS+ML-7 '};
 num_groups = length(group_name);
 

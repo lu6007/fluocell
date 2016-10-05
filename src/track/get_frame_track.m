@@ -1,4 +1,6 @@
 % function frame_with_track = get_frame_track(tracksFinal, movie_info)
+
+% Copyright Shaoying Lu 2016, shaoying.lu@gmail.com
 function frame_with_track = get_frame_track(tracksFinal, movie_info)
 % initialize frame_with_track
 num_frames = length(movie_info);

@@ -3,12 +3,17 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function data = close_button_callback(data)
+function [data, fun] = close_button_callback(data)
+% internal function fun.clean_up(data)
+% >> [~,fun] = close_buttom_callback([]);
+% >> data = fun.clean_up(data);
+fun.clean_up = @clean_up;
+
 data = close_figure(data);
+data = clean_up(data);
 return;
 
-% Save the quantified results to data.value
-% and data.time
+% Close figures and clean up data
 function data = close_figure(data)
 if isfield(data, 'f'),
     for i = 1:data.num_figures;
@@ -16,6 +21,10 @@ if isfield(data, 'f'),
     end
     data = rmfield(data,'f');
 end;
+return;
+
+%  Clean up data
+function data = clean_up(data)
 if isfield(data,'bg_bw'),
     data = rmfield(data,'bg_bw');
     data = rmfield(data,'bg_poly');
@@ -27,14 +36,9 @@ if isfield(data, 'roi_bw'),
     data = rmfield(data, 'roi_bw');
     data = rmfield(data, 'roi_poly');
 end;
-% if isfield(data, 'value'),
-if isfield(data, 'ratio'), % Since value is already removed, we use ratio instead. Lexie on 12/21/2015
-%     data = rmfield(data, {'value','time','ratio','donor', 'acceptor'});
-    data = rmfield(data, {'time','ratio', 'cell_size', 'channel1', 'channel2'}); % delete value part cause it is already removed from data. 12/21/2015
-%     data = rmfield(data, 'time');
-%     data = rmfiled(data,'ratio');
-%     data = rmfield(data,'donor');
-%     data = rmfield(data,'acceptor');
+
+if isfield(data, 'ratio'), 
+    data = rmfield(data, {'time','ratio', 'cell_size', 'channel1', 'channel2'}); 
 end;
 % Lexie on 3/2/2015; delete im after close figure
 if isfield(data, 'ref_centroid'),
