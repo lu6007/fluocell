@@ -42,8 +42,9 @@ if ~isfield(data, 'f'),
     f = zeros(num_figures, 1);
     for i =1:num_figures,
         f(i) = figure;
+        set(gcf, 'ColorMap', jet);
         set(gca, 'FontSize', 12, 'FontWeight','bold',...
-            'Box', 'off', 'LineWidth', 2); 
+            'Box', 'off', 'LineWidth', 2);
     end;
     data.f = f;
 end;
