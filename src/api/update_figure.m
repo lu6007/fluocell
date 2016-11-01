@@ -44,6 +44,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
             end
 
+            figure(data.f(3)); save_image(data, data.file{6}, im_3, caxis, 'my_color_map', 'jet');
+
             clear first_channel_im second_channel_im im_3 ratio_im;
 
         case 'FRET-Intensity-2',
@@ -104,6 +106,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 axis off; my_title('DIC', data.index, 'data', data);
                 clear first_channel_im second_channel_im im_3 ratio_im;
             end
+            figure(data.f(3)); save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
+
         case 'FLIM',
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
@@ -147,18 +151,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 data = quantify_region_of_interest(data, data.im{2});
             end;
 
-            if isfield(data, 'save_processed_image') && data.save_processed_image,
-                % use the factor 1.25 to adjust the image size and the save
-                % file size. 100 for the frame size of windows xp.
-                image_size = floor(size(data.im{2})*1.25+100);
-                height = image_size(1); width = image_size(2);
-                left = 50; bottom = 50;
-                set(data.f(2), 'Position', [left bottom width height]);
-                fr = getframe(data.f(2), [1 1 width height]); % [left low width height]
-                im = frame2im(fr);
-                imwrite(im, data.file{2}, data.file{3}, 'Compression', 'none');
-                clear fr im;
-             end;
+             figure(data.f(2)); save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
              clear second_channel_im;
         case 'Intensity-DIC',
             figure(data.f(1)); my_imagesc(data.im{1}); 
@@ -178,22 +171,12 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 data = quantify_region_of_interest(data, data.im{3});
             end;
             
-            if ~exist(data.file{3}, 'file') &&...
-                isfield(data, 'save_processed_image')&& data.save_processed_image,                
-                figure(data.f(3)); im = imscale(data.im{3}, 0, 1, caxis);
-                imwrite(im, data.file{3}, 'tiff','compression', 'none');
-                clear im;
+             figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
+             % The allows saving DIC images
+             if isfield(data, 'save_processed_image') && data.save_processed_image == 2,
+                 figure(data.f(2)); save_image(data, data.file{5}, data.im{2}, caxis);
+             end;
                 
-                % added by Kathy for Lei on 7/15/2016
-                % to allow saving DIC images
-                % >> fluocell_data.save_processed_image = 2
-                if data.save_processed_image ==2, % save the DIC image
-                    figure(data.f(2)); im = imscale(data.im{2}, 0, 1, caxis);
-                    imwrite(im, data.file{5}, 'tiff', 'compression', 'none');
-                    clear im;
-                end; 
-             end; %i if ~exist(data.file{3}, 'file')&&...
-
     end; %switch data.protocol
     
     % Lexie on 03/02/2015
@@ -232,14 +215,32 @@ return;
 function my_imagesc(im)
 temp = caxis;
 axis_vector = axis;
-clf; 
+clf;
 if temp(1) ==0 && temp(2) ==1,
-    imagesc(im);
+    imagesc(im); 
 else
     imagesc(im, temp);
     axis(axis_vector);
 end;
 return;
 
+% figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
+function save_image(data, file, im, caxis, varargin)
+para_name = {'my_color_map'};
+para_default = {'gray'};
+my_color_map = parse_parameter(para_name, para_default, varargin);
 
+if ~exist(file, 'file') &&...
+    isfield(data, 'save_processed_image')&& data.save_processed_image,                
+    temp = imscale(im, 0, 1, caxis);
+    switch my_color_map,
+        case 'gray',
+            imwrite(temp, file, 'tiff','compression', 'none');
+        case 'jet'
+            clear im;
+            im = gray2ind(temp); 
+            imwrite(im, jet, file, 'tiff', 'compression', 'none');
+    end; % switch
+end;
+return;
 
