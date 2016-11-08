@@ -93,7 +93,7 @@ assert(num_unique_seqs>= output_num_seqs, ...
     'test_seq() Error: num_unique_seqs< output_num_seqs');
 for j = 1:output_num_seqs,
     nt = seq_unique(index_count(j), :);
-    amino_acid = nt2aa(nt, 'ACGTOnly', 'false');
+    amino_acid = nt2aa(nt, 'ACGTOnly', 'false', 'AlternativeStartCodons', 'false');
     % if output & regexp(amino_acid, 'Y'),
     if output && ~isempty(regexp(amino_acid, 'Y', 'ONCE')),
          display(sprintf('%d\t%s\t%s', count_sort(j), amino_acid, nt)); 
@@ -141,7 +141,7 @@ function output_seq = count_unique_sequence(seq_array, output_num_seqs)
             ii = ii+1;
             output_seq_cell{ii, 1} = cuj; % frequency
             output_seq_cell{ii, 2} = nt(kk,:); % nucleotide
-            output_seq_cell{ii, 3} = nt2aa(nt(kk,:), 'ACGTOnly', 'false'); % amino_acid
+            output_seq_cell{ii, 3} = nt2aa(nt(kk,:), 'ACGTOnly', 'false', 'AlternativeStartCodons', 'false'); % amino_acid
         end;
         clear nt;
     end;
@@ -170,7 +170,7 @@ function count_sanger_sequence(seq_array, title_string)
 
     % Draw the sequence logo. 
     if num_codes<1000, 
-        aa_seq_array = nt2aa(seq_array, 'ACGTOnly', false);
+        aa_seq_array = nt2aa(seq_array, 'ACGTOnly', false, 'AlternativeStartCodons', 'false');
         seqlogo(aa_seq_array);
     end;
 return;

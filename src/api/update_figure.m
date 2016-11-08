@@ -104,9 +104,10 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 figure(data.f(4)); my_imagesc(data.im{4});
                 colormap gray; 
                 axis off; my_title('DIC', data.index, 'data', data);
-                clear first_channel_im second_channel_im im_3 ratio_im;
+                clear first_channel_im second_channel_im ratio_im;
             end
             figure(data.f(3)); save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
+		 clear im_3;
 
         case 'FLIM',
             first_channel_im = preprocess(data.im{1}, data);
