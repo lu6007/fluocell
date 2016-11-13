@@ -17,9 +17,9 @@ if ~success,
 else
     data.success = 1;
 end;
+
 % Use ~ only if MATLAB 2009b (version 7.9) or later
 % if verLessThan('matlab', '7.9'), do not use ~
-% else use '~'
 
 [~, prefix,postfix] = fileparts(file); 
 data.path = path;
