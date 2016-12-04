@@ -13,6 +13,7 @@ default_value = {'draggable',1}; % 'draggable', 'undraggable', etc
 % For compatibility
     if ~iscell(this_poly),
         num_polygons = 1;
+        num_objects = 1;
         temp{1} = this_poly; clear this_poly;
         this_poly = temp;
     else

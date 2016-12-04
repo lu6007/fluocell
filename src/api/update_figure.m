@@ -200,7 +200,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image),
-                    draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', 'draggable');
+                if isfield(data, 'quantify_roi') && data.quantify_roi == 1,
+                    polygon_type = 'draggable';
+                else
+                    % Note that drawing draggable polygons are very slow
+                    % (0.7sec/image), while undraggable polygons are much faster (<0.01
+                    % sec/image). So use undraggable polygons whenever
+                    % possible. 
+                    polygon_type = 'undraggable'; 
+                end;
+                draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', polygon_type);
             end;  
         end;
 

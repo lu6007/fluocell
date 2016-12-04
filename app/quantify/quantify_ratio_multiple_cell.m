@@ -44,6 +44,9 @@ for i = 1:num_images,
     % Load image and calulate ratio
     file{1} = regexprep(data.first_file, data.index_pattern{1}, index_i);
     temp = imread(strcat(data.path, file{1}));
+    if ~exist(strcat(data.path, 'output/'), 'dir'),
+        mkdir(strcat(data.path, 'output/'));
+    end;
     bg_file = strcat(data.path, 'output/background_', index_i, '.mat');
     data.bg_bw = get_background(temp, bg_file, 'method', 'auto');
     im{1} = preprocess(temp, data); clear temp;
@@ -97,7 +100,9 @@ for i = 1:num_images,
     end; % if manual_select
     clear temp;
     % display ob
-    display_boundary(label, 'im', [], 'color', 'k', 'show_label', 1, 'new_figure', 0);
+    if max(max(label))>0,
+        display_boundary(label, 'im', [], 'color', 'k', 'show_label', 1, 'new_figure', 0);
+    end; 
    
     for j = 1:num_rois,
         mask = double(label==j);
@@ -114,7 +119,10 @@ for i = 1:num_images,
         % CFP intensity > 1000; FRET intensity > 1000 and <=40000 to
         % exclude intensity saturated cells
         % mCherry intensity > 5000 to allow sufficient expression and overcoming autofluorescence. 
-        if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>5000, % && fi3>7000, 
+        % if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>5000, % && fi3>7000, 
+        % cytosolic mCherry >5000
+        % mCherry-Lck>500 
+         if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>500, 
             num_cells = num_cells+1;
             ratio_value(num_cells,1) = rr;
             intensity_value(num_cells,1) = fi1;

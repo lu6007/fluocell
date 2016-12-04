@@ -26,13 +26,15 @@ index2 = abs(residual)>2*std(residual);
 index = index1 | index2;
 % figure; plot(index, '+');
 
+index = index1; 
+
 outlier = excludedata(xdata, ydata, 'indices', index);
 fit3 = fit(xdata, ydata, line, 'StartPoint', [1 1], 'Exclude', outlier);
 
 figure; hold on;
 plot(fit1, 'r-', xdata, ydata, 'k.', outlier,'m*');
 plot(fit3, 'c--'); 
-axis([4000 35000 0.2 0.38]);
+axis auto;
 
 end
 

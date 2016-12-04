@@ -2,6 +2,8 @@
 my_color = get_my_color();
 
 %% Feedback Model, the effect of triggering KDMS/histone ratio
+% Feedback: phosphorylation recruits KDMS
+% No Feedback: phosphorylation does not recruit KDMS
 data = model_init_data('with_feedback');
 nk = [1; 2; 5; 10; 25; 50; 100];
 %nk = [1; 2; 5; 10; 25; 50; 100; 150; 200];
@@ -20,6 +22,16 @@ end;
 my_figure('handle', 11, 'font_size', 24, 'line_width', 3); hold on;
 plot(time(index), methyl(index,:), 'LineWidth', 3);
 xlabel('Time (min)'); ylabel('Methylation Level');
+title('Feedback Model: Triggering KDMS/Histone Ratio');
+legend(strcat(num2str(nk), 'K:6M'));
+
+phos = zeros(num_points, num_sims);
+for i = 1:num_sims,
+    phos(:,i) = res{i}.phosphorylation;
+end;
+my_figure('handle', 12, 'font_size', 24, 'line_width', 3); hold on;
+plot(time(index), phos(index,:), 'LineWidth', 3);
+xlabel('Time (min)'); ylabel('Phosphorylation Level');
 title('Feedback Model: Triggering KDMS/Histone Ratio');
 legend(strcat(num2str(nk), 'K:6M'));
 
@@ -44,6 +56,16 @@ my_figure('handle', 13, 'font_size', 24, 'line_width', 3); hold on;
 plot(time(index), methyl(index,:), 'LineWidth', 3);
 xlabel('Time (min)'); ylabel('Methylation Level');
 title('No Feedback: Triggering KDMS/Histone Ratio');
+legend(strcat(num2str(nk), 'K:6M'));
+
+phos = zeros(num_points, num_sims);
+for i = 1:num_sims,
+    phos(:,i) = res{i}.phosphorylation;
+end;
+my_figure('handle', 14, 'font_size', 24, 'line_width', 3); hold on;
+plot(time(index), phos(index,:), 'LineWidth', 3);
+xlabel('Time (min)'); ylabel('Phosphorylation Level');
+title('Feedback Model: Triggering KDMS/Histone Ratio');
 legend(strcat(num2str(nk), 'K:6M'));
 
 % %% Feedback Model, the effect of max KDMS/histone ratio

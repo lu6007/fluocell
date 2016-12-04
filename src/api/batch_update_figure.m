@@ -109,7 +109,7 @@ else %Parallel processing enabled.
 end %End of batch data processing and collection of data output.
 
 %%
-if ~isempty(temp_index),
+if exist('temp_index','var'),
     data.index = temp_index; % return data.index to the initial value for consistency.
 end;
 return;

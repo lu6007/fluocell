@@ -17,6 +17,106 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;     
+    case '1122_wt1',
+        data.path = 'G:\20161122\JCam_LckWT_LckBS\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:96)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_wt2',
+        data.path = 'G:\20161122\JCam_LckWT_LckBS2\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:98)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_wt3',
+        data.path = 'G:\20161122\JCam_LckWT_LckBS3\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:80)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_yf1',
+        data.path = 'G:\20161122\JCam_LckYF_LckBS\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:97)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_yf2',
+        data.path = 'G:\20161122\JCam_LckYF_LckBS2\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:91)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_yf3',
+        data.path = 'G:\20161122\JCam_LckYF_LckBS3\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:99)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+
+        
+        % F
+        
     case 'wt_1030',
         %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
         data.path = 'E:\data\2016\rongxue_1030\20161030_WT\';
