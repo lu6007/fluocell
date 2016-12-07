@@ -1,10 +1,12 @@
-% model relation between methylation and phosphorylation
+% Model the relation between methylation and phosphorylation,
+% assuming methylation drives phosphorylation. 
+%
 % function result = methyl_phospho_model(data, varargin)
 % para_name = {'num_kdms', 'a1', 'a2'};
 % para_default = {data.num_kdms, data.a(1), data.a(2)};
 %
 % Example:
-% >> data = model_init_data('with_feedback');
+% >> data = model_init_data('with_recruit');
 % >> res = methyl_phospho_model(data);
 % >> my_figure(11); hold on;
 % >> plot(res.time, res.methylation);
@@ -15,11 +17,12 @@
 
 function result = methyl_phospho_model(data, varargin)
 para_name = {'num_kdms', 'max_kdms', 'a1', 'a2'};
-para_default = {data.num_kdms, data.max_kdms, data.a(1), data.a(2)};
+para_default = {data.num_mols, data.max_mols, data.a(1), data.a(2)};
 [num_kdms, max_kdms, a1, a2] = parse_parameter(para_name, ...
     para_default, varargin);
 
-data.num_kdms = num_kdms;
+data.num_mols = num_kdms;
+data.max_mols = max_kdms;
 num_histones = data.num_histones;  % 6M 60000; % 60M
 
 h3k9 = ones(num_histones, 1);
@@ -30,13 +33,13 @@ time = (tspan(1): step: tspan(2))';
 num_time_steps = size(time, 1);
 y = zeros(num_time_steps, 3);
 ss = 0;
-% num_kdms is the different between the 
+% num_kdms is the difference between the 
 % number of KDMs and methyltransferase. 
 % h3k9 = 1 --- methylated; 0 --- demethylated
 % h3s10 = 1 --- phosphorylated;  0 --- dephosphorylated
 num_kdms = -num_kdms;
 for i = 1:num_time_steps,
-    [ss, num_kdms] = state(time(i),ss, num_kdms, data);
+    [ss, num_kdms] = model_state(time(i),ss, num_kdms, data);
     if num_kdms>0, % There are more KDMs
         index = find(h3k9==1, num_kdms);
         h3k9(index) = 0; 
@@ -75,16 +78,3 @@ result.methylation = y(:,1);
 result.phosphorylation = y(:,2);
 return;
 
-
-function [s, num_kdms] = state(t, s, num_kdms, data)
-% s = 0, for 0<=t<=dt1, mitosis starts
-% s = 1, for t>dt1, exit mitosis
-tt = mod(t, data.dt(2));
-if tt<=data.dt(1) && s == 0,
-    s = 1; 
-    num_kdms = data.num_kdms;
-elseif tt>data.dt(1) && tt<=data.dt(2) && s == 1, 
-    s = 0;
-    num_kdms = -data.num_kdms;
-end;
-return;

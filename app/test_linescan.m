@@ -1,11 +1,11 @@
-% function test_linescan_0119() 
+% function test_linescan() 
 % Detect the locations of two sister chromosomes
 % Rotate the chromsomes so that they are horizontally oriented
 % Calculate the linescan ratio values in the horizontal direction.
 % Copyright: Shaoying (Kathy) Lu, shaoying.lu@gmail.com 2/18/2016
 
-function test_linescan_0119()
-data.path = 'D:/sof/data/linescan/';
+function test_linescan()
+data.path = 'D:/sof/data/fluocell_dataset2/linescan/';
 data.first_file = '11.057';
 data.index_pattern = {'057', '%03d'};
 data.channel_pattern = {'11.0', '12.0', '13.0'};
@@ -27,7 +27,7 @@ my_color = get_my_color();
 first_fret_file = strcat(data.path, data.first_file);
 % frames before 62 were not detected well. 
 start_i = 62;
-for i = start_i:67, % 62-67
+for i = start_i:66, % 62-67
     % read images and preprocess
     index_i = sprintf(data.index_pattern{2}, i);
     fret_file = regexprep(first_fret_file, data.index_pattern{1}, index_i);
@@ -67,7 +67,7 @@ for i = start_i:67, % 62-67
     plot(cc(:,1), cc(:,2), 'y','LineWidth', 1.5);
     [value, pixel] = get_horizontal_linescan(ratio_value, new_center, 'mask', bw_rotate);
      
-%     figure(11); hold on; 
+   % figure(11); hold on; 
     my_figure('handle', 11); hold on; 
     xlabel('Distance to Center (Pixel)'); ylabel('FRET/ECFP Ratio');
     x1 =(pixel<100)&(value>min_value );
@@ -90,8 +90,7 @@ for i = start_i:67, % 62-67
     plot3_color(dist1, (t1-60), value(x1), 'width', 0.3);
     plot3_color(dist2, (t2-60), value(x2), 'width', 0.3);
     shading interp; colormap jet;
-    
-    
+      
 end % for i = 62:65, 
 
 return;

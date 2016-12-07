@@ -15,7 +15,8 @@ if ~isempty(handle),
 else % isempty(handle)
     handle = figure('color', 'w'); 
 end
-clf; 
+% Kathy --- 12/4/2016 comment clf to allow figures to hold on; 
+% clf; 
 set(gca, 'LineWidth', lw);
 set(gca, 'FontName', 'Arial', 'FontSize', fs, 'FontWeight', 'bold', 'Box', 'off');
 % set(findall(gcf,'type','text'),'FontSize',12,'FontName','Arial', 'Fontweight', 'bold');
