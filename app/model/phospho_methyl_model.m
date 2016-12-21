@@ -24,21 +24,23 @@ para_default = {data.a(1), data.a(2), 0, data.b};
     para_default, varargin);
 
 max_mols = data.max_mols;
-num_histones = data.num_histones;  % 6M 60000; % 60M
-max_methyl_plus = 200;
+num_histones = data.num_histones;  % 60M 60000; 
+max_methyl_plus = 2000;
 
 tspan =[-50, 200]; %[-100; 800]; % min
-step =  1/2.5; % 24s %1.0/10;            % 6s 
+step =  1/5; % 12s %1.0/10;            % 6s 
 time = (tspan(1): step: tspan(2))';
 num_time_steps = size(time, 1);
 
 % Initializaton
 phospho = 0; % phosphorylated H3S10
-phospho_plus = 50; % kinase = 50K 
-phospho_minus = 50; % phospotas
+% The kinase is 5 times of KDMs in interphase and
+% 16 time of KDMs in mitosis
+phospho_plus = 500; % kinase = 500K; 
+phospho_minus = 500; % phospotas
 methyl = num_histones/2; % methylated H3K9
-methyl_minus = 10 ; % demethylase
-methyl_plus = 10; % methyltransferase
+methyl_minus = 100 ; % demethylase
+methyl_plus = 100; % methyltransferase
 
 % Prepare the integer model system
 y = zeros(6, num_time_steps);
@@ -68,7 +70,7 @@ data.step = step;
 ss = 0;
 for i = 1:num_time_steps-1,
     data.time_i = time(i);
-    data.y_i = y(:,i:num_time_steps);
+    data.y_i = y(:, i);
     [ss, data] = model_state(ss, data);
     c([2 5]) = data.c([2 5]);
     %
@@ -96,7 +98,7 @@ return;
 % function [s, num_mols] = model_state(t, s, num_mols, data)
 % Determine the state of the model and the number of triggering molecules
 % s = 0, for t<=0, interphase
-% s = 1, for 0<t<=dt1, mitosis starts
+% s = 1, for t>0, mitosis starts
 % s = 2, for t>dt1, exit mitosis
 % Outside these time frames, the model state and number of triggering molecules remain unchained. 
 function [s, data] = model_state(s, data)
@@ -109,20 +111,30 @@ max_time_phospho = data.max_time_phospho;
 more_methyl = data.more_methyl;
 
 tt = mod(t, data.dt(2)); % make tt>=0 && tt<data.dt(2)
-if tt>0 && tt<=data.dt(1) && s==0,
+if s ==0 && tt>0 && tt<data.dt(1), 
+    % mitosis starts
+    % kinase and methyltransferace both increase
     s = 1; 
     c(2)  = c(2)+ data.num_mols;
     c(5) = c(5) + more_methyl;
-elseif time_phospho < max_time_phospho && s == 1,
-    data.time_phospho = time_phospho + y(1,1)*step;
-elseif time_phospho >= max_time_phospho && s ==1,
+elseif s==1 && time_phospho < max_time_phospho ,
+    time_phospho = time_phospho + y(1)*step;
+elseif s==1 && time_phospho >= max_time_phospho, 
+    % When the total phosphorylation accumulates for a certain period of time,
+    % mitosis ends. Kinase decreases and methyltransferace increase more
     s = 2;
-    data.time_phospho = 0;
-    c(2) = c(2) - 2*data.num_mols;
-elseif y(4)>= data.num_histones/2 && s ==2,
+    time_phospho = time_phospho +y(1)*step;
+    c(2) = c(2) - 1.5*data.num_mols;
+    c(5) = c(5) + more_methyl;
+elseif s==2 && y(4)>= data.num_histones/2, 
+    % When the methylation level recovers, interphase starts.
+    % Kinase and mehtyltransferace level recover to the interphase baseline.  
     s = 0;
-    c(5) = c(5) - more_methyl;
+    time_phospho = 0; 
+    c(2) = c(2) - 0.5*data.num_mols;
+    c(5) = c(5) - 2*more_methyl;
 end;
 data.c = c;
+data.time_phospho = time_phospho;
 return;
 

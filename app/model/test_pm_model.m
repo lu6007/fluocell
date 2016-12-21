@@ -5,7 +5,8 @@ my_color = get_my_color();
 % Recruit: phosphorylation recruits KDMS
 % No Recruit: phosphorylation does not recruit KDMS
 data = model_init_data('phospho_with_recruit');
-b = [1; 0.5; 0.4; 0.3; 0.2];
+inhibitor = [0; 0.6; 0.7; 1];
+b = 1-inhibitor;
 num_sims = length(b);
 res = cell(num_sims,1);
 for i = 1:num_sims,
@@ -22,8 +23,8 @@ end;
 my_figure('handle', 11, 'font_size', 24, 'line_width', 3); hold on;
 plot(time(index), methyl(index,:), 'LineWidth', 3);
 xlabel('Time (min)'); ylabel('Methylation Level (K Residual)');
-title('Phosphorylaton Drives Methylation: Kinase Strength');
-legend(strcat(num2str(b*100), '%'));
+title('Inhibitor Strength');
+legend(strcat(num2str(100*inhibitor), '%'));
 %
 phospho = zeros(num_points, num_sims);
 for i = 1:num_sims,
@@ -32,5 +33,5 @@ end;
 my_figure('handle', 12, 'font_size', 24, 'line_width', 3); hold on;
 plot(time(index), phospho(index,:), 'LineWidth', 3);
 xlabel('Time (min)'); ylabel('Phospho Level (K Residual)');
-title('Phosphorylaton Drives Methylation: Kinase Strength');
-legend(strcat(num2str(b*100), '%'));
+title('Inhibitor Strength');
+legend(strcat(num2str(100*inhibitor), '%'));

@@ -1,15 +1,15 @@
 function data = model_init_data( name )
 switch name,
     case 'phospho_with_recruit',
-        data.num_histones = 6000; % 6000K histone
-        data.a(1) = 0.01; % phosphorylation repels methyltransferase
-        data.a(2) = 0.03;  % phosphorylation recruit demethylase
-        data.num_mols = 200; % 200K kinase binds to h3s10 during mitosis
-        data.max_mols = 400; % 400k aurora b kinase 
+        data.num_histones = 60000; % 6000K histone
+        data.a(1) = 0.003; % phosphorylation repels methyltransferase
+        data.a(2) = 0.01;  % phosphorylation recruit demethylase
+        data.num_mols = 1500; % 1.5M more kinase binds to h3s10 during mitosis
+        data.max_mols = 4000; % 4M aurora b kinase 
         data.b = 1; % the strength of kinase; 
         data.max_time_phospho = 40 * data.num_histones;  %max phosphorylation for 40 min
-        data.more_methyl = 50; % 50K methyltransferase binds interacts with h3k9 during mitosis
-        data.dt(1) = 55; % min, time to exit mitosis; enter mitosis at 0 min
+        data.more_methyl = 150; % 150K methyltransferase binds interacts with h3k9 during mitosis
+        data.dt(1) = 45; % min, time to exit mitosis; enter mitosis at 0 min
         data.dt(2) = 300; % min, cell cycle duration
 
     case 'with_feedback',
