@@ -8,7 +8,7 @@ p = 'D:\doc\paper\2016\yijia_0830\data\ts12\';
 data_file = strcat(p, 'output\', 'data.mat');
 load(data_file);
 
-% data.image_index = (1:50:124);
+%data.image_index = (1:10:124);
 data.image_index = (1:124);
 data = init_figure(data);
 
@@ -32,7 +32,8 @@ for i = data.image_index,
     fret = preprocess(data.im{1}, data);
     cfp = preprocess(data.im{2}, data);
     % image translation
-    new_cfp = imtranslate(cfp, shift, 'FillValues', 0);
+    % i_row and shift(2) give the x-axis; i_col and shift(1) give the y-axis.  
+    new_cfp = imtranslate(cfp, [shift(2) shift(1)], 'FillValues', 0);
     ratio = get_imd_image(fret./new_cfp, fret+new_cfp, 'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
     figure(3); imshow(ratio);
     
