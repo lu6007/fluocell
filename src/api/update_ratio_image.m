@@ -16,13 +16,18 @@ function [data, ratio_im] = update_ratio_image(first_channel_im,...
     
 %% 7/27/2016 Shannon: Quanty optimization so get_imd_image does not run
 % under certain conditions. 
-% i.e. when data.show_figure==0 & save_processed_image==0
+% i.e. when data.show_figure==0 && save_processed_image==0
+    if isfield(data,'save_processed_image') && data.save_processed_image
+        save_processed_image = 1;
+    else
+        save_processed_image = 0;
+    end;
     if ~exist(file, 'file')
-        if ~isfield(data,'show_figure') ...
-            || ( isfield(data,'show_figure') &&  data.show_figure==1 ),
+        if (~isfield(data,'show_figure') ...
+            || ( isfield(data,'show_figure') &&  data.show_figure==1 )) && ~save_processed_image,
             ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
                 'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-        elseif isfield(data, 'save_processed_image') && data.save_processed_image,
+        elseif save_processed_image,
             ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
                 'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
             imwrite(ratio_im, file, 'tiff', 'Compression', 'none');

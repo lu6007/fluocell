@@ -1,4 +1,4 @@
-% Update figures.
+% function data = update_figure(data)
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
