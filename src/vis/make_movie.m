@@ -14,6 +14,11 @@
 % The files for making movie is saved before hand, this function
 % is only used to make movie from existing files.
 % Other parameters include the axis.
+%
+% To label the images with time and descriptive text, first run the above
+% commands and figure out where your would like to put the text. Then
+% specify the info text fields
+% 
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
@@ -21,6 +26,13 @@
 % vis/make_movie and vis/make_movie_2 functions. 
 % The function make_movie_2() make the images and 
 % then assemble them into movies.
+% info.time = info.image_index;
+% info.time_location = [700 100];
+% info.event_location = [700 250];
+% info.has_event(1:4) = 1;
+% info.has_event(5:13) = 2;
+% info.event_text = {'Test1', 'Test2'};
+% movie = make_movie(info);
 
 function my_movie=make_movie(movie_info, varargin)
 parameter_name = {'color_bar', 'movie_name','ratio_bound'};
@@ -81,12 +93,18 @@ for j = 1:num_frames,
     % The insertText function is nice that it inserts directly in to the
     % pixels of an image. Alternatively, any polygon shape can be 
     % inserted using the insertShape function. 
+    % Note insertText may not worker with older versions of MATLAB, 
+    % such as 2014b. 
      if isfield(movie_info, 'time_location'),
-        im_fig = insertText(im, time_location, [num2str(time_f), ' min'], 'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
-        if movie_info.has_event(j),
-            im_fig = insertText(im_fig, event_location, movie_info.event_text{1}, 'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
+        im_fig = insertText(im, time_location, [num2str(time_f), ' min'], ...
+        'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
+        event_j = movie_info.has_event(j);
+        if event_j,
+            im_fig = insertText(im_fig, event_location, movie_info.event_text{event_j}, ...
+            'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
         else
-            im_fig = insertText(im_fig, event_location, movie_name, 'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
+            im_fig = insertText(im_fig, event_location, movie_name, ...
+                'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
         end;
      else
          im_fig = im;
