@@ -18,6 +18,13 @@
 % To label the images with time and descriptive text, first run the above
 % commands and figure out where your would like to put the text. Then
 % specify the info text fields
+% info.time = info.image_index;
+% info.time_location = [700 100];
+% info.event_location = [700 250];
+% info.has_event(1:4) = 1;
+% info.has_event(5:13) = 2;
+% info.event_text = {'Test1', 'Test2'};
+% movie = make_movie(info);
 % 
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
@@ -93,8 +100,9 @@ for j = 1:num_frames,
     % The insertText function is nice that it inserts directly in to the
     % pixels of an image. Alternatively, any polygon shape can be 
     % inserted using the insertShape function. 
-    % Note insertText may not worker with older versions of MATLAB, 
-    % such as 2014b. 
+    % insertText works for in MATLAB 2016b and higher,
+    % but shows a problem with MATLAB 2014b or lower, although
+    % movie making still works. 
      if isfield(movie_info, 'time_location'),
         im_fig = insertText(im, time_location, [num2str(time_f), ' min'], ...
         'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
