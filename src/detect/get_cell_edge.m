@@ -45,9 +45,9 @@ clear bw_image
 bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
 
 
-% if ~isempty(mask_bw),
-%     bw_image = bw_image.*mask_bw;
-% end;
+if ~isempty(mask_bw),
+    bw_image = bw_image.*mask_bw;
+end;
 
 % Lexie and Shirley on 10/13/2015
 % option to have multiple detections

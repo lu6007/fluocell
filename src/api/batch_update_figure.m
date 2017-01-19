@@ -4,7 +4,9 @@
 
 function data = batch_update_figure(data)
 %Store initial index value for later retrieval for consistency.
-temp = data.index;
+if isfield(data,'index'),
+    temp_index = data.index;
+end;
 
 % Compatibility with Quanty.
 if isfield(data, 'ratio'),
@@ -107,5 +109,7 @@ else %Parallel processing enabled.
 end %End of batch data processing and collection of data output.
 
 %%
-data.index = temp; % return data.index to the initial value for consistency.
+if exist('temp_index','var'),
+    data.index = temp_index; % return data.index to the initial value for consistency.
+end;
 return;

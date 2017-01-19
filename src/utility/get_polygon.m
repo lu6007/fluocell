@@ -16,7 +16,7 @@ default_values = {1, 'any', 200,'manual'};
 if ~exist(file_roi,'file'),
     switch method
         case {'manual','m'},
-            h = figure; imagesc(im); title(title_str); hold on;
+            h = figure; imagesc(im); colormap jet; title(title_str); hold on;
                 bw = cell(num_polygons, 1);
                 poly = cell(num_polygons, 1);
                 for j = 1:num_polygons,

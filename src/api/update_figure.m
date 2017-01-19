@@ -1,4 +1,4 @@
-% Update figures.
+% function data = update_figure(data)
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
@@ -107,7 +107,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
                 clear first_channel_im second_channel_im ratio_im;
             end
             figure(data.f(3)); save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
-            clear im_3;
+		 clear im_3;
 
         case 'FLIM',
             first_channel_im = preprocess(data.im{1}, data);
@@ -200,7 +200,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image),
-                    draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', 'draggable');
+                if isfield(data, 'quantify_roi') && data.quantify_roi == 1,
+                    polygon_type = 'draggable';
+                else
+                    % Note that drawing draggable polygons are very slow
+                    % (0.7sec/image), while undraggable polygons are much faster (<0.01
+                    % sec/image). So use undraggable polygons whenever
+                    % possible. 
+                    polygon_type = 'undraggable'; 
+                end;
+                draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', polygon_type);
             end;  
         end;
 

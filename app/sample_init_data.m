@@ -1,10 +1,11 @@
 % initialize data  for the various applications.
 function data = sample_init_data(name, function_name)
-root = '..\..\data\fluocell\';
+% replace the root variable in line 4 with the location of fluocell_data/ folder
+root = 'D:/sof/data/fluocell_sample/';
 switch name,
     case 'src_pax',
         % General parameters
-        data.path = strcat(root, '10_24_08_Src_fret_pax\');
+        data.path = strcat(root, '10_24_08_Src_fret_pax/');
         data.index_pattern = {'001', '%03d'};
         data.image_index = 1:10;
         switch function_name
@@ -12,8 +13,8 @@ switch name,
                 % Making Movie
                 % For the data.first_file, user needs to adjust it to their
                 % own path and file name.
-                data.first_file = 'output\0.3-0.8\ratio001.tiff';
-                data.file_name = strcat(data.path,'output\fret.avi');
+                data.first_file = 'output/0.3-0.8/ratio001.tiff';
+                data.file_name = strcat(data.path,'output/fret.avi');
             %case 'detect_cell',
             case 'batch_detect_cell',
                 % cell detection
@@ -55,8 +56,8 @@ switch name,
                 data.is_cfp_over_fret = 0;
         end; % switch function_name  
 case 'akt_1',
-        data.path = strcat(root, 'PH-Akt-GFP_1\');
-        data.output_path = strcat(data.path, 'output\');
+        data.path = strcat(root, 'PH-Akt-GFP_1/');
+        data.output_path = strcat(data.path, 'output/');
         data.prefix = 'AKT-PH-YFP_PDGF5';
         data.channel_number = 2;
         data.time_pt = 119; % the largest time point in the analysis.

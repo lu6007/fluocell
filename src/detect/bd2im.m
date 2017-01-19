@@ -1,7 +1,8 @@
+% function new_im = bd2im(im, x, y)
 % Calculate the subscribing mask of a given region of interest based on the
 % given boundary and size of the image.
 % This function is the inverse of the function bwboundaries().
-% Output: new_im is a logical matrix of the same size of im.
+% Output: new_im is a logical matrix of the same size as im.
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 

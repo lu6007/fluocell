@@ -2,7 +2,7 @@ function data = quantify_ratio_init_data(exp_name)
 root = 'E:/data/2016/binbin_0217/';
 switch exp_name
     case 'sample',
-        data.path = 'D:/sof/data/quantify/1/';
+        data.path = 'D:/sof/data/fluocell_dataset2/quantify/1/';
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP; 
         data.index_pattern = {'002', '%03d'};
@@ -16,7 +16,179 @@ switch exp_name
         data.alpha = 1.0; % average ratio between channels 1 and 2. 
         % 
         data.subtract_background = 1;
+        data.median_filter = 1;     
+    case '1122_wt1',
+        data.path = 'G:\20161122\JCam_LckWT_LckBS\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:96)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
         data.median_filter = 1;        
+    case '1122_wt2',
+        data.path = 'G:\20161122\JCam_LckWT_LckBS2\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:98)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_wt3',
+        data.path = 'G:\20161122\JCam_LckWT_LckBS3\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:80)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_yf1',
+        data.path = 'G:\20161122\JCam_LckYF_LckBS\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:97)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_yf2',
+        data.path = 'G:\20161122\JCam_LckYF_LckBS2\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:91)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+    case '1122_yf3',
+        data.path = 'G:\20161122\JCam_LckYF_LckBS3\';
+        data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:99)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 0.9;
+        data.min_area = 1000;
+        data.alpha = 0.35; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+
+        
+        % F
+        
+    case 'wt_1030',
+        %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
+        data.path = 'E:\data\2016\rongxue_1030\20161030_WT\';
+        data.first_file = '1_w1CFP-10-_s2_t1.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s2', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(2:60)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 1.2;
+        data.min_area = 1000;
+        data.alpha = 0.25; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+   
+    case 'wt_1030_2',
+        %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
+        data.path = 'E:\data\2016\rongxue_1030\20161030_WT2\';
+        data.first_file = '1_w1CFP-10-_s2_t1.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s2', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:31)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 1.2;
+        data.min_area = 1000;
+        data.alpha = 0.25; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+
+   case 'yf_1030',
+        %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
+        data.path = 'E:\data\2016\rongxue_1030\20161030_YF\';
+        data.first_file = '1_w1CFP-10-_s2_t1.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s2', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:94)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 1.2;
+        data.min_area = 1000;
+        data.alpha = 0.25; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+
+   case 'yf_1030_2',
+        %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
+        data.path = 'E:\data\2016\rongxue_1030\20161030_YF2\';
+        data.first_file = '2_w1CFP-10-_s2_t1.TIF'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'s2', 's%d'};
+        data.channel_pattern= {'w1CFP-10-', 'w2FRET-10-', 'w4mCherry-10--Molly'}; 
+        data.detection = 'auto';
+        data.image_index =(1:55)';
+        data.intensity_bound = [0 20000];
+        data.ratio_bound = [0.2 0.5];
+        data.brightness_factor = 1.2;
+        data.min_area = 1000;
+        data.alpha = 0.25; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;        
+
     case 'rep1_1012',
         data.path = strcat(root, 'try3/1012_2015_rep1/');
         data.first_file = 'PSIN-H31.002'; % FRET channel

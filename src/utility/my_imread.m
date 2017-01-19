@@ -25,7 +25,7 @@ function [im, fun] = my_imread(file_name, data)
                 temp = sum(im,3); clear im;
                 im = temp; clear temp;
             end
-     elseif strcmp(data.image_type,'z-stack'),
+     elseif isfield(data, 'image_type') && strcmp(data.image_type,'z-stack'),
             %try-catch to check for valid user input of the z-index value. -Shannon 8/23/2016
             try
                 im = imread(file_name,data.z_index);

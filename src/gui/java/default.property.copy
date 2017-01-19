@@ -1,0 +1,10 @@
+#Sat May 03 23:48:49 PDT 2014
+matlablocation=C\:\\Program Files\\MATLAB\\2013b\\bin\\matlab.exe
+imageIndexPattern={'t1', 't%d'}
+firstChannelPattern=cfp
+intensityValue=[1 400]
+fretRatioValue=[0.5 1.5]
+secondChannelPattern=fret
+thirdChannelPattern=w3mCherry
+defaultDataLocation=D\:\\sof\\fluocell_4.3\\data\\tracking_ex\\
+fourthChannelPattern=w4DIC1
