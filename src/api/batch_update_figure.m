@@ -4,13 +4,15 @@
 
 function data = batch_update_figure(data)
 %Store initial index value for later retrieval for consistency.
-if isfield(data,'index'),
+if isfield(data,'index')
     temp_index = data.index;
 end;
 
-% Compatibility with Quanty.
-if isfield(data, 'ratio'),
+% Compatibility with previous version of Quanty.
+if isfield(data, 'ratio') && ~iscell(data.ratio)
     data = rmfield(data, 'ratio');
+    data = rmfield(data, 'channel1');
+    data = rmfield(data, 'channel2');
     data = rmfield(data,'time');
     data = rmfield(data, 'cell_size');
 end
@@ -20,9 +22,9 @@ end
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
     % loop through the row vector image_index
-    for i = data.image_index, 
+    for i = data.image_index 
         data.index = i;
-        if  i == data.image_index(1), 
+        if  i == data.image_index(1) 
            data = get_image(data,1);
         else
             data = get_image(data,0);
@@ -50,7 +52,7 @@ else %Parallel processing enabled.
     % Kathy: I feel that multiple object handing should be in some other
     % functions. But we can merge first and see how it goes. 09/13/2016
     num_objects = length(data.ratio);
-    for j = 1:num_objects,
+    for j = 1:num_objects
         %Initialization of temp_data. Interface with variable: data.
         temp_ratio = inf(length(data.ratio{1}),1);
         temp_time = inf(size(data.time));
@@ -71,7 +73,7 @@ else %Parallel processing enabled.
         
         % Kathy: there is a warning which says that the range of parfor
         % has to be consecutive numbers. 09/13/2016
-        parfor i = data.image_index(2:end), 
+        parfor i = data.image_index(2:end) 
             %Update temp_data.index to the new index point based on image_index
             temp_data = data;
             temp_data.index = i;
@@ -109,7 +111,7 @@ else %Parallel processing enabled.
 end %End of batch data processing and collection of data output.
 
 %%
-if exist('temp_index','var'),
+if exist('temp_index','var')
     data.index = temp_index; % return data.index to the initial value for consistency.
 end;
 return;
