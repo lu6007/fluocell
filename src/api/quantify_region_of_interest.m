@@ -161,7 +161,7 @@ switch data.quantify_roi
             c_diff = floor(this_c - data.ref_centroid+0.5);
             if length(data.roi_bw)<num_rois
                 disp('Warning: quantify_region_of_interest - ');
-                disp(sprintf('Reduce data.num_rois to %d', length(data.roi_bw)));
+                fprintf('Reduce data.num_rois to %d\n', length(data.roi_bw));
                 data.num_rois = length(data.roi_bw);
                 num_rois = data.num_rois;
             end;

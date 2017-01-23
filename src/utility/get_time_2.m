@@ -6,8 +6,8 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function time = get_time_2(file)
-    if ~exist(file, 'file'),
-        time = -1; % file not exist
+    if ~exist(file, 'file')
+        time = nan; % file not exist
         return;
     end;
     info = imfinfo(file);
