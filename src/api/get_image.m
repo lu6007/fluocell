@@ -112,7 +112,7 @@ end
 
 clear im_size
 roi_file = strcat(data.output_path, 'roi.mat');
-if isfield(data, 'quantify_roi') && (data.quantify_roi == 1 || data.quantify_roi == 2)
+if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
     if isfield(data, 'num_rois') 
         num_rois = data.num_rois;
     else
