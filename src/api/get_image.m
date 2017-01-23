@@ -156,14 +156,14 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
     end;
     % 02/20/2015
     % Load the ROIs
-    if ~isfield(data,'roi_poly')
+    if ~isfield(data,'roi_poly') && (data.quantify_roi ==1 || data.quantify_roi ==2)
         %im = imread(data.file{1});
         [data.roi_bw, data.roi_poly] = ...
             get_polygon(im, roi_file, 'Please choose the ROI now.', ...
             'polygon_type', 'any', 'num_polygons', num_rois);
         %clear im;
     end;  
-end;
+end; % if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
 
 % Load the mask if needed. 
 % If data.need_apply_mask == 1,2,3, load mask from 'mask.mat', selected
