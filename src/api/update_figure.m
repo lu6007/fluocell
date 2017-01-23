@@ -2,7 +2,11 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function data= update_figure(data)
+function data= update_figure(data, varargin)
+parameter_name = {'save_bw_file'};
+default_value = {0};
+[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
+
 %Lexie on 03/09/2015
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
@@ -15,7 +19,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1));
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{3} = ratio_im;
             
             % Lexie on 3/2/2015
@@ -34,7 +38,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             end
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{4} = ratio_im;
             
             if show_figure_option
@@ -58,7 +62,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             end
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{5} = ratio_im;
             
             if show_figure_option
@@ -76,7 +80,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             % file{4} -> ratio_im -> data.f(1)
             data.im{4} = ratio_im;
 
@@ -93,7 +97,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             im_3 = preprocess(data.im{3}, data);
             % file{5} -> ratio_im -> data.f(1), im{5}
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{5}, data.f(1));
+                data.file{5}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{5} = ratio_im;
 
             if show_figure_option
@@ -115,7 +119,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, flim_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1)); %'update_flim_image');
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file); %'update_flim_image');
             data.im{3} = flim_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
@@ -128,7 +132,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, sted_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1));
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{3} = sted_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
