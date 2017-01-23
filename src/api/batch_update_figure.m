@@ -19,6 +19,7 @@ end
 % data = close_button_callback(data);
 
 %% Option for parallel processing. - Shannon 8/10/2016
+data.parallel_processing = 1;
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
     % loop through the row vector image_index
@@ -29,7 +30,9 @@ if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
         else
             data = get_image(data,0);
         end;
+        %%% Main sub-function %%%
         data = update_figure(data);
+        %%% 
     end;
     
 else %Parallel processing enabled.
@@ -40,7 +43,7 @@ else %Parallel processing enabled.
     %Parallel processing does not update MATLAB figures well, if at all.
     %Hence, data.show_figure is set to 0 to disable figure updates.
     data.show_figure = 0;
-    disp('Function batch_update_figure() warning: fluocell_data.show_figure has been set to 0 for optimized processing.');
+    disp('Function batch_update_figure() warning: fluocell_data.show_figure has been set to 0 for parallel processing.');
 
     %Get the data at the initial time point.
     %get_image() handles the first image differently than the following images.
