@@ -19,7 +19,6 @@ end
 % data = close_button_callback(data);
 
 %% Option for parallel processing. - Shannon 8/10/2016
-data.parallel_processing = 1;
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
     % loop through the row vector image_index
