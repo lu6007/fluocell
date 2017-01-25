@@ -23,16 +23,22 @@ end
 % data = close_button_callback(data);
 
 %% Option for parallel processing. - Shannon 8/10/2016
+% data.parallel_processing = 1; 
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
     % loop through the row vector image_index
+    new_first_file = 1;
     for i = data.image_index 
         data.index = i;
-        if  i == data.image_index(1) 
-           data = get_image(data,1);
-        else
-            data = get_image(data,0);
+        data = get_image(data, new_first_file);
+        if ~isempty(data.im{1})
+            new_first_file = 0;
         end;
+%         if  i == data.image_index(1) 
+%            data = get_image(data,new_first_file);
+%         else
+%             data = get_image(data,0);
+%         end;
         data = update_figure(data, 'save_bw_file', save_bw_file);
     end;
     
@@ -62,8 +68,6 @@ else %Parallel processing enabled.
         temp_time = inf(size(data.time));
         temp_channel1 = inf(length(data.channel1{1}),1);
         temp_channel2 = inf(length(data.channel2{1}),1);
-%         temp_channel1_bg = inf(size(data.channel1_bg));
-%         temp_channel2_bg = inf(size(data.channel2_bg));
         temp_channel1_bg = inf(size(data.image_index(end), 1));
         temp_channel2_bg = inf(size(data.image_index(end), 1));
 
@@ -72,10 +76,8 @@ else %Parallel processing enabled.
         temp_time(1) = data.time(1);
         temp_channel1(1) = data.channel1{j}(1);
         temp_channel2(1) = data.channel2{j}(1);
-%         temp_channel1_bg(1,:) = data.channel1_bg(1,:);
-%         temp_channel2_bg(1,:) = data.channel2_bg(1,:);
-            temp_channel1_bg(1) = data.channel1_bg(1);
-            temp_channel2_bg(1) = data.channel2_bg(1);
+        temp_channel1_bg(1) = data.channel1_bg(1);
+        temp_channel2_bg(1) = data.channel2_bg(1);
 
 
         %loop through the row vector image_index
@@ -103,8 +105,6 @@ else %Parallel processing enabled.
             temp_time(i) = temp_data.time(i);
             temp_channel1(i) = temp_data.channel1{j}(i);
             temp_channel2(i) = temp_data.channel2{j}(i);
-%             temp_channel1_bg(i,:) = temp_data.channel1_bg(i,:);
-%             temp_channel2_bg(i,:) = temp_data.channel2_bg(i,:);
             temp_channel1_bg(i) = temp_data.channel1_bg(i);
             temp_channel2_bg(i) = temp_data.channel2_bg(i);
 

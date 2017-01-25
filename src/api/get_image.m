@@ -22,6 +22,7 @@ index_str = sprintf(data.index_pattern{2}, data.index);
 if new_first_file
     data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
+end;
     
     %When viewing z-stacks: (i.e. organoids)
     %Alternative possible optimization to try-catch in my_imread() for checking 
@@ -33,11 +34,10 @@ if new_first_file
 %        data.num_z_indices = length(file_info);
 %     end
     % - Shannon 8/23/2016
-else
-    num_matching = length(regexp(data.first_file, data.index_pattern{1}));
-    data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
-        index_str, num_matching);
-end;
+num_matching = length(regexp(data.first_file, data.index_pattern{1}));
+data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
+    index_str, num_matching);
+
 if exist(data.file{1}, 'file')
     im = imread(data.file{1});
 else
@@ -118,10 +118,8 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
     else
         num_rois = 1;
     end;
-    % Lexie on 03/02/2015 default size might unavailable for long time
-    % experiments
-    % Lexie on 03/11, change the name temp to be num_points and also use
-    % max instead of length as Kathy suggested
+    % The default length of the column vectors is either 200 or 
+    % max(data.image_index) if it is more than 200. 
     if ~isfield(data,'ratio') || new_first_file  
         if ~isfield(data, 'image_index') || max(data.image_index) <= 200
             num_points = 200;
@@ -129,21 +127,19 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
             num_points = max(data.image_index);
         end
                 
-        % Change all the initial data strcuture to be cells to fit the
+        % Change all the initial data strcuture to cells for the
         % multiple tracking and multiple layer functions
-            data.time = Inf*ones(num_points, 2);
-            
-            % data.ratio{num_objects, 1}(num_frames, num_rois)
-            data.ratio{1} = Inf*ones(num_points, num_rois);
-            data.cell_size{1} = Inf*ones(num_points, 1);
-            
-            data.channel1{1} = Inf*ones(num_points, num_rois);
-            data.channel2{1} = Inf*ones(num_points, num_rois);
-            data.channel1_bg = Inf*ones(num_points, 1);
-            data.channel2_bg = Inf*ones(num_points, 1);
-
         % two column for time
         % one columns for value
+            data.time = nan*ones(num_points, 2);
+            
+            data.ratio{1} = nan*ones(num_points, num_rois);
+            % data.cell_size{1} = nan*ones(num_points, 1);
+            
+            data.channel1{1} = nan*ones(num_points, num_rois);
+            data.channel2{1} = nan*ones(num_points, num_rois);
+            data.channel1_bg = nan*ones(num_points, 1);
+            data.channel2_bg = nan*ones(num_points, 1);
     end;
     % if there is a cropped image, load the image and ROI on the cropped
     % one, Lexie on 02/20/2015
@@ -154,7 +150,7 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
         im_crop = imcrop(im, data.rectangle);clear im; 
         im = im_crop; clear im_crop;
     end;
-    % 02/20/2015
+    
     % Load the ROIs
     if ~isfield(data,'roi_poly') && (data.quantify_roi ==1 || data.quantify_roi ==2)
         %im = imread(data.file{1});
@@ -216,15 +212,6 @@ switch data.protocol
         for i = 1:2
             % slow version
             data.im{i} = my_imread(data.file{i}, data);
-            
-%             % fast version, Kathy 08/06/2016
-%             if exist(data.file{i}, 'file'),
-%                 data.im{i} = imread(data.file{i});
-%             else
-%                 display(sprintf('%s : %s\n', file_name, 'This file does not exist!'));
-%                 data.im{i} = []; 
-%             end;
-
         end;
         % ratio_image_file and file_type
        fret_file = get_fret_file(data, data.file{1});
