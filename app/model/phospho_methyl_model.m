@@ -68,7 +68,7 @@ data.c = c;
 data.time_phospho = 0;
 data.step = step;
 ss = 0;
-for i = 1:num_time_steps-1,
+for i = 1:num_time_steps-1
     data.time_i = time(i);
     data.y_i = y(:, i);
     [ss, data] = model_state(ss, data);
@@ -81,8 +81,8 @@ end;
 
 % Plot results
 lw = 3;
-if show_figure,
-    for j = 1:6,
+if show_figure
+    for j = 1:6
         my_figure('handle', j); hold on; 
         plot(time, y(j,:)', 'LineWidth', lw); 
         xlabel('Time (min)'); ylabel(strcat('Y --- ', num2str(j)));

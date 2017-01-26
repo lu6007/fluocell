@@ -2,21 +2,21 @@
 function data = sample_init_data(name, function_name)
 % replace the root variable in line 4 with the location of fluocell_data/ folder
 root = 'D:/sof/data/fluocell_sample/';
-switch name,
-    case 'src_pax',
+switch name
+    case 'src_pax'
         % General parameters
         data.path = strcat(root, '10_24_08_Src_fret_pax/');
         data.index_pattern = {'001', '%03d'};
         data.image_index = 1:10;
         switch function_name
-            case 'make_movie',
+            case 'make_movie'
                 % Making Movie
                 % For the data.first_file, user needs to adjust it to their
                 % own path and file name.
                 data.first_file = 'output/0.3-0.8/ratio001.tiff';
                 data.file_name = strcat(data.path,'output/fret.avi');
             %case 'detect_cell',
-            case 'batch_detect_cell',
+            case 'batch_detect_cell'
                 % cell detection
                 data.first_cfp_file = '2-11.001';
                 data.cfp_channel = {'2-11'};
@@ -33,7 +33,7 @@ switch name,
                 % data.pax_cbound = [0 2000];
                 data.yfp_cbound = [0 5000];
             %case 'detect_fa',
-            case 'batch_detect_fa',
+            case 'batch_detect_fa'
                 % FA detection
                 data.subtract_background = 1;
                 data.median_filter = 1;
@@ -55,7 +55,8 @@ switch name,
                 % data.num_fans = 1;
                 data.is_cfp_over_fret = 0;
         end; % switch function_name  
-case 'akt_1',
+
+case 'akt_1'
         data.path = strcat(root, 'PH-Akt-GFP_1/');
         data.output_path = strcat(data.path, 'output/');
         data.prefix = 'AKT-PH-YFP_PDGF5';
@@ -69,6 +70,11 @@ case 'akt_1',
         data.subtract_background = 1;
         data.median_filter = 1;
         data.crop_image = 1;
+        
+case 'tracking_ex'
+        % General parameters
+        data.path = strcat(root, 'tracking_ex/');
+        data.first_file = strcat(data.path, 'cfp_t1.tif');
         
 end; % switch name (cell_name)
 return;
