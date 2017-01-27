@@ -25,9 +25,9 @@ default_value = {1,2,4, 5, 1, 0};
     default_value, varargin);
 
 %data = init_data(cell_name);
-data_file = strcat(data.path, 'output\data.mat');
-if remove_data && exist(data_file, 'file'),
-    delete(data_file);
+result_file = strcat(data.path, 'output\result.mat');
+if remove_data && exist(result_file, 'file')
+    delete(result_file);
 end;
 
 %data = init_data(cell_name);
@@ -51,9 +51,9 @@ else
     num_images = max(image_index);
 end;
 
-if ~exist(strcat(data.path, 'output/data.mat'), 'file'),
+if ~exist(result_file, 'file')
 
-    for k = 2:num_acquisitions,
+    for k = 2:num_acquisitions
         num_images = num_images+max(image_index{k});
     end;
     cell_bw = cell(num_images, 1);
@@ -74,8 +74,8 @@ if ~exist(strcat(data.path, 'output/data.mat'), 'file'),
     yfp_channel = data.yfp_channel;
     pax_channel = data.pax_channel;
     ii = 0; % frame index
-    for k = 1:num_acquisitions,
-        if multiple_cell_name,
+    for k = 1:num_acquisitions
+        if multiple_cell_name
             path = data.path_all{k};
             first_cfp_file = data.first_cfp_file_all{k};
             this_image_index = image_index{k};
@@ -190,7 +190,7 @@ if ~exist(strcat(data.path, 'output/data.mat'), 'file'),
         clear path first_cfp_file this_image_index
     end; % k num_acquisitions
     time_ba = zeros(2,1);
-    for j = 1:2,
+    for j = 1:2
         if multiple_cell_name,
             k = data.pdgf_between_frame(j, 1);
             i = data.pdgf_between_frame(j,2);
@@ -212,18 +212,18 @@ if ~exist(strcat(data.path, 'output/data.mat'), 'file'),
         pdgf_time = 0.5*(time_ba(1)+time_ba(2));
     end;
 
-    if save_file,
+    if save_file
         index = data.index;
-        save(strcat(data.path, 'output/data.mat'), 'time', 'ratio_in_fa', 'ratio_out_fa', ...
+        save(result_file, 'time', 'ratio_in_fa', 'ratio_out_fa', ...
             'average_intensity_fa', 'total_pax_intensity', 'total_intensity_fa',...
             'portion_pixel_fa', 'pdgf_time');
     end;
-else % if exist data.mat
-    load(strcat(data.path, 'output/data.mat'));
-end; % if exist data.mat
+else % if exist result_file
+    load(result_file);
+end; % if exist result_file
 
 % remove some nodes
-if multiple_cell_name,
+if multiple_cell_name
     all_index = cell2mat(data.index);
     % something wrong here with multiple index.
 else
@@ -240,11 +240,11 @@ total_intensity_fa = temp; clear temp;
 temp =  portion_pixel_fa(all_index); clear portion_pixel_fa;
 portion_pixel_fa = temp; clear temp;
 
-if isfield(data, 'shift'),
+if isfield(data, 'shift')
     n = length(average_intensity_fa);
-    for i = 1:length(data.shift),
+    for i = 1:length(data.shift)
         j = find(data.index ==data.shift(i));
-        if has_fret,
+        if has_fret
             ratio_in_fa(j-1:n) = fix_shift (ratio_in_fa(j-1:n));
             ratio_out_fa(j-1:n) = fix_shift(ratio_out_fa(j-1:n));
         end;

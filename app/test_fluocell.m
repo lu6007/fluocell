@@ -16,7 +16,7 @@ temp = sample_init_data('src_pax','');
 % After a successful run, rung
 % >> data = fluocell_data;
 % >> save(strcat(data.path, 'output/data.mat'), 'data');
-data_file = strcat(data.path, 'output/data.mat');
+data_file = strcat(temp.path, 'output/data.mat');
 res = load(data_file);
 data = res.data;
 data.path = temp.path;
@@ -49,7 +49,7 @@ single_cell_analyzer('akt_1',data);
 if enable_pause, pause; end
 close all; clear data;
 
-%% o   2.3.1   FRET ANALYSIS- Tracking Cells and Regions of Interest********
+%% o   2.3.1   FRET ANALYSIS- Tracking Cells and Regions of Interest ********
 % temp = sample_init_data('src_pax','');
 % data_file = strcat(temp.path, 'output/data.mat');
 % res = load(data_file);
@@ -57,9 +57,11 @@ close all; clear data;
 temp = sample_init_data('tracking_ex', '');
 data_file =strcat(temp.path, 'output/data.mat');
 res = load(data_file);
-data = res.data;
+data = res.data; 
 data.path = temp.path;
+data.output_path = strcat(data.path, 'output/');
 data.first_file = strcat(data.path, 'cfp_t1.tif');
+save(data_file, 'data');
 %
 batch_update_figure(data);
 if enable_pause, pause; end
@@ -77,5 +79,5 @@ clear data;
 cell_name = 'src_pax';
 data = sample_init_data(cell_name, 'batch_detect_fa');
 batch_detect_fa(cell_name, data);
-compute_fa_property(cell_name, data, 'remove_data', 1, 'save_file', 1);      
+compute_fa_property(cell_name, data, 'remove_data', 0, 'save_file', 0);      
       
