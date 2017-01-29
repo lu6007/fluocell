@@ -7,7 +7,7 @@
 
 %%For each part, please right click and choose "Evaluate current section"
 %%or use ctrl+enter.
-enable_pause = 1;
+enable_pause = 0;
 
 %% o   2.1.1  FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images   **********
 % p = strcat(root, 'fluocell_sample/');
