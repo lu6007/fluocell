@@ -122,24 +122,24 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
     % max(data.image_index) if it is more than 200. 
     if ~isfield(data,'ratio') || new_first_file  
         if ~isfield(data, 'image_index') || max(data.image_index) <= 200
-            num_points = 200;
+            num_frame = 200;
         elseif isfield(data, 'image_index') && max(data.image_index) > 200
-            num_points = max(data.image_index);
+            num_frame = max(data.image_index);
         end
                 
         % Change all the initial data strcuture to cells for the
         % multiple tracking and multiple layer functions
         % two column for time
         % one columns for value
-            data.time = nan*ones(num_points, 2);
+            data.time = nan*ones(num_frame, 2);
             
-            data.ratio{1} = nan*ones(num_points, num_rois);
-            % data.cell_size{1} = nan*ones(num_points, 1);
+            data.ratio{1} = nan*ones(num_frame, num_rois);
+            % data.cell_size{1} = nan*ones(num_frame, 1);
             
-            data.channel1{1} = nan*ones(num_points, num_rois);
-            data.channel2{1} = nan*ones(num_points, num_rois);
-            data.channel1_bg = nan*ones(num_points, 1);
-            data.channel2_bg = nan*ones(num_points, 1);
+            data.channel1{1} = nan*ones(num_frame, num_rois);
+            data.channel2{1} = nan*ones(num_frame, num_rois);
+            data.channel1_bg = nan*ones(num_frame, 1);
+            data.channel2_bg = nan*ones(num_frame, 1);
     end;
     % if there is a cropped image, load the image and ROI on the cropped
     % one, Lexie on 02/20/2015
