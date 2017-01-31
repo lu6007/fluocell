@@ -10,14 +10,15 @@
 % intensity_base = 50;
 
 % Hela-WT1 t1, t5, t9
-root = 'E:\data\2014\qin_peng\';
-p = '1111\WTH3K9\3\p2\dconv9\';
+% root = 'E:\data\2014\qin_peng\';
+% p = '1111\WTH3K9\3\p2\dconv9\';
+p = strcat(root, 'fig5/1111_h3k9_3/p2/dconv9/');
 z_dist = 1.0*15; % 1um *15 pixel/um
 image_index = (11:31)';
 iso_value = 450;%550;
 surface_file = 't1surface';
 intensity_base = 1.0e-4;
-ratio_bound = [0.5 2.5]; 
+ratio_bound = [0.5 3.5]; 
 ratio_factor = 1.5; % ratio_factor = (ratio_bound(1)+ratio_bound(2))/2;
 % for t5 and t9, run after running this seciton
 % >> data.first_file = strcat(data.path, 't5FRET1.001');
@@ -26,9 +27,12 @@ ratio_factor = 1.5; % ratio_factor = (ratio_bound(1)+ratio_bound(2))/2;
 % >> isovalue = 200;
 
 save_image = 0; % save images for movie
-data_file = strcat(root, p, 'output\data.mat');
-if exist(data_file, 'file'),
+data_file = strcat(p, 'output\data.mat');
+if exist(data_file, 'file')
     load(data_file);
+    data.path = p;
+    data.first_file = strcat(p, 't1FRET_z01.tif');
+    save(data_file, 'data');
 else
     data = fluocell_data;
     save(data_file, 'data');
@@ -45,7 +49,7 @@ num_frames = length(image_index);
 fret_im = zeros(nsize(1), nsize(2), num_frames);
 cfp_im = zeros(size(fret_im));
 
-for i = 1:num_frames, 
+for i = 1:num_frames 
     j = image_index(i);
     j_str = sprintf(data.index_pattern{2}, j);
     file_name = regexprep(data.first_file, data.index_pattern{1}, j_str);
@@ -63,10 +67,10 @@ intensity_im = 1/(1+ratio_factor)*fret_im+ratio_factor/(1+ratio_factor)*cfp_im;
 intensity_bound = [1 1023];
 
 %% output files for 3dview(?)
-for i = 1:num_frames,
+for i = 1:num_frames
     j = image_index(i);
     j_str = sprintf(data.index_pattern{2},j);
-    file_name = strcat(root, p, 'output/im_rgb_',j_str,'.tiff');
+    file_name = strcat(p, 'output/im_rgb_',j_str,'.tiff');
     temp = floor(0.5+imscale(intensity_im(:,:,i), 1, 255, intensity_bound));
     im_red = ind2rgb(temp, gray(255)); clear temp;
     temp = floor(0.5+imscale(ratio_im(:,:,1), 1, 255, ratio_bound));
@@ -79,19 +83,30 @@ for i = 1:num_frames,
     imwrite(im_rgb, file_name, 'tiff', 'Compression', 'none');  
     clear j_str file_name im_red im_green im_blue im_rgb;
 end;
-display('red - intensity; green - ratio; blue - z_index');
-display(strcat('z_dist = ', num2str(z_dist), '; 15 pixels - 1 um'));
-display(strcat('intensity_bound = ', num2str(intensity_bound)));
-display(strcat('ratio_bound = ', num2str(ratio_bound)));
+disp('red - intensity; green - ratio; blue - z_index');
+disp(strcat('z_dist = ', num2str(z_dist), '; 15 pixels - 1 um'));
+disp(strcat('intensity_bound = ', num2str(intensity_bound)));
+disp(strcat('ratio_bound = ', num2str(ratio_bound)));
 
 %% Calculate the ISO surface
 [xx, yy, zz] = meshgrid(1:nsize(2), 1:nsize(1), (1:num_frames)*z_dist); % 15 pixel/micron in z-plane
 screen_size = get(0, 'ScreenSize');
-fig = figure('Position', [1 1 screen_size(4) screen_size(4)], ...
+fig = figure('Position', [50 50 screen_size(4) screen_size(4)], ...
     'color', 'w');
 isosurface(xx, yy, zz, intensity_im, iso_value, ratio_im);
 caxis(ratio_bound); shading interp; colormap jet;
 axis tight; xlabel('x-pixel'); ylabel('y-pixel'); zlabel('z-pixel');
+camlight right;
+% view(0, 90) standard 2d view. % view(h_rotation, v_rotation);
+% view(180, -90); lightangle(180,-90); view from the bottom
+
+fig = figure('Position', [50 50 screen_size(4) screen_size(4)], ...
+    'color', 'w');
+isosurface(xx/15, yy/15, zz/15, intensity_im, iso_value, ratio_im);
+caxis(ratio_bound); shading interp; colormap jet;
+axis tight; xlabel('x-\mu m'); ylabel('y-\mu m'); zlabel('z-\mu m');
+set(gca, 'FontSize', 24, 'FontWeight', 'Bold');
+set(gca, 'LineWidth', 3);
 camlight right;
 % view(0, 90) standard 2d view. % view(h_rotation, v_rotation);
 % view(180, -90); lightangle(180,-90); view from the bottom
@@ -104,12 +119,12 @@ step_size = 5;
 num_frames = 180/step_size+1; % 25;
 light_handle = lightangle(0, 0);
 
-if save_image,
-    for i = 1:num_frames,
+if save_image
+    for i = 1:num_frames
         %for j = 1:2,
            % if j ==1,
             horizontal_rotation = horizontal_rotation+step_size;
-            if horizontal_rotation >= 180,
+            if horizontal_rotation >= 180
                 horizontal_rotation = horizontal_rotation - 360;
             end;
             vertical_rotation = vertical_rotation - step_size;
@@ -133,7 +148,7 @@ if save_image,
        clear temp cs this_frame i_str file_name;
     end;
 end; % save image
-display('Done!');
+disp('Done!');
 % %% View of the chromesome. 
 % figure; isosurface(x, y, z, fret_im+cfp_im, iso_value, x+z);
 % shading interp;

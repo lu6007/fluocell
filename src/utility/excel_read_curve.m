@@ -42,13 +42,13 @@ for i = 1:num_sheets,
     % only reads the numerical values
     data = xlsread(file_name, sheet_name{i});
     switch method
-    case 1, % read the format time ratio time ratio etc.
+    case 1 % read the format time ratio time ratio etc.
         num_cells = size(data,2)/2;
         exp{i}.num_cells = num_cells;
         exp{i}.name = sheet_name{i};
-         for j =1:num_cells,  
+         for j =1:num_cells  
             num_rows = find(isnan(data(:,j*2-1)),1, 'first')-1;
-            if isempty(num_rows),
+            if isempty(num_rows)
                 time = data(:, j*2-1);
                 value = data(:,j*2);
             else
@@ -61,7 +61,7 @@ for i = 1:num_sheets,
             %end;
             clear time value;
         end;
-    case 2, % read the format time ratio ratio ratio
+    case 2 % read the format time ratio ratio ratio
         exp{i}.name = sheet_name{i};
         exp{i}.time = data(:,1);
         exp{i}.ratio = data(:,2:end);        

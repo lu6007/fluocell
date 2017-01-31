@@ -6,7 +6,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function p = scale_by_magnification(p_old, magnification)
-switch magnification,
+switch magnification
     case 40
       %factor = 10.0/60.0; % used before 2011
       % This would cause the estimated diffusion coefficient to be

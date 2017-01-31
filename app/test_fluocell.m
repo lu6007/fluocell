@@ -24,7 +24,7 @@ data.first_file = strcat(data.path, '2-11.001');
 save(data_file, 'data');
 batch_update_figure(data);
 
-%% o  2.1.2  FRET ANALYSIS- Make Movies   ********* You should ran the 2.1 section first;
+%% o  2.1.2  FRET ANALYSIS- Make Movies   ********* Run the section 2.1.1 first;
 data = sample_init_data('src_pax', 'make_movie');
 make_movie(data); 
 if enable_pause, pause; end
