@@ -12,8 +12,9 @@ switch magnification
       % This would cause the estimated diffusion coefficient to be
       % 10 times smaller than it should have been.
       factor = 1/2.56;
-    case 60 % chien lab
-        factor = 1/3.84;
+    case 60 % chien lab 60x confocal/frap
+        % factor = 1/3.84;
+        factor = 0.114;
     case 100
       %100 times, 60 pixels = 4 um
       %factor = 4.0/60.0; % used before 2011
