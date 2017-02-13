@@ -4,7 +4,11 @@
 % 1/27/2015 Lexie: change all the cfp and yfp to be first_channel_im and
 % second_channel_im;
 function [data, ratio_im] = update_ratio_image(first_channel_im,...
-    second_channel_im, data, file, handle)
+    second_channel_im, data, file, handle, varargin)
+parameter_name = {'save_bw_file'};
+default_value = {0};
+[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
+
     % data.file{3} -> ratio_im -> data.im{3} -> data.f(1)
     if ~exist(file, 'file') || (isfield(data,'quantify_roi') && data.quantify_roi),
 %         if data.is_channel1_over_channel2,
@@ -63,21 +67,23 @@ function [data, ratio_im] = update_ratio_image(first_channel_im,...
             %Modified to enable z-index use in title. See my_title() for further changes. - Shannon 8/24/2016
             axis off; my_title('Intensity Ratio', data.index, 'data', data);
             clear axis_vector;
+    end;
     
-            if isfield(data, 'show_detected_boundary') && data.show_detected_boundary,
-                if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3,
-                    data = show_detected_boundary(data.third_channel_im * 2, data);
-                else
-                    data = show_detected_boundary(first_channel_im + second_channel_im, data);
-                end
-            end;
-            pause(0.001); % pause to force updating the figure;
-    end % option for displaying figure
+    % This part is needed for detecing cell_bw for quantifcation even when
+    % show_figure = 0. 
+    if isfield(data, 'show_detected_boundary') && data.show_detected_boundary,
+        if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3,
+            data = show_detected_boundary(data.third_channel_im * 2, data);
+        else
+            data = show_detected_boundary(first_channel_im + second_channel_im, data);
+        end
+    end;
+    pause(0.001); % pause to force updating the figure;
 
     % quantification of roi
     if isfield(data,'quantify_roi') && data.quantify_roi,
         data = quantify_region_of_interest(data, ratio, first_channel_im,...
-            second_channel_im);
+            second_channel_im, 'save_bw_file', save_bw_file);
     end;
 return;
 

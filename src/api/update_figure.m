@@ -2,42 +2,46 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function data= update_figure(data)
+function data= update_figure(data, varargin)
+parameter_name = {'save_bw_file'};
+default_value = {0};
+[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
+
 %Lexie on 03/09/2015
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
-if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
+if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
-    switch data.protocol,
-        case 'FRET',
+    switch data.protocol
+        case 'FRET'
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1));
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{3} = ratio_im;
             
             % Lexie on 3/2/2015
-            if show_figure_option,
+            if show_figure_option
                 figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
             end
 
             clear first_channel_im second_channel_im ratio_im;
-        case 'FRET-Intensity',
+        case 'FRET-Intensity'
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             im_3 = preprocess(data.im{3}, data);
-            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3,
+            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
                 data.third_channel_im =  im_3;
             end
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{4} = ratio_im;
             
-            if show_figure_option,
+            if show_figure_option
                 figure(data.f(2)); my_imagesc(second_channel_im); 
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
@@ -48,20 +52,20 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             clear first_channel_im second_channel_im im_3 ratio_im;
 
-        case 'FRET-Intensity-2',
+        case 'FRET-Intensity-2'
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             im_3 = preprocess(data.im{3}, data);
             im_4 = preprocess(data.im{4}, data);
-            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3,
+            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
                 data.third_channel_im =  im_3;
             end
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{5} = ratio_im;
             
-            if show_figure_option,
+            if show_figure_option
                 figure(data.f(2)); my_imagesc(second_channel_im); 
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
@@ -72,31 +76,31 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             clear first_channel_im second_channel_im im_3 im_4 ratio_im;
 
-        case 'FRET-DIC',
+        case 'FRET-DIC'
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             % file{4} -> ratio_im -> data.f(1)
             data.im{4} = ratio_im;
 
-            if show_figure_option,
+            if show_figure_option
                 figure(data.f(2)); my_imagesc(second_channel_im); 
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(data.im{3});
                 colormap gray; 
                 axis off; my_title('DIC', data.index, 'data', data);
             end
-        case 'FRET-Intensity-DIC',
+        case 'FRET-Intensity-DIC'
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             im_3 = preprocess(data.im{3}, data);
             % file{5} -> ratio_im -> data.f(1), im{5}
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{5}, data.f(1));
+                data.file{5}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{5} = ratio_im;
 
-            if show_figure_option,
+            if show_figure_option
                 figure(data.f(2)); my_imagesc(second_channel_im); 
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
                 figure(data.f(3)); my_imagesc(im_3);
@@ -109,26 +113,26 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             figure(data.f(3)); save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
 		 clear im_3;
 
-        case 'FLIM',
+        case 'FLIM'
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, flim_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1)); %'update_flim_image');
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file); %'update_flim_image');
             data.im{3} = flim_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
             axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
-         case 'STED',
+         case 'STED'
             first_channel_im = preprocess(data.im{1}(:,:,1), data);
             second_channel_im = preprocess(data.im{2}(:,:,3), data);
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, sted_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1));
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{3} = sted_im;
        
             figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
@@ -136,7 +140,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
             clear first_channel_im second_channel_im ratio_im;
 
-       case 'Intensity',
+       case 'Intensity'
             second_channel_im = data.im{1};
             figure(data.f(1)); imagesc(second_channel_im); 
             axis off; my_title('Intensity',data.index, 'data', data);
@@ -144,17 +148,17 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             figure(data.f(2)); my_imagesc(data.im{2}); 
             axis off; my_title('Processed',data.index, 'data', data);
 
-            if isfield(data, 'show_detected_boundary') && data.show_detected_boundary,
+            if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
                 data = show_detected_boundary(data.im{2}, data); 
             end;
             
-             if isfield(data,'quantify_roi') && data.quantify_roi,
+             if isfield(data,'quantify_roi') && data.quantify_roi
                 data = quantify_region_of_interest(data, data.im{2});
             end;
 
              figure(data.f(2)); save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
              clear second_channel_im;
-        case 'Intensity-DIC',
+        case 'Intensity-DIC'
             figure(data.f(1)); my_imagesc(data.im{1}); 
             axis off; my_title('Intensity',data.index, 'data', data);
             figure(data.f(2)); 
@@ -168,13 +172,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
             axis off; my_title('Processed',data.index, 'data', data);
 
             %show_detected_boundary(data.im{3}, data, data.f(3));
-            if isfield(data,'quantify_roi') && data.quantify_roi,
+            if isfield(data,'quantify_roi') && data.quantify_roi
                 data = quantify_region_of_interest(data, data.im{3});
             end;
             
              figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
              % The allows saving DIC images
-             if isfield(data, 'save_processed_image') && data.save_processed_image == 2,
+             if isfield(data, 'save_processed_image') && data.save_processed_image == 2
                  figure(data.f(2)); save_image(data, data.file{5}, data.im{2}, caxis);
              end;
                 
@@ -183,7 +187,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
     % Lexie on 03/02/2015
     % Draw the background region
     if show_figure_option
-        if isfield(data, 'subtract_background') && data.subtract_background,
+        if isfield(data, 'subtract_background') && data.subtract_background
             figure(data.f(1)); hold on; 
     %         file_name = strcat(data.output_path, 'background.mat');
             % locate the right path for bg
@@ -199,8 +203,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
     % will be displayed
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
-                    ~data.crop_image),
-                if isfield(data, 'quantify_roi') && data.quantify_roi == 1,
+                    ~data.crop_image)
+                if isfield(data, 'quantify_roi') && data.quantify_roi == 1
                     polygon_type = 'draggable';
                 else
                     % Note that drawing draggable polygons are very slow
@@ -215,8 +219,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f'),
 
     end
 else
-    display('Function update_figure warning: ');
-    display('Please load the images or check the range of index.')
+    disp('Function update_figure warning: ');
+    disp('Please load the images or check the range of index.')
 end; % if isfield(data, 'im'),
 return;
 
@@ -226,7 +230,7 @@ function my_imagesc(im)
 temp = caxis;
 axis_vector = axis;
 clf;
-if temp(1) ==0 && temp(2) ==1,
+if temp(1) ==0 && temp(2) ==1
     imagesc(im); 
 else
     imagesc(im, temp);
@@ -241,10 +245,10 @@ para_default = {'gray'};
 my_color_map = parse_parameter(para_name, para_default, varargin);
 
 if ~exist(file, 'file') &&...
-    isfield(data, 'save_processed_image')&& data.save_processed_image,                
+    isfield(data, 'save_processed_image')&& data.save_processed_image                
     temp = imscale(im, 0, 1, caxis);
-    switch my_color_map,
-        case 'gray',
+    switch my_color_map
+        case 'gray'
             imwrite(temp, file, 'tiff','compression', 'none');
         case 'jet'
             clear im;

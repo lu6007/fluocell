@@ -1,4 +1,4 @@
-# fluocell
+# fluocell-current
 Fluocell: A Software Package for Analysis and Visualization of Fluorescence Image of Live Cells
 
 Fluocell is a software package for the analysis and visualization of fluorescence images of live cells, with applications in 

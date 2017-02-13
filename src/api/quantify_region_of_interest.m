@@ -23,23 +23,23 @@ default_value = {0};
 %w/o show_figure field
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 % Process data.quantify_roi
-switch data.quantify_roi,
-    case 0, % Do not quantify ROI
-        display('Warning: function quantify_region_of_interest - data.quantify_roi = 0');
+switch data.quantify_roi
+    case 0 % Do not quantify ROI
+        disp('Warning: function quantify_region_of_interest - data.quantify_roi = 0');
         return;
-    case 1, % Quantify ROI without tracking cells
+    case 1 % Quantify ROI without tracking cells
         roi_type = 'draggable';
-    case 2, % 2 - Quantify ROI with tracking
+    case 2 % 2 - Quantify ROI with tracking
         roi_type = 'undraggable';
-    case 3, % 3 - Quantify subcellular regions without ROI, but with tracking
+    case 3 % 3 - Quantify subcellular regions without ROI, but with tracking
         roi_type = 'no roi';
 end;
 
 % When data.quantify_roi = 1 or 2
 % data.quantify_roi =1: only one roi which can be manually moved around
 % data.quantify_roi = 2: more than 1 roi which can only be automatically tracked.  
-if data.quantify_roi == 1 || data.quantify_roi ==2,
-    if isfield(data,'num_rois'),
+if data.quantify_roi == 1 || data.quantify_roi ==2
+    if isfield(data,'num_rois')
         num_rois = data.num_rois;
     else
         num_rois = 1;
@@ -49,29 +49,29 @@ end;
 % Multiple layers for multiple rois and
 % tracking
 %elseif data.quantify_roi == 3,
-if isfield(data, 'num_layers'),
+if isfield(data, 'num_layers')
     num_layers = data.num_layers;
 else
     num_layers = 1;
 end;
 %end;
 % 
-if nargin == 2,
+if nargin == 2
     cfp = ratio;
     yfp = ratio;
 end;
 
 % Get cell_bw
-if data.quantify_roi == 2 || data.quantify_roi == 3,
+if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
     if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
-            isfield(data, 'cell_bw'),
+            isfield(data, 'cell_bw')
         cell_bw = data.cell_bw;
     else 
         % detect the cell shape (this part should be moved too)
         % use the centroid of the cell to move the regions of interest
         im = cfp + yfp;
-        if isfield(data, 'need_apply_mask') && data.need_apply_mask,
+        if isfield(data, 'need_apply_mask') && data.need_apply_mask
             temp = uint16(im).*uint16(data.mask); clear im;
             im = temp; clear temp;
         end;
@@ -135,8 +135,8 @@ if data.quantify_roi == 2 || data.quantify_roi == 3,
 end; % if data.quantify_roi ==2 || data.quantify_roi ==3,
 
 % Get roi_bw
-switch data.quantify_roi,
-    case 1, % not track cell
+switch data.quantify_roi
+    case 1 % not track cell
         roi_bw = data.roi_bw;
         roi_poly = data.roi_poly;
         % Since there is no cell_bw file, calculate the num_rois based on
@@ -144,30 +144,30 @@ switch data.quantify_roi,
         % if ~exist('cell_bw', 'var')
             num_rois = length(roi_bw);
         % end
-        if isfield(data,'need_apply_mask') && data.need_apply_mask ==4,
-            for i = 1:num_rois,
+        if isfield(data,'need_apply_mask') && data.need_apply_mask ==4
+            for i = 1:num_rois
                 roi_bw{i} = roi_bw{i}.*data.mask;
             end;
         end;
-    case 2, % move roi while tracking cell
+    case 2 % move roi while tracking cell
         % use the centroid of the cell to track rois
         prop = regionprops(obj{1});
-        if ~isfield(data, 'ref_centroid'), % reference location
+        if ~isfield(data, 'ref_centroid') % reference location
             data.ref_centroid = prop.Centroid;
             roi_bw = data.roi_bw;
             roi_poly = data.roi_poly;
         else % shift roi_bw and roi_poly
             this_c = prop.Centroid;
             c_diff = floor(this_c - data.ref_centroid+0.5);
-            if length(data.roi_bw)<num_rois,
-                display('Warning: quantify_region_of_interest - ');
-                display(sprintf('Reduce data.num_rois to %d', length(data.roi_bw)));
+            if length(data.roi_bw)<num_rois
+                disp('Warning: quantify_region_of_interest - ');
+                fprintf('Reduce data.num_rois to %d\n', length(data.roi_bw));
                 data.num_rois = length(data.roi_bw);
                 num_rois = data.num_rois;
             end;
             roi_bw = cell(num_rois, 1);
             roi_poly = cell(num_rois, 1);
-            for i = 1:min(num_rois, length(data.roi_bw)),
+            for i = 1:min(num_rois, length(data.roi_bw))
                 % shift bw by c_diff
                 bw_shift = circshift(data.roi_bw{i}, [c_diff(2), c_diff(1)]);
                 roi_bw{i} = bw_shift.*cell_bw;  % multiply by cell_bw to make sure ratio is calculated inside detected object
@@ -178,7 +178,7 @@ switch data.quantify_roi,
         end; % if ~isfield(data, 'ref_centroid')
         num_rois = length(data.roi_bw);
     % Lexie on 12/10/2015, change the roi data structure to fit mutiple tracking and multiple layers situation   
-    case 3, %switch data.quantify_roi,
+    case 3 %switch data.quantify_roi,
         [roi_poly, label_layer] = divide_layer(obj, num_layers, 'method',2, ...
             'xylabel', 'normal');
         % figure; imagesc(label_layer);
@@ -186,7 +186,7 @@ switch data.quantify_roi,
         num_rois = length(obj);
         roi_bw = cell(num_rois, num_layers); 
         for j = 1 : num_rois
-            for i = 1 : num_layers,
+            for i = 1 : num_layers
                roi_bw{j, i} = (label_layer{j} == i);
             end;
         end
@@ -209,36 +209,36 @@ end
 
 %% Modified the following for loop to shrink area of quantification. - Shannon 8/4/2016
 for i = 1 : num_rois
-    for j = 1:num_layers,
+    for j = 1:num_layers
         %Modified to try to shrink the area that needs to be computed. - Shannon 8/4/2016
-%         data.ratio{j}(data.index, i) = compute_average_value(ratio, roi_bw{j,i});
-%         data.channel1{j}(data.index, i) = compute_average_value(cfp, roi_bw{j,i});
-%         data.channel2{j}(data.index, i) = compute_average_value(yfp, roi_bw{j,i});
+        data.ratio{i}(data.index, j) = compute_average_value(ratio, roi_bw{i,j});
+        data.channel1{i}(data.index, j) = compute_average_value(cfp, roi_bw{i,j});
+        data.channel2{i}(data.index, j) = compute_average_value(yfp, roi_bw{i,j});
 
-        %BoundingBox retrieves the upper left coordinates and the 
-        %length and width of a rectangle bounding the region of interest.
-        stat = regionprops(roi_bw{i,j},'BoundingBox');
-        %Use fix to ensure values are greater than 0, but less than the max value.
-        boundingBox = fix(stat.BoundingBox - 1) + 1; %[x_ul,y_ul,x_width,y_width]
-        %Shrink the widths in case the BoundingBox is the entire width of the image.
-        boundingBox(3:4) = boundingBox(3:4)-1;
-        %Calculating coordinates of the bottom right corner.
-        brCorner = [boundingBox(1) + boundingBox(3), boundingBox(2) + boundingBox(4)];%[x_br,y_br]
-        yBound = boundingBox(2):brCorner(2); %y_ul:y_br
-        xBound = boundingBox(1):brCorner(1); %x_ul:x_br
-        %Using (yBound,xBound) since the image's matrix is stored as (col,row) 
-        %i.e. (y-reversed,x) instead of (x,y).
-        boundedRoiBw = roi_bw{i,j}(yBound,xBound);
-        
-        data.ratio{i}(data.index, j) = compute_average_value(ratio(yBound,xBound), boundedRoiBw);
-        data.channel1{i}(data.index, j) = compute_average_value(cfp(yBound,xBound), boundedRoiBw);
-        data.channel2{i}(data.index, j) = compute_average_value(yfp(yBound,xBound), boundedRoiBw);
+%         %BoundingBox retrieves the upper left coordinates and the 
+%         %length and width of a rectangle bounding the region of interest.
+%         stat = regionprops(roi_bw{i,j},'BoundingBox');
+%         %Use fix to ensure values are greater than 0, but less than the max value.
+%         boundingBox = fix(stat.BoundingBox - 1) + 1; %[x_ul,y_ul,x_width,y_width]
+%         %Shrink the widths in case the BoundingBox is the entire width of the image.
+%         boundingBox(3:4) = boundingBox(3:4)-1;
+%         %Calculating coordinates of the bottom right corner.
+%         brCorner = [boundingBox(1) + boundingBox(3), boundingBox(2) + boundingBox(4)];%[x_br,y_br]
+%         yBound = boundingBox(2):brCorner(2); %y_ul:y_br
+%         xBound = boundingBox(1):brCorner(1); %x_ul:x_br
+%         %Using (yBound,xBound) since the image's matrix is stored as (col,row) 
+%         %i.e. (y-reversed,x) instead of (x,y).
+%         boundedRoiBw = roi_bw{i,j}(yBound,xBound);
+%         
+%         data.ratio{i}(data.index, j) = compute_average_value(ratio(yBound,xBound), boundedRoiBw);
+%         data.channel1{i}(data.index, j) = compute_average_value(cfp(yBound,xBound), boundedRoiBw);
+%         data.channel2{i}(data.index, j) = compute_average_value(yfp(yBound,xBound), boundedRoiBw);
     end;
 end
 %%
     
 % quantify background
-if isfield(data, 'subtract_background') && data.subtract_background,
+if isfield(data, 'subtract_background') && data.subtract_background
 %     data.channel1_bg(data.index) = compute_average_value(cfp, data.bg_bw);
 %     data.channel2_bg(data.index) = compute_average_value(yfp, data.bg_bw);
 % matrix didn't match, Lexie on 02/19/2015

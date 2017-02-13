@@ -1,5 +1,6 @@
 % function data=show_detected_boundary(im, data)
-% This function add the boundary to the image and save the detected boundary
+% This function detect the mask of the cell (data.cell_bw), 
+% and add the boundary to the image and save the detected boundary
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
 function data=show_detected_boundary(im, data)
