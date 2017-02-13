@@ -18,3 +18,5 @@ in micro-patterned live cells.
 
 Email Contact Shaoying (Kathy) Lu : shaoying.lu@gmail.com
 
+Version: 6.0.0
+
