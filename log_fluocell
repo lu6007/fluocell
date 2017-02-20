@@ -1,0 +1,55 @@
+Version 6.0.0 - 02/14/2017:
+    Modify the phospho/methylation model for Qin's paper
+    Instruction on how to save DIC images
+    Added the description of fluocell data structure.
+    Minor changes
+    Corrections for quanty/test_fig4.m and test_fig5.m
+    Bug fix
+    Corrections for test_fluocell.m
+    Modifications for test_fluocell.m
+    Fixed the ROI problem for subcellular quantification.
+    Added save_bw_file parameter to update_figure()
+    Bug fix for parallel_processing and data.quantify_roi =3
+    Fixing the problem when show_figure = 0
+    Fixing the problem when show_figure = 0
+    Allow plotting index-time as a broken line with missing images.
+    Additional bug fix for figure 4
+
+Previous Version:
+01/18/2017
+    Bug fix for Quanty and User's Guide
+    Added comments to the make_movie file
+    switch x and y axis of translation
+    Added the test_align_image.m file, and scale factor of 60, minor bug fix
+    Modified the phospho methyl model and added the domo ppt
+    added phosphorylation drives methylation model'
+    fixed the problem of slow quantification speed by files in api/
+    Bug fix for image reading.
+    Bug fix in FRET-Intensity-DIC and sequence analysis
+    Quantification of multi-cell ratio images and robust linear regression
+11/04/2016
+    Allow the FRET-Intensity protocol to save intensity images
+10/24/2016
+    Corrections; moved beta version functions from the User's Guide to the Programmer's Guide
+10/04/2016
+    Allows user supplied mask files by need_apply_mask = 4
+    Improved the User's Guide, Mac compatibility, and bug fixes
+    Updated author list comments.
+    Optimized image processing by using a bounded box to define the region of quantification.
+    Added the z-index to figure titles when 3D viewing is enabled.
+    Checks for correct user input of the z-index when viewing 3D images. Alternative optimization also added to the comments in get_image().
+    Optimized Quanty using parallel processing.
+    Optimized get_imd_image so it does not run under certain conditions.
+    Added a preliminary 3D viewer to the Fluocell GUI.
+    Bug fix for multiple-object quantification and User's Guide.
+    Made compatible with Quanty and enable tracking splitting cells
+    Fixed a bug related to the change of variable name.
+    Changed the Variable name from fluocell_data.multiple_region to fluocell_data.multiple_object
+    Added the mac version of default.property file.
+    Make compatible with Quanty programs
+    options to allow Lei save DIC image
+    Updated the user's guide
+    Improved the gui
+    Moved default.properties to default.property
+    Updated the user's guide
+07/14/2016
