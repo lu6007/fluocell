@@ -7,7 +7,7 @@
 
 %%For each part, please right click and choose "Evaluate current section"
 %%or use ctrl+enter.
-enable_pause = 0;
+enable_pause = 1;
 
 %% o   2.1.1  FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images   **********
 % p = strcat(root, 'fluocell_sample/');
@@ -27,7 +27,11 @@ batch_update_figure(data);
 %% o  2.1.2  FRET ANALYSIS- Make Movies   ********* Run the section 2.1.1 first;
 data = sample_init_data('src_pax', 'make_movie');
 make_movie(data); 
-if enable_pause, pause; end
+pause_str = 'test_fluocell: paused. Press any key to close current figures and continue.';
+if enable_pause
+    disp(pause_str);
+    pause; 
+end
 close all; clear data; 
 
 %% o   2.2.1  INTENSITY ANALYSIS-Polarity Analysis*********
@@ -39,14 +43,20 @@ data.path = temp.path;
 data.first_file = strcat(data.path, '2-11.001');
 save(data_file, 'data');
 batch_update_figure(data);
-if enable_pause, pause; end
+if enable_pause
+    disp(pause_str);
+    pause; 
+end
 close all; clear data;
 
 %% o   2.2.2  INTENSITY ANALYSIS-Polarity Analysis*********
 cell_name = 'akt_1';
 data = sample_init_data(cell_name);
 single_cell_analyzer('akt_1',data);
-if enable_pause, pause; end
+if enable_pause
+    disp(pause_str);
+    pause; 
+end
 close all; clear data;
 
 %% o   2.3.1   FRET ANALYSIS- Tracking Cells and Regions of Interest ********
@@ -64,7 +74,10 @@ data.first_file = strcat(data.path, 'cfp_t1.tif');
 save(data_file, 'data');
 %
 batch_update_figure(data);
-if enable_pause, pause; end
+if enable_pause
+    disp(pause_str);
+    pause; 
+end
 close all; 
 
 %% o   2.3.2   FRET ANALYSIS- FA Detection and Subcellular Quantification ***** 

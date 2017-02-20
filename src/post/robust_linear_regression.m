@@ -14,13 +14,13 @@
 %      Coefficients (with 95% confidence bounds):
 %        a =      0.2497  (0.2297, 0.2698)
 %        b =   1.585e-06  (3.2e-07, 2.851e-06)
-function fit3 = robust_linear_regression(xdata, ydata)
+function [fit3, goodness, output] = robust_linear_regression(xdata, ydata)
 line = fittype('a+b*x');
-[fit1, gof,fitinfo] = fit(xdata, ydata, line, 'StartPoint', [1 1]);
+[fit1, ~ ,fitinfo] = fit(xdata, ydata, line, 'StartPoint', [1 1]);
 residual = fitinfo.residuals;
 % Exclude outliers with a residual of 2*std in both x and y directions. 
 index1 = abs(residual)>2*std(residual);
-[fit2, gof, fitinfo] = fit(ydata, xdata, line, 'StartPoint', [1 1]);
+[~, ~, fitinfo] = fit(ydata, xdata, line, 'StartPoint', [1 1]);
 residual = fitinfo.residuals;
 index2 = abs(residual)>2*std(residual);
 index = index1 | index2;
@@ -29,7 +29,8 @@ index = index1 | index2;
 index = index1; 
 
 outlier = excludedata(xdata, ydata, 'indices', index);
-fit3 = fit(xdata, ydata, line, 'StartPoint', [1 1], 'Exclude', outlier);
+[fit3, goodness, output] = fit(xdata, ydata, line, 'StartPoint', [1 1], 'Exclude', outlier);
+output.outlier = outlier;
 
 figure; hold on;
 plot(fit1, 'r-', xdata, ydata, 'k.', outlier,'m*');

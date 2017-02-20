@@ -12,6 +12,7 @@
 % Hela-WT1 t1, t5, t9
 % root = 'E:\data\2014\qin_peng\';
 % p = '1111\WTH3K9\3\p2\dconv9\';
+root = 'D:/doc/paper/2016/fluocell_1221/quanty_dataset_2/';
 p = strcat(root, 'fig5/1111_h3k9_3/p2/dconv9/');
 z_dist = 1.0*15; % 1um *15 pixel/um
 image_index = (11:31)';
