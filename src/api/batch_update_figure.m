@@ -22,8 +22,15 @@ if isfield(data, 'ratio') && ~iscell(data.ratio)
 end
 % data = close_button_callback(data);
 
+if isfield(data,'multiple_object') && data.multiple_object == 1
+   save_bw_file = 1; 
+   disp('Function batch_update_figure() warning: save_bw_file has been set to 1 for multiple object tracking.');
+end
+
 %% Option for parallel processing. - Shannon 8/10/2016
 % data.parallel_processing = 1; 
+
+% When parallel processing is disabled.
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
     % loop through the row vector image_index
@@ -61,11 +68,14 @@ else %Parallel processing enabled.
     %Multiple object handling in case there is more than one cell in an image.
     % Kathy: I feel that multiple object handing should be in some other
     % functions. But we can merge first and see how it goes. 09/13/2016
+    %This only works if new cells do not enter/exit the viewing area.
     num_objects = length(data.ratio);
     for j = 1:num_objects
         %Initialization of temp_data. Interface with variable: data.
         temp_ratio = inf(length(data.ratio{1}),1);
-        temp_time = inf(size(data.time));
+        %problem with time not being NaN
+%         temp_time = inf(size(data.time));
+        temp_time = nan(size(data.time));
         temp_channel1 = inf(length(data.channel1{1}),1);
         temp_channel2 = inf(length(data.channel2{1}),1);
         temp_channel1_bg = inf(size(data.image_index(end), 1));
@@ -73,7 +83,8 @@ else %Parallel processing enabled.
 
         %Collect the data at the initial time point.
         temp_ratio(1) = data.ratio{j}(1);
-        temp_time(1) = data.time(1);
+%         temp_time(1) = data.time(1);
+        temp_time(1,:) = data.time(1,:);
         temp_channel1(1) = data.channel1{j}(1);
         temp_channel2(1) = data.channel2{j}(1);
         temp_channel1_bg(1) = data.channel1_bg(1);
@@ -84,7 +95,7 @@ else %Parallel processing enabled.
         
         % Kathy: there is a warning which says that the range of parfor
         % has to be consecutive numbers. 09/13/2016
-        parfor i = data.image_index(2:end) 
+        for i = data.image_index(2:end) 
 %         for i = data.image_index(2:end)
             %Update temp_data.index to the new index point based on image_index
             temp_data = data;
@@ -102,13 +113,16 @@ else %Parallel processing enabled.
             
             %Collect the data output.
             temp_ratio(i) = temp_data.ratio{j}(i);
-            temp_time(i) = temp_data.time(i);
+            temp_time(i,:) = temp_data.time(i,:);
             temp_channel1(i) = temp_data.channel1{j}(i);
             temp_channel2(i) = temp_data.channel2{j}(i);
             temp_channel1_bg(i) = temp_data.channel1_bg(i);
             temp_channel2_bg(i) = temp_data.channel2_bg(i);
 
         end % parfor i = data.image_index(2:end),
+%         for k = 1 : num_rois
+%             temp_ratio{k}(temp_ratio{k} == 0) = NaN;
+%         end
         %Collect the data output.
         data.ratio{j} = temp_ratio;
         data.channel1{j} = temp_channel1;
@@ -127,4 +141,13 @@ end %End of batch data processing and collection of data output.
 if exist('temp_index','var')
     data.index = temp_index; % return data.index to the initial value for consistency.
 end;
+    
+%Modify output w/ simpletracker() to get more accurate tracks.
+%Output data in the same format so that compute_time_course() can plot.
+if isfield(data, 'multiple_object') && data.multiple_object
+    data = multiple_object.postprocessing(data);
+    coordInfo = multiple_object.getCoord(data);
+    data = multiple_object.simpletracking(data, coordInfo);
+end
+
 return;
