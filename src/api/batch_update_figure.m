@@ -18,13 +18,13 @@ if isfield(data, 'ratio') && ~iscell(data.ratio)
     data = rmfield(data, 'channel1');
     data = rmfield(data, 'channel2');
     data = rmfield(data,'time');
-    data = rmfield(data, 'cell_size');
+    % data = rmfield(data, 'cell_size');
 end
 % data = close_button_callback(data);
 
 if isfield(data,'multiple_object') && data.multiple_object == 1
    save_bw_file = 1; 
-   disp('Function batch_update_figure() warning: save_bw_file has been set to 1 for multiple object tracking.');
+   disp('Function batch_update_figure warning: save_bw_file has been set to 1 for multiple object tracking.');
 end
 
 %% Option for parallel processing. - Shannon 8/10/2016
@@ -41,11 +41,6 @@ if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
         if ~isempty(data.im{1})
             new_first_file = 0;
         end;
-%         if  i == data.image_index(1) 
-%            data = get_image(data,new_first_file);
-%         else
-%             data = get_image(data,0);
-%         end;
         data = update_figure(data, 'save_bw_file', save_bw_file);
     end;
     
@@ -72,14 +67,14 @@ else %Parallel processing enabled.
     num_objects = length(data.ratio);
     for j = 1:num_objects
         %Initialization of temp_data. Interface with variable: data.
-        temp_ratio = inf(length(data.ratio{1}),1);
+        temp_ratio = nan(length(data.ratio{1}),1);
         %problem with time not being NaN
 %         temp_time = inf(size(data.time));
         temp_time = nan(size(data.time));
-        temp_channel1 = inf(length(data.channel1{1}),1);
-        temp_channel2 = inf(length(data.channel2{1}),1);
-        temp_channel1_bg = inf(size(data.image_index(end), 1));
-        temp_channel2_bg = inf(size(data.image_index(end), 1));
+        temp_channel1 = nan(length(data.channel1{1}),1);
+        temp_channel2 = nan(length(data.channel2{1}),1);
+        temp_channel1_bg = nan(size(data.image_index(end), 1));
+        temp_channel2_bg = nan(size(data.image_index(end), 1));
 
         %Collect the data at the initial time point.
         temp_ratio(1) = data.ratio{j}(1);
@@ -128,7 +123,7 @@ else %Parallel processing enabled.
         data.channel1{j} = temp_channel1;
         data.channel2{j} = temp_channel2;
         clear temp_ratio temp_channel1 temp_channel2
-    end;
+    end; %for j = 1:num_objects
     %Output the collected data from temp_data back to data.
     data.time = temp_time;
     data.channel1_bg = temp_channel1_bg;

@@ -106,12 +106,6 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
             end
         end
     end;
-    % compute cell size
-%     for i = 1 : length(cell_bw)
-%         data.cell_size{data.index, i} = sum(sum(double(cell_bw)));
-%     end
-    % Compute the cell size based on the new cell data structure, Lexie on
-    % 12/16/2015
     [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_objects = length(cell_bd);

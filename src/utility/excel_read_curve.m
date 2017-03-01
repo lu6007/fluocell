@@ -13,8 +13,8 @@
 % ......
 %
 % Output: A cell of structure called exp
-% exp = cell(num_sheets,1)
-% exp{i}.num_cells
+% exp = cell(num_sheet,1)
+% exp{i}.num_cell
 % exp{i}.name
 % exp{i}.cell(j).time
 % exp{i}.cell(j).value 
@@ -36,24 +36,25 @@ method = parse_parameter(parameter_name, default_value, varargin);
 
 % The Name of the sheets describes the types of experiments
 [~, sheet_name] = xlsfinfo(file_name); 
-num_sheets = length(sheet_name);
-exp = cell(num_sheets, 1);
-for i = 1:num_sheets,
+num_sheet = length(sheet_name);
+exp = cell(num_sheet, 1);
+for i = 1:num_sheet
     % only reads the numerical values
     data = xlsread(file_name, sheet_name{i});
     switch method
     case 1 % read the format time ratio time ratio etc.
-        num_cells = size(data,2)/2;
-        exp{i}.num_cells = num_cells;
+        num_cell = size(data,2)/2;
+        exp{i}.num_cell = num_cell;
         exp{i}.name = sheet_name{i};
-         for j =1:num_cells  
-            num_rows = find(isnan(data(:,j*2-1)),1, 'first')-1;
-            if isempty(num_rows)
+         for j =1:num_cell  
+             % find the last non-nan entry
+            num_row = find(~isnan(data(:,j*2-1)),1, 'last');
+            if isempty(num_row)
                 time = data(:, j*2-1);
                 value = data(:,j*2);
             else
-                time = data(1:num_rows, j*2-1);
-                value = data(1:num_rows, j*2);
+                time = data(1:num_row, j*2-1);
+                value = data(1:num_row, j*2);
             end;
             %if max_ratio{i}(j)>1.02*ratio_zero,
             exp{i}.cell(j).time = time;
@@ -66,6 +67,6 @@ for i = 1:num_sheets,
         exp{i}.time = data(:,1);
         exp{i}.ratio = data(:,2:end);        
     end; % switch method
-end; % for i = 1:num_sheets,
+end; % for i = 1:num_sheet,
 
 return;
