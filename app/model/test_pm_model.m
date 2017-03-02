@@ -1,12 +1,14 @@
 % test_pm_model
-function test_pm_model(model_name)
+function test_pm_model(model_name, varargin)
 %% Recruit Model, the effect of triggering Molecule/histone ratio
 % Recruit: phosphorylation recruits KDMS
 % No Recruit: phosphorylation does not recruit KDMS
-show_figure = 0;
+parameter_name = {'show_figure'};
+default_value = {0};
+show_figure = parse_parameter(parameter_name, default_value, varargin);
 
 switch model_name
-    case {'model1', 'model2'}
+    case {'model1'}
         data = model_init_data(model_name);
         % 1. Test the effect of inhibitor strength
         inhibitor = [0; 0.5; 0.6; 1.0];
@@ -18,11 +20,24 @@ switch model_name
         end;
         title_str = 'Inhibitor Strength';
         legend_str = strcat(num2str(100*inhibitor), '%');
+    case {'model2'}
+        data = model_init_data('model4');
+        % 3. Test the effect of methyltransferase inhibitor
+        data.more_methyl = 0;
+        inhibitor = [0; 0.35; 0.425; 1.0];
+        b = 1-inhibitor;
+        num_sim =  length(b);
+        res = cell(num_sim,1);
+        for i = 1:num_sim
+            res{i} = phospho_methyl_model(data, 'b', b(i), 'show_figure', show_figure);
+        end;
+        title_str = 'Inhibitor Strength';
+        legend_str = strcat(num2str(100*inhibitor), '%');
     case 'model3'
-        data = model_init_data('model1');
+        data = model_init_data('model4');
         % 2. The effect of phosphorylation in recruiting kdms and repelling
         % methyltransferase
-        a = [0.01 0.01; 0 0.01; 0.01 0];
+        a = [0.03 0.03; 0 0.03; 0.03 0];
         num_sim = size(a, 1);
         res = cell(num_sim, 1);
         for i = 1:num_sim
@@ -35,7 +50,7 @@ switch model_name
      case 'model4'
         data = model_init_data(model_name);
         % 1. Test the effect of inhibitor strength
-        inhibitor = [0; 0.25; 0.325; 0.5];
+        inhibitor = [0; 0.35; 0.425; 0.5];
         b = 1-inhibitor;
         num_sim =  length(b);
         res = cell(num_sim,1);

@@ -2,10 +2,8 @@
 % assuming that phosphorylation drives methylation. 
 %
 % function result = phospho_methyl_model(data, varargin)
-% para_name = {'a1', 'a2', 'show_figure','b', 'time_step'}; 
-% para_default = {data.a(1), data.a(2), 0, data.b, data.time_step}; 
-% [a1, a2, show_figure, b, time_step] = parse_parameter(para_name, ...
-%     para_default, varargin);
+% para_name = {'a1', 'a2', 'show_figure','b'}; 
+% para_default = {data.a(1), data.a(2), 0, data.b}; 
 %
 % Example:
 % >> data = model_init_data('model1');
@@ -19,14 +17,15 @@
 % All Rights Reserved
 
 function result = phospho_methyl_model(data, varargin)
-para_name = {'a1', 'a2', 'show_figure','b', 'time_step'}; 
-para_default = {data.a(1), data.a(2), 0, data.b, data.time_step}; 
-[a1, a2, show_figure, b, time_step] = parse_parameter(para_name, ...
+para_name = {'a1', 'a2', 'show_figure','b'}; 
+para_default = {data.a(1), data.a(2), 0, data.b}; 
+[a1, a2, show_figure, b] = parse_parameter(para_name, ...
     para_default, varargin);
 
-max_mol = data.max_mol; 
+max_phosphor_enzyme = data.max_phosphor_enzyme; 
 num_histone = data.num_histone;  % 60M 60000; 
-max_methyl = data.max_methyl;
+max_methyl_enzyme = data.max_methyl_enzyme;
+time_step = data.time_step;
 
 tspan =[-50, 150]; %[-100; 800]; % min
 time = (tspan(1): time_step: tspan(2))';
@@ -38,19 +37,20 @@ num_time_step = size(time, 1);
 % State variable y
 y = zeros(6, num_time_step);
 y(1, 1) = 0; % H3S10 phosphorylation
-y(2, 1) = 500; % kinase/phospho_plus
-y(3, 1) = 500; % phosphotase/phospho_minus
+y(2, 1) = 1000; % kinase/phospho_plus
+y(3, 1) = 1000; % phosphotase/phospho_minus
 y(4, 1) = data.base_methyl; % K9 methylation
 y(5, 1) = 100; % methyltransferaze/methyl_plus
 y(6, 1) = 100; % demethylase/methyl_minus
-y_min = [0; 0; 0; 0; 0; 0];
-y_max = [num_histone; max_mol; max_mol; ...
-    num_histone; max_methyl; max_methyl];
+y_min = [0; 0; 0; 0; 0; 100];
+y_max = [num_histone; max_phosphor_enzyme; max_phosphor_enzyme; ...
+    num_histone; max_methyl_enzyme; max_methyl_enzyme];
 
-% signal matrix 
-signal_matrix = eye(6);
-signal_matrix(1, [1 2 3]) = [1 b -1];
-signal_matrix(4, [4 5 6]) = [1 1 -1];
+% k molecules/min were processed by each enzyme 
+% considering recruiting and biochemical reaction. 
+signal_matrix = zeros(6);
+signal_matrix(1, [2 3]) = [b -1]*5;
+signal_matrix(4, [5 6]) = [1 -1]*4;
 % %
 % signal_matrix(5, [2 3 5]) = [-a1*signal_matrix(1,2:3) 1.0];
 % signal_matrix(6, [2 3 6]) = [a2*signal_matrix(1,2:3) 1.0];
@@ -65,7 +65,6 @@ end
 
 %
 data.time_phospho = 0;
-data.time_step = time_step;
 c = zeros(6,1);
 ss = 0;
 for i = 1:num_time_step-1
@@ -73,7 +72,7 @@ for i = 1:num_time_step-1
     data.y_i = y(:, i);
     [ss, c_new, data] = model_state(ss, c, data);
     c([2 5]) = c_new([2 5]); clear c_new; 
-    y(:, i+1) = signal_matrix*y(:, i)+c;
+    y(:, i+1) = y(:,i)+time_step*signal_matrix*y(:, i)+c;
     y(:, i+1) = max(y(:, i+1), y_min);
     y(:, i+1) = min(y(:, i+1), y_max);
     % phosphorylation repels methyltransferase and recruits demethylase

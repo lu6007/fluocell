@@ -37,7 +37,10 @@ elseif s==2 && y(4)>= base_methyl
     % Kinase and mehtyltransferace level recover to the interphase baseline.  
     s = 0;
     c(2) = y(3)-y(2); % reset y(2) to y(3)
-    c(5) = -(y(5)-y(6)); % reset y(5) to y(6)
+    c(5) = y(6)-y(5); % reset y(5) to y(6)
+elseif s==0 && y(4)>base_methyl+10 || y(1)>10
+    c(2) = y(3)-y(2); 
+    c(5) = y(6)-y(5); % reset y(5) to y(6) again to stabilize the model
 elseif s==0 && y(4)>= base_methyl
     c([2 5]) = 0; 
 end;
