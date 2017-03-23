@@ -46,7 +46,7 @@ y_min = [0; 0; 0; 0; 0; 100];
 y_max = [num_histone; max_phosphor_enzyme; max_phosphor_enzyme; ...
     num_histone; max_methyl_enzyme; max_methyl_enzyme];
 
-% k molecules/min were processed by each enzyme 
+% molecules/min were processed by each enzyme 
 % considering recruiting and biochemical reaction. 
 signal_matrix = zeros(6);
 signal_matrix(1, [2 3]) = [b -1]*5;

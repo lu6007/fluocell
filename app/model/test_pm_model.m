@@ -31,13 +31,13 @@ switch model_name
         for i = 1:num_sim
             res{i} = phospho_methyl_model(data, 'b', b(i), 'show_figure', show_figure);
         end;
-        title_str = 'Inhibitor Strength';
+        title_str = 'No Methyltransferase at State 1';
         legend_str = strcat(num2str(100*inhibitor), '%');
     case 'model3'
         data = model_init_data('model4');
         % 2. The effect of phosphorylation in recruiting kdms and repelling
         % methyltransferase
-        a = [0.03 0.03; 0 0.03; 0.03 0];
+        a = [0.03 0.03; 0 0.03; 0.03 0; 0 0];
         num_sim = size(a, 1);
         res = cell(num_sim, 1);
         for i = 1:num_sim
@@ -45,7 +45,7 @@ switch model_name
                 'show_figure', show_figure);
         end
         title_str = 'Phospho Regulates Methyl';
-        legend_str = {'WT', 'S10P Not Repels MTs', 'S10P Not Recruits KDMs'};
+        legend_str = {'WT', '-MT', '-KDM', '-/-'};
 
      case 'model4'
         data = model_init_data(model_name);
@@ -59,6 +59,15 @@ switch model_name
         end; 
         title_str = 'Inhibitor Strength';
         legend_str = strcat(num2str(100*inhibitor), '%');
+        
+      case 'model5'
+        data = model_init_data('model4');
+        % 0. Run the original model
+        num_sim = 1;
+        res{1} = phospho_methyl_model(data, 'b', 1, 'show_figure', show_figure);
+        title_str = 'Phosphor-methyl Model';
+        legend_str = '';
+
 end % switch model_name
 
 % Making plots. 

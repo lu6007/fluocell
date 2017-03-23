@@ -52,17 +52,17 @@ if ~isfield(movie_info, 'movie_name') && isfield(movie_info, 'file_name'),
     movie_info.movie_name = movie_info.file_name;
 end;
 
-if isfield(movie_info, 'time'),
+if isfield(movie_info, 'time')
     time = movie_info.time; %minute
 else
     time = movie_info.image_index;
 end;
 
 % Windows 64 bit, use VideoWriter
-if strcmp(computer, 'PCWIN64'),
+if strcmp(computer, 'PCWIN64')
     use_video_writer = 1;
     video_object = VideoWriter(movie_info.movie_name, 'Motion JPEG AVI');
-    video_object.FrameRate = 5;
+    video_object.FrameRate = 10;
     video_object.Quality = 100;
     open(video_object);
 else
@@ -147,7 +147,7 @@ for j = 1:num_frames,
 end;
 my_movie = cell2struct(movie_F, fields,2);
 
-if use_video_writer,
+if use_video_writer
     close(video_object);
 else
     if strcmp(computer, 'PCWIN32')

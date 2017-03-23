@@ -38,18 +38,18 @@ ca_value = ca_peak;
 % ca_value = ca_frequency;
 
 num_entries = length(ca_value{1});
-for i = 2: num_groups,
+for i = 2: num_groups
     num_entries = num_entries + length(ca_value{i});
 end
 ca_value_array = zeros(num_entries, 1);
 index = 1;
-for i = 1:num_groups,
+for i = 1:num_groups
     n = length(ca_value{i});
     ca_value_array(index:index+n-1) = ca_value{i};
     index = index+n;
 end
 tag = get_tag(ca_value{1}, group_name{1});
-for i = 2:num_groups,
+for i = 2:num_groups
     tag = [tag; get_tag(ca_value{i}, group_name{i})];
 end;
 multiple_comparison(ca_value_array, tag);
