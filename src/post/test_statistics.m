@@ -1,4 +1,32 @@
-% test_0322
+% test_statistics
+%% Fig. 1E
+% By the exact randomized permutation test, p=0.0014 for all 3 groups we
+% tested. So the adjusted p < 0.01 **. [Dwass M 1957 Ann Math Statist,
+% Modified Randomization Tests for Nonparametric Hypotheses]. 
+disp('For Fig. 1E')
+clear all;
+group_name = {'iSNAP', 'iSNAP_Src', 'FF', 'FF+Src'};
+value = cell(4,1);
+value{1} = [457	392	354]';
+value{2} = [1645 1498 2034]';
+value{3} = [331	322	319]';
+value{4} = [363	342	341]'; 
+zz = zeros(3,1);
+test_pair = [2 1; 2 3; 2 4];
+
+num_test = size(test_pair, 1);
+p = zeros(num_test, 1);
+% The ranksum function implements the Mann-Witney U-test which is good for small sample size 
+% and does not require the samples to have normal distribution like the t-test. 
+for i = 1:num_test
+    tp = test_pair(i, :);
+    %p(i) = ranksum(value{tp(1)}-value{tp(2)}, zz); 
+    [~,p(i), ~] = fishertest([value{tp(1)}'; value{tp(2)}']);
+    fprintf('%s vs. %s: p = %f \n', group_name{tp(1)}, group_name{tp(2)}, p(i));
+    clear tp; 
+end;
+fprintf('\n');
+
 %% Fig. 2C
 disp('For Fig. 2C')
 clear all;
@@ -37,13 +65,34 @@ clear all;
 disp('For Fig. 2f')
 group_name = {'ISNAP', 'FF', 'Delta PTP', 'SIRP', 'SIRP no ITIM', 'GFP'};
 value = cell(6,1);
-value{1} = [1.857336482	1.8230765	1.629758375	1.518025841	1.7432106	1.867613293]';
-value{2} = [1.690634457	1.3718385	1.372092156	1.448850544	1.3467189	1.524374598]';
-value{3} = [1.307203218	1.0058688	1.14]';
-value{4} = [1.000001735	1.0000000	1.000041592	0.999860053	1.0000000	1.00]';
-value{5} = [1.475677555		1.289371677	1.492584109	1.4959427	1.69]';
-value{6} = [1.01 	0.8752674	1.160843308		0.8196891	0.922365707]';
+value{1} = [1.857336482	1.8230765	1.629758375	1.518025841	1.7432106	1.867613293 1.89]';
+value{2} = [1.690634457	1.3718385	1.372092156	1.448850544	1.3467189	1.524374598 1.03]';
+value{3} = [1.307203218	1.0058688	1.14 1.11]';
+value{4} = [1.000001735	1.0000000	1.000041592	0.999860053	1.0000000	1.00 1.00]';
+value{5} = [1.475677555		1.289371677	1.492584109	1.4959427	1.69 1.20]';
+value{6} = [1.01 	0.8752674	1.160843308		0.8196891	0.922365707 1.05]';
 test_pair = [1 2; 1 3; 1 4; 1 5; 1 6];
+
+num_test = size(test_pair, 1);
+p = zeros(num_test, 1);
+for i = 1:num_test
+    tp = test_pair(i, :);
+    p(i) = ranksum(value{tp(1)}, value{tp(2)}); 
+    fprintf('%s vs. %s: p = %f \n', group_name{tp(1)}, group_name{tp(2)}, p(i));
+    clear tp; 
+end;
+fprintf('\n');
+
+%% Fig 3c
+clear all;
+disp('For Fig. 3c');
+group_name = {'Basal', 'Engulfing', 'Completion'};
+value = cell(3,1);
+value{1} = [1.006189232	1.000000172	1.000000597	1.00000257	1.00000076	1.000000499	1.000000857]';
+value{2} = [1.22083576	1.21604174	1.227070752	1.160055991	1.142427449	1.20676291	1.468431381]';
+value{3} = [1.001165599	1.045423172	1.035008994	1.014336244	1.020391185	1.019223091	0.907378359]';
+test_pair = [1 2; 2 3];
+% n = 7; p<0.001
 
 num_test = size(test_pair, 1);
 p = zeros(num_test, 1);
@@ -60,11 +109,11 @@ clear all;
 disp('For Fig. 3d');
 group_name = {'ISNAP', 'FF', 'Delta PTP', 'SIRP', 'SIRP no ITIM'};
 value = cell(5,1);
-value{1} = [2.65678	2.61217	2.01614	2.04061	2.62133	1.66436]';
-value{2} = [1.77302	1.44514	1.74711	1.97021	1.54250]';
-value{3} = [2.09267	1.87822	1.82479	1.73648	1.81364	1.09447]';
+value{1} = [2.656775892	2.612172048	2.18117	2.040613317	2.368664156	1.831438412]';
+value{2} = [1.773019326	1.20787	1.747113357	1.820977381	1.641916285]';
+value{3} = [2.092665154	1.878215947	1.78935	1.736484703	1.242470297	1.538080224]';
 value{4} = [1.00000	1.00000	1.00000	1.00000	1.00000	1.00000]';
-value{5} = [1.42795	1.79581		1.70775	1.37613	1.15357]';
+value{5} = [1.427948385	1.79580527 1.707752894	1.352101252	1.114795663]';
 test_pair = [1 2; 1 3; 1 4; 1 5; 4 2; 4 3; 4 5];
 
 num_test = size(test_pair, 1);
@@ -82,11 +131,11 @@ clear all;
 disp('For Fig. 3e');
 group_name = {'ISNAP', 'FF', 'Delta PTP', 'SIRP', 'SIRP no ITIM'};
 value = cell(5,1);
-value{1} = [2.45770 	2.37838 	1.83627 	2.37238 	1.96498 	2.49951 	2.14218 	1.906028432 ]';
-value{2} = [2.11041 	2.15403 	1.64770 	1.98879 	1.76615 	2.22023 	1.55766 	1.723087054]';
-value{3} = [2.10481 	1.81661 	1.67480 	1.59963 	1.49769 	1.73325 	1.62532 	1.745645921]';
+value{1} = [2.25380 	2.16571 	1.93197 	2.37238 	1.96498 	2.18906 	2.14218 	1.906028432]';
+value{2} = [1.97495 	1.90271 	1.74362 	1.98879 	1.76615 	1.85571 	1.55766 	1.723087054]';
+value{3} = [1.71754 	1.62645 	1.74771 	1.59963 	1.49769 	1.34448 	1.62532 	1.745645921]';
 value{4} = [1.00001 	1.00000 	1.00000 	1.00000 	1.00000 	1.00000 	1.00000 	1.000000733]';
-value{5} = [1.80951 	1.77918 	1.41114 	1.27236 	1.54401 	1.65851 	1.15670 	1.309848901]';
+value{5} = [1.89722 	1.59237 	1.45799 	1.27236 	1.54401 	1.40930 	1.15670 	1.309848901]';
 test_pair = [1 2; 1 3; 1 4; 1 5; 4 2; 4 3; 4 5];
 
 num_test = size(test_pair, 1);
