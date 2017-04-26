@@ -28,23 +28,23 @@ num_varargin = length(varargin);
 parameter_recognized = 0;
 success = 1;
 num_parameters = length(parameter_name);
-for i = 1:num_varargin,
-    if parameter_recognized,
+for i = 1:num_varargin
+    if parameter_recognized
         parameter_recognized = 0;
         continue;
-    end;
-    for j = 1:num_parameters,
-        if strcmpi(varargin{i}, parameter_name{j}),
+    end
+    for j = 1:num_parameters
+        if strcmpi(varargin{i}, parameter_name{j})
             varargout{j} = varargin{i+1};
             parameter_recognized = 1;
             break;
-        end; % if
-    end; % for j
+        end % if
+    end % for j
 %     if ~parameter_recognized,
 %         display('Parse_parameter: Unrecognized parameter!');
 %         success = 0;
 %     end;
-end;
+end
 
 varargout{num_parameters+1} = success;
 return;

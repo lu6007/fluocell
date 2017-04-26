@@ -10,7 +10,7 @@ default_value = {0};
 %Store initial index value for later retrieval for consistency.
 if isfield(data,'index')
     temp_index = data.index;
-end;
+end
 
 % Compatibility with previous version of Quanty.
 if isfield(data, 'ratio') && ~iscell(data.ratio)
@@ -24,7 +24,8 @@ end
 
 if isfield(data,'multiple_object') && data.multiple_object == 1
    save_bw_file = 1; 
-   disp('Function batch_update_figure warning: save_bw_file has been set to 1 for multiple object tracking.');
+   disp('Function batch_update_figure warning: ');
+   disp('save_bw_file has been set to 1 for multiple object tracking.');
 end
 
 %% Option for parallel processing. - Shannon 8/10/2016
@@ -40,9 +41,9 @@ if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
         data = get_image(data, new_first_file);
         if ~isempty(data.im{1})
             new_first_file = 0;
-        end;
+        end
         data = update_figure(data, 'save_bw_file', save_bw_file);
-    end;
+    end
     
 else %Parallel processing enabled.
     
@@ -52,7 +53,8 @@ else %Parallel processing enabled.
     %Parallel processing does not update MATLAB figures well, if at all.
     %Hence, data.show_figure is set to 0 to disable figure updates.
     data.show_figure = 0;
-    disp('Function batch_update_figure() warning: fluocell_data.show_figure has been set to 0 for parallel processing.');
+    disp('Function batch_update_figure() warning: ');
+    disp('fluocell_data.show_figure has been set to 0 for parallel processing.');
 
     %Get the data at the initial time point.
     %get_image() handles the first image differently than the following images.
@@ -123,7 +125,7 @@ else %Parallel processing enabled.
         data.channel1{j} = temp_channel1;
         data.channel2{j} = temp_channel2;
         clear temp_ratio temp_channel1 temp_channel2
-    end; %for j = 1:num_objects
+    end %for j = 1:num_objects
     %Output the collected data from temp_data back to data.
     data.time = temp_time;
     data.channel1_bg = temp_channel1_bg;
@@ -135,7 +137,7 @@ end %End of batch data processing and collection of data output.
 %%
 if exist('temp_index','var')
     data.index = temp_index; % return data.index to the initial value for consistency.
-end;
+end
     
 %Modify output w/ simpletracker() to get more accurate tracks.
 %Output data in the same format so that compute_time_course() can plot.
