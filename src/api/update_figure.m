@@ -9,6 +9,16 @@ default_value = {0};
 
 %Lexie on 03/09/2015
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
+
+if isfield(data,'quantify_roi') && ...
+        (data.quantify_roi == 2 ||data.quantify_roi == 3)
+    if ~isfield(data, 'show_detected_boundary') || data.show_detected_boundary == 0
+       data.show_detected_boundary = 1;
+       disp('Function update_figure warning: ');
+       disp('data.show_detected_boundary has been set to 1 for quantify_roi.');
+    end
+end
+
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
     switch data.protocol
@@ -150,11 +160,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
                 data = show_detected_boundary(data.im{2}, data); 
-            end;
+            end
             
              if isfield(data,'quantify_roi') && data.quantify_roi
                 data = quantify_region_of_interest(data, data.im{2});
-            end;
+             end
 
              figure(data.f(2)); save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
              clear second_channel_im;
@@ -174,15 +184,15 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             %show_detected_boundary(data.im{3}, data, data.f(3));
             if isfield(data,'quantify_roi') && data.quantify_roi
                 data = quantify_region_of_interest(data, data.im{3});
-            end;
+            end
             
              figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
              % The allows saving DIC images
              if isfield(data, 'save_processed_image') && data.save_processed_image == 2
                  figure(data.f(2)); save_image(data, data.file{5}, data.im{2}, caxis);
-             end;
+             end
                 
-    end; %switch data.protocol
+    end %switch data.protocol
     
     % Lexie on 03/02/2015
     % Draw the background region
@@ -212,16 +222,16 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                     % sec/image). So use undraggable polygons whenever
                     % possible. 
                     polygon_type = 'undraggable'; 
-                end;
+                end
                 draw_polygon(gca, data.bg_poly, 'yellow', file_name, 'type', polygon_type);
-            end;  
-        end;
+            end 
+        end
 
     end
 else
     disp('Function update_figure warning: ');
     disp('Please load the images or check the range of index.')
-end; % if isfield(data, 'im'),
+end % if isfield(data, 'im'),
 return;
 
 % Keep the caxis from the previous plot
@@ -235,7 +245,7 @@ if temp(1) ==0 && temp(2) ==1
 else
     imagesc(im, temp);
     axis(axis_vector);
-end;
+end
 return;
 
 % figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
@@ -254,7 +264,7 @@ if ~exist(file, 'file') &&...
             clear im;
             im = gray2ind(temp); 
             imwrite(im, jet, file, 'tiff', 'compression', 'none');
-    end; % switch
-end;
+    end % switch
+end
 return;
 

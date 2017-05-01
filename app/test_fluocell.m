@@ -34,7 +34,7 @@ if enable_pause
 end
 close all; clear data; 
 
-%% o   2.2.1  INTENSITY ANALYSIS-Polarity Analysis*********
+%% o   2.2  INTENSITY ANALYSIS-Polarity Analysis*********
 temp = sample_init_data('akt_1', '');
 data_file= strcat(temp.path, 'output/data.mat');
 res = load(data_file);
@@ -43,13 +43,7 @@ data.path = temp.path;
 data.first_file = strcat(data.path, '2-11.001');
 save(data_file, 'data');
 batch_update_figure(data);
-if enable_pause
-    disp(pause_str);
-    pause; 
-end
-close all; clear data;
 
-%% o   2.2.2  INTENSITY ANALYSIS-Polarity Analysis*********
 cell_name = 'akt_1';
 data = sample_init_data(cell_name);
 single_cell_analyzer('akt_1',data);
@@ -73,7 +67,10 @@ data.output_path = strcat(data.path, 'output/');
 data.first_file = strcat(data.path, 'cfp_t1.tif');
 save(data_file, 'data');
 %
-batch_update_figure(data);
+data = batch_update_figure(data);
+disp('Check output, and confirm that the next two rows show same numbers.');
+disp('[1.0172    1.0321    1.0541    1.0721    1.0825]');
+disp(data.ratio{1}(1:5));
 if enable_pause
     disp(pause_str);
     pause; 

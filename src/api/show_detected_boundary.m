@@ -6,7 +6,7 @@
 function data=show_detected_boundary(im, data)
 show_figure = (isfield(data, 'show_figure') && data.show_figure) || ~isfield(data, 'show_figure');
 
-if isfield(data, 'need_apply_mask')&& data.need_apply_mask,
+if isfield(data, 'need_apply_mask')&& data.need_apply_mask
     %if ~isfield(data,'mask_bw') || isempty(data.mask_bw),
     [temp, temp2] = get_polygon(uint16(im), strcat(data.output_path, 'mask.mat'),...
         'Please Choose the Mask Region');

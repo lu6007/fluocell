@@ -17,7 +17,7 @@ switch model_name
         res = cell(num_sim,1);
         for i = 1:num_sim
             res{i} = phospho_methyl_model(data, 'b', b(i), 'show_figure', show_figure);
-        end;
+        end
         title_str = 'Inhibitor Strength';
         legend_str = strcat(num2str(100*inhibitor), '%');
     case {'model2'}
@@ -30,7 +30,7 @@ switch model_name
         res = cell(num_sim,1);
         for i = 1:num_sim
             res{i} = phospho_methyl_model(data, 'b', b(i), 'show_figure', show_figure);
-        end;
+        end
         title_str = 'No Methyltransferase at State 1';
         legend_str = strcat(num2str(100*inhibitor), '%');
     case 'model3'
@@ -56,7 +56,7 @@ switch model_name
         res = cell(num_sim,1);
         for i = 1:num_sim
             res{i} = phospho_methyl_model(data, 'b', b(i), 'show_figure', show_figure);
-        end; 
+        end
         title_str = 'Inhibitor Strength';
         legend_str = strcat(num2str(100*inhibitor), '%');
         
@@ -77,7 +77,7 @@ index = 1:10:num_points;
 methyl = zeros(num_points, num_sim);
 for i = 1:num_sim
     methyl(:,i) = res{i}.methylation;
-end;
+end
 % my_figure('handle', 11, 'font_size', 24, 'line_width', 3); hold on;
 % plot(time(index), methyl(index,:), 'LineWidth', 3);
 % xlabel('Time (min)'); ylabel('Methylation Level');
@@ -93,7 +93,7 @@ legend(legend_str);
 phospho = zeros(num_points, num_sim);
 for i = 1:num_sim
     phospho(:,i) = res{i}.phosphorylation;
-end;
+end
 my_figure('handle', 13, 'font_size', 24, 'line_width', 3); hold on;
 plot(time(index), phospho(index,:), 'LineWidth', 3);
 xlabel('Time (min)'); ylabel('Phospho Level');
