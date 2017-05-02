@@ -5,18 +5,18 @@
 
 function data = open_button_callback(data)
 % open and initialize file variables
-if isfield(data, 'path'),
+if isfield(data, 'path')
     default_file = strcat(data.path, '*.*');
 else
     default_file = '*.*';
-end;
+end
 [file, path, success] = uigetfile(default_file);
-if ~success,
+if ~success
     data.success = 0;
     return;
 else
     data.success = 1;
-end;
+end
 
 % Use ~ only if MATLAB 2009b (version 7.9) or later
 % if verLessThan('matlab', '7.9'), do not use ~
@@ -27,9 +27,9 @@ data.prefix =prefix;
 data.postfix = postfix;
 
 data.output_path = strcat(data.path, 'output/');
-if ~exist(data.output_path, 'dir'),
+if ~exist(data.output_path, 'dir')
     mkdir(data.output_path);
-end;
+end
 
 
 % % Update the user-interface and the figures
