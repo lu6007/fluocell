@@ -12,7 +12,7 @@ default_value = {0};
         ratio = compute_ratio(first_channel_im, second_channel_im);
     end
     
-%% 7/27/2016 Shannon: Quanty optimization so get_imd_image does not run
+% 7/27/2016 Shannon: Quanty optimization so get_imd_image does not run
 % under certain conditions. 
 % i.e. when data.show_figure==0 && save_processed_image==0
     if isfield(data,'save_processed_image') && data.save_processed_image
@@ -46,8 +46,6 @@ default_value = {0};
 %     else 
 %         ratio_im = imread(file, 'tiff');
 %     end;
-
-%%
     
 %     figure(handle); clf; imshow(ratio_im); 
 %     axis off; my_title('FRET', data.index);

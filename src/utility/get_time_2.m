@@ -9,7 +9,7 @@ function time = get_time_2(file)
     if ~exist(file, 'file')
         time = nan; % file not exist
         return;
-    end;
+    end
     info = imfinfo(file);
     if isfield(info, 'DateTime')
         date_time = info.DateTime;
@@ -32,5 +32,5 @@ function time = get_time_2(file)
         time = (hr*3600+mn*60+sc)/60.0;
     else
         time = 0;
-    end;
+    end
 return;

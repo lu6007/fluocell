@@ -8,14 +8,14 @@ function time = get_time(input, varargin)
     p_name = {'ref_time', 'method'};
     default_v = {0, 1};
     [ref_time, method] = parse_parameter(p_name, default_v, varargin);
-    switch method,
+    switch method
         case 1
             % method 1 -> get time information (min) from .INF or time.data
             time = get_time_1(input, ref_time);
         case 2
             % method 2 -> get time information (min) from one file
             time = get_time_2(input);
-    end;
+    end
 return
 
 % function time = get_time_1(data, ref_time)
@@ -25,17 +25,17 @@ return
 function time = get_time_1(data, ref_time)
     % convert time log to time.data file
     data_file = strcat(data.output_path, 'time.data');
-    if ~exist(data_file, 'file'),
+    if ~exist(data_file, 'file')
         log_file = strcat(data.path, data.prefix, 'D.INF');
         src_id = fopen(log_file, 'r');
         dest_id = fopen(data_file, 'w');
-        while feof(src_id) == 0,
+        while feof(src_id) == 0
             this_line = fgetl(src_id);
-            if strcmp(this_line(1), '*'),
+            if strcmp(this_line(1), '*')
                 this_line = strcat('% ', this_line);
-            end;
+            end
             fprintf(dest_id, '%s\n', this_line);
-        end;
+        end
         fclose(src_id);
         fclose(dest_id);
     end

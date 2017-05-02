@@ -33,7 +33,7 @@ switch data.quantify_roi
         roi_type = 'undraggable';
     case 3 % 3 - Quantify subcellular regions without ROI, but with tracking
         roi_type = 'no roi';
-end;
+end
 
 % When data.quantify_roi = 1 or 2
 % data.quantify_roi = 1: only one roi which can be manually moved around
@@ -43,8 +43,8 @@ if data.quantify_roi == 1 || data.quantify_roi ==2
         num_rois = data.num_rois;
     else
         num_rois = 1;
-    end;
-end;
+    end
+end
 
 % Multiple layers for multiple rois and
 % tracking
@@ -53,13 +53,13 @@ if isfield(data, 'num_layers')
     num_layers = data.num_layers;
 else
     num_layers = 1;
-end;
+end
 %end;
 % 
 if nargin == 2
     cfp = ratio;
     yfp = ratio;
-end;
+end
 
 % Get cell_bw
 if data.quantify_roi == 2 || data.quantify_roi == 3
@@ -74,7 +74,7 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
         if isfield(data, 'need_apply_mask') && data.need_apply_mask
             temp = uint16(im).*uint16(data.mask); clear im;
             im = temp; clear temp;
-        end;
+        end
         % Lexie on 03/10/2015
 %         temp_file = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
         % Read mat file instead of tiff file, Lexie on 12/14/2015
@@ -105,14 +105,14 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
                 save(temp_file_mat, 'cell_bw');
             end
         end
-    end;
+    end
     [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_objects = length(cell_bd);
     obj = cell(num_objects, 1);
     for i = 1:num_objects
          obj{i} = bd2im(cell_bw, cell_bd{i}(:,2), cell_bd{i}(:,1));
-    end;
+    end
     
     for i = 1 : num_objects
 %         %%% Kathy bug fix 07/22/2016
@@ -127,7 +127,7 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
     % need to save cell_bw in a file somewhere
     clear num_objects cell_label cell_prop; % The value of num_objects changed later
     
-end; % if data.quantify_roi ==2 || data.quantify_roi ==3,
+end % if data.quantify_roi ==2 || data.quantify_roi ==3,
 
 % Get roi_bw
 switch data.quantify_roi
@@ -142,8 +142,8 @@ switch data.quantify_roi
         if isfield(data,'need_apply_mask') && data.need_apply_mask ==4
             for i = 1:num_rois
                 roi_bw{i} = roi_bw{i}.*data.mask;
-            end;
-        end;
+            end
+        end
     case 2 % move roi while tracking cell
         % use the centroid of the cell to track rois
         prop = regionprops(obj{1});
@@ -159,7 +159,7 @@ switch data.quantify_roi
                 fprintf('Reduce data.num_rois to %d\n', length(data.roi_bw));
                 data.num_rois = length(data.roi_bw);
                 num_rois = data.num_rois;
-            end;
+            end
             roi_bw = cell(num_rois, 1);
             roi_poly = cell(num_rois, 1);
             for i = 1:min(num_rois, length(data.roi_bw))
@@ -169,8 +169,8 @@ switch data.quantify_roi
                 % shift the boundary by c_diff
                 roi_poly{i} = data.roi_poly{i}+ones(size(data.roi_poly{i}))*[c_diff(1),0; 0, c_diff(2)];
                 clear bw_shift;
-            end; % for i
-        end; % if ~isfield(data, 'ref_centroid')
+            end % for i
+        end % if ~isfield(data, 'ref_centroid')
         num_rois = length(data.roi_bw);
     % Lexie on 12/10/2015, change the roi data structure to fit mutiple tracking and multiple layers situation   
     case 3 %switch data.quantify_roi,
@@ -183,9 +183,9 @@ switch data.quantify_roi
         for j = 1 : num_rois
             for i = 1 : num_layers
                roi_bw{j, i} = (label_layer{j} == i);
-            end;
+            end
         end
-end;
+end
 
 
 % Extract the time value,
@@ -228,7 +228,7 @@ for i = 1 : num_rois
 %         data.ratio{i}(data.index, j) = compute_average_value(ratio(yBound,xBound), boundedRoiBw);
 %         data.channel1{i}(data.index, j) = compute_average_value(cfp(yBound,xBound), boundedRoiBw);
 %         data.channel2{i}(data.index, j) = compute_average_value(yfp(yBound,xBound), boundedRoiBw);
-    end;
+    end
 end; clear i j
 %%
     
@@ -239,7 +239,7 @@ if isfield(data, 'subtract_background') && data.subtract_background
 % matrix didn't match, Lexie on 02/19/2015
     data.channel1_bg(data.index) = compute_average_value(data.im{1}, data.bg_bw);
     data.channel2_bg(data.index) = compute_average_value(data.im{2}, data.bg_bw);
-end;
+end
 
 
 return;
