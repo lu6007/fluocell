@@ -1224,14 +1224,14 @@ public class fluocellUI extends javax.swing.JFrame {
     }//GEN-LAST:event_zindexEnableCheckBoxActionPerformed
 
     private void timeZeroTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_timeZeroTextFocusLost
-       try{// later change pdgf_between_frame to time_zero_between_frame
+       // In the future we can change pdgf_between_frame to time_zero_between_frame
+        try{
             proxy.setVariable("time_zero_text", timeZeroText.getText());
             proxy.eval("fluocell_data.pdgf_between_frame = str2num(time_zero_text);");
-            proxy.eval("fluocell_data = update_figure(fluocell_data);");
+            // proxy.eval("fluocell_data = update_figure(fluocell_data);");
         } catch (MatlabInvocationException ex){
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         } // TODO add your handling code here:
-        // TODO add your handling code here:
     }//GEN-LAST:event_timeZeroTextFocusLost
 
     private void timeZeroTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeZeroTextActionPerformed

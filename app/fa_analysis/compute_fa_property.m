@@ -28,20 +28,20 @@ default_value = {1,2,4, 5, 1, 0};
 result_file = strcat(data.path, 'output\result.mat');
 if remove_data && exist(result_file, 'file')
     delete(result_file);
-end;
+end
 
 %data = init_data(cell_name);
 path = data.path;
 
 image_index = data.index;
 shift = 1.0e-4;
-if isfield(data, 'num_layers'),
+if isfield(data, 'num_layers')
     num_layers = data.num_layers;
 else
     num_layers = 5;
-end;
+end
 
-if isfield(data, 'path_all') && iscell(data.path_all),
+if isfield(data, 'path_all') && iscell(data.path_all)
     multiple_cell_name = 1;
     num_acquisitions = length(data.path_all);
     num_images = max(image_index{1});
@@ -49,13 +49,13 @@ else
     multiple_cell_name = 0;
     num_acquisitions = 1;
     num_images = max(image_index);
-end;
+end
 
 if ~exist(result_file, 'file')
 
     for k = 2:num_acquisitions
         num_images = num_images+max(image_index{k});
-    end;
+    end
     cell_bw = cell(num_images, 1);
     fa_labels = cell(num_images, 1);
     ratio_in_fa = zeros(num_images, 1);
@@ -85,7 +85,7 @@ if ~exist(result_file, 'file')
             first_cfp_file = data.first_cfp_file;
             this_image_index = image_index;
             output_path = strcat(data.path, 'output/');
-        end;
+        end
 %         % get the pdgf time
 %         if k ==2,
 %             i = 1;
@@ -99,7 +99,7 @@ if ~exist(result_file, 'file')
         % loop through the images, computing the ratio and intensity.
         %tic;
         %matlabpool open local 2;
-       for kk = 1:length(this_image_index), % parfor for parallel for loop
+       for kk = 1:length(this_image_index) % parfor for parallel for loop
             i = this_image_index(kk);
             %ii = ii+1;
              index = sprintf(data.index_pattern{2},i);
@@ -108,9 +108,9 @@ if ~exist(result_file, 'file')
             pax_file = regexprep(cfp_file, cfp_channel, pax_channel);
             pax = imread(strcat(path, pax_file));
             % subtract_background and filter
-            if ~isfield(data, 'bg_bw'),
+            if ~isfield(data, 'bg_bw')
                 data.bg_bw = get_background(pax, strcat(output_path, 'background.mat'));
-            end;
+            end
             temp = subtract_background(pax, data.bg_bw, 'method', 3); clear pax;
             pax = medfilt2(temp); clear temp;
             cfp = imread(strcat(path, cfp_file));
@@ -124,12 +124,12 @@ if ~exist(result_file, 'file')
             file = strcat(output_path, 'cell_bw.', index, '.mat');
 %             cell_bw_ii = imread(strcat(output_path, 'cell_bw.',index),'tiff');
             % Backward compatible
-            if exist(file, 'file'), 
+            if exist(file, 'file') 
                 temp_cell_bw = load([output_path, 'cell_bw.',index, '.mat']);
                 cell_bw_ii = temp_cell_bw.cell_bw;
             else
                  cell_bw_ii = imread(strcat(output_path, 'cell_bw.',index),'tiff');
-            end;
+            end
             clear old_cell_bw; old_cell_bw{1} = uint16(cell_bw_ii);           
             % Take the out-most layer and quantify there.
             %[bd_layer, label_layer] = divide_layer(old_cell_bw, num_layers);
@@ -138,14 +138,14 @@ if ~exist(result_file, 'file')
 
             cell_bw{i} = (label_layer{1}==1); 
             % mask with fans
-            if isfield(data,'num_fans'),
-                if data.num_fans>0,
+            if isfield(data,'num_fans')
+                if data.num_fans>0
                 fan_bw = get_fan(data.num_fans, pax, old_cell_bw,...
                     strcat(output_path,'fan_nodes.mat'),'draw_figure',0);
                 cell_bw{i} = cell_bw{i}.*double(fan_bw);
                 clear fan_bw;
-                end;
-            end;
+                end
+            end
             
             % fa_labels
             temp = load(strcat(output_path, 'fa_', index, '.mat'));
@@ -168,9 +168,9 @@ if ~exist(result_file, 'file')
             fa_props =regionprops(fa_labels{i}, 'Area');
             num_fas(i) = length(fa_props);
             temp = zeros(num_fas(i),1);
-            for j = 1:num_fas(i),
+            for j = 1:num_fas(i)
                 temp(j) = fa_props(j).Area;
-            end;
+            end
             %total_pixel_fa(ii) = sum(temp); 
             average_pixel_fa(i) = sum(temp)/num_fas(i);
             clear temp;
@@ -184,14 +184,14 @@ if ~exist(result_file, 'file')
     
             clear cfp_file yfp_file pax_file cfp yfp pax cell_bw_ii bd_layer label_layer 
             clear fa_props in_fa_mask out_fa_mask index 
-        end; % i image index
+       end % i image index
         %matlabpool close;
         %toc;
         clear path first_cfp_file this_image_index
-    end; % k num_acquisitions
+    end % k num_acquisitions
     time_ba = zeros(2,1);
     for j = 1:2
-        if multiple_cell_name,
+        if multiple_cell_name
             k = data.pdgf_between_frame(j, 1);
             i = data.pdgf_between_frame(j,2);
             index = sprintf(data.index_pattern{2},i);
@@ -205,22 +205,22 @@ if ~exist(result_file, 'file')
             cfp_file = regexprep(data.first_cfp_file, data.index_pattern{1}, index);
             pax_file = regexprep(cfp_file, cfp_channel, pax_channel);
             pax_file = strcat(data.path, pax_file);
-        end;
+        end
         time_ba(j) = get_time(pax_file,'method',2);
         clear index cfp_file pax_file info;
         
         pdgf_time = 0.5*(time_ba(1)+time_ba(2));
-    end;
+    end
 
     if save_file
         index = data.index;
         save(result_file, 'time', 'ratio_in_fa', 'ratio_out_fa', ...
             'average_intensity_fa', 'total_pax_intensity', 'total_intensity_fa',...
             'portion_pixel_fa', 'pdgf_time');
-    end;
+    end
 else % if exist result_file
     load(result_file);
-end; % if exist result_file
+end % if exist result_file
 
 % remove some nodes
 if multiple_cell_name
@@ -228,7 +228,7 @@ if multiple_cell_name
     % something wrong here with multiple index.
 else
     all_index = data.index;
-end;
+end
 temp = ratio_in_fa(all_index); clear ratio_in_fa; ratio_in_fa = temp; clear temp;
 temp = ratio_out_fa(all_index); clear ratio_out_fa; ratio_out_fa = temp; clear temp;
 temp = average_intensity_fa(all_index); clear average_intensity_fa;
@@ -247,13 +247,13 @@ if isfield(data, 'shift')
         if has_fret
             ratio_in_fa(j-1:n) = fix_shift (ratio_in_fa(j-1:n));
             ratio_out_fa(j-1:n) = fix_shift(ratio_out_fa(j-1:n));
-        end;
+        end
         total_pax_intensity(j-1:n) = fix_shift(total_pax_intensity(j-1:n));
         average_intensity_fa(j-1:n) = fix_shift(average_intensity_fa(j-1:n));
         total_intensity_fa(j-1:n) = fix_shift(total_intensity_fa(j-1:n));
         portion_pixel_fa(j-1:n) = fix_shift(portion_pixel_fa(j-1:n));
-    end;
-end;
+    end
+end
 
 h =figure; hold on;
 set(gca, 'FontSize', 16, 'Box', 'off', 'LineWidth',2 );
