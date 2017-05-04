@@ -10,14 +10,14 @@ default_value = {0};
 %Lexie on 03/09/2015
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 
-% if isfield(data,'quantify_roi') && ...
-%         (data.quantify_roi == 2 ||data.quantify_roi == 3)
-%     if ~isfield(data, 'show_detected_boundary') || data.show_detected_boundary == 0
-%        data.show_detected_boundary = 1;
-%        disp('Function update_figure warning: ');
-%        disp('data.show_detected_boundary has been set to 1 for quantify_roi == 2 or 3.');
-%     end
-% end
+if isfield(data,'quantify_roi') && ...
+        (data.quantify_roi == 2 ||data.quantify_roi == 3)
+    if ~isfield(data, 'show_detected_boundary') || data.show_detected_boundary == 0
+       data.show_detected_boundary = 1;
+       disp('Function update_figure warning: ');
+       disp('data.show_detected_boundary has been set to 1 for quantify_roi == 2 or 3.');
+    end
+end
 
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 

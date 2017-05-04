@@ -62,49 +62,52 @@ if nargin == 2
 end
 
 % Get cell_bw
+temp_file_mat = strcat(data.output_path, 'cell_bw.t', num2str(data.index), '.mat');
+%temp_file_tiff = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
 if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
-    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
-            isfield(data, 'cell_bw')
+%    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
+%            isfield(data, 'cell_bw')
+     % Kathy 05/03/2017
+     % In update_figure.m show_detected_boundary is forced to be 1. So
+     % there are no other possibilities
         cell_bw = data.cell_bw;
-    else 
-        % detect the cell shape (this part should be moved too)
-        % use the centroid of the cell to move the regions of interest
-        im = cfp + yfp;
-        if isfield(data, 'need_apply_mask') && data.need_apply_mask
-            temp = uint16(im).*uint16(data.mask); clear im;
-            im = temp; clear temp;
-        end
-        % Lexie on 03/10/2015
-%         temp_file = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
-        % Read mat file instead of tiff file, Lexie on 12/14/2015
-        temp_file_mat = strcat(data.output_path, 'cell_bw.t', num2str(data.index), '.mat');
-        temp_file_tiff = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
-        if exist(temp_file_mat, 'file')
-%             cell_bw = imread(temp_file); clear temp_file
-            % Load the mat file instead of the tiff file, Lexie on
-            % 12/14/2115
-            load(temp_file_mat); clear temp_file_mat
-            
-        % For backward compatibility of the tiff file, Lexie on 12/14/2015
-        elseif exist(temp_file_tiff, 'file')
-            cell_bw = imread(temp_file_tiff); 
-            % delete the old tiff cell_bw file and save it to be new mat
-            % file. Lexie on 12/21/2015
-            delete(temp_file_tiff); clear temp_file_tiff
-            save(temp_file_mat, 'cell_bw');
-        else
-            if ~isfield(data, 'multiple_object') || ~data.multiple_object
-                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3);
-            else
-                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3, 'multiple_object', data.multiple_object);
-            end
-            % save cell_bw file to be mat file instead of tiff, Lexie on
-            % 12/14/2015
-            if save_bw_file 
-                save(temp_file_mat, 'cell_bw');
-            end
-        end
+%     else 
+%         % detect the cell shape (this part should be moved too)
+%         % use the centroid of the cell to move the regions of interest
+%         im = cfp + yfp;
+%         if isfield(data, 'need_apply_mask') && data.need_apply_mask
+%             temp = uint16(im).*uint16(data.mask); clear im;
+%             im = temp; clear temp;
+%         end
+%         % Lexie on 03/10/2015
+% %         temp_file = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
+%         % Read mat file instead of tiff file, Lexie on 12/14/2015
+%         if exist(temp_file_mat, 'file')
+% %             cell_bw = imread(temp_file); clear temp_file
+%             % Load the mat file instead of the tiff file, Lexie on
+%             % 12/14/2115
+%             load(temp_file_mat); clear temp_file_mat
+%             
+%         % For backward compatibility of the tiff file, Lexie on 12/14/2015
+%         elseif exist(temp_file_tiff, 'file')
+%             cell_bw = imread(temp_file_tiff); 
+%             % delete the old tiff cell_bw file and save it to be new mat
+%             % file. Lexie on 12/21/2015
+%             delete(temp_file_tiff); clear temp_file_tiff
+%             save(temp_file_mat, 'cell_bw');
+%         else
+%             if ~isfield(data, 'multiple_object') || ~data.multiple_object
+%                 [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3);
+%             else
+%                 [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3, 'multiple_object', data.multiple_object);
+%             end
+%         end %if exist(temp_file_mat, 'file')
+%    end % if isfield(data,'show_detected_boundary')
+    % save cell_bw file to be mat file instead of tiff, Lexie on
+    % 12/14/2015
+    if save_bw_file 
+        save(temp_file_mat, 'cell_bw');
     end
     [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 

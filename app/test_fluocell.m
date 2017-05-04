@@ -34,7 +34,7 @@ if enable_pause
 end
 close all; clear data; 
 
-%% o   2.2  INTENSITY ANALYSIS-Polarity Analysis*********
+%% o   2.2  INTENSITY ANALYSIS-Polarity Analysis *********
 temp = sample_init_data('akt_1', '');
 data_file= strcat(temp.path, 'output/data.mat');
 res = load(data_file);
@@ -69,8 +69,8 @@ save(data_file, 'data');
 %
 data = batch_update_figure(data);
 disp('Check output, and confirm that the next two rows show same numbers.');
-disp('[1.0172    1.0321    1.0541    1.0721    1.0825]');
-disp(data.ratio{1}(1:5));
+disp(' [1.0046 1.0161 1.0309 1.0580 1.0775]');
+disp(data.ratio{3}(1:5)');
 if enable_pause
     disp(pause_str);
     pause; 
