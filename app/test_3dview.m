@@ -1,4 +1,4 @@
-%function test_3dview()
+function test_3dview(data)
 %% Initiate data
 % % mef-1
 % root = 'C:\Users\kathy\Desktop\data\qin_peng\';
@@ -12,8 +12,9 @@
 % Hela-WT1 t1, t5, t9
 % root = 'E:\data\2014\qin_peng\';
 % p = '1111\WTH3K9\3\p2\dconv9\';
-root = 'D:/doc/paper/2016/fluocell_1221/quanty_dataset_2/';
-p = strcat(root, 'fig5/1111_h3k9_3/p2/dconv9/');
+% root = 'D:/doc/paper/2016/fluocell_1221/quanty_dataset_2/';
+% p = strcat(root, 'fig6/1111_h3k9_3/p2/dconv9/');
+p = data.path;
 z_dist = 1.0*15; % 1um *15 pixel/um
 image_index = (11:31)';
 iso_value = 450;%550;
@@ -28,7 +29,7 @@ ratio_factor = 1.5; % ratio_factor = (ratio_bound(1)+ratio_bound(2))/2;
 % >> isovalue = 200;
 
 save_image = 0; % save images for movie
-data_file = strcat(p, 'output\data.mat');
+data_file = strcat(p, 'output/data.mat');
 if exist(data_file, 'file')
     load(data_file);
     data.path = p;
@@ -37,7 +38,7 @@ if exist(data_file, 'file')
 else
     data = fluocell_data;
     save(data_file, 'data');
-end;
+end
 % data.first_file = regexprep(data.first_file, 't1', 't5');
 
 %% load images
@@ -61,7 +62,7 @@ for i = 1:num_frames
     clear temp; temp = imread(file_name);
     cfp_im(:,:,i) = preprocess(temp, data);
     clear j_str temp file_name;
-end;
+end
 figure; imagesc(fret_im(:,:,8));
 ratio_im = compute_ratio(fret_im, cfp_im, 'shift', intensity_base);
 intensity_im = 1/(1+ratio_factor)*fret_im+ratio_factor/(1+ratio_factor)*cfp_im; 
@@ -83,7 +84,7 @@ for i = 1:num_frames
     im_rgb(:,:,3) = im_blue(:,:,3);
     imwrite(im_rgb, file_name, 'tiff', 'Compression', 'none');  
     clear j_str file_name im_red im_green im_blue im_rgb;
-end;
+end
 disp('red - intensity; green - ratio; blue - z_index');
 disp(strcat('z_dist = ', num2str(z_dist), '; 15 pixels - 1 um'));
 disp(strcat('intensity_bound = ', num2str(intensity_bound)));
@@ -127,7 +128,7 @@ if save_image
             horizontal_rotation = horizontal_rotation+step_size;
             if horizontal_rotation >= 180
                 horizontal_rotation = horizontal_rotation - 360;
-            end;
+            end
             vertical_rotation = vertical_rotation - step_size;
     %         if j == 1,
                 i_str = sprintf('%03d', i);
@@ -147,11 +148,11 @@ if save_image
        imwrite(this_frame, file_name, 'tiff');
        %figure; imagesc(this_frame);
        clear temp cs this_frame i_str file_name;
-    end;
-end; % save image
+    end
+end % save image
 disp('Done!');
 % %% View of the chromesome. 
 % figure; isosurface(x, y, z, fret_im+cfp_im, iso_value, x+z);
 % shading interp;
 
-%end;
+return;
