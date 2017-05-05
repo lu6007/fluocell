@@ -1,3 +1,5 @@
+Version 6.1.0
+
 05/01/2017:
     Fixed the problem of not showing detected boundary and clean up.
 04/26/2017:
@@ -16,7 +18,11 @@
 02/19/2017:
     Modified model for Qin's paper, and miner modifications to fluocell
 
-Version 6.0.0 - 02/14/2017:
+*****************************************************************
+
+Version 6.0.0 
+
+02/14/2017:
     Modify the phospho/methylation model for Qin's paper
     Instruction on how to save DIC images
     Added the description of fluocell data structure.
@@ -31,7 +37,9 @@ Version 6.0.0 - 02/14/2017:
     Fixing the problem when show_figure = 0
     Fixing the problem when show_figure = 0
     Allow plotting index-time as a broken line with missing images.
-    Additional bug fix for figure 4
+    Additional bug fix for figure 
+
+*****************************************************************
 
 Previous Version:
 01/18/2017
