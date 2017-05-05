@@ -9,19 +9,19 @@ default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
     parse_parameter(parameter_name, default_value, varargin);
 
 %
-switch method,
-    case 'atsu',
+switch method
+    case 'atsu'
         pn = {'threshold','mask_bw','show_figure'};
         dv = {0,[], 0};
-        [th, mask_bw, show_figure] = parse_parameter(pn,dv, varargin);
-        sf =3;
+        [~, mask_bw, show_figure] = parse_parameter(pn,dv, varargin);
+        % sf =3;
         bf = brightness_factor;
 %         [bd, ~] = get_cell_edge(im, 'brightness_factor', bf, 'threshold', th,...
 %             'smoothing_factor', sf, 'show_figure', show_figure,'mask_bw', mask_bw);
-        [bd, ~, th] = get_cell_edge(im, 'brightness_factor', bf, ...
+        [bd, ~, ~] = get_cell_edge(im, 'brightness_factor', bf, ...
             'show_figure', show_figure, 'mask_bw', mask_bw, 'multiple_object', multiple_object,...
             'min_area', min_area, 'segment_method', segment_method);
-    case 'kmean',         
+    case 'kmean'         
         p = {'num_cluster'};
         d = {3};
         num_cluster = parse_parameter(p, d, varargin);        
@@ -39,7 +39,7 @@ switch method,
         [rad_y, wf, bf] = parse_parameter(p, d, varargin);        
         bd = get_cell_edge_local(im, 'rad_y',...
             rad_y,'width_factor',wf,'brightness_factor',bf);
-end;
+end
 
 [bw, bd] = clean_up_boundary(im, bd, with_smoothing,...
     smoothing_factor);

@@ -16,24 +16,24 @@ default_value = {1.0, 500, 0, [], 0, 0};
     = parse_parameter(parameter_name, default_value, varargin);
 
 % for molly's data, Lexie on 10/15/2015
-if multiple_object,
+if multiple_object
     threshold = my_graythresh(uint16(im));
 end
 
-if ~isempty(mask_bw),
+if ~isempty(mask_bw)
     temp = double(im).*double(mask_bw); clear im;
     im = temp; clear temp;
-end;
+end
 
 % in the case the input im is double
 temp = uint16(im); clear im;
 im = temp; clear temp;
 
-if ~threshold,
+if ~threshold
     threshold = my_graythresh(im);
-end;
+end
 
-bw_image = im2bw( im, threshold*brightness_factor);
+bw_image = imbinarize( im, threshold*brightness_factor);
 % get rid of objects with size less than min_area
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
@@ -45,24 +45,24 @@ clear bw_image
 bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
 
 
-if ~isempty(mask_bw),
+if ~isempty(mask_bw)
     bw_image = bw_image.*mask_bw;
-end;
+end
 
 % Lexie and Shirley on 10/13/2015
 % option to have multiple detections
 
-if ~multiple_object,
+if ~multiple_object
     boundaries{1} = find_longest_boundary(bw_image);
 else
     [boundaries, ~] = bwboundaries(bw_image, 8, 'noholes');
-end;
+end
 
-if isempty(boundaries),
+if isempty(boundaries)
     bd = [];
     bw = [];
    return;
-end;
+end
 
 bd = boundaries;
 bw = bw_image;

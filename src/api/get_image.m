@@ -132,12 +132,22 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
         % two column for time
         % one columns for value
             data.time = nan*ones(num_frame, 2);
+            if isfield(data, 'ratio')
+                data = rmfield(data, 'ratio');
+                data = rmfield(data, 'channel1');
+                data = rmfield(data, 'channel2');
+                data = rmfield(data, 'cell_size');
+            end
+            
+            if isfield(data, 'cell_size')
+                data = rmfield(data, 'cell_size');
+            end;
             
             data.ratio{1} = nan*ones(num_frame, num_rois);
             % data.cell_size{1} = nan*ones(num_frame, 1);
-            
             data.channel1{1} = nan*ones(num_frame, num_rois);
             data.channel2{1} = nan*ones(num_frame, num_rois);
+            data.cell_size{1} = nan*ones(num_frame, 1);
             data.channel1_bg = nan*ones(num_frame, 1);
             data.channel2_bg = nan*ones(num_frame, 1);
     end;

@@ -36,7 +36,7 @@ switch data.quantify_roi
 end;
 
 % When data.quantify_roi = 1 or 2
-% data.quantify_roi =1: only one roi which can be manually moved around
+% data.quantify_roi = 1: only one roi which can be manually moved around
 % data.quantify_roi = 2: more than 1 roi which can only be automatically tracked.  
 if data.quantify_roi == 1 || data.quantify_roi ==2
     if isfield(data,'num_rois')
@@ -95,9 +95,9 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
             save(temp_file_mat, 'cell_bw');
         else
             if ~isfield(data, 'multiple_object') || ~data.multiple_object
-                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1);
+                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3);
             else
-                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3,'brightness_factore', 1.1, 'multiple_object', data.multiple_object);
+                [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3, 'multiple_object', data.multiple_object);
             end
             % save cell_bw file to be mat file instead of tiff, Lexie on
             % 12/14/2015
@@ -106,12 +106,6 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
             end
         end
     end;
-    % compute cell size
-%     for i = 1 : length(cell_bw)
-%         data.cell_size{data.index, i} = sum(sum(double(cell_bw)));
-%     end
-    % Compute the cell size based on the new cell data structure, Lexie on
-    % 12/16/2015
     [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_objects = length(cell_bd);
@@ -126,7 +120,8 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
 %             data.cell_size(data.index) = cell_prop(1).Area;
 %         else
             %data.cell_size{i}(data.index) = sum(sum(uint16(obj{i})));
-            data.cell_size{i}(data.index) = cell_prop(i).Area;
+%             data.cell_size{i}(data.index) = cell_prop(i).Area;
+            data.cell_size{i}(data.index,1) = cell_prop(i).Area; %Column format -Shannon
 %        end
     end
     % need to save cell_bw in a file somewhere
@@ -209,7 +204,7 @@ end
 
 %% Modified the following for loop to shrink area of quantification. - Shannon 8/4/2016
 for i = 1 : num_rois
-    for j = 1:num_layers
+    for j = 1:num_layers %subcellular layers
         %Modified to try to shrink the area that needs to be computed. - Shannon 8/4/2016
         data.ratio{i}(data.index, j) = compute_average_value(ratio, roi_bw{i,j});
         data.channel1{i}(data.index, j) = compute_average_value(cfp, roi_bw{i,j});
@@ -234,7 +229,7 @@ for i = 1 : num_rois
 %         data.channel1{i}(data.index, j) = compute_average_value(cfp(yBound,xBound), boundedRoiBw);
 %         data.channel2{i}(data.index, j) = compute_average_value(yfp(yBound,xBound), boundedRoiBw);
     end;
-end
+end; clear i j
 %%
     
 % quantify background

@@ -16,10 +16,10 @@ for i = 1 : num_objects
     [x,y] = delete_duplicate_node(x,y);
 
     % smoothing
-    if with_smoothing,
+    if with_smoothing
         x = smooth(x, smoothing_factor, 'lowess');
         y = smooth(y, smoothing_factor, 'lowess');
-    end;
+    end
 
     % delete unecessary nodes, such as a little needle 
     % at edge of the image

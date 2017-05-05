@@ -31,17 +31,17 @@ if isfield(data,'protocol')
     protocol_default = data.protocol;
 else
     protocol_default = 'FRET-Intensity';
-end;
+end
 if isfield(data,'need_mask')
     need_mask_default = data.need_mask;
 else
     need_mask_default = 0;
-end;
+end
 if isfield(data, 'index')
     image_index_default = data.index;
 else
     image_index_default = 1;
-end;
+end
 default_value = {1, image_index_default,need_mask_default, [0 10000],protocol_default};
 [save_file, image_index,need_mask, cbound, protocol] =...
     parse_parameter(parameter_name, default_value, varargin);
@@ -52,7 +52,7 @@ if isfield(data, 'path_all') && iscell(data.path_all)
 else 
     multiple_cell_name = 0;
     num_acquisitions = 1;
-end;
+end
 
 for k = 1:num_acquisitions
     if multiple_cell_name
@@ -61,11 +61,11 @@ for k = 1:num_acquisitions
     else
         path = data.path;
         this_image_index = image_index';
-    end;
+    end
     output_path = strcat(path, 'output/');
     if ~exist(output_path, 'dir')
         mkdir(output_path);
-    end;
+    end
     
     data.multiple_cell_name = multiple_cell_name;
     data.this_path = path;
@@ -81,7 +81,7 @@ for k = 1:num_acquisitions
                 temp = double(im).*double(cell_mask); clear im;
                 im = temp; clear temp;
                 clear cell_mask cell_mask_file;
-            end;
+            end
             if ~isfield(data,'ref_pax_intensity')
                 data.ref_pax_intensity =sum(sum(im)); % require the 1st image in the index to be 001
                 th = data.threshold;
@@ -91,10 +91,10 @@ for k = 1:num_acquisitions
             [~, cell_bw] = detect_cell(im, 'threshold', th, 'show_figure', 0);
              if save_file
                  imwrite(logical(cell_bw), output_file, 'tiff');
-             end;
+             end
         else %if ~exist(output_file, 'file'),
             cell_bw = imread(output_file, 'tiff');
-        end; %if ~exist(output_file, 'file'),
+        end %if ~exist(output_file, 'file'),
 
         % Calculate the cell boundary and find the cell with the longest
         % boundary.
@@ -105,19 +105,19 @@ for k = 1:num_acquisitions
          plot(cell_bd(:,2), cell_bd(:,1),'w', 'LineWidth', 2);
          if isfield(data, 'cbound')
              caxis(data.cbound);
-         end;
+         end
          % initialize ref_pax_intensity even if the first mask already
          % exists
          if ~isfield(data,'ref_pax_intensity')
              data.ref_pax_intesnity = sum(sum(im)); 
-         end;
+         end
 
          clear cfp_file yfp_file pax_file cfp yfp pax cell_bd output_file;
     
-    end; %i image_index
+    end %i image_index
 
 clear path this_image_index output_path;
-end; %k num_acquisitions
+end %k num_acquisitions
 
 beep;
 return;
@@ -128,7 +128,7 @@ function [im, data] = get_image_detect_cell(data, index, protocol)
                 first_file = data.first_cfp_file_all{k};
             else
                 first_file = data.first_cfp_file;
-            end;
+            end
             cfp_channel = data.cfp_channel;
             yfp_channel = data.yfp_channel;
             pax_channel = data.pax_channel;
@@ -154,5 +154,5 @@ function [im, data] = get_image_detect_cell(data, index, protocol)
             clear pax temp;
         else
             im = [];
-        end;
+        end
 return;
