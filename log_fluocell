@@ -1,3 +1,21 @@
+05/01/2017:
+    Fixed the problem of not showing detected boundary and clean up.
+04/26/2017:
+    Fluocell bug fix and cleanup
+04/25/2017:
+    Updated statistics
+    Removed default.property.copy
+03/22/2017:
+    Updated Sequence analyzer, phospho-methyl model, make_movie etc
+03/02/2017:
+    Updated the model and results based on literature.
+03/01/2017:
+    Minor bugfix for Qunaty
+02/20/2017:
+    Implementing multiple object tracking.
+02/19/2017:
+    Modified model for Qin's paper, and miner modifications to fluocell
+
 Version 6.0.0 - 02/14/2017:
     Modify the phospho/methylation model for Qin's paper
     Instruction on how to save DIC images
