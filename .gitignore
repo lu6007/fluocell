@@ -2,3 +2,5 @@
 /src/gui/java/dist/
 /src/gui/java/default.property
 *.m~
+
+src/gui/java/hs_err_pid652.log
