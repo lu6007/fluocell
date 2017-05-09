@@ -51,7 +51,7 @@ end
 tag = get_tag(ca_value{1}, group_name{1});
 for i = 2:num_groups
     tag = [tag; get_tag(ca_value{i}, group_name{i})];
-end;
+end
 multiple_comparison(ca_value_array, tag);
 
 
