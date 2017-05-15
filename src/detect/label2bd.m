@@ -7,7 +7,7 @@ function bd = label2bd(label)
 num_regions = max(max(label));
 label_prop = regionprops(label, 'PixelList');
 bd = cell(num_regions,1);
-for i = 1:num_regions,
+for i = 1:num_regions
     x = label_prop(i).PixelList(:,1);
     y = label_prop(i).PixelList(:,2);
     min_x = min(x)-1; min_y = min(y)-1;
