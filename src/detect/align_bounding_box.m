@@ -9,7 +9,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function bb=align_bounding_box(bb);
+function bb=align_bounding_box(bb)
 bb(1:2) = bb(1:2)+0.5;
 bb(3:4) = bb(3:4)-1;
 return;
