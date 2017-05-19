@@ -15,8 +15,8 @@ return;
 
 % Close figures and clean up data
 function data = close_figure(data)
-if isfield(data, 'f'),
-    for i = 1:data.num_figures;
+if isfield(data, 'f')
+    for i = 1:data.num_figures
         close(data.f(i));
     end
     data = rmfield(data,'f');
@@ -25,36 +25,36 @@ return;
 
 %  Clean up data
 function data = clean_up(data)
-if isfield(data,'bg_bw'),
+if isfield(data,'bg_bw')
     data = rmfield(data,'bg_bw');
     data = rmfield(data,'bg_poly');
 end;
-if isfield(data,'rectangle'),
+if isfield(data,'rectangle')
     data = rmfield(data,'rectangle');
 end;
-if isfield(data, 'roi_bw'),
+if isfield(data, 'roi_bw')
     data = rmfield(data, 'roi_bw');
     data = rmfield(data, 'roi_poly');
 end;
 
-if isfield(data, 'ratio'), 
+if isfield(data, 'ratio')
     data = rmfield(data, {'time','ratio', 'cell_size', 'channel1', 'channel2'}); 
 end;
 % Lexie on 3/2/2015; delete im after close figure
-if isfield(data, 'ref_centroid'),
+if isfield(data, 'ref_centroid')
     data = rmfield(data, 'ref_centroid');
 end;
-if isfield(data,'roi_poly'),
+if isfield(data,'roi_poly')
     data = rmfield(data, 'roi_poly');
     data = rmfield(data, 'roi_bw');
 end;
-if isfield(data, 'mask'),
+if isfield(data, 'mask')
     data = rmfield(data, 'mask');
 end;
-if isfield(data,'mask_bw'),
+if isfield(data,'mask_bw')
     data = rmfield(data,'mask_bw');
 end;
-if isfield(data,'mask_bg'),
+if isfield(data,'mask_bg')
     data = rmfield(data,'mask_bg');
 end;
 return;

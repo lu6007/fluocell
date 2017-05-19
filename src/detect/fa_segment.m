@@ -15,9 +15,9 @@ num_fas = max(max(fa_label));
 fa_delete = zeros(num_fas, 1);
 
  % Delete smaller FAs
- for i = 1:num_fas,
+ for i = 1:num_fas
     % Do nothing with the large FAs
-    if fa_prop(i).Area>min_single_fa,% && fa_prop(i).Area<=1000,
+    if fa_prop(i).Area>min_single_fa% && fa_prop(i).Area<=1000,
         continue;
     end;
     % Mark smaller FAs for deletion
