@@ -110,15 +110,15 @@ end
 
 
 % Initialize data.time, data.ratio, data.donor, data.acceptor
-% set data.num_rois, and data.roi_poly
+% set data.num_roi, and data.roi_poly
 
 clear im_size
 roi_file = strcat(data.output_path, 'roi.mat');
 if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
-    if isfield(data, 'num_rois') 
-        num_rois = data.num_rois;
+    if isfield(data, 'num_roi') 
+        num_roi = data.num_roi;
     else
-        num_rois = 1;
+        num_roi = 1;
     end
     % The default length of the column vectors is either 200 or 
     % max(data.image_index) if it is more than 200. 
@@ -145,10 +145,10 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
                 data = rmfield(data, 'cell_size');
             end
             
-            data.ratio{1} = nan*ones(num_frame, num_rois);
+            data.ratio{1} = nan*ones(num_frame, num_roi);
             % data.cell_size{1} = nan*ones(num_frame, 1);
-            data.channel1{1} = nan*ones(num_frame, num_rois);
-            data.channel2{1} = nan*ones(num_frame, num_rois);
+            data.channel1{1} = nan*ones(num_frame, num_roi);
+            data.channel2{1} = nan*ones(num_frame, num_roi);
             data.cell_size{1} = nan*ones(num_frame, 1);
             data.channel1_bg = nan*ones(num_frame, 1);
             data.channel2_bg = nan*ones(num_frame, 1);
@@ -168,7 +168,7 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
         %im = imread(data.file{1});
         [data.roi_bw, data.roi_poly] = ...
             get_polygon(im, roi_file, 'Please choose the ROI now.', ...
-            'polygon_type', 'any', 'num_polygons', num_rois);
+            'polygon_type', 'any', 'num_polygons', num_roi);
         %clear im;
     end 
 end % if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)

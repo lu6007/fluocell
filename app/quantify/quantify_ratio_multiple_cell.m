@@ -29,7 +29,7 @@ switch data.detection
         manual_select = 1;
     case 'auto'
         manual_select = 0;
-end;
+end
 intensity_value = inf*ones(500,4);
 ratio_value = inf*ones(500,1);
 
@@ -39,14 +39,14 @@ num_cells  = 0;
 file = cell(4,1);
 im = cell(4,1);
 ratio_im = cell(1,1);
-for i = 1:num_images,
+for i = 1:num_images
     index_i = sprintf(data.index_pattern{2}, data.image_index(i));
     % Load image and calulate ratio
     file{1} = regexprep(data.first_file, data.index_pattern{1}, index_i);
     temp = imread(strcat(data.path, file{1}));
-    if ~exist(strcat(data.path, 'output/'), 'dir'),
+    if ~exist(strcat(data.path, 'output/'), 'dir')
         mkdir(strcat(data.path, 'output/'));
-    end;
+    end
     bg_file = strcat(data.path, 'output/background_', index_i, '.mat');
     data.bg_bw = get_background(temp, bg_file, 'method', 'auto');
     im{1} = preprocess(temp, data); clear temp;
@@ -58,35 +58,35 @@ for i = 1:num_images,
     ratio_im{1} = get_imd_image(ratio, max(im{1}, im{2}), ...
             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
         
-    if add_channel, % add 1 additional channel
+    if add_channel % add 1 additional channel
         file{3} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{3});
         temp = imread(strcat(data.path, file{3}));
         im{3} = preprocess(temp,data); clear temp;
-    end;
+    end
     
     i8 = mod(i,8);
-    if i8 == 0,
+    if i8 == 0
         i8 = 8;
-    end; 
-    if i8 == 1,
+    end 
+    if i8 == 1
         my_figure;
-    end;
+    end
     subplot(2,4, i8); hold on;
     % display all detected object in red
     display_boundary(data.bg_bw, 'im', ratio_im{1}, 'line_color', 'r', 'new_figure', 0);
 
     % Select ROIs by hand
-    % Kathy 02/21/2016 for manual selection, this need to update to allow user to input num_rois
+    % Kathy 02/21/2016 for manual selection, this need to update to allow user to input num_roi
     %temp = uint16(im{1});
     temp = uint16(im{2});
-    if manual_select,
+    if manual_select
         % temp = uint16(temp);
-        num_rois = 1; 
+        num_roi = 1; 
         display_text=strcat('Please Select : ',...
-            num2str(num_rois), ' Regions of Interest');
+            num2str(num_roi), ' Regions of Interest');
         roi_file = strcat(p, 'output\ROI', '_', image_index, '.mat');
         [roi_bw, ~] = get_polygon(temp, roi_file, display_text, ...
-            'num_polygons', num_rois);
+            'num_polygons', num_roi);
         [~, label] = bwgoundaries (roi_bw, 8, 'noholes');
     else % Automatic detection
 %         threshold = graythresh(temp); 
@@ -95,24 +95,24 @@ for i = 1:num_images,
         bw_image = (temp>15000); 
         bw_image_open = bwareaopen(bw_image, data.min_area);
         [bd, label] = bwboundaries(bw_image_open,8,'noholes');
-        num_rois = length(bd);
+        num_roi = length(bd);
         clear bw_image bw_image_open bd temp; 
-    end; % if manual_select
+    end % if manual_select
     clear temp;
     % display ob
-    if max(max(label))>0,
+    if max(max(label))>0
         display_boundary(label, 'im', [], 'color', 'k', 'show_label', 1, 'new_figure', 0);
-    end; 
+    end 
    
-    for j = 1:num_rois,
+    for j = 1:num_roi
         mask = double(label==j);
         area = sum(sum(mask));
         rr = sum(sum(ratio.*mask))/area;
         fi1 = sum(sum(im{1}.*mask))/area;
         fi2 = sum(sum(im{2}.*mask))/area;
-        if add_channel,
+        if add_channel
             fi3 = sum(sum(im{3}.*mask))/area;
-        end;
+        end
         % if rr<max_ratio && fi1>= min_intensity && fi2>= min_intensity ,
         % A cell is detected if FRET > 15000
         % A cell is selected if the ratio values is less than 0.5 to exclude dead cells, 
@@ -122,23 +122,23 @@ for i = 1:num_images,
         % if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>5000, % && fi3>7000, 
         % cytosolic mCherry >5000
         % mCherry-Lck>500 
-         if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>500, 
+         if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>500 
             num_cells = num_cells+1;
             ratio_value(num_cells,1) = rr;
             intensity_value(num_cells,1) = fi1;
             intensity_value(num_cells,2) = fi2;
-            if add_channel,
+            if add_channel
                  intensity_value(num_cells,3) = fi3;
-            end;
+            end
             display_boundary(mask, 'im', [], 'color', 'w', 'show_label', 0, 'new_figure', 0);
-        end;
+         end
         clear mask;
-    end;
+    end
     clear roi_poly roi_bw file im ratio ratio_im mask;
     % display_boundary(label, 'im', [], 'color', 'w', 'show_label',1,'new_figure', 0);
     title(strcat('Intensity Ratio - ', index_i));
     
-end; %i
+end %i
 temp = intensity_value; clear intensity_value;
 intensity_value = temp(1:num_cells,:); clear temp;
 temp = ratio_value; clear ratio_value;

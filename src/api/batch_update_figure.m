@@ -117,7 +117,7 @@ else %Parallel processing enabled.
             temp_channel2_bg(i) = temp_data.channel2_bg(i);
 
         end % parfor i = data.image_index(2:end),
-%         for k = 1 : num_rois
+%         for k = 1 : num_roi
 %             temp_ratio{k}(temp_ratio{k} == 0) = NaN;
 %         end
         %Collect the data output.
