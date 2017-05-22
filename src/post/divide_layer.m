@@ -33,7 +33,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function [bd_layer, label_layer]= divide_layer(cell_bw, num_layers,varargin)
+function [bd_layer, label_layer]= divide_layer(cell_bw, num_layer,varargin)
 parameter_name = {'xylabel'};
 % method 1 - relative distance to the centroid
 % method 2 - distance transformation to the extracellular space
@@ -48,7 +48,7 @@ if ~iscell_cell_bw,
 end;
 
 num_objects = length(cell_bw);
-bd_layer = cell(num_objects, num_layers);
+bd_layer = cell(num_objects, num_layer);
 label_layer = cell(num_objects, 1); 
 % we can remove method in the comments and the program 12/9/2015
 % if method == 1,
@@ -87,8 +87,8 @@ label_layer = cell(num_objects, 1);
 for j = 1 : num_objects
     im = bwdist(~cell_bw{j});
     max_v = max(max(im))+1;
-    label_layer{j} = floor(im/max_v*num_layers)+double(cell_bw{j});
-    for i = 1:num_layers,
+    label_layer{j} = floor(im/max_v*num_layer)+double(cell_bw{j});
+    for i = 1:num_layer,
         bd = bw2bd(label_layer{j} >= i);  
         bd_layer{j, i} = bd{1};
         clear bd;
@@ -99,9 +99,9 @@ c = 0;
 % end;
 
 if strcmp(xylabel, 'normal'),
-    temp = cell(num_objects, num_layers);
+    temp = cell(num_objects, num_layer);
     for j = 1 : num_objects
-        for i = 1 : num_layers,
+        for i = 1 : num_layer,
             temp{j, i} = [bd_layer{j, i}(:,2), bd_layer{j, i}(:,1)];
         end;
     end
