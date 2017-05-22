@@ -51,7 +51,7 @@ switch name
                 data.ref_pax_intensity = 8829698;
                 data.fa.min_water = 30;
                 data.fa.single_min_area = 10;
-                data.num_layers = 5;
+                data.num_layer = 5;
                 % data.num_fans = 1;
                 data.is_cfp_over_fret = 0;
         end; % switch function_name  

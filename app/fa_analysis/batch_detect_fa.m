@@ -16,7 +16,7 @@
 
 % New features:
 % 1. Allow reading flexible file names.
-% 2. Allow changing num_layers.
+% 2. Allow changing num_layer.
 % 3. Removed the option of not have yfp files.
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2013
@@ -41,10 +41,10 @@ default_value = {1, data.index,need_mask_default,'segmentation', 1,...
     parse_parameter(parameter_name, ...
     default_value, varargin);
 
-if isfield(data, 'num_layers'),
-    num_layers = data.num_layers;
+if isfield(data, 'num_layer')
+    num_layer = data.num_layer;
 else
-    num_layers = 5;
+    num_layer = 5;
 end;
 
 % if need_mask && ~exist(strcat(data.path, 'output\cell_mask'), 'file'),
@@ -59,7 +59,7 @@ end;
 pax_cbound = data.pax_cbound;
 fan_file = strcat(data.path, 'output\fan_nodes.mat');
 
-if isfield(data, 'path_all') && iscell(data.path_all),
+if isfield(data, 'path_all') && iscell(data.path_all)
     multiple_cell_name = 1;
     num_acquisitions = length(data.path_all);
 else 
@@ -67,14 +67,14 @@ else
     num_acquisitions = 1;
 end;
 
-if isfield(data,'mask_with_cell')&& data.mask_with_cell==0,
+if isfield(data,'mask_with_cell')&& data.mask_with_cell==0
     mask_with_cell = 0;
 else
     mask_with_cell = 1;
 end;
 
-for k = 1:num_acquisitions,
-    if multiple_cell_name,
+for k = 1:num_acquisitions
+    if multiple_cell_name
         path = data.path_all{k};
         this_image_index = image_index{k}';
     else
@@ -130,20 +130,20 @@ for k = 1:num_acquisitions,
              %bd = bwboundaries(fa_label, 8, 'nohole');
              bd = fa_bd;
              num_fas = length(bd);
-             for j = 1:num_fas,
+             for j = 1:num_fas
                  plot(bd{j}(:,2), bd{j}(:,1), 'k-', 'LineWidth', 1.5);
              end;
              % cell_bw
-             if exist('cell_bw','file'),
-                 [bd_layer, ~] = divide_layer(cell_bw, num_layers, ...
+             if exist('cell_bw','file')
+                 [bd_layer, ~] = divide_layer(cell_bw, num_layer, ...
                      'method',2);
                  plot(bd_layer{2}(:,2), bd_layer{2}(:,1), 'w--','LineWidth',2);
              end;
              % fan regions
-             if isfield(data,'num_fans') && data.num_fans>0,
+             if isfield(data,'num_fans') && data.num_fans>0
                  [~, fan_bd, c] = get_fan(data.num_fans, im, cell_bw, fan_file,...
                      'draw_figure', 0);
-                 for j = 1:length(fan_bd),
+                 for j = 1:length(fan_bd)
                      plot(fan_bd{j}(:,2), fan_bd{j}(:,1), 'b--', 'LineWidth',2);
                  end;
                  plot(c(1), c(2), 'r*', 'LineWidth', 2, 'MarkerSize', 6);
