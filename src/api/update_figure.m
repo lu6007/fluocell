@@ -37,7 +37,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             
             % Lexie on 3/2/2015
             if show_figure_option
-                figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
             end
 
@@ -55,9 +57,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.im{4} = ratio_im;
             
             if show_figure_option
-                figure(data.f(2)); my_imagesc(second_channel_im); 
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
-                figure(data.f(3)); my_imagesc(im_3);
+                figure(data.f(4)); my_imagesc(im_3);
                 axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
             end
 
@@ -79,11 +83,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.im{5} = ratio_im;
             
             if show_figure_option
-                figure(data.f(2)); my_imagesc(second_channel_im); 
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
-                figure(data.f(3)); my_imagesc(im_3);
+                figure(data.f(4)); my_imagesc(im_3);
                 axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
-                figure(data.f(4)); my_imagesc(im_4);
+                figure(data.f(5)); my_imagesc(im_4);
                 axis off; my_title(data.channel_pattern{4}, data.index, 'data', data);
             end
 
@@ -98,9 +104,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.im{4} = ratio_im;
 
             if show_figure_option
-                figure(data.f(2)); my_imagesc(second_channel_im); 
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
-                figure(data.f(3)); my_imagesc(data.im{3});
+                figure(data.f(4)); my_imagesc(data.im{3});
                 colormap gray; 
                 axis off; my_title('DIC', data.index, 'data', data);
             end
@@ -114,11 +122,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.im{5} = ratio_im;
 
             if show_figure_option
-                figure(data.f(2)); my_imagesc(second_channel_im); 
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
                 axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
-                figure(data.f(3)); my_imagesc(im_3);
+                figure(data.f(4)); my_imagesc(im_3);
                 axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
-                figure(data.f(4)); my_imagesc(data.im{4});
+                figure(data.f(5)); my_imagesc(data.im{4});
                 colormap gray; 
                 axis off; my_title('DIC', data.index, 'data', data);
                 clear first_channel_im second_channel_im ratio_im;
@@ -135,7 +145,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 data.file{3}, data.f(1), 'save_bw_file', save_bw_file); %'update_flim_image');
             data.im{3} = flim_im;
        
-            figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
+            figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+            axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+            figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
             axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
@@ -148,7 +160,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
             data.im{3} = sted_im;
        
-            figure(data.f(2)); my_imagesc(second_channel_im); % clf was included in my_imagesc
+            figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+            axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+            figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
             axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
 
             clear first_channel_im second_channel_im ratio_im;
@@ -237,17 +251,19 @@ else
 end % if isfield(data, 'im'),
 return;
 
-% Keep the caxis from the previous plot
+% Keep the caxis and colormap from the previous plot
 % Use caxis auto for a new figure
 function my_imagesc(im)
 temp = caxis;
 axis_vector = axis;
+this_colormap = colormap(gca); 
 clf;
 if temp(1) ==0 && temp(2) ==1
     imagesc(im); 
 else
     imagesc(im, temp);
     axis(axis_vector);
+    colormap(this_colormap); 
 end
 return;
 

@@ -31,7 +31,6 @@ if ~exist(data.output_path, 'dir')
     mkdir(data.output_path);
 end
 
-
 % % Update the user-interface and the figures
 % data = init_figure(data);
 return;

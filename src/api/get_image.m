@@ -35,8 +35,10 @@ end
 %     end
     % - Shannon 8/23/2016
 num_matching = length(regexp(data.first_file, data.index_pattern{1}));
-data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
-    index_str, num_matching);
+if num_matching>0
+    data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
+        index_str, num_matching);
+end
 
 if exist(data.file{1}, 'file')
     im = imread(data.file{1});
