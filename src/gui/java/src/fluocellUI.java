@@ -37,11 +37,14 @@ public class fluocellUI extends javax.swing.JFrame {
         chooseThreshold = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         ThesholdLabel = new javax.swing.JLabel();
-        BrightnessFactorLabel = new javax.swing.JLabel();
+        brightnessFactorLabel = new javax.swing.JLabel();
         brightnessFactor = new javax.swing.JTextField();
         showBoundary = new javax.swing.JCheckBox();
         applyMask = new javax.swing.JCheckBox();
         threshold = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        numROI = new javax.swing.JTextField();
+        numROILabel = new javax.swing.JLabel();
         batchUpdateImage = new javax.swing.JFrame();
         jLabel4 = new javax.swing.JLabel();
         imageIndex = new javax.swing.JTextField();
@@ -104,9 +107,9 @@ public class fluocellUI extends javax.swing.JFrame {
 
         ThesholdLabel.setText("Threshold");
 
-        BrightnessFactorLabel.setLabelFor(BrightnessFactorLabel);
-        BrightnessFactorLabel.setText("Brightness Factor");
-        BrightnessFactorLabel.setToolTipText("");
+        brightnessFactorLabel.setLabelFor(brightnessFactorLabel);
+        brightnessFactorLabel.setText("Brightness Factor");
+        brightnessFactorLabel.setToolTipText("");
 
         brightnessFactor.setText("1.0");
         brightnessFactor.setToolTipText("");
@@ -157,14 +160,14 @@ public class fluocellUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(BrightnessFactorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(brightnessFactorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(brightnessFactor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(149, 149, 149)
                 .addComponent(ThesholdLabel)
                 .addGap(18, 18, 18)
                 .addComponent(threshold, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(showBoundary)
@@ -175,35 +178,78 @@ public class fluocellUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BrightnessFactorLabel)
+                    .addComponent(brightnessFactorLabel)
                     .addComponent(brightnessFactor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ThesholdLabel)
                     .addComponent(threshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(showBoundary)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(showBoundary, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(applyMask)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
-        BrightnessFactorLabel.getAccessibleContext().setAccessibleName("BrightnessFactor");
-        BrightnessFactorLabel.getAccessibleContext().setAccessibleDescription("");
+        brightnessFactorLabel.getAccessibleContext().setAccessibleName("BrightnessFactor");
+        brightnessFactorLabel.getAccessibleContext().setAccessibleDescription("");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 592, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 58, Short.MAX_VALUE)
+        );
+
+        numROI.setText("1");
+        numROI.setToolTipText("");
+        numROI.setName(""); // NOI18N
+        numROI.setPreferredSize(new java.awt.Dimension(60, 30));
+        numROI.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                numROIFocusLost(evt);
+            }
+        });
+        numROI.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numROIActionPerformed(evt);
+            }
+        });
+
+        numROILabel.setLabelFor(brightnessFactorLabel);
+        numROILabel.setText("Number of ROIs");
+        numROILabel.setToolTipText("");
 
         javax.swing.GroupLayout chooseThresholdLayout = new javax.swing.GroupLayout(chooseThreshold.getContentPane());
         chooseThreshold.getContentPane().setLayout(chooseThresholdLayout);
         chooseThresholdLayout.setHorizontalGroup(
             chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(chooseThresholdLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(214, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, chooseThresholdLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(chooseThresholdLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(numROILabel, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(numROI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         chooseThresholdLayout.setVerticalGroup(
             chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(chooseThresholdLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(chooseThresholdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(numROI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(numROILabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         batchUpdateImage.setMinimumSize(new java.awt.Dimension(300, 150));
@@ -1237,6 +1283,18 @@ public class fluocellUI extends javax.swing.JFrame {
     private void timeZeroTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeZeroTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_timeZeroTextActionPerformed
+
+    private void numROIFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numROIFocusLost
+        try {
+            proxy.setVariable("num_roi_str", numROI.getText());
+            proxy.eval("fluocell_data.num_roi = str2num(num_roi_str);");
+        } catch (MatlabInvocationException ex) {
+            Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_numROIFocusLost
+
+    private void numROIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numROIActionPerformed
+    }//GEN-LAST:event_numROIActionPerformed
  
     private void readFile() throws MatlabInvocationException {
         try {
@@ -1368,7 +1426,6 @@ public class fluocellUI extends javax.swing.JFrame {
     public String default_path = "";
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel BrightnessFactorLabel;
     private javax.swing.JLabel ThesholdLabel;
     private javax.swing.JMenuItem adjustBrightnessFactor;
     private javax.swing.JCheckBox applyFilter;
@@ -1376,6 +1433,7 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem batchUpdate;
     private javax.swing.JFrame batchUpdateImage;
     private javax.swing.JTextField brightnessFactor;
+    private javax.swing.JLabel brightnessFactorLabel;
     private javax.swing.JFrame chooseThreshold;
     private javax.swing.JMenuItem closeFigure;
     private javax.swing.JComboBox comboBoxQuantification;
@@ -1413,7 +1471,10 @@ public class fluocellUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel mainControl;
+    private javax.swing.JTextField numROI;
+    private javax.swing.JLabel numROILabel;
     private javax.swing.JMenuItem openFigure;
     private javax.swing.JMenuItem openFolder;
     private javax.swing.JPanel processingOptions;
