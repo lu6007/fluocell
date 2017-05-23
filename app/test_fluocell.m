@@ -21,7 +21,7 @@ res = load(data_file);
 data = res.data;
 data.path = temp.path;
 data.first_file = strcat(data.path, '2-11.001');
-data.num_figures = 3;
+% data.num_figures = 3;
 % data.f(3) = figure;
 save(data_file, 'data');
 batch_update_figure(data);
