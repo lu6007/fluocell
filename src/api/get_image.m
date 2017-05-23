@@ -218,7 +218,7 @@ clear im;
 % load the names of image files into data.file
 % load images from data.file to data.im
 switch data.protocol
-    case 'FRET'
+    case {'FRET', 'Ratio'}
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
         for i = 1:2
@@ -292,22 +292,15 @@ switch data.protocol
     case 'FLIM'
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
-%         temp = regexprep(strcat(data.prefix, '.', index_str), data.channel_pattern{1},...
-%         data.channel_pattern{2});
-%         data.file{2} = strcat(data.path, temp); clear temp;
         for i = 1:2
-            %data.im{i} = my_imread(data.file{i});
-%             temp = my_imread(data.file{i}); 
-%             data.im{i} = temp(:,:,1); clear temp;
-    if exist(data.file{i}, 'file') ==2
-        temp = my_imread(data.file{i}, data);
-    else
-        temp = [];
-        fprintf('%s : %s\n', data.file{i}, 'This file does not exist!');
-    end
-    data.im{i} = uint16(temp); clear temp;
-
-        end
+            if exist(data.file{i}, 'file') ==2
+                temp = my_imread(data.file{i}, data);
+            else
+                temp = [];
+                fprintf('%s : %s\n', data.file{i}, 'This file does not exist!');
+            end
+            data.im{i} = uint16(temp); clear temp;
+        end % for i = 1:2
         % ratio_image_file and file_type
        fret_file = get_fret_file(data, data.file{1});
        data.file{3} = strcat(fret_file, '.', 'tiff');

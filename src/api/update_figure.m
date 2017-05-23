@@ -25,7 +25,7 @@ end
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
     switch data.protocol
-        case 'FRET'
+        case {'FRET', 'Ratio', 'FLIM'}
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
 
@@ -136,22 +136,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             figure(data.f(3)); save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
 		 clear im_3;
 
-        case 'FLIM'
-            first_channel_im = preprocess(data.im{1}, data);
-            second_channel_im = preprocess(data.im{2}, data);
-
-            % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
-            [data, flim_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1), 'save_bw_file', save_bw_file); %'update_flim_image');
-            data.im{3} = flim_im;
-       
-            figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
-            axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
-            figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
-            axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
-
-            clear first_channel_im second_channel_im ratio_im;
-         case 'STED'
+      case 'STED'
             first_channel_im = preprocess(data.im{1}(:,:,1), data);
             second_channel_im = preprocess(data.im{2}(:,:,3), data);
 

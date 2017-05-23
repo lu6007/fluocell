@@ -37,18 +37,6 @@ default_value = {0};
         ratio_im = imread(file, 'tiff');
     end
     
-%     if ~exist(file, 'file'),
-%         ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
-%             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-%         if isfield(data, 'save_processed_image') && data.save_processed_image,
-%             imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
-%         end;
-%     else 
-%         ratio_im = imread(file, 'tiff');
-%     end;
-    
-%     figure(handle); clf; imshow(ratio_im); 
-%     axis off; my_title('FRET', data.index);
     if (isfield(data, 'show_figure') && data.show_figure == 1)...
         || ~isfield(data, 'show_figure') % option for displaying figure
             figure(handle); axis_vector = axis; 

@@ -5,7 +5,7 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2012
 function data = init_figure(data)
 switch data.protocol
-    case 'FRET'
+    case {'FRET', 'Ratio','FLIM', 'STED'}
         num_figures = 3;
 %         if ~isfield(data,'is_channel1_over_channel2'),
 %             data.is_channel1_over_channel2 = 1;
@@ -30,8 +30,8 @@ switch data.protocol
 %         if ~isfield(data,'is_channel1_over_channel2'),
 %             data.is_channel1_over_channel2 = 1;
 %         end;
-    case {'FLIM', 'STED'}
-        num_figures = 4;
+%     case {'FLIM', 'STED'}
+%         num_figures = 3;
     case 'Intensity'
         num_figures = 2;
     case 'Intensity-DIC'
