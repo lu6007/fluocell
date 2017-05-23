@@ -6,10 +6,10 @@
 function [bw, bd] = clean_up_boundary(im, boundaries, with_smoothing, smoothing_factor)
 % 10/14/2015 Lexie - change the boundary data structure to be cell to store more than one
 % objects
-num_objects = length(boundaries);
-bw = cell(num_objects, 1);
-bd = cell(num_objects, 1);
-for i = 1 : num_objects
+num_object = length(boundaries);
+bw = cell(num_object, 1);
+bd = cell(num_object, 1);
+for i = 1 : num_object
     x = boundaries{i}(:,2); y = boundaries{i}(:,1);
 
     % delete duplicated nodes

@@ -66,8 +66,8 @@ else %Parallel processing enabled.
     % Kathy: I feel that multiple object handing should be in some other
     % functions. But we can merge first and see how it goes. 09/13/2016
     %This only works if new cells do not enter/exit the viewing area.
-    num_objects = length(data.ratio);
-    for j = 1:num_objects
+    num_object = length(data.ratio);
+    for j = 1:num_object
         %Initialization of temp_data. Interface with variable: data.
         temp_ratio = nan(length(data.ratio{1}),1);
         %problem with time not being NaN
@@ -125,7 +125,7 @@ else %Parallel processing enabled.
         data.channel1{j} = temp_channel1;
         data.channel2{j} = temp_channel2;
         clear temp_ratio temp_channel1 temp_channel2
-    end %for j = 1:num_objects
+    end %for j = 1:num_object
     %Output the collected data from temp_data back to data.
     data.time = temp_time;
     data.channel1_bg = temp_channel1_bg;

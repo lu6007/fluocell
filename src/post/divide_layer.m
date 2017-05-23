@@ -47,9 +47,9 @@ if ~iscell_cell_bw,
     cell_bw = temp;
 end;
 
-num_objects = length(cell_bw);
-bd_layer = cell(num_objects, num_layer);
-label_layer = cell(num_objects, 1); 
+num_object = length(cell_bw);
+bd_layer = cell(num_object, num_layer);
+label_layer = cell(num_object, 1); 
 % we can remove method in the comments and the program 12/9/2015
 % if method == 1,
 %     % Compute the boundarys for the layers.
@@ -83,8 +83,8 @@ label_layer = cell(num_objects, 1);
 % function bwdist().
 % Then we use the function bw2bd() to calculate the boundaryies.
 %
-% Multiple detections with num_objects
-for j = 1 : num_objects
+% Multiple detections with num_object
+for j = 1 : num_object
     im = bwdist(~cell_bw{j});
     max_v = max(max(im))+1;
     label_layer{j} = floor(im/max_v*num_layer)+double(cell_bw{j});
@@ -99,8 +99,8 @@ c = 0;
 % end;
 
 if strcmp(xylabel, 'normal'),
-    temp = cell(num_objects, num_layer);
-    for j = 1 : num_objects
+    temp = cell(num_object, num_layer);
+    for j = 1 : num_object
         for i = 1 : num_layer,
             temp{j, i} = [bd_layer{j, i}(:,2), bd_layer{j, i}(:,1)];
         end;
