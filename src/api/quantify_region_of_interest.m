@@ -4,7 +4,7 @@
 % (1) To start tracking: fluocell_data.quantify_roi = 2; 
 % (2) To use subcellular layers instead of ROIs:
 % fluocell_data.quantify_roi = 3;
-% fluocell_data.num_layer = 3;
+% fluocell_data.num_roi = 3;
 % by change the value of parameter save_bw_file, you could 
 % decide save the cell_bw file of not
 % default save_bw_file = 0 ( not saving those file)
@@ -39,6 +39,7 @@ end
 % data.quantify_roi = 1: only one roi which can be manually moved around
 % data.quantify_roi = 2: more than 1 roi which can only be automatically tracked.  
 if data.quantify_roi == 1 || data.quantify_roi ==2
+    num_object = 1;
     if isfield(data,'num_roi')
         num_roi = data.num_roi;
     else
@@ -46,16 +47,12 @@ if data.quantify_roi == 1 || data.quantify_roi ==2
     end
 end
 
-% Multiple layers for multiple rois and
-% tracking
-%elseif data.quantify_roi == 3,
-if isfield(data, 'num_layer')
-    num_layer = data.num_layer;
+if isfield(data, 'num_roi')
+    num_roi = data.num_roi;
 else
-    num_layer = 1;
+    num_roi = 1;
 end
-%end;
-% 
+
 if nargin == 2
     cfp = ratio;
     yfp = ratio;
@@ -71,41 +68,7 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
      % Kathy 05/03/2017
      % In update_figure.m show_detected_boundary is forced to be 1. So
      % there are no other possibilities
-        cell_bw = data.cell_bw;
-%     else 
-%         % detect the cell shape (this part should be moved too)
-%         % use the centroid of the cell to move the regions of interest
-%         im = cfp + yfp;
-%         if isfield(data, 'need_apply_mask') && data.need_apply_mask
-%             temp = uint16(im).*uint16(data.mask); clear im;
-%             im = temp; clear temp;
-%         end
-%         % Lexie on 03/10/2015
-% %         temp_file = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
-%         % Read mat file instead of tiff file, Lexie on 12/14/2015
-%         if exist(temp_file_mat, 'file')
-% %             cell_bw = imread(temp_file); clear temp_file
-%             % Load the mat file instead of the tiff file, Lexie on
-%             % 12/14/2115
-%             load(temp_file_mat); clear temp_file_mat
-%             
-%         % For backward compatibility of the tiff file, Lexie on 12/14/2015
-%         elseif exist(temp_file_tiff, 'file')
-%             cell_bw = imread(temp_file_tiff); 
-%             % delete the old tiff cell_bw file and save it to be new mat
-%             % file. Lexie on 12/21/2015
-%             delete(temp_file_tiff); clear temp_file_tiff
-%             save(temp_file_mat, 'cell_bw');
-%         else
-%             if ~isfield(data, 'multiple_object') || ~data.multiple_object
-%                 [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3);
-%             else
-%                 [~, cell_bw] = detect_cell(im, 'show_figure', show_figure_option, 'smoothing_factor',3, 'multiple_object', data.multiple_object);
-%             end
-%         end %if exist(temp_file_mat, 'file')
-%    end % if isfield(data,'show_detected_boundary')
-    % save cell_bw file to be mat file instead of tiff, Lexie on
-    % 12/14/2015
+    cell_bw = data.cell_bw;
     if save_bw_file 
         save(temp_file_mat, 'cell_bw');
     end
@@ -121,7 +84,7 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
         data.cell_size{i}(data.index,1) = cell_prop(i).Area; %Column format -Shannon
     end
     % need to save cell_bw in a file somewhere
-    clear num_object cell_label cell_prop; % The value of num_object changed later
+    clear cell_label cell_prop; % The value of num_object changed later
     
 end % if data.quantify_roi ==2 || data.quantify_roi ==3,
 
@@ -130,11 +93,6 @@ switch data.quantify_roi
     case 1 % not track cell
         roi_bw = data.roi_bw;
         roi_poly = data.roi_poly;
-        % Since there is no cell_bw file, calculate the num_roi based on
-        % roi_bw, Lexie on 12/15/2015
-        % if ~exist('cell_bw', 'var')
-            num_roi = length(roi_bw);
-        % end
         if isfield(data,'need_apply_mask') && data.need_apply_mask ==4
             for i = 1:num_roi
                 roi_bw{i} = roi_bw{i}.*data.mask;
@@ -167,22 +125,19 @@ switch data.quantify_roi
                 clear bw_shift;
             end % for i
         end % if ~isfield(data, 'ref_centroid')
-        num_roi = length(data.roi_bw);
-    % Lexie on 12/10/2015, change the roi data structure to fit mutiple tracking and multiple layers situation   
     case 3 %switch data.quantify_roi,
-        [roi_poly, label_layer] = divide_layer(obj, num_layer, 'method',2, ...
+        [roi_poly, label_layer] = divide_layer(obj, num_roi, 'method',2, ...
             'xylabel', 'normal');
         % figure; imagesc(label_layer);
         % label = 1 outlayer; label = 3 inner layer
-        num_roi = length(obj);
-        roi_bw = cell(num_roi, num_layer); 
-        for j = 1 : num_roi
-            for i = 1 : num_layer
-               roi_bw{j, i} = (label_layer{j} == i);
+        num_object = length(obj);
+        roi_bw = cell(num_roi, num_object); 
+        for i = 1 : num_object
+            for j = 1 : num_roi
+               roi_bw{j, i} = (label_layer{i} == j);
             end
         end
 end
-
 
 % Extract the time value,
 % Draw the rois,
@@ -199,40 +154,18 @@ if (isfield(data, 'show_figure') && data.show_figure == 1)...
 end
 
 %% Modified the following for loop to shrink area of quantification. - Shannon 8/4/2016
-for i = 1 : num_roi
-    for j = 1:num_layer %subcellular layers
+for i = 1 : num_object
+    for j = 1:num_roi %subcellular layers
         %Modified to try to shrink the area that needs to be computed. - Shannon 8/4/2016
-        data.ratio{i}(data.index, j) = compute_average_value(ratio, roi_bw{i,j});
-        data.channel1{i}(data.index, j) = compute_average_value(cfp, roi_bw{i,j});
-        data.channel2{i}(data.index, j) = compute_average_value(yfp, roi_bw{i,j});
-
-%         %BoundingBox retrieves the upper left coordinates and the 
-%         %length and width of a rectangle bounding the region of interest.
-%         stat = regionprops(roi_bw{i,j},'BoundingBox');
-%         %Use fix to ensure values are greater than 0, but less than the max value.
-%         boundingBox = fix(stat.BoundingBox - 1) + 1; %[x_ul,y_ul,x_width,y_width]
-%         %Shrink the widths in case the BoundingBox is the entire width of the image.
-%         boundingBox(3:4) = boundingBox(3:4)-1;
-%         %Calculating coordinates of the bottom right corner.
-%         brCorner = [boundingBox(1) + boundingBox(3), boundingBox(2) + boundingBox(4)];%[x_br,y_br]
-%         yBound = boundingBox(2):brCorner(2); %y_ul:y_br
-%         xBound = boundingBox(1):brCorner(1); %x_ul:x_br
-%         %Using (yBound,xBound) since the image's matrix is stored as (col,row) 
-%         %i.e. (y-reversed,x) instead of (x,y).
-%         boundedRoiBw = roi_bw{i,j}(yBound,xBound);
-%         
-%         data.ratio{i}(data.index, j) = compute_average_value(ratio(yBound,xBound), boundedRoiBw);
-%         data.channel1{i}(data.index, j) = compute_average_value(cfp(yBound,xBound), boundedRoiBw);
-%         data.channel2{i}(data.index, j) = compute_average_value(yfp(yBound,xBound), boundedRoiBw);
+        data.ratio{i}(data.index, j) = compute_average_value(ratio, roi_bw{j,i});
+        data.channel1{i}(data.index, j) = compute_average_value(cfp, roi_bw{j,i});
+        data.channel2{i}(data.index, j) = compute_average_value(yfp, roi_bw{j,i});
     end
 end; clear i j
 %%
     
 % quantify background
 if isfield(data, 'subtract_background') && data.subtract_background
-%     data.channel1_bg(data.index) = compute_average_value(cfp, data.bg_bw);
-%     data.channel2_bg(data.index) = compute_average_value(yfp, data.bg_bw);
-% matrix didn't match, Lexie on 02/19/2015
     data.channel1_bg(data.index) = compute_average_value(data.im{1}, data.bg_bw);
     data.channel2_bg(data.index) = compute_average_value(data.im{2}, data.bg_bw);
 end

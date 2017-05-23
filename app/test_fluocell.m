@@ -21,6 +21,8 @@ res = load(data_file);
 data = res.data;
 data.path = temp.path;
 data.first_file = strcat(data.path, '2-11.001');
+data.num_figures = 3;
+% data.f(3) = figure;
 save(data_file, 'data');
 batch_update_figure(data);
 
@@ -65,14 +67,15 @@ data = res.data;
 data.path = temp.path;
 data.output_path = strcat(data.path, 'output/');
 data.first_file = strcat(data.path, 'cfp_t1.tif');
-% data = rmfield(data, 'num_rois');
 data.num_roi = 3;
+% data.num_figures = 3;
+% data.f(3) = figure;
 save(data_file, 'data');
 %
 data = batch_update_figure(data);
 disp('Check output, and confirm that the next two rows show same numbers.');
 disp(' [1.0046 1.0161 1.0309 1.0580 1.0775]');
-disp(data.ratio{3}(1:5)');
+disp(data.ratio{1}(1:5,data.num_roi)');
 if enable_pause
     disp(pause_str);
     pause;  

@@ -16,7 +16,7 @@
 
 % New features:
 % 1. Allow reading flexible file names.
-% 2. Allow changing num_layer.
+% 2. Allow changing num_roi.
 % 3. Removed the option of not have yfp files.
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2013
@@ -41,10 +41,10 @@ default_value = {1, data.index,need_mask_default,'segmentation', 1,...
     parse_parameter(parameter_name, ...
     default_value, varargin);
 
-if isfield(data, 'num_layer')
-    num_layer = data.num_layer;
+if isfield(data, 'num_roi')
+    num_roi = data.num_roi;
 else
-    num_layer = 5;
+    num_roi = 5;
 end
 
 % if need_mask && ~exist(strcat(data.path, 'output\cell_mask'), 'file'),
@@ -135,7 +135,7 @@ for k = 1:num_acquisitions
              end
              % cell_bw
              if exist('cell_bw','file')
-                 [bd_layer, ~] = divide_layer(cell_bw, num_layer, ...
+                 [bd_layer, ~] = divide_layer(cell_bw, num_roi, ...
                      'method',2);
                  plot(bd_layer{2}(:,2), bd_layer{2}(:,1), 'w--','LineWidth',2);
              end

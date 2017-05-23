@@ -4402,7 +4402,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 2 ;
-        data.num_layer = 3;
+        data.num_roi = 3;
 %         batch_detect_cell_bws('07_20_2s1' 'save_file' 0, 'image_index' {1,[]},...
 % 'cbound' [1 200]);
 % batch_detect_fa_labels('07_20_2s1' 'save_file' 1);
@@ -4426,7 +4426,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 3 ;
-        data.num_layer = 5;
+        data.num_roi = 5;
     case '07_20_2s3'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p3\');
@@ -4445,7 +4445,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 1 ;
-        data.num_layer = 5;
+        data.num_roi = 5;
     case '07_20_2s4'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p4\');
@@ -4465,7 +4465,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 1;
-        data.num_layer = 5;
+        data.num_roi = 5;
     case '07_20_2s5'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p5\');
@@ -4485,7 +4485,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 1;
-        data.num_layer = 5;
+        data.num_roi = 5;
     case '07_29_1s1'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s1\');
@@ -4505,7 +4505,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 3;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.need_mask = 1;
     case '07_29_1s2'
         data.multiple_acquisition = 1;
@@ -4526,7 +4526,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 2;
-        data.num_layer = 5;
+        data.num_roi = 5;
     case '07_29_1s3'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s3\');
@@ -4546,7 +4546,7 @@ switch name
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 2;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.need_mask = 1;
     case '07_29_1s4'
         data.multiple_acquisition = 1;
@@ -4566,7 +4566,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
     case '07_29_1s5' % image too dim cannot detect cell well
         data.multiple_acquisition = 1;
@@ -4587,7 +4587,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
     case '07_29_2s1' 
         data.multiple_acquisition = 1;
@@ -4607,7 +4607,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
     case '07_29_2s2' 
         data.multiple_acquisition = 1;
@@ -4627,7 +4627,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
     case '07_29_2s3' 
         data.multiple_acquisition = 1;
@@ -4648,7 +4648,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
     case '07_29_2s4' 
         data.multiple_acquisition = 1;
@@ -4669,7 +4669,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
     case '07_29_2s5' 
         data.multiple_acquisition = 1;
@@ -4690,7 +4690,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
     case '07_29_3s3' 
         data.multiple_acquisition = 1;
@@ -4711,7 +4711,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
     case '07_29_3s4' 
         data.multiple_acquisition = 1;
@@ -4732,7 +4732,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
     case '07_29_3s5' 
         data.multiple_acquisition = 1;
@@ -4753,7 +4753,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
     case '07_29_3s6' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\3\s6\');
@@ -4773,7 +4773,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      % 08_06_1s1 fret 10 1:10, 1:51, [1 500], [1 500]
      case '08_06_1s1' 
@@ -4795,7 +4795,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      case '08_06_1s2' 
          % [0 500]
@@ -4817,7 +4817,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      case '08_06_1s3' 
          % [0 5000]
@@ -4839,7 +4839,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_06_1s5' 
          % [0 1000]
@@ -4861,7 +4861,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      case '08_06_1s6' 
          % [0 1800]
@@ -4883,7 +4883,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
      case '08_06_2s1' 
          % [0 800]
@@ -4905,7 +4905,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      case '08_06_2s2' 
          % [0 4000]
@@ -4927,7 +4927,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_06_2s3' 
          % [0 500]
@@ -4949,7 +4949,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_06_2s4' 
          % [0 200]
@@ -4971,7 +4971,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      case '08_06_2s5' 
          % [0 300]
@@ -4993,7 +4993,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
      case '08_06_2s6' 
          % [0 400]
         data.multiple_acquisition = 1;
@@ -5014,7 +5014,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_19_fn25_1s1'  %RacV12_fn25
          % [0 200]
@@ -5037,7 +5037,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_19_fn25_1s2'  
          % [0 100]
@@ -5065,7 +5065,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_19_fn25_1s3'  
          % [0 100]
@@ -5089,7 +5089,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
      case '08_19_fn25_1s5'  
          % [0 1000]
@@ -5112,7 +5112,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_19_fn25_1s6'  
          % [0 100]
@@ -5138,7 +5138,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
      case '08_19_fn25_2s2'  
          % [0 500]
@@ -5161,7 +5161,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
      case '08_19_fn25_2s3'  
          % [0 200]
@@ -5184,7 +5184,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      case '08_19_fn25_2s4'  % [0 500]
         data.multiple_acquisition = 1;
@@ -5202,7 +5202,7 @@ switch name
         data.ref_pax_intensity =  99344663; % total paxillin intensity
         data.fa.min_water = 40 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layer = 2.5;
+        data.fa.single_min_area = 30; data.num_roi = 2.5;
         data.num_fans = 1;
      case '08_19_fn25_2s5'  % [0 700]
         data.multiple_acquisition = 1;
@@ -5220,7 +5220,7 @@ switch name
         data.ref_pax_intensity =  87369028; % total paxillin intensity
         data.fa.min_water = 50 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layer = 5;
+        data.fa.single_min_area = 30; data.num_roi = 5;
         data.num_fans = 2;
      case '08_19_fn25_2s6'  % [0 100]
         data.multiple_acquisition = 1;
@@ -5238,7 +5238,7 @@ switch name
         data.ref_pax_intensity =  7141833; % total paxillin intensity
         data.fa.min_water = 20 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layer = 5;
+        data.fa.single_min_area = 30; data.num_roi = 5;
         data.num_fans = 3;
      case '08_19_fn25_2s7'  % [0 80]
         data.multiple_acquisition = 1;
@@ -5256,7 +5256,7 @@ switch name
         data.ref_pax_intensity =  3912049; % total paxillin intensity
         data.fa.min_water = 15 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layer = 5;
+        data.fa.single_min_area = 30; data.num_roi = 5;
         data.num_fans = 1;
 
         
@@ -5285,7 +5285,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '08_19_fn20_1s3'  % RacV12 FN20 s6-s3
          % [0 100]
@@ -5310,7 +5310,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       %case '08_19_fn20_1s4'  % RacV12 FN20 s7-s4
       % did not analyze since the the cells could not be detected
@@ -5347,7 +5347,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '08_19_fn20_2s1'  
          % [0 100]
@@ -5371,7 +5371,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '08_19_fn20_2s2'  
          % [0 100]
@@ -5394,7 +5394,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '08_19_fn20_2s3'  
          % [0 500]
@@ -5417,7 +5417,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '08_19_fn20_2s4'  
          % [0 80]
@@ -5441,7 +5441,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '08_19_fn20_2s5'  
          % [0 100]
@@ -5464,7 +5464,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '08_19_fn20_2s6'  
          % [0 100]
@@ -5487,7 +5487,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
 % RhoV14
       case '11_11_RhoV14_1p1'  
@@ -5512,7 +5512,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_1p2'  
          data.multiple_acquisition = 1;
@@ -5536,7 +5536,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_1p3'  
         data.multiple_acquisition = 1;
@@ -5560,7 +5560,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_1p4'  
         data.multiple_acquisition = 1;
@@ -5584,7 +5584,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_1p5'  
         data.multiple_acquisition = 1;
@@ -5608,7 +5608,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_1p6'  
         data.multiple_acquisition = 1;
@@ -5632,7 +5632,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_1p7'  
         data.multiple_acquisition = 1;
@@ -5656,7 +5656,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_1p8'  
         data.multiple_acquisition = 1;
@@ -5680,7 +5680,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_2p1'  
         data.multiple_acquisition = 1;
@@ -5701,7 +5701,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_2p2'  
         data.multiple_acquisition = 1;
@@ -5722,7 +5722,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_2p3'  
         data.multiple_acquisition = 1;
@@ -5743,7 +5743,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_2p4'  
         data.multiple_acquisition = 1;
@@ -5764,7 +5764,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_2p5'  
         data.multiple_acquisition = 1;
@@ -5785,7 +5785,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_3p1'  
         data.multiple_acquisition = 1;
@@ -5808,7 +5808,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_3p2'  
         data.multiple_acquisition = 1;
@@ -5831,7 +5831,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '11_11_RhoV14_3p3'  
         data.multiple_acquisition = 1;
@@ -5854,7 +5854,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_3p4'  
         data.multiple_acquisition = 1;
@@ -5878,7 +5878,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '11_11_RhoV14_3p5'  % too much noise, did not include in analysis
         data.multiple_acquisition = 1;
@@ -5901,7 +5901,7 @@ switch name
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_1p1'  
         data.multiple_acquisition = 1;
@@ -5925,7 +5925,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_1p2'  
         data.multiple_acquisition = 1;
@@ -5950,7 +5950,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_1p3'  
         data.multiple_acquisition = 1;
@@ -5975,7 +5975,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_1p4'  
         data.multiple_acquisition = 1;
@@ -6000,7 +6000,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_1p5'  
         data.multiple_acquisition = 1;
@@ -6025,7 +6025,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_2p1'  
         data.multiple_acquisition = 1;
@@ -6050,7 +6050,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_2p2'  
         data.multiple_acquisition = 1;
@@ -6075,7 +6075,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_2p3'  
         data.multiple_acquisition = 1;
@@ -6100,7 +6100,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
         % p4 time course too short not using
       case '01_27_fn25_2p5'  
@@ -6127,7 +6127,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_1p1'  
         data.multiple_acquisition = 1;
@@ -6152,7 +6152,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racn17_1p21'  
           % two cells -- this one is the lower left cell
@@ -6178,7 +6178,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_1p22'  
           % two cells -- this one is the top right cell
@@ -6204,7 +6204,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racn17_1p3'  
         data.multiple_acquisition = 1;
@@ -6229,7 +6229,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_1p4'  
           % unstable before pdgf, not using.
@@ -6255,7 +6255,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_1p5'  
         data.multiple_acquisition = 1;
@@ -6280,7 +6280,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racn17_1p6'  
         data.multiple_acquisition = 1;
@@ -6305,7 +6305,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_2p1'  
         data.multiple_acquisition = 1;
@@ -6329,7 +6329,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_2p2'  
         data.multiple_acquisition = 1;
@@ -6353,7 +6353,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 20;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_2p3'  
           % did not use, the paxillin was unstable before pdgf.
@@ -6378,7 +6378,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 20;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_2p4'  
         data.multiple_acquisition = 1;
@@ -6402,7 +6402,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
       case '01_27_fn25_racn17_2p5'  
         data.multiple_acquisition = 1;
@@ -6426,7 +6426,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
       case '01_27_fn25_racn17_2p6'  
         data.multiple_acquisition = 1;
@@ -6450,7 +6450,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_3p1'  
         data.multiple_acquisition = 1;
@@ -6474,7 +6474,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_3p21'  
           % two cells -- this one is the top left cell
@@ -6499,7 +6499,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racn17_3p22'  
           % some near nuclear unspecificity, not using the data.
@@ -6524,7 +6524,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_3p3'  
         data.multiple_acquisition = 1;
@@ -6548,7 +6548,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_3p4'  
         data.multiple_acquisition = 1;
@@ -6572,7 +6572,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racn17_3p5'  
         data.multiple_acquisition = 1;
@@ -6596,7 +6596,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racn17_3p6'  
         data.multiple_acquisition = 1;
@@ -6620,7 +6620,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racv12_1p2'  
         data.multiple_acquisition = 1;
@@ -6644,7 +6644,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racv12_1p4'  
           % cell not stable before pdgf, not using.
@@ -6669,7 +6669,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_1p5'  
         data.multiple_acquisition = 1;
@@ -6693,7 +6693,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_1p6'  
         data.multiple_acquisition = 1;
@@ -6717,7 +6717,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_2p1'  
         data.multiple_acquisition = 1;
@@ -6741,7 +6741,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
       case '01_27_fn25_racv12_2p2'  
           % unstable before pdgf not using
@@ -6766,7 +6766,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_2p3'  
         data.multiple_acquisition = 1;
@@ -6790,7 +6790,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_2p4'  
         data.multiple_acquisition = 1;
@@ -6814,7 +6814,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_2p5'  
         data.multiple_acquisition = 1;
@@ -6838,7 +6838,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
       case '01_27_fn25_racv12_2p6'  
         data.multiple_acquisition = 1;
@@ -6862,7 +6862,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racv12_3p1'  
         data.multiple_acquisition = 1;
@@ -6886,7 +6886,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
       case '01_27_fn25_racv12_3p2'  
         data.multiple_acquisition = 1;
@@ -6910,7 +6910,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_3p3'  
         data.multiple_acquisition = 1;
@@ -6934,7 +6934,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_3p4'  
         data.multiple_acquisition = 1;
@@ -6958,7 +6958,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
       case '01_27_fn25_racv12_3p5'  
         data.multiple_acquisition = 1;
@@ -6982,7 +6982,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 0;
       case '01_27_fn25_racv12_3p6'  
         data.multiple_acquisition = 1;
@@ -7006,7 +7006,7 @@ switch name
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layer = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
        
         

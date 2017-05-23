@@ -31,7 +31,7 @@ switch data.protocol
 %             data.is_channel1_over_channel2 = 1;
 %         end;
     case {'FLIM', 'STED'}
-        num_figures = 2;
+        num_figures = 4;
     case 'Intensity'
         num_figures = 2;
     case 'Intensity-DIC'

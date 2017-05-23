@@ -16,10 +16,10 @@
 
 
 function compute_fa_property(cell_name, data, varargin)
-parameter_name = {'cfp_channel','yfp_channel','pax_channel', 'num_layer',...
+parameter_name = {'cfp_channel','yfp_channel','pax_channel', 'num_roi',...
     'save_file', 'remove_data'};
 default_value = {1,2,4, 5, 1, 0};
-[cfp_channel_input, yfp_channel_input, pax_channel_input, num_layer, ...
+[cfp_channel_input, yfp_channel_input, pax_channel_input, num_roi, ...
     save_file, remove_data] ...
 = parse_parameter(parameter_name, ...
     default_value, varargin);
@@ -35,10 +35,10 @@ path = data.path;
 
 image_index = data.index;
 shift = 1.0e-4;
-if isfield(data, 'num_layer')
-    num_layer = data.num_layer;
+if isfield(data, 'num_roi')
+    num_roi = data.num_roi;
 else
-    num_layer = 5;
+    num_roi = 5;
 end
 
 if isfield(data, 'path_all') && iscell(data.path_all)
@@ -132,8 +132,8 @@ if ~exist(result_file, 'file')
             end
             clear old_cell_bw; old_cell_bw{1} = uint16(cell_bw_ii);           
             % Take the out-most layer and quantify there.
-            %[bd_layer, label_layer] = divide_layer(old_cell_bw, num_layer);
-            [bd_layer, label_layer] = divide_layer(old_cell_bw, num_layer, ...
+            %[bd_layer, label_layer] = divide_layer(old_cell_bw, num_roi);
+            [bd_layer, label_layer] = divide_layer(old_cell_bw, num_roi, ...
             'method', 2);
 
             cell_bw{i} = (label_layer{1}==1); 
@@ -265,7 +265,7 @@ plot(total_pax_intensity/total_pax_intensity(1), 'k', 'LineWidth',2);
 plot(all_index,all_index/100+1,'k--', 'LineWidth',1);
 legend('Ratio in FA', 'Ratio out FA', 'Norm. Total FA Intensity',...
     'Norm. Total Pax Intensity', 'Frame Number');
-title(strcat(strrep(cell_name,'_','\_'), ' FA Layers\_', num2str(num_layer), '\_1'));
+title(strcat(strrep(cell_name,'_','\_'), ' FA Layers\_', num2str(num_roi), '\_1'));
 axis([1 60 0 2]);
 
 return;

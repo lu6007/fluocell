@@ -24,7 +24,7 @@ data.index_pattern = {'t1', 't%d'};
 data.fa.filter_size = 61;
 data.fa.brightness_factor = 1;
 data.fa.single_min_area = 10;
-data.num_layer = 5;
+data.num_roi = 5;
 data.multiple_acquisition = 1;
 data.cell_name = name;
 switch name
