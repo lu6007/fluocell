@@ -6,16 +6,21 @@
 %
 % Copyright: Shaoying (Kathy) Lu, shaoying.lu@gmail.com 2/18/2016
 function display_boundary(bw, varargin)
-    parameter_name = {'im', 'show_label', 'color', 'new_figure'};
-    parameter_default = {[], 0, 'r', 1};
-    [im, show_label, cr, new_figure] = parse_parameter(parameter_name, parameter_default, varargin);
+    parameter_name = {'im', 'show_label', 'color', 'new_figure', 'type'};
+    parameter_default = {[], 0, 'r', 1, 1};
+    [im, show_label, cr, new_figure, type] = parse_parameter(parameter_name, parameter_default, varargin);
     bd = bwboundaries(bw, 8, 'noholes');
     num_object = length(bd);
     if new_figure 
         my_figure; 
     end
     if ~isempty(im)
-        imshow(im);    
+        switch type
+            case 1
+                imshow(im);
+            case 2
+                imagesc(im);
+        end
     end
     
     hold on; 

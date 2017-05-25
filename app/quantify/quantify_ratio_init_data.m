@@ -1,7 +1,8 @@
 function data = quantify_ratio_init_data(exp_name)
-root = 'E:/data/2016/binbin_0217/';
+% root = 'E:/data/2016/binbin_0217/';
+root = '/Volumes/KathyWD2TB/data/2017/yanmin_0525/';
 switch exp_name
-    case 'sample',
+    case 'sample'
         data.path = 'D:/sof/data/fluocell_dataset2/quantify/1/';
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -16,8 +17,41 @@ switch exp_name
         data.alpha = 1.0; % average ratio between channels 1 and 2. 
         % 
         data.subtract_background = 1;
-        data.median_filter = 1;     
-    case '1122_wt1',
+        data.median_filter = 1;    
+    case 'none'
+        data.path = strcat(root, 'None/');
+        data.first_file = '1_w1mCherry2_s1.TIF'; 
+        % 1 - mCherry; 2 - GFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1mCherry2', 'w2GFP-WPZ'}; 
+        data.detection = 'auto';
+        data.image_index =(1:10)';
+        data.intensity_bound = [0 4000];
+        data.ratio_bound = [0.5 10];
+        data.brightness_factor = 0.3;
+        data.min_area = 70;
+        data.alpha = 3; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 0;    
+    case '10min'
+        data.path = strcat(root, '10min/');
+        data.first_file = '1_w1mCherry2_s1.TIF'; 
+        % 1 - mCherry; 2 - GFP; 
+        data.index_pattern = {'s1', 's%d'};
+        data.channel_pattern= {'w1mCherry2', 'w2GFP-WPZ'}; 
+        data.detection = 'auto';
+        data.image_index =(1:10)';
+        data.intensity_bound = [0 4000];
+        data.ratio_bound = [0.5 10];
+        data.brightness_factor = 0.3;
+        data.min_area = 70;
+        data.alpha = 1; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 0;    
+
+    case '1122_wt1'
         data.path = 'G:\20161122\JCam_LckWT_LckBS\';
         data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -33,7 +67,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case '1122_wt2',
+    case '1122_wt2'
         data.path = 'G:\20161122\JCam_LckWT_LckBS2\';
         data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -49,7 +83,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case '1122_wt3',
+    case '1122_wt3'
         data.path = 'G:\20161122\JCam_LckWT_LckBS3\';
         data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -65,7 +99,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case '1122_yf1',
+    case '1122_yf1'
         data.path = 'G:\20161122\JCam_LckYF_LckBS\';
         data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -81,7 +115,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case '1122_yf2',
+    case '1122_yf2'
         data.path = 'G:\20161122\JCam_LckYF_LckBS2\';
         data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -97,7 +131,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case '1122_yf3',
+    case '1122_yf3'
         data.path = 'G:\20161122\JCam_LckYF_LckBS3\';
         data.first_file = '1_w1CFP-10-_s1_t2.TIF'; % FRET channel
         % 1 - FRET; 2 - CFP; 
@@ -117,7 +151,7 @@ switch exp_name
         
         % F
         
-    case 'wt_1030',
+    case 'wt_1030'
         %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
         data.path = 'E:\data\2016\rongxue_1030\20161030_WT\';
         data.first_file = '1_w1CFP-10-_s2_t1.TIF'; % FRET channel
@@ -135,7 +169,7 @@ switch exp_name
         data.subtract_background = 1;
         data.median_filter = 1;        
    
-    case 'wt_1030_2',
+    case 'wt_1030_2'
         %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
         data.path = 'E:\data\2016\rongxue_1030\20161030_WT2\';
         data.first_file = '1_w1CFP-10-_s2_t1.TIF'; % FRET channel
@@ -153,7 +187,7 @@ switch exp_name
         data.subtract_background = 1;
         data.median_filter = 1;        
 
-   case 'yf_1030',
+   case 'yf_1030'
         %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
         data.path = 'E:\data\2016\rongxue_1030\20161030_YF\';
         data.first_file = '1_w1CFP-10-_s2_t1.TIF'; % FRET channel
@@ -171,7 +205,7 @@ switch exp_name
         data.subtract_background = 1;
         data.median_filter = 1;        
 
-   case 'yf_1030_2',
+   case 'yf_1030_2'
         %data.path = 'D:\data\rongxue_1031\20161030_WT\output\';
         data.path = 'E:\data\2016\rongxue_1030\20161030_YF2\';
         data.first_file = '2_w1CFP-10-_s2_t1.TIF'; % FRET channel
@@ -189,7 +223,7 @@ switch exp_name
         data.subtract_background = 1;
         data.median_filter = 1;        
 
-    case 'rep1_1012',
+    case 'rep1_1012'
         data.path = strcat(root, 'try3/1012_2015_rep1/');
         data.first_file = 'PSIN-H31.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -206,7 +240,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep2_1013',
+    case 'rep2_1013'
         data.path = strcat(root, 'try3/1013_2015_rep2/');
         data.first_file = 'PSIN-H31.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -223,7 +257,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep3_1014',
+    case 'rep3_1014'
         data.path = strcat(root, 'try3/1014_2015_rep3/');
         data.first_file = 'PSIN-H31.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -239,7 +273,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep4_1015',
+    case 'rep4_1015'
         data.path = strcat(root, 'try3/1015_2015_rep4/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -257,7 +291,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep5_1016',
+    case 'rep5_1016'
         data.path = strcat(root, 'try3/1016_2015_rep5/');
         data.first_file = 'H3K9 IN1.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -274,7 +308,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep6_1017',
+    case 'rep6_1017'
         data.path = strcat(root, 'try3/1017_2015_rep6/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -290,7 +324,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep7_1018',
+    case 'rep7_1018'
         data.path = strcat(root, 'try3/1018_2015_rep7/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -306,7 +340,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'rep8_1019',
+    case 'rep8_1019'
         data.path = strcat(root, 'try3/1019_2015_rep8/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -323,7 +357,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;        
-    case 'con1_1012',
+    case 'con1_1012'
         data.path = strcat(root, 'try3/1012_2015_con1/');
         data.first_file = 'PSIN-H31.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -341,7 +375,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con2_1013',
+    case 'con2_1013'
         data.path = strcat(root, 'try3/1013_2015_con2/');
         data.first_file = 'PSIN-H31.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -358,7 +392,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con3_1014',
+    case 'con3_1014'
         data.path = strcat(root, 'try3/1014_2015_con3/');
         data.first_file = 'PSIN-H31.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -374,7 +408,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con4_1015',
+    case 'con4_1015'
         data.path = strcat(root, 'try3/1015_2015_con4/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -390,7 +424,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con5_1016',
+    case 'con5_1016'
         data.path = strcat(root, 'try3/1016_2015_con5/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -409,7 +443,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con6_1017',
+    case 'con6_1017'
         data.path = strcat(root, 'try3/1017_2015_con6/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -426,7 +460,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con7_1018', % name of experiment
+    case 'con7_1018' % name of experiment
         data.path = strcat(root, 'try3/1018_2015_con7/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -444,7 +478,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1; 
-    case 'con8_1019', % name of experiment
+    case 'con8_1019' % name of experiment
         data.path = strcat(root, 'try3/1019_2015_con8/');
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP;  
@@ -463,5 +497,5 @@ switch exp_name
         data.subtract_background = 1;
         data.median_filter = 1; 
         
-end;
+end
 return;

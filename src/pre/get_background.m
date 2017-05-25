@@ -18,13 +18,13 @@ default_value = {'manual'};
 method = parse_parameter(parameter_name, default_value,varargin);
 
 switch method
-    case {'manual','m', 1},        % 1 and 2 added Kathy 04/24/2016
+    case {'manual','m', 1}        % 1 and 2 added Kathy 04/24/2016
         [bw_cell, poly_cell] = get_polygon(im, file_bg,...
             'Please choose the background region.');
         bw = bw_cell{1};
         poly = poly_cell{1};
         
-    case {'auto','a', 2},
+    case {'auto','a', 2}
         %Automatically select a background region with the minimal 
         %intensity value among the four corners.
         [bw_cell, poly_cell] = get_polygon(im, file_bg,...
