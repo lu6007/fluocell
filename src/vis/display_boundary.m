@@ -9,8 +9,7 @@ function display_boundary(bw, varargin)
     parameter_name = {'im', 'show_label', 'color', 'new_figure', 'type'};
     parameter_default = {[], 0, 'r', 1, 1};
     [im, show_label, cr, new_figure, type] = parse_parameter(parameter_name, parameter_default, varargin);
-    bd = bwboundaries(bw, 8, 'noholes');
-    num_object = length(bd);
+    
     if new_figure 
         my_figure; 
     end
@@ -24,6 +23,14 @@ function display_boundary(bw, varargin)
     end
     
     hold on; 
+
+    
+    if isempty(bw) 
+        return;
+    end
+    
+    bd = bwboundaries(bw, 8, 'noholes');
+    num_object = length(bd);
     for j = 1:num_object
         plot(bd{j}(:,2), bd{j}(:,1), 'Color', cr);
     end

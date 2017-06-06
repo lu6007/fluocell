@@ -18,8 +18,8 @@
 % Copyright: Shaoying Lu 2015-2017
 % shaoying.lu@gmail.com
 function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, varargin)
-para_name = {'add_channel'};
-para_default = {0};
+para_name = {'add_channel','enable_high_pass_filter'};
+para_default = {0, 0};
 add_channel = parse_parameter(para_name, para_default, varargin);
 %
 qfun = quantify_fun();
@@ -53,7 +53,9 @@ for i = 1:num_image
         mkdir(strcat(data.path, 'output/'));
     end
     temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
-    data.bg_bw = get_background(temp, bg_file, 'method', 'manual'); clear temp;
+    if isfield(data, 'subtract_background') && data.subtract_background
+        data.bg_bw = get_background(temp, bg_file, 'method', 'manual'); clear temp;
+    end
     im{1} = preprocess(temp1, data); clear temp1;
     im{2} = preprocess(temp2, data); clear temp2;
     ratio = compute_ratio(im{1}, im{2});
@@ -78,8 +80,12 @@ for i = 1:num_image
     % im_detect is the image used for detection. 
     
     im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
-    display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
+    if isfield(data, 'bg_bw') 
+        display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
     % display_boundary(data.bg_bw, 'im', im{2}, 'line_color', 'r', 'new_figure', 0, 'type', 2);
+    else
+        display_boundary([], 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
+    end
        
     %%% 
     if manual_select
