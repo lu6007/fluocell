@@ -75,10 +75,11 @@ for i = 1:num_image
     end 
     if i8 == 1
         my_figure;
+        tight_subplot(2, 4, [.01 .01], [.01 .01], [.01 .01]); hold on;
     end
-    subplot(2,4, i8); hold on;
-    % im_detect is the image used for detection. 
+    subplot(2,4, i8); % hold on;
     
+    % im_detect is the image used for detection. 
     im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
     if isfield(data, 'bg_bw') 
         display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
