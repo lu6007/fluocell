@@ -81,7 +81,7 @@ for i = 1:num_dt-1
     [ss, c_new, data] = model_state(ss, data);
     c = M2*c_new; clear c_new; 
     
-    y(:,i+1) = y(:,i)+dt*v+c;
+    y(:,i+1) = temp+c;
 
     % modulated by y_min and y_max
     y(:, i+1) = max(y(:, i+1), y_min);

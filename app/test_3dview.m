@@ -8,12 +8,15 @@ function test_3dview(data)
 % iso_value = 425;
 % surface_file = 'surface';
 % intensity_base = 50;
-
+%
 % Hela-WT1 t1, t5, t9
 % root = 'E:\data\2014\qin_peng\';
 % p = '1111\WTH3K9\3\p2\dconv9\';
-% root = 'D:/doc/paper/2016/fluocell_1221/quanty_dataset_2/';
-% p = strcat(root, 'fig6/1111_h3k9_3/p2/dconv9/');
+%
+% Example: 
+% data.root = '/Users/kathylu/Documents/doc/paper/fluocell_0420/quanty_dataset_2/';
+% data.path = strcat(data.root, 'fig6/1111_h3k9_3/p2/dconv9/');
+% test_3dview(data)
 p = data.path;
 z_dist = 1.0*15; % 1um *15 pixel/um
 image_index = (11:31)';
@@ -43,6 +46,7 @@ end
 
 %% load images
 temp = imread(data.first_file);
+% data.high_pass_filter = 61;
 im = preprocess(temp, data); clear temp;
 figure; imagesc(im);
 rect = data.rectangle;
@@ -68,7 +72,7 @@ ratio_im = compute_ratio(fret_im, cfp_im, 'shift', intensity_base);
 intensity_im = 1/(1+ratio_factor)*fret_im+ratio_factor/(1+ratio_factor)*cfp_im; 
 intensity_bound = [1 1023];
 
-%% output files for 3dview(?)
+%% output files for 3d view in visIt
 for i = 1:num_frames
     j = image_index(i);
     j_str = sprintf(data.index_pattern{2},j);
