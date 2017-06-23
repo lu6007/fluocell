@@ -16,16 +16,16 @@ function [im, fun] = my_imread(file_name, data)
     %      im = imread(file_name, data.index),
     % end;
     % 
-    if exist(file_name, 'file') == 2,
-            % insert >>> 1 >>>
+    if exist(file_name, 'file') == 2
+         if ~isfield(data, 'image_type')|| ~strcmp(data.image_type, 'z-stack')
             im = imread(file_name);
 
             % Solve the jpg format problem.
-            if isfield(data, 'image_format') && strcmp(data.image_format, 'jpg1'),
+            if isfield(data, 'image_format') && strcmp(data.image_format, 'jpg1')
                 temp = sum(im,3); clear im;
                 im = temp; clear temp;
             end
-     elseif isfield(data, 'image_type') && strcmp(data.image_type,'z-stack'),
+        elseif isfield(data, 'image_type') && strcmp(data.image_type,'z-stack')
             %try-catch to check for valid user input of the z-index value. -Shannon 8/23/2016
             try
                 im = imread(file_name,data.z_index);
@@ -37,10 +37,11 @@ function [im, fun] = my_imread(file_name, data)
                     throw(exception)
                 end
             end
-       else % not exist file 
+         end
+    else % not exist file 
             im = [];
-            display(sprintf('%s : %s\n', file_name, 'This file does not exist!'));
-       end;
+            fprintf('%s : %s\n', file_name, 'This file does not exist!');
+    end
 return;
 
 % Ref: Jerome, How to load Tiff stacks fast

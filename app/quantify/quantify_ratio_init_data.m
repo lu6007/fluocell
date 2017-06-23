@@ -1,7 +1,7 @@
 function data = quantify_ratio_init_data(exp_name)
 % root = 'E:/data/2016/binbin_0217/';
 % root = '/Volumes/KathyWD2TB/data/2017/yanmin_0525/';
-root = '/Volumes/KathyWD2TB/data/2017/';
+root = '/Volumes/KathyWD2TB/data/2017/molly_0606/';
 switch exp_name
     case 'sample'
         data.path = 'D:/sof/data/fluocell_dataset2/quantify/1/';
@@ -19,8 +19,104 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;    
+    case '0616_6'
+        data.path = strcat(root, '0616/6/');
+        data.first_file = 'JURKAT1.001'; % Intensity Only
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
+        data.detection = 'auto';
+        data.image_index =(1:11)';
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [0 0.5];
+        data.brightness_factor = 0.3;
+        data.min_area = 30;
+        data.alpha = 10; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 0;
+        data.median_filter = 1;
+        data.high_pass_filter = 61; % use when background not even
+    case '0616_7'
+        data.path = strcat(root, '0616/7/');
+        data.first_file = 'JURKAT1.001'; % Intensity Only
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
+        data.detection = 'auto';
+        data.image_index =(1:10)';
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [0 0.5];
+        data.brightness_factor = 0.3;
+        data.min_area = 30;
+        data.alpha = 10; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 0;
+        data.median_filter = 1;
+        data.high_pass_filter = 61; % use when background not even
+    case '0616_8'
+        data.path = strcat(root, '0616/8/');
+        data.first_file = 'JURKAT1.001'; % Intensity Only
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
+        data.detection = 'auto';
+        data.image_index =(1:12)';
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [0 0.5];
+        data.brightness_factor = 0.3;
+        data.min_area = 30;
+        data.alpha = 10; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 0;
+        data.median_filter = 1;
+        data.high_pass_filter = 61; % use when background not even
+    case '0616_9'
+        data.path = strcat(root, '0616/9/');
+        data.first_file = 'JURKAT1.001'; % Intensity Only
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
+        data.detection = 'auto';
+        data.image_index =(1:11)';
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [0 0.5];
+        data.brightness_factor = 0.3;
+        data.min_area = 30;
+        data.alpha = 10; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 0;
+        data.median_filter = 1;
+        data.high_pass_filter = 61; % use when background not even
+    case '0616_10'
+        data.path = strcat(root, '0616/10/');
+        data.first_file = 'JURKAT1.001'; % Intensity Only
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
+        data.detection = 'auto';
+        data.image_index =(1:12)';
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [0 0.5];
+        data.brightness_factor = 0.3;
+        data.min_area = 30;
+        data.alpha = 10; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 0;
+        data.median_filter = 1;
+        data.high_pass_filter = 61; % use when background not even
+    case '0616_11'
+        data.path = strcat(root, '0616/11/');
+        data.first_file = 'JURKAT1.001'; % Intensity Only
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
+        data.detection = 'auto';
+        data.image_index =(1:11)';
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [0 0.5];
+        data.brightness_factor = 0.3;
+        data.min_area = 30;
+        data.alpha = 10; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 0;
+        data.median_filter = 1;
+        data.high_pass_filter = 61; % use when background not even
     case 'molly_1'
-        data.path = strcat(root, 'molly_0606/sample_data/1/');
+        data.path = strcat(root, 'sample_data/1/');
         data.first_file = 'JURKAT1.001'; % Intensity Only
         data.index_pattern = {'001', '%03d'};
         data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 
@@ -36,7 +132,7 @@ switch exp_name
         data.median_filter = 1;
         data.high_pass_filter = 61; % use when background not even
     case 'molly_2'
-        data.path = strcat(root, 'molly_0606/sample_data/2/');
+        data.path = strcat(root, 'sample_data/2/');
         data.first_file = 'JURKAT1.001'; % Intensity Only
         data.index_pattern = {'001', '%03d'};
         data.channel_pattern= {'JURKAT1', 'JURKAT5'}; 

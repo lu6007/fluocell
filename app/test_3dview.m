@@ -17,11 +17,12 @@ function test_3dview(data)
 % data.root = '/Users/kathylu/Documents/doc/paper/fluocell_0420/quanty_dataset_2/';
 % data.path = strcat(data.root, 'fig6/1111_h3k9_3/p2/dconv9/');
 % test_3dview(data)
+
 p = data.path;
 z_dist = 1.0*15; % 1um *15 pixel/um
-image_index = (11:31)';
-iso_value = 450;%550;
-surface_file = 't1surface';
+image_index = (1:20)';
+iso_value = 3000;%550;
+% surface_file = 't1surface';
 intensity_base = 1.0e-4;
 ratio_bound = [0.5 3.5]; 
 ratio_factor = 1.5; % ratio_factor = (ratio_bound(1)+ratio_bound(2))/2;
@@ -36,7 +37,7 @@ data_file = strcat(p, 'output/data.mat');
 if exist(data_file, 'file')
     load(data_file);
     data.path = p;
-    data.first_file = strcat(p, 't1FRET_z01.tif');
+    % data.first_file and data.output_path may need to be updated. 
     save(data_file, 'data');
 else
     data = fluocell_data;
@@ -51,15 +52,19 @@ im = preprocess(temp, data); clear temp;
 figure; imagesc(im);
 rect = data.rectangle;
 nsize = floor([rect(4); rect(3)]+0.5); 
-num_frames = length(image_index);
-fret_im = zeros(nsize(1), nsize(2), num_frames);
+num_frame = length(image_index);
+fret_im = zeros(nsize(1), nsize(2), num_frame);
 cfp_im = zeros(size(fret_im));
 
-for i = 1:num_frames 
-    j = image_index(i);
-    j_str = sprintf(data.index_pattern{2}, j);
-    file_name = regexprep(data.first_file, data.index_pattern{1}, j_str);
-    temp = imread(file_name); 
+for i = 1:num_frame 
+%     j = image_index(i);
+%     j_str = sprintf(data.index_pattern{2}, j);
+%     file_name = regexprep(data.first_file, data.index_pattern{1}, j_str);
+%     temp = imread(file_name); 
+
+    file_name = data.first_file;
+    temp = imread(file_name, i);
+
     fret_im(:,:,i) = preprocess(temp, data); 
     clear temp; temp = file_name; clear file_name;
     file_name = regexprep(temp, data.channel_pattern{1}, data.channel_pattern{2});
@@ -73,7 +78,7 @@ intensity_im = 1/(1+ratio_factor)*fret_im+ratio_factor/(1+ratio_factor)*cfp_im;
 intensity_bound = [1 1023];
 
 %% output files for 3d view in visIt
-for i = 1:num_frames
+for i = 1:num_frame
     j = image_index(i);
     j_str = sprintf(data.index_pattern{2},j);
     file_name = strcat(p, 'output/im_rgb_',j_str,'.tiff');
@@ -95,7 +100,7 @@ disp(strcat('intensity_bound = ', num2str(intensity_bound)));
 disp(strcat('ratio_bound = ', num2str(ratio_bound)));
 
 %% Calculate the ISO surface
-[xx, yy, zz] = meshgrid(1:nsize(2), 1:nsize(1), (1:num_frames)*z_dist); % 15 pixel/micron in z-plane
+[xx, yy, zz] = meshgrid(1:nsize(2), 1:nsize(1), (1:num_frame)*z_dist); % 15 pixel/micron in z-plane
 screen_size = get(0, 'ScreenSize');
 fig = figure('Position', [50 50 screen_size(4) screen_size(4)], ...
     'color', 'w');
@@ -122,11 +127,11 @@ camlight right;
 horizontal_rotation = 15; 
 vertical_rotation = 30;
 step_size = 5; 
-num_frames = 180/step_size+1; % 25;
+num_frame = 180/step_size+1; % 25;
 light_handle = lightangle(0, 0);
 
 if save_image
-    for i = 1:num_frames
+    for i = 1:num_frame
         %for j = 1:2,
            % if j ==1,
             horizontal_rotation = horizontal_rotation+step_size;
@@ -137,7 +142,7 @@ if save_image
     %         if j == 1,
                 i_str = sprintf('%03d', i);
     %         elseif j ==2,
-    %             i_str = sprintf('%03d', i+num_frames);
+    %             i_str = sprintf('%03d', i+num_frame);
     %        end;
         %end;
         figure(fig);

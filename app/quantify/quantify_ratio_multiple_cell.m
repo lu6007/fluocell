@@ -52,7 +52,8 @@ for i = 1:num_image
     if ~exist(strcat(data.path, 'output/'), 'dir')
         mkdir(strcat(data.path, 'output/'));
     end
-    temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
+    %temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
+    temp = temp2;
     if isfield(data, 'subtract_background') && data.subtract_background
         data.bg_bw = get_background(temp, bg_file, 'method', 'manual'); clear temp;
     end
