@@ -33,7 +33,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function [bd_layer, label_layer]= divide_layer(cell_bw, num_layers,varargin)
+function [bd_layer, label_layer]= divide_layer(cell_bw, num_roi,varargin)
 parameter_name = {'xylabel'};
 % method 1 - relative distance to the centroid
 % method 2 - distance transformation to the extracellular space
@@ -42,14 +42,14 @@ default_value = {'reverse'};
 
 iscell_cell_bw = iscell(cell_bw);
 % Make cell_bw a cell and keep backward compatibility
-if ~iscell_cell_bw,
+if ~iscell_cell_bw
     temp{1} = cell_bw; clear cell_bw;
     cell_bw = temp;
-end;
+end
 
-num_objects = length(cell_bw);
-bd_layer = cell(num_objects, num_layers);
-label_layer = cell(num_objects, 1); 
+num_object = length(cell_bw);
+bd_layer = cell(num_object, num_roi);
+label_layer = cell(num_object, 1); 
 % we can remove method in the comments and the program 12/9/2015
 % if method == 1,
 %     % Compute the boundarys for the layers.
@@ -83,41 +83,41 @@ label_layer = cell(num_objects, 1);
 % function bwdist().
 % Then we use the function bw2bd() to calculate the boundaryies.
 %
-% Multiple detections with num_objects
-for j = 1 : num_objects
+% Multiple detections with num_object
+for j = 1 : num_object
     im = bwdist(~cell_bw{j});
     max_v = max(max(im))+1;
-    label_layer{j} = floor(im/max_v*num_layers)+double(cell_bw{j});
-    for i = 1:num_layers,
+    label_layer{j} = floor(im/max_v*num_roi)+double(cell_bw{j});
+    for i = 1:num_roi
         bd = bw2bd(label_layer{j} >= i);  
         bd_layer{j, i} = bd{1};
         clear bd;
-    end;
+    end
 end
     % need to update c for later, not needed for method = 2
-c = 0;
+% c = 0;
 % end;
 
-if strcmp(xylabel, 'normal'),
-    temp = cell(num_objects, num_layers);
-    for j = 1 : num_objects
-        for i = 1 : num_layers,
+if strcmp(xylabel, 'normal')
+    temp = cell(num_object, num_roi);
+    for j = 1 : num_object
+        for i = 1 : num_roi
             temp{j, i} = [bd_layer{j, i}(:,2), bd_layer{j, i}(:,1)];
-        end;
+        end
     end
     clear bd_layer;
     bd_layer = temp; clear temp;
-end;
+end
 
 % figure; imagesc(label_layer); colorbar; hold on;
 % for i = 1:n, 
 %     plot(bd_layer{i}(:,2), bd_layer{i}(:,1), 'w');
 % end;
 
-if ~iscell_cell_bw, % backward compatible 
+if ~iscell_cell_bw % backward compatible 
     temp = bd_layer{1}; clear bd_layer;
     bd_layer = temp; clear temp;
     temp = label_layer{1}; clear label_layer;
     label_layer = temp; clear temp;
-end;
+end
 return;

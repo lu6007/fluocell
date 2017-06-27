@@ -4,9 +4,12 @@
 % MATLAB statistics toolbox (The MathWorks, Natick, MA).
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011-2016
-function m = multiple_comparison(data, tag)
+function m = multiple_comparison(data, tag, varargin)
+para_name = {'alpha'};
+default_value = {0.05};
+alpha = parse_parameter(para_name, default_value, varargin);
 [p,~,stat] = anova1(data, tag);
-[c,m,h,nms]=multcompare(stat, 'ctype', 'bonferroni', 'alpha', 0.05);
+[c,m,h,nms]=multcompare(stat, 'ctype', 'bonferroni', 'alpha', alpha);
 p
 c
 m

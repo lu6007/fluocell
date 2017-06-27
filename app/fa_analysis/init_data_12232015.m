@@ -16,7 +16,7 @@
 % >> batch_detect_fa('12_18_ba_fn25_p1','image_index', data.index,...
 % 'save_file', 1);
 % >> compute_fa_property('12_18_ba_fn25_p1','remove_data', 0);
-function data = init_data(name)
+function data = init_data_12232015(name)
 root = 'F:\data\';
 data.cfp_channel = {'w1CFP'};
 data.yfp_channel = {'w2FRET'};
@@ -24,11 +24,11 @@ data.index_pattern = {'t1', 't%d'};
 data.fa.filter_size = 61;
 data.fa.brightness_factor = 1;
 data.fa.single_min_area = 10;
-data.num_layers = 5;
+data.num_roi = 5;
 data.multiple_acquisition = 1;
 data.cell_name = name;
-switch name,
-      case '12_18_ba_fn25_p1',
+switch name
+      case '12_18_ba_fn25_p1'
         data.path = strcat(root,'jie\12_18_2012\4_25fn\p1\');
         data.first_cfp_file = 'BTAM_w1CFP_s1_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
@@ -44,7 +44,7 @@ switch name,
         data.is_cfp_over_fret = 0;
         % '12_18_ba_fn25_p2' did not have obvious fas and did not analyze.
         % '12_18_ba_fn25_p3' too dim in CFP/FRET channel did not include.
-      case '12_18_ba_fn25_p3',
+      case '12_18_ba_fn25_p3'
         data.path = strcat(root,'jie\12_18_2012\4_25fn\p3\');
         data.first_cfp_file = 'BTAM_w1CFP_s3_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
@@ -58,7 +58,7 @@ switch name,
         data.fa.min_water = 1000;
         data.num_fans = 1;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn25_p4',
+      case '12_18_ba_fn25_p4'
         data.path = strcat(root,'jie\12_18_2012\4_25fn\p4\');
         data.first_cfp_file = 'BTAM1_w1CFP_s4_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
@@ -72,7 +72,7 @@ switch name,
         data.fa.min_water = 300;
         data.num_fans = 1;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn25_p5',
+      case '12_18_ba_fn25_p5'
         data.path = strcat(root,'jie\12_18_2012\4_25fn\p5\');
         data.first_cfp_file = 'BTAM1_w1CFP_s5_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
@@ -86,7 +86,7 @@ switch name,
         data.fa.min_water = 150;
         data.num_fans = 2;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn25_p6',
+      case '12_18_ba_fn25_p6'
         data.path = strcat(root,'jie\12_18_2012\4_25fn\p6\');
         data.first_cfp_file = 'BTAM1_w1CFP_s6_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
@@ -100,11 +100,11 @@ switch name,
         data.fa.min_water = 1350;
         data.num_fans = 1;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn25_p7',
+      case '12_18_ba_fn25_p7'
         data.path = strcat(root,'jie\12_18_2012\4_25fn\p7\');
         data.first_cfp_file = 'BTAM1_w1CFP_s7_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
-        data.index = [1:51];
+        data.index = (1:51);
         data.need_mask = 0;
         data.pdgf_between_frame = [10; 11];
         data.pax_cbound = [0 2000];
@@ -114,11 +114,11 @@ switch name,
         data.fa.min_water = 1350;
         data.num_fans = 1;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn10_p1',
+      case '12_18_ba_fn10_p1'
         data.path = strcat(root,'jie\12_18_2012\5_10fn\p1\');
         data.first_cfp_file = 'BTAM1_w1CFP_s1_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
-        data.index = [1:51];
+        data.index = (1:51);
         data.need_mask = 0;
         data.pdgf_between_frame = [10; 11];
         data.pax_cbound = [0 3000];
@@ -128,11 +128,11 @@ switch name,
         data.fa.min_water = 500;
         data.num_fans = 1;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn10_p2',
+      case '12_18_ba_fn10_p2'
         data.path = strcat(root,'jie\12_18_2012\5_10fn\p2\');
         data.first_cfp_file = 'BTAM1_w1CFP_s2_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
-        data.index = [1:51];
+        data.index = (1:51);
         data.need_mask = 0;
         data.pdgf_between_frame = [10; 11];
         data.pax_cbound = [0 3000];
@@ -142,11 +142,11 @@ switch name,
         data.fa.min_water = 500;
         data.num_fans = 1;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn10_p3',
+      case '12_18_ba_fn10_p3'
         data.path = strcat(root,'jie\12_18_2012\5_10fn\p3\');
         data.first_cfp_file = 'BTAM1_w1CFP_s3_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
-        data.index = [1:51];
+        data.index = (1:51);
         data.need_mask = 0;
         data.pdgf_between_frame = [10; 11];
         data.pax_cbound = [0 3000];
@@ -156,11 +156,11 @@ switch name,
         data.fa.min_water = 500;
         data.num_fans = 2;
         data.is_cfp_over_fret = 0;
-      case '12_18_ba_fn10_p4',
+      case '12_18_ba_fn10_p4'
         data.path = strcat(root,'jie\12_18_2012\5_10fn\p4\');
         data.first_cfp_file = 'BTAM1_w1CFP_s4_t1.TIF';
         data.pax_channel = {'w3MCherry-EYE'};
-        data.index = [1:51];
+        data.index = (1:51);
         data.need_mask = 0;
         data.pdgf_between_frame = [10; 11];
         data.pax_cbound = [0 8000];
@@ -172,7 +172,7 @@ switch name,
         data.is_cfp_over_fret = 0;
         
       %% Invapodia analysis 6/10/2013
-      case '0518_control2',
+      case '0518_control2'
           data.path = strcat(root,'bristow\0518_2013\control\matlab\2\');
           data.first_file = 'ch2_001.tiff';
           data.index_pattern = {'001', '%03d'};
@@ -190,7 +190,7 @@ switch name,
           data.protocol = 'Intensity';
           % Tracking parameters
           data.track_max_search_radius = 16;
-      case '0518_control8',
+      case '0518_control8'
           data.path = strcat(root,'bristow\0518_2013\control\matlab\8\');
           data.first_file = 'ch2_001.tiff';
           data.index_pattern = {'001', '%03d'};
@@ -208,7 +208,7 @@ switch name,
           data.protocol = 'Intensity';
           % Tracking parameters
           data.track_max_search_radius = 16;
-      case '0518_shFAPa4',
+      case '0518_shFAPa4'
           data.path = strcat(root,'bristow\0518_2013\shFAPa\matlab\4\');
           data.first_file = 'ch2_001.tiff';
           data.index_pattern = {'001', '%03d'};
@@ -226,7 +226,7 @@ switch name,
           data.protocol = 'Intensity';
           % Tracking parameters
           data.track_max_search_radius = 16;
-      case '0518_shFAPa6',
+      case '0518_shFAPa6'
           data.path = strcat(root,'bristow\0518_2013\shFAPa\matlab\6\');
           data.first_file = 'ch2_001.tiff';
           data.index_pattern = {'001', '%03d'};
@@ -246,7 +246,7 @@ switch name,
           data.track_max_search_radius = 16;
           
       % track fak and pax FAs. 03/18/2014
-     case 'fak_pax',
+     case 'fak_pax'
         % This cell is extending at the front with no flow
         data.path = strcat(root, 'yingli_0307\fak_pax\fak_paxillin\');
         %data.first_file = 'leona20x5_w1FITC_t01.TIF';
@@ -254,7 +254,7 @@ switch name,
         data.pattern = {'1FITC', '2TRITC'}; 
         data.channel = {'FAK', 'Pax'};
         data.index_pattern = {'01','%02d'};
-        data.image_index = [1:9]';
+        data.image_index = (1:9)';
         %data.image_index = [1:9, 11:53]';
         data.index = data.image_index;
         data.mask_with_cell = 0;
@@ -284,8 +284,8 @@ switch name,
         %data.track_index = [5 6 7 81 92 150 163 315 399 444]';
         % data.image_frame = ?
 
-end;
-if ~isfield(data, 'path'),
+end
+if ~isfield(data, 'path')
     data = initialize_data_02_23_2011(name);
-end;
+end
 return;

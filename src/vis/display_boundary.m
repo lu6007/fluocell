@@ -6,26 +6,38 @@
 %
 % Copyright: Shaoying (Kathy) Lu, shaoying.lu@gmail.com 2/18/2016
 function display_boundary(bw, varargin)
-    parameter_name = {'im', 'show_label', 'color', 'new_figure'};
-    parameter_default = {[], 0, 'r', 1};
-    [im, show_label, cr, new_figure] = parse_parameter(parameter_name, parameter_default, varargin);
-    bd = bwboundaries(bw, 8, 'noholes');
-    num_objects = length(bd);
-    if new_figure, 
+    parameter_name = {'im', 'show_label', 'color', 'new_figure', 'type'};
+    parameter_default = {[], 0, 'r', 1, 1};
+    [im, show_label, cr, new_figure, type] = parse_parameter(parameter_name, parameter_default, varargin);
+    
+    if new_figure 
         my_figure; 
-    end;
-    if ~isempty(im),
-        imshow(im);    
-    end;
+    end
+    if ~isempty(im)
+        switch type
+            case 1
+                imshow(im);
+            case 2
+                imagesc(im);
+        end
+    end
     
     hold on; 
-    for j = 1:num_objects,
-        plot(bd{j}(:,2), bd{j}(:,1), 'Color', cr);
-    end;
+
     
-    if show_label,
+    if isempty(bw) 
+        return;
+    end
+    
+    bd = bwboundaries(bw, 8, 'noholes');
+    num_object = length(bd);
+    for j = 1:num_object
+        plot(bd{j}(:,2), bd{j}(:,1), 'Color', cr);
+    end
+    
+    if show_label
         prop = regionprops(bw,'Centroid');
         cc = cat(1, prop.Centroid);
-        text(cc(:,1), cc(:,2), num2str((1:num_objects)'), 'Color', cr);
-    end;
+        text(cc(:,1), cc(:,2), num2str((1:num_object)'), 'Color', cr);
+    end
 return;

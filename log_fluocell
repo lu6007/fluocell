@@ -1,6 +1,54 @@
+06/26-27/2017:
+		bug fix and interface adjustment
+
+06/23/2017:
+		bug fix for z-stack view
+
+06/10/2017:
+		put model_state() into phoshpo_methyl_model()
+
+06/06/2017:
+		Updated the model for qin's results and the quantification programs for Molly's data
+
+05/25/2017:
+		Modified quantify_ratio_multiple_cell function and clean up.
+
+05/23/2017:
+		Added a "Ratio" protocol
+		Add the choice of num_roi to the tools --> brightness factor panel.
+
+05/22/2017:
+	Replace num_layer with num_roi, change num_objects to num_object, replace nunm_rois with num_roi, replace num_layers with num_layer
+
+05/15/2017:
+		Update init_figure.m, close_button_callback.m, align_bounding_box.m, fa_segment.m, get_fa_label.m, label2bd.m
+
+05/09/2017:
+		Set show_detect_boundary = 1, when quantify_roi = 2 or 3.
+		Updated the demo and user's guide.
+
+05/05/2017:
+		Reversed change update_figure.  …
+		Fixed the compatibility issue of im2binary for early versions of Matlab
+
+05/04/2017:
+	Debugged test_fig6 and clean up.
+
+05/03/2017:
+		Correct the conflict between multiple_object = 1 and show_detect_boun…  …
+		Moved drive factor  …
+		Moved the driven factor option and Mac compatibility.  …
+		Fixed a problem in the open folder option.  …
+
+05/02/2017:
+		Clean up open_button_callback
+
+*****************************************************************
+
 Version 6.1.0
 
 05/01/2017:
+		More clean up and reverse show_detected_boundary.
     Fixed the problem of not showing detected boundary and clean up.
 04/26/2017:
     Fluocell bug fix and cleanup

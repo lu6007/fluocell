@@ -14,7 +14,7 @@ function data = get_image(data,new_first_file)
 global fluocell_data_roi_move
 if isempty(fluocell_data_roi_move)
     fluocell_data_roi_move = 0;
-end;
+end
 
 % update the first file
 % pattern = data.index_pattern{2}; 
@@ -22,7 +22,7 @@ index_str = sprintf(data.index_pattern{2}, data.index);
 if new_first_file
     data.first_file = strcat(data.path, data.prefix, data.postfix);
     data.file{1} = data.first_file;
-end;
+end
     
     %When viewing z-stacks: (i.e. organoids)
     %Alternative possible optimization to try-catch in my_imread() for checking 
@@ -35,28 +35,30 @@ end;
 %     end
     % - Shannon 8/23/2016
 num_matching = length(regexp(data.first_file, data.index_pattern{1}));
-data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
-    index_str, num_matching);
+if num_matching>0
+    data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
+        index_str, num_matching);
+end
 
 if exist(data.file{1}, 'file')
     im = imread(data.file{1});
 else
     data.im{1} = [];
     return;
-end;
+end
 
 % Load background into data.bg_bw and data.bg_poly
 if fluocell_data_roi_move
     if isfield(data, 'bg_poly')
         temp = rmfield(data,'bg_poly'); clear data;
         data = rmfield(temp, 'bg_bw'); clear temp;
-    end;
+    end
     if isfield(data, 'roi_poly')
         temp = rmfield(data, 'roi_poly'); clear data;
         data = temp; clear temp;
-    end;
+    end
     fluocell_data_roi_move = 0;
-end;
+end
 % Lexie on 02/18/2015
 % 1. right method to choose bg
 % 2. if there is already bg, load it directly
@@ -67,7 +69,7 @@ end;
 %     bg_file = 'background.mat';
 %     [data.bg_bw, data.bg_poly]= get_background(im, strcat(data.output_path, bg_file));
 %     %clear im; 
-% end;
+% end
 
 if isfield(data,'subtract_background') && data.subtract_background
     %im = imread(data.file{1})
@@ -85,7 +87,7 @@ if isfield(data,'subtract_background') && data.subtract_background
         [data.bg_bw, data.bg_poly] = get_background(im, bg_file, 'method', data.subtract_background);
     end
     %clear im; 
-end;
+end
 
 
 
@@ -96,7 +98,7 @@ if isfield(data, 'crop_image') && data.crop_image...
     if isfield(data, 'rotate_image') && data.rotate_image
          im_rot = imrotate(im, data.angle);
          clear im; im = im_rot; clear im_rot;
-    end;
+    end
     data.rectangle = get_rectangle(im, strcat(data.output_path, 'rectangle.mat'));
     temp = imcrop(im, data.rectangle); clear im;
     im = temp; clear temp;
@@ -108,16 +110,16 @@ end
 
 
 % Initialize data.time, data.ratio, data.donor, data.acceptor
-% set data.num_rois, and data.roi_poly
+% set data.num_roi, and data.roi_poly
 
 clear im_size
 roi_file = strcat(data.output_path, 'roi.mat');
 if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
-    if isfield(data, 'num_rois') 
-        num_rois = data.num_rois;
+    if isfield(data, 'num_roi') 
+        num_roi = data.num_roi;
     else
-        num_rois = 1;
-    end;
+        num_roi = 1;
+    end
     % The default length of the column vectors is either 200 or 
     % max(data.image_index) if it is more than 200. 
     if ~isfield(data,'ratio') || new_first_file  
@@ -141,35 +143,35 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
             
             if isfield(data, 'cell_size')
                 data = rmfield(data, 'cell_size');
-            end;
+            end
             
-            data.ratio{1} = nan*ones(num_frame, num_rois);
+            data.ratio{1} = nan*ones(num_frame, num_roi);
             % data.cell_size{1} = nan*ones(num_frame, 1);
-            data.channel1{1} = nan*ones(num_frame, num_rois);
-            data.channel2{1} = nan*ones(num_frame, num_rois);
+            data.channel1{1} = nan*ones(num_frame, num_roi);
+            data.channel2{1} = nan*ones(num_frame, num_roi);
             data.cell_size{1} = nan*ones(num_frame, 1);
             data.channel1_bg = nan*ones(num_frame, 1);
             data.channel2_bg = nan*ones(num_frame, 1);
-    end;
+    end
     % if there is a cropped image, load the image and ROI on the cropped
     % one, Lexie on 02/20/2015
     if isfield(data, 'crop_image') && data.crop_image
         if ~isfield(data,'rectangle')
             data.rectangle = get_rectangle(im, strcat(data.path, 'output/rectangle.mat'));
-        end;
+        end
         im_crop = imcrop(im, data.rectangle);clear im; 
         im = im_crop; clear im_crop;
-    end;
+    end
     
     % Load the ROIs
     if ~isfield(data,'roi_poly') && (data.quantify_roi ==1 || data.quantify_roi ==2)
         %im = imread(data.file{1});
         [data.roi_bw, data.roi_poly] = ...
             get_polygon(im, roi_file, 'Please choose the ROI now.', ...
-            'polygon_type', 'any', 'num_polygons', num_rois);
+            'polygon_type', 'any', 'num_polygons', num_roi);
         %clear im;
-    end;  
-end; % if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
+    end 
+end % if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
 
 % Load the mask if needed. 
 % If data.need_apply_mask == 1,2,3, load mask from 'mask.mat', selected
@@ -202,13 +204,13 @@ if isfield(data, 'need_apply_mask') && data.need_apply_mask
                         temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
                     end   
                 data.mask = temp{1}; clear temp;
-            end; % if ~isfield(data, 'mask'),
+            end % if ~isfield(data, 'mask'),
         case 4
             mask_file = regexprep(data.file{1}, data.channel_pattern{1}, data.mask_pattern);
             temp = imread(mask_file);
             data.mask = logical(temp); clear temp;
-    end; % switch data.need_apply_mask, 
-end;
+    end % switch data.need_apply_mask, 
+end
 clear im;
 
 
@@ -216,13 +218,13 @@ clear im;
 % load the names of image files into data.file
 % load images from data.file to data.im
 switch data.protocol
-    case 'FRET'
+    case {'FRET', 'Ratio'}
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
         for i = 1:2
             % slow version
             data.im{i} = my_imread(data.file{i}, data);
-        end;
+        end
         % ratio_image_file and file_type
        fret_file = get_fret_file(data, data.file{1});
        data.file{3} = strcat(fret_file, '.', 'tiff');
@@ -235,7 +237,7 @@ switch data.protocol
             data.channel_pattern{3});
         for i = 1:3
             data.im{i} = my_imread(data.file{i}, data);
-        end;
+        end
         % ratio_image_file and file_type
         fret_file = get_fret_file(data, data.file{1});
         data.file{4} = strcat(fret_file, '.', 'tiff');
@@ -252,7 +254,7 @@ switch data.protocol
 
         for i = 1:4
             data.im{i} = my_imread(data.file{i}, data);
-        end;
+        end
         % ratio_image_file and file_type
         fret_file = get_fret_file(data, data.file{1});
         data.file{5} = strcat(fret_file, '.', 'tiff');
@@ -265,7 +267,7 @@ switch data.protocol
             data.channel_pattern{3});
         for i = 1:3
             data.im{i} = my_imread(data.file{i}, data);
-        end;
+        end
         % ratio_image_file and file_type
         fret_file = get_fret_file(data, data.file{1});
         data.file{4} = strcat(fret_file, '.', 'tiff');
@@ -280,7 +282,7 @@ switch data.protocol
             data.channel_pattern{4}); % 4- DIC        
         for i = 1:4
             data.im{i} = my_imread(data.file{i}, data);
-        end;
+        end
         % ratio_image_file and file_type
         fret_file = get_fret_file(data, data.file{1});
         data.file{5} = strcat(fret_file, '.', 'tiff');
@@ -290,22 +292,15 @@ switch data.protocol
     case 'FLIM'
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...
             data.channel_pattern{2});
-%         temp = regexprep(strcat(data.prefix, '.', index_str), data.channel_pattern{1},...
-%         data.channel_pattern{2});
-%         data.file{2} = strcat(data.path, temp); clear temp;
         for i = 1:2
-            %data.im{i} = my_imread(data.file{i});
-%             temp = my_imread(data.file{i}); 
-%             data.im{i} = temp(:,:,1); clear temp;
-    if exist(data.file{i}, 'file') ==2
-        temp = my_imread(data.file{i}, data);
-    else
-        temp = [];
-        fprintf('%s : %s\n', data.file{i}, 'This file does not exist!');
-    end;
-    data.im{i} = uint16(temp); clear temp;
-
-        end;
+            if exist(data.file{i}, 'file') ==2
+                temp = my_imread(data.file{i}, data);
+            else
+                temp = [];
+                fprintf('%s : %s\n', data.file{i}, 'This file does not exist!');
+            end
+            data.im{i} = uint16(temp); clear temp;
+        end % for i = 1:2
         % ratio_image_file and file_type
        fret_file = get_fret_file(data, data.file{1});
        data.file{3} = strcat(fret_file, '.', 'tiff');
@@ -328,7 +323,7 @@ switch data.protocol
         data.file{5} = strcat(data.output_path, 'dic_im', index_str,'.tiff');
         for i = 1:2
             data.im{i} = my_imread(data.file{i}, data);
-        end;
+        end
 end
 return;
 

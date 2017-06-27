@@ -1,7 +1,7 @@
 % Generate the movie_info data structure which contains the (x,y)
 % coordinates and the total intensity of the focal adhesions. 
 function movie_info = get_movie_info(data, varargin)
-display(sprintf('Cell Name : %s',data.cell_name));
+fprintf('Cell Name : %s\n',data.cell_name);
 
 parameter = {'load_file', 'file_type'};
 default = {1, 'cell'};
@@ -9,7 +9,7 @@ default = {1, 'cell'};
 
 mi_file_name = strcat(data.path, 'output/movie_info.mat');
 
-if exist(mi_file_name, 'file') && load_file,
+if exist(mi_file_name, 'file') && load_file
     result = load(mi_file_name);
     movie_info = result.movie_info;
     return;
@@ -19,7 +19,7 @@ else
     pattern = data.index_pattern{2};
     first_index_pattern = sprintf(pattern, data.image_index(1));
     
-    switch file_type,
+    switch file_type
         case 'cell'
             first_file = data.first_file;
             % second_file = data.file{2};
@@ -33,19 +33,19 @@ else
     num_fields = length(field);
     c = cell(num_frames, num_fields);
     
-    for k = 1:num_frames, 
+    for k = 1:num_frames
         data.index = data.image_index(k);
         data = get_image(data, 0);
         
         index_str = sprintf(pattern, data.index);
 % For different file types, there are different mat files correspondingly.
 % Lexie on 1/4/2016
-        switch file_type,
-            case 'cell',
+        switch file_type
+            case 'cell'
                 file_name = strcat(data.path, 'output\cell_bw.', index_str, '.mat');
                 result = load(file_name);
                 object_bw = result.cell_bw;
-            case 'fa',
+            case 'fa'
                 file_name = strcat(data.path, 'YFP_fa_', index_str, '.mat');
                 result = load(file_name);
                 object_bw = result.fa_bw;
@@ -61,7 +61,7 @@ else
             case 'fa'
                 [object_bd, object_label] = bwboundaries(object_bw, 4, 'noholes');
         end
-        num_objects = length(object_bd);
+        num_object = length(object_bd);
         object_prop = regionprops(object_label, 'Centroid', 'PixelList');
         object_centroid = cat(1, object_prop.Centroid);
 
@@ -95,9 +95,9 @@ else
                 clear pax_file;
         end
         num_rows = size(im_object,1);
-        object_total_intensity = zeros(num_objects, 1);
-        num_pixels = zeros(num_objects, 1);
-        for j = 1:num_objects,
+        object_total_intensity = zeros(num_object, 1);
+        num_pixels = zeros(num_object, 1);
+        for j = 1:num_object
             index = object_prop(j).PixelList; 
             % PixelList gives a num_pixelsx2 vector including 
             % (colum_number row_number)
@@ -110,12 +110,12 @@ else
             %fa_total_intensity(j) = sum(sum(im_pax(index)));
             %fa_label(index) = fa_total_intensity(j);
             clear index linear_index
-        end;
+        end
 %         figure; imagesc(fa_label); 
 %         hold on; plot(fa_centroids(:,1), fa_centroids(:,2), 'w+');
 % 
         % now convert all the information into the movie_info datastructure.
-        z = zeros(num_objects, 1);
+        z = zeros(num_object, 1);
         % field = {'xCoord', 'yCoord', 'amp', 'num_pixels'};
         c{k,1} = [object_centroid(:,1) z];
         c{k,2} = [object_centroid(:,2) z];
@@ -135,10 +135,10 @@ else
 %             'average_ratio', average_ratio);
         clear im_fak im_object im_ratio object_centroid object_total_intensity object_label...
             object_prop object_bd fak_total_intensity pax_total_intensity z
-    end; % for k = 1:5
+    end % for k = 1:5
     % field = {'xCoord', 'yCoord', 'amp', 'num_pixels'};
     movie_info = cell2struct(c, field, 2);
     save(mi_file_name, 'movie_info');
-end;
+end
 
 return;

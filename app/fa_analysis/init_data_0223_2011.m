@@ -12,8 +12,8 @@ function data = init_data_0223_2011(name)
 root = 'E:\sof\fluocell_2.1\data\';
 %root = 'C:\sylu\copy_07_19_2009-xxx\sof\fluocell_2.1\data\';
 %root = 'C:\sylu\copy_xxx-06_05_2009\sof\fluocell_2.1\data\';
-switch name,
-    case 'fakpax1',
+switch name
+    case 'fakpax1'
         data.path = strcat(root, ...
             'jihye_fak_pdgf_03_10_2008\FAKPAX1''D\');
         data.prefix = 'FAKPAX1''';
@@ -29,7 +29,7 @@ switch name,
         data.fa.single_min_area = 15;
         data.fa.min_area = 50;
         data.pax_cbound = [1500 2645];
-    case '07_05_dish2',
+    case '07_05_dish2'
         data.path = strcat(root, ...
             '07_05_2008\dish2_lyn_src_pax\');
         data.prefix = 'FRET';
@@ -46,7 +46,7 @@ switch name,
         data.ref_pax_intensity = 7949663;
         data.before_pdgf = 12;
         data.pdgf_time = 709.97;
-    case '07_05_dish3',
+    case '07_05_dish3'
         data.path = strcat(root, ...
             '07_05_2008\dish3_lyn_src_pax\');
         data.prefix = 'FRET';
@@ -62,7 +62,7 @@ switch name,
         data.ref_pax_intensity = 59685817;
         data.before_pdgf = 12;
         data.pdgf_time = 767.98;
-    case '07_05_dish4',
+    case '07_05_dish4'
         data.path = strcat(root, ...
             '07_05_2008\dish4_lyn_src_pax\');
         data.prefix = 'FRET';
@@ -78,7 +78,7 @@ switch name,
         data.fa.single_min_area = 15;
         data.fa.min_area = 50;
         data.pax_cbound = [0 1500];
-    case '07_05_dish5',
+    case '07_05_dish5'
         % naco treatment
         data.path = strcat(root, ...
             '07_05_2008\dish5_naco_lyn_src_pax\');
@@ -93,7 +93,7 @@ switch name,
         data.fa.single_min_area = 15;
         data.fa.min_area = 50;
         data.pax_cbound = [0 1000];        
-    case '07_05_dish6',
+    case '07_05_dish6'
         % naco treatment
         data.path = strcat(root, ...
             '07_05_2008\dish6_naco_lyn_src_pax\');
@@ -112,13 +112,13 @@ switch name,
         data.fa.single_min_area = 15;
         data.fa.min_area = 50;
         data.pax_cbound = [0 800];        
-    case '07_05_dish7',
+    case '07_05_dish7'
         % naco treatment
         data.path = strcat(root, ...
             '07_05_2008\dish7_naco_lyn_src_pax\');
         data.prefix = 'FRET';
         data.prefix_sub = 'FRET_SUB';
-        data.index = [1:35]; % pdgf between frames 8 and 9, 531.81 sec
+        data.index = (1:35); % pdgf between frames 8 and 9, 531.81 sec
         %data.index = [1:3, 6:10, 14:19, 25:48, 50:54, 56:58];
         data.fa.brightness_factor = 0.9; 
         data.fa.filter_size = 61;
@@ -130,7 +130,7 @@ switch name,
         % For some reason this cell did not respond significantly to pdgf
         % The FAs did not disassemble, instead it appeared to
         % increase in terms of average intensity.
-    case '07_05_dish8',
+    case '07_05_dish8'
         % The FAs looked kind of weired, like endosom structure.
         % not include this cell.
         data.path = strcat(root, ...
@@ -146,7 +146,7 @@ switch name,
         data.fa.single_min_area = 15;
         data.fa.min_area = 50;
         data.pax_cbound = [0 2000];    
-    case '07_14_dish1',
+    case '07_14_dish1'
         data.path = strcat(root, ...
             '07_14_2008\dish1_lyn_src_dsred_pax\');
         data.prefix = 'FRET';
@@ -163,7 +163,7 @@ switch name,
         data.ref_pax_intensity = 13292854;
         data.before_pdgf = 15;
         data.pdgf_time = 903.82;
-    case '07_14_dish2',
+    case '07_14_dish2'
         % There is a sudden drop in the mCherry intensity
         % after adding PDGF, which is not same as 
         % the Src kinetics. It is not likely due to photobleaching
@@ -185,7 +185,7 @@ switch name,
         data.ref_pax_intensity = 52462967;
         data.before_pdgf = 14;
         data.pdgf_time = 822.28;
-    case '07_14_dish3',
+    case '07_14_dish3'
         % The FAs were well-detected.
         % The dynamics results of FA disassembly was not clear.
         data.path = strcat(root, ...
@@ -204,7 +204,7 @@ switch name,
         data.ref_pax_intensity = 31627850;
         data.before_pdgf = 12;
         data.pdgf_time = 748.17;
-    case '07_14_dish4',
+    case '07_14_dish4'
         %Not much response
         data.path = strcat(root, ...
             '07_14_2008\dish4_lyn_src_mcherry\');
@@ -222,7 +222,7 @@ switch name,
         data.before_pdgf = 13;
         data.pdgf_time = 812.01;
         data.shift = 14;
-    case '07_14_dish5',
+    case '07_14_dish5'
         % good
         data.path = strcat(root, ...
             '07_14_2008\dish5_lyn_src_mcherry\');
@@ -239,7 +239,7 @@ switch name,
         data.ref_pax_intensity = 123766869;
         data.before_pdgf = 15;
         data.pdgf_time = 920.52;
-    case '07_14_dish6',
+    case '07_14_dish6'
         % For some reason there was only 3 frames after PDGF
         % Will not use this cell.
         data.path = strcat(root, ...
@@ -255,7 +255,7 @@ switch name,
         data.fa.min_area = 50;
         data.fa.max_water = 200;
         data.pax_cbound = [0 800];
-   case '07_14_dish7', % dsred
+   case '07_14_dish7' % dsred
        % PDGF added between frames 7 and 8 at 421.46 sec.
        % There were ~20% response in Src activation and the FA did not 
        % start to disassemble significantly
@@ -275,7 +275,7 @@ switch name,
         data.ref_pax_intensity = 123766869;
         data.before_pdgf = 7;
         data.pdgf_time = 421.46;
-   case '07_14_dish8', %dsred
+   case '07_14_dish8' %dsred
         % Added PDGF between frames 8-9
         % at time 482.09 seconds
         % This cell reponded about 10% to PDGF
@@ -295,7 +295,7 @@ switch name,
         data.ref_pax_intensity = 11108157;
         data.before_pdgf = 8;
         data.pdgf_time = 482.09;
-   case '07_29_dish1',
+   case '07_29_dish1'
        % Good Cell, OK detection
        % However the FAs did not disassemble.
         data.path = strcat(root, ...
@@ -316,7 +316,7 @@ switch name,
         % PDGF between 11-12: 678.78s 
         data.before_pdgf = 11;
         data.pdgf_time = 678.78;
-   case '07_29_dish2',
+   case '07_29_dish2'
        % Good Results
         data.path = strcat(root, ...
             '07_29_2008\dish2_lyn_src_mcherry_pax\');
@@ -332,7 +332,7 @@ switch name,
         data.pax_cbound = [0 1000];
         data.before_pdgf = 9;
         data.pdgf_time = 614.72;
-   case '07_29_dish3',
+   case '07_29_dish3'
        %The cell only respond 10% to PDGF
        % Not much disassembly
         data.path = strcat(root, ...
@@ -353,7 +353,7 @@ switch name,
         data.before_pdgf = 15;
         data.pdgf_time = 904.87;
         data.num_fans = 1;
-   case '07_29_dish4',
+   case '07_29_dish4'
        % After applying two fan region
        % Not much disassembly after pdgf,
        % More assembly after pp1.
@@ -378,7 +378,7 @@ switch name,
         data.num_fans = 2;
     % Looks like dish5 and 6 did not add pp1
     % double check in metafluor
-    case '07_29_dish5', %pp1 pretreat.
+    case '07_29_dish5' %pp1 pretreat.
         data.path = strcat(root, '07_29_2008\dish5_pp1\');
         data.prefix = 'FRET';
         data.prefix_sub = 'FRET_SUB';
@@ -393,7 +393,7 @@ switch name,
         data.before_pdgf = 10;
         data.pdgf_time = 678.24;
         data.num_fans = 1;
-    case '07_29_dish6', % wound cell .
+    case '07_29_dish6' % wound cell .
         data.path = strcat(root, '07_29_2008\dish6_wound\');
         data.prefix = 'FRET';
         data.prefix_sub = 'FRET_SUB';
@@ -407,7 +407,7 @@ switch name,
         data.ref_pax_intensity= 40795886;
         data.before_pdgf = 10;
         data.pdgf_time = 595.64;
-   case '07_29_dish7',
+   case '07_29_dish7'
        % The FAs did not significantly disassemble or
        % assemble after PDGF or pp1.
        % Maybe the detection was not accurate
@@ -429,7 +429,7 @@ switch name,
         data.pax_cbound = [0 1000];
         data.before_pdgf = 11;
         data.pdgf_time = 674.80;
-   case '07_29_dish8',
+   case '07_29_dish8'
        % The FAs started to disassemble or
        % assemble after PDGF, and even more after pp1
        % inhibition.
@@ -450,7 +450,7 @@ switch name,
         data.pax_cbound = [0 1000];
         data.before_pdgf = 8;
         data.pdgf_time = 501.80;
-   case '07_29_dish9',
+   case '07_29_dish9'
        % wound
         data.path = strcat(root, ...
             '07_29_2008\dish9_wound\');
@@ -468,7 +468,7 @@ switch name,
         data.before_pdgf = 10;
         data.pdgf_time = 626.01;
         data.num_fans =1;
-   case '10_24_dish21',
+   case '10_24_dish21'
        % The FAs started to disassemble or
        % assemble after PDGF, and even more after pp1
        % inhibition.
@@ -489,7 +489,7 @@ switch name,
         % PDGF between 10&11 611.52s 
         data.before_pdgf = 10;
         data.pdgf_time = 611.52;
-   case '10_24_dish22',
+   case '10_24_dish22'
        % The FAs started to disassemble or
        % assemble after PDGF, and even more after pp1
        % inhibition.
@@ -518,7 +518,7 @@ switch name,
         data.pdgf_time = 406.94;
         data.before_pp1 = 40;
         data.pp1_time = 2469.80;
-   case '10_24_dish31',
+   case '10_24_dish31'
        % The FAs appeared to decrease after PDGF
         data.path = strcat(root, ...
             '10_24_08_Src_mcherry_pax\3\dish1\');
@@ -537,7 +537,7 @@ switch name,
         data.pax_cbound = [0 400];
         data.before_pdgf = 4;
         data.pdgf_time = 260.21;
-   case '10_24_dish32',
+   case '10_24_dish32'
        % Disassemble after pdgf, continue disassembly after pp1.
         data.path = strcat(root, ...
             '10_24_08_Src_mcherry_pax\3\dish2\');
@@ -558,7 +558,7 @@ switch name,
         % pp1 between 38&39 at 2270.99s
         data.before_pdgf = 5;
         data.pdgf_time = 249.61;
-   case '10_24_dish33',
+   case '10_24_dish33'
        % The detection of FA did not work very well.
         data.path = strcat(root, ...
             '10_24_08_Src_mcherry_pax\3\dish3\');
@@ -579,7 +579,7 @@ switch name,
         % pp1 between 37&38 2193.84s
         data.before_pdgf = 7;
         data.pdgf_time = 428.90;
-   case '10_24_dish41',
+   case '10_24_dish41'
        % The detection of FA worked OK.
        % The cell was very dynamic after adding PDGF, 
        % with much ruffling process.
@@ -603,7 +603,7 @@ switch name,
         data.before_pdgf = 7;
         data.pdgf_time = 423.61;
         data.num_fans = 1;
-   case '10_24_dish42',
+   case '10_24_dish42'
         data.path = strcat(root, ...
             '10_24_08_Src_mcherry_pax\4\dish2\');
         data.prefix = '4-2';
@@ -620,7 +620,7 @@ switch name,
         data.before_pdgf = 6;
         data.pdgf_time = 471.60;
         data.num_fans = 2;
-   case '10_24_dish43',
+   case '10_24_dish43'
        % This is a very dynamic cell, surprisingly the total 
        % paxillin intensity in the cells remain relative stable
        % during the experiment.
@@ -640,7 +640,7 @@ switch name,
         data.before_pdgf = 9; % another  pdgf at 20
         data.pdgf_time = 551.09;
         data.num_fans = 2;
-   case '11_14_dish3',
+   case '11_14_dish3'
        % The detection of FA worked very well.
        % There were mysterious oscillation of the total intensity at the
        % frames 21 24 27 29 with no obvious reason, possibly due 
@@ -662,7 +662,7 @@ switch name,
         data.ref_pax_intensity = 83643752;
         data.before_pdgf = 6;
         data.pdgf_time = 346.56;
-   case '11_14_dish4',
+   case '11_14_dish4'
        % The detection of FA looks good.
        % There were mysterious oscillation of the total intensity at the
        % frames 1-2, 10, 14-16, 20, 24 with no obvious reason, possibly due 
@@ -683,7 +683,7 @@ switch name,
         data.ref_pax_intensity = 38296557;
         data.before_pdgf = 5;
         data.pdgf_time = 308.48;
-   case '11_14_dish5',
+   case '11_14_dish5'
        % The detection of FA looks OK.
        % 6% reduction in FA intensity over time.
         data.path = strcat(root, ...
@@ -702,7 +702,7 @@ switch name,
         data.ref_pax_intensity = 35611454;
         data.before_pdgf = 6;
         data.pdgf_time = 300.43;
-   case '11_18_dish1',
+   case '11_18_dish1'
        % The detection of FA looks OK.
         data.path = strcat(root, ...
             '11_18_2008_src_pax_pdgf_pp1\1\');
@@ -724,7 +724,7 @@ switch name,
         data.ref_pax_intensity = 85132441;
         data.before_pdgf = 13;
         data.pdgf_time = 813.6;
-   case '11_18_dish2',
+   case '11_18_dish2'
        % The detection of FA looks OK.
         data.path = strcat(root, ...
             '11_18_2008_src_pax_pdgf_pp1\2\');
@@ -745,7 +745,7 @@ switch name,
         % pp1 between 51&52 at 3038.71 sec
         data.before_pdgf = 11;
         data.pdgf_time = 683.19;
-   case '11_18_dish3',
+   case '11_18_dish3'
        % The detection of FA looks OK.
        % FA intensity did not decrease, but increased.
         data.path = strcat(root, ...
@@ -767,7 +767,7 @@ switch name,
         % pp1 between 56&57 at 3356.14 sec
         data.before_pdgf = 9; 
         data.pdgf_time = 549.57;
-    case '12_10_dish1', 
+    case '12_10_dish1' 
         % pdgf between 6-7 at 1048.51 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\1\');
@@ -785,7 +785,7 @@ switch name,
         data.before_pdgf = 6;
         data.pdgf_time = 1048.51;
         data.has_yfp = 0;
-    case '12_10_dish2',
+    case '12_10_dish2'
         %pdgf between 9-10 at 512.43 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\2\');
@@ -804,7 +804,7 @@ switch name,
         data.pdgf_time = 512.43;
         data.has_yfp = 0;
         data.need_mask = 1;
-    case '12_10_dish3',
+    case '12_10_dish3'
         % The cell was very dynamic with lots of ruffles.
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\3\');
@@ -823,7 +823,7 @@ switch name,
         data.pdgf_time = 525.81;
         data.has_yfp = 0;
         data.need_mask = 0;
-    case '12_10_dish4',
+    case '12_10_dish4'
         %pdgf between 6-7 at 437.17 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\4\');
@@ -843,7 +843,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans = 1;
-    case '12_10_dish5',
+    case '12_10_dish5'
         %pdgf between 8-9 at 479.98 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\5\');
@@ -863,7 +863,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans = 1;
-    case '12_10_dish6',
+    case '12_10_dish6'
         %pdgf between 5-6 at 314.56 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\6\');
@@ -884,7 +884,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans = 0;
-    case '12_10_dish7',
+    case '12_10_dish7'
         %pdgf between 6-7 at 359.35 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\7\');
@@ -905,7 +905,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans = 0;
-    case '12_10_dish7',
+    case '12_10_dish7'
         %pdgf between 6-7 at 359.35 sec
         data.path = strcat(root, ...
             '12_10_2008\mch_pax_pdgf\7\');
@@ -926,7 +926,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans = 0;
-    case '12_10_dish8',
+    case '12_10_dish8'
         % The detection of the boundary was not stable.
         % Had to copy cell_bw.007 to all the cell_bw.008-cell_bw.061.
         data.path = strcat(root, ...
@@ -947,7 +947,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 1;
         data.num_fans = 0;
-    case '12_18_dish1', % copied the first mask to the rest of images
+    case '12_18_dish1' % copied the first mask to the rest of images
         %pdgf between  5-6 at 310.90 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_pax_pdgf\1\');
@@ -967,7 +967,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans =0;
-    case '12_18_dish2',
+    case '12_18_dish2'
         %pdgf between  5-6 at 331.84 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_pax_pdgf\2\');
@@ -987,7 +987,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 1;
         data.num_fans =0;
-    case '12_18_dish3',
+    case '12_18_dish3'
         % pdgf between  7-8 at 417.19 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_pax_pdgf\3\');
@@ -1007,7 +1007,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 1;
         data.num_fans =0;
-    case '12_18_vinc_dish1',
+    case '12_18_vinc_dish1'
         % pdgf between  6-7 at 365.23 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\1\');
@@ -1027,7 +1027,7 @@ switch name,
         data.has_yfp = 0;
         data.need_mask = 0;
         data.num_fans =0;
-    case '12_18_vinc_dish2',
+    case '12_18_vinc_dish2'
         % pdgf between  8-9 at 488.21 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\2\');
@@ -1042,7 +1042,7 @@ switch name,
         data.fa.min_area = 50;
         data.pax_cbound = [0 500];
         data.ref_pax_intensity = 14606230;        
-    case '12_18_vinc_dish3',
+    case '12_18_vinc_dish3'
         % pdgf between  7-8 at 428.84 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\3\');
@@ -1057,7 +1057,7 @@ switch name,
         data.fa.min_area = 50;
         data.pax_cbound = [0 500];
         data.ref_pax_intensity = 14606230;        
-    case '12_18_vinc_dish4',
+    case '12_18_vinc_dish4'
         % pdgf between  9-10 at 466.25 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\4\');
@@ -1072,7 +1072,7 @@ switch name,
         data.fa.min_area = 50;
         data.pax_cbound = [0 500];
         data.ref_pax_intensity = 14606230;        
-    case '12_18_vinc_dish5',
+    case '12_18_vinc_dish5'
         % pdgf between  9-10 at 596.00 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\5\');
@@ -1087,7 +1087,7 @@ switch name,
         data.fa.min_area = 50;
         data.pax_cbound = [0 500];
         data.ref_pax_intensity = 14606230;        
-    case '12_18_vinc_dish6',
+    case '12_18_vinc_dish6'
         % pdgf between 8-9 at 445.79 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\6\');
@@ -1102,7 +1102,7 @@ switch name,
         data.fa.min_area = 50;
         data.pax_cbound = [0 500];
         data.ref_pax_intensity = 14606230;        
-    case '12_18_vinc_dish7',
+    case '12_18_vinc_dish7'
         % pdgf between 5-6 at 321.04 sec
         data.path = strcat(root, ...
             '12_18_2008\mch_vinc_pdgf\7\');
@@ -1117,7 +1117,7 @@ switch name,
         data.fa.min_area = 50;
         data.pax_cbound = [0 500];
         data.ref_pax_intensity = 14606230;        
-    case '01_12_pax_dish1',
+    case '01_12_pax_dish1'
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_pax\1\');
         data.prefix = '1';
@@ -1134,7 +1134,7 @@ switch name,
         data.before_pdgf = 4;
         data.pdgf_time = 301.24;
         data.num_fans = 1;
-    case '01_12_pax_dish2', 
+    case '01_12_pax_dish2' 
         % Not much pdgf response or disassembly
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_pax\2\');
@@ -1152,7 +1152,7 @@ switch name,
         data.before_pdgf = 6;
         data.pdgf_time = 315.61;
         data.num_fans = 1;
-    case '01_12_pax_dish3',
+    case '01_12_pax_dish3'
         % good Src response, no disassembly
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_pax\3\');
@@ -1169,7 +1169,7 @@ switch name,
         data.ref_pax_intensity = 36344166;
         data.before_pdgf = 11;
         data.pdgf_time = 678.43;
-    case '01_12_pax_dish4',
+    case '01_12_pax_dish4'
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_pax\4\');
         data.prefix = '4';
@@ -1185,7 +1185,7 @@ switch name,
         data.ref_pax_intensity = 35069561;
         data.before_pdgf = 5;
         data.pdgf_time = 278.30;
-    case '01_12_vin_dish1',
+    case '01_12_vin_dish1'
         % low src response, no disassembly.
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_vin\1\');
@@ -1204,7 +1204,7 @@ switch name,
         data.pdgf_time = 384.23;
         data.need_mask = 1;
         data.num_fans = 1;
-    case '01_12_vin_dish2',
+    case '01_12_vin_dish2'
         % low Src response, slightly disassembly.
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_vin\2\');
@@ -1223,7 +1223,7 @@ switch name,
         data.before_pdgf = 5;
         data.pdgf_time = 340.50;
         data.num_fans = 2;
-    case '01_12_vin_dish3',
+    case '01_12_vin_dish3'
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_vin\3\');
         data.prefix = '3';
@@ -1241,7 +1241,7 @@ switch name,
         data.pdgf_time = 428.65;
         data.num_fans = 1;
         %data.unspecific_gate = 1100;
-    case '01_12_vin_dish4', %some disassembly
+    case '01_12_vin_dish4' %some disassembly
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_vin\4\');
         data.prefix = '4';
@@ -1258,7 +1258,7 @@ switch name,
         data.before_pdgf = 8;
         data.pdgf_time = 406.90;
         %data.unspecific_gate = 1000;
-    case '01_12_vin_dish5', % not much disassembly
+    case '01_12_vin_dish5' % not much disassembly
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_vin\5\');
         data.prefix = '5';
@@ -1275,7 +1275,7 @@ switch name,
         data.before_pdgf = 8;
         data.pdgf_time = 443.50;
         data.num_fans = 1;
-    case '01_12_vin_dish6',
+    case '01_12_vin_dish6'
         data.path = strcat(root, ...
             '01_12_2009\src_mcherry_vin\6\');
         data.prefix = '6';
@@ -1292,7 +1292,7 @@ switch name,
         data.before_pdgf = 7;
         data.pdgf_time = 415.54;
         data.num_fans = 1;
-    case '01_31_dish1', % significant disassembly
+    case '01_31_dish1' % significant disassembly
         data.path = strcat(root, ...
             '01_31_2009_src_mcherry pax_pd\1\');
         data.prefix = '1';
@@ -1308,7 +1308,7 @@ switch name,
         data.ref_pax_intensity = 36875447;
         data.before_pdgf = 5;
         data.pdgf_time = 299.72;
-    case '01_31_dish1', % significant disassembly
+    case '01_31_dish1' % significant disassembly
         data.path = strcat(root, ...
             '01_31_2009_src_mcherry pax_pd\1\');
         data.prefix = '1';
@@ -1324,7 +1324,7 @@ switch name,
         data.ref_pax_intensity = 36875447;
         data.before_pdgf = 5;
         data.pdgf_time = 299.72;
-    case '01_31_dish2', 
+    case '01_31_dish2' 
         data.path = strcat(root, ...
             '01_31_2009_src_mcherry pax_pd\2\');
         data.prefix = '2';
@@ -1340,7 +1340,7 @@ switch name,
         data.ref_pax_intensity = 29687378;
         data.before_pdgf = 15;
         data.pdgf_time = 869.68; % another mark of pdgf at 6
-    case '01_31_dish3', % not disassembly
+    case '01_31_dish3' % not disassembly
         data.path = strcat(root, ...
             '01_31_2009_src_mcherry pax_pd\3\');
         data.prefix = '3';
@@ -1358,7 +1358,7 @@ switch name,
         data.pdgf_time = 281.38;
         %data.unspecific_gate = 700;
         data.num_fans = 1;
-    case '01_31_dish4',
+    case '01_31_dish4'
         % There were significantly less FAs in the base level
         % compared to untreated cells.
         % There were significant disassembly.
@@ -1377,7 +1377,7 @@ switch name,
         data.ref_pax_intensity = 32491256;
         data.before_pdgf = 4;
         data.pdgf_time = 207.43;
-    case '01_31_dish5',
+    case '01_31_dish5'
         % The time course was only 13 minutes after
         % the second time PDGF was added.
         % This was too short to tell.
@@ -1398,7 +1398,7 @@ switch name,
         data.pdgf_time = 466.66;
         data.num_fans =1;
     % The water algorithm was updated after Feb 5th here.
-    case '02_05_dish1',
+    case '02_05_dish1'
         % significant disassembly.
         data.path = strcat(root, ...
             '02_05_2009_src_mcherry pax_pd\1\');
@@ -1416,7 +1416,7 @@ switch name,
         data.ref_pax_intensity = 30401565;
         data.before_pdgf = 7;
         data.pdgf_time = 445.77;
-    case '02_05_dish2',
+    case '02_05_dish2'
         data.path = strcat(root, ...
             '02_05_2009_src_mcherry pax_pd\2\');
         data.prefix = '2';
@@ -1434,7 +1434,7 @@ switch name,
         data.before_pdgf = 5;
         data.pdgf_time = 295.79;
         data.num_fans = 1;
-     case '02_05_dish3',
+     case '02_05_dish3'
          % There was disassembly.
         data.path = strcat(root, ...
             '02_05_2009_src_mcherry pax_pd\3\');
@@ -1453,7 +1453,7 @@ switch name,
         data.before_pdgf = 7;
         data.pdgf_time = 354.91;
         %data.unspecific_gate = 550;
-     case '02_05_dish4',
+     case '02_05_dish4'
          % FAs were disassembled
         data.path = strcat(root, ...
             '02_05_2009_src_mcherry pax_pd\4\');
@@ -1473,7 +1473,7 @@ switch name,
         data.pdgf_time = 496.98;
         data.num_fans = 1;
         %data.unspecific_gate = 550;
-     case '02_05_dish5',
+     case '02_05_dish5'
          % FAs were disassembled
         data.path = strcat(root, ...
             '02_05_2009_src_mcherry pax_pd\5\');
@@ -1492,7 +1492,7 @@ switch name,
         data.pdgf_time = 340.51;
         data.num_fans = 1;
         %data.unspecific_gate = 550;
-     case '02_10_dish1',
+     case '02_10_dish1'
         data.path = strcat(root, ...
             '02_10_2009\src_mch pax_ly\1\');
         data.prefix = '1';
@@ -1510,7 +1510,7 @@ switch name,
         data.pdgf_time = 265.64;
         %data.unspecific_gate = 550;
         data.num_fans = 0;
-     case '02_10_dish2',
+     case '02_10_dish2'
          % disassembled for 7% 
         data.path = strcat(root, ...
             '02_10_2009\src_mch pax_ly\2\');
@@ -1529,7 +1529,7 @@ switch name,
         data.pdgf_time = 326.20;
         %data.unspecific_gate = 550;
         data.num_fans = 2;
-     case '02_10_dish3',
+     case '02_10_dish3'
          % Src did not response and FAs did not disassemble
         data.path = strcat(root, ...
             '02_10_2009\src_mch pax_ly\3\');
@@ -1547,7 +1547,7 @@ switch name,
         data.before_pdgf = 34;
         data.pdgf_time = 1997.11;
         %data.unspecific_gate = 550;
-     case '02_10_dish6',
+     case '02_10_dish6'
          % to subtract_background
         data.path = strcat(root, ...
             '02_10_2009\src_mch pax_ly\6\');
@@ -1566,7 +1566,7 @@ switch name,
         data.pdgf_time = 290.88;
         data.num_fans = 1;
         %data.unspecific_gate = 550;
-     case '02_10_dish4',
+     case '02_10_dish4'
          % to subtract_background
         data.path = strcat(root, ...
             '02_10_2009\src_mch pax_ly pd\4\');
@@ -1586,7 +1586,7 @@ switch name,
         data.pdgf_time = 691.58;
         data.num_fans = 1;
         %data.unspecific_gate = 550;
-     case '02_10_dish5',
+     case '02_10_dish5'
          % to subtract_background
         data.path = strcat(root, ...
             '02_10_2009\src_mch pax_ly pd\5\');
@@ -1604,7 +1604,7 @@ switch name,
         data.before_pdgf = 15;
         data.pdgf_time = 843.79;
         %data.unspecific_gate = 550;
-     case '02_20_racn_dish1',
+     case '02_20_racn_dish1'
         data.path = strcat(root, ...
             '02_20_2009\src_mcherry pax_RacN17\1\');
         data.prefix = '1';
@@ -1622,7 +1622,7 @@ switch name,
         data.pdgf_time = 393.39;
         data.num_fans = 1;
         %data.unspecific_gate = 550;
-     case '02_20_racn_dish2',
+     case '02_20_racn_dish2'
         data.path = strcat(root, ...
             '02_20_2009\src_mcherry pax_RacN17\2\');
         data.prefix = '2';
@@ -1640,7 +1640,7 @@ switch name,
         data.pdgf_time = 337.48;
         %data.unspecific_gate = 550;
         data.num_fans = 1;
-     case '02_20_racn_dish3',
+     case '02_20_racn_dish3'
         data.path = strcat(root, ...
             '02_20_2009\src_mcherry pax_RacN17\3\');
         data.prefix = '3';
@@ -1658,7 +1658,7 @@ switch name,
         data.pdgf_time = 381.36;
         %data.unspecific_gate = 550;
         data.num_fans = 1;
-     case '02_20_racn_dish4',
+     case '02_20_racn_dish4'
         data.path = strcat(root, ...
             '02_20_2009\src_mcherry pax_RacN17\4\');
         data.prefix = '4';
@@ -1676,10 +1676,10 @@ switch name,
         data.pdgf_time = 217.21;
         %data.unspecific_gate = 550;
         data.num_fans = 1;
-         % '02_20_frnk_dish1',
+         % '02_20_frnk_dish1'
          %There was some unspecific staining of pax on the glass
          % Did not proceed analyzing experiment
-    case '02_20_frnk_dish2',
+    case '02_20_frnk_dish2'
         data.path = strcat(root, ...
             '02_20_2009\lyn fak_pax_FRNK\2\');
         data.prefix = '2';
@@ -1696,7 +1696,7 @@ switch name,
         data.before_pdgf = 5;
         data.pdgf_time = 245.32;
         data.unspecific_gate = 550;
-    case '02_20_frnk_dish3',
+    case '02_20_frnk_dish3'
         % It is weired that the cell is switching between
         % two different shape at the last few images in 
         % the time sequence.
@@ -1716,7 +1716,7 @@ switch name,
         data.before_pdgf = 7;
         data.pdgf_time = 333.19;
         data.unspecific_gate = 550;
-    case '02_20_frnk_dish4',
+    case '02_20_frnk_dish4'
         % It is weired that the cell is switching between
         % two different shape at the last few images in 
         % the time sequence.
@@ -1741,7 +1741,7 @@ switch name,
 % root = 'C:\sylu\copy_07_19_2009-xxx\sof\fluocell_2.1\data\';
 % root = 'C:\sylu\copy_xxx-06_05_2009\sof\fluocell_2.1\data\';
 % The rest of the data are stored in another position
-    case '07_18_dish1',
+    case '07_18_dish1'
         % very good.
         data.path = strcat(root, ...
             '07_18_2009\RFP_MEF_dish01\');
@@ -1760,7 +1760,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.has_yfp = 0;
-    case '07_18_dish2',
+    case '07_18_dish2'
         % good, need mask.
         data.path = strcat(root, ...
             '07_18_2009\mCherry_MEF_dish02\');
@@ -1778,7 +1778,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
-    case '07_18_dish3',
+    case '07_18_dish3'
         % good. need mask.
         data.path = strcat(root, ...
             '07_18_2009\mCherry_MEF_dish03\');
@@ -1797,7 +1797,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
-    case '07_18_dish4',
+    case '07_18_dish4'
         % good
         data.path = strcat(root, ...
             '07_18_2009\mCherry_MEF_dish04\');
@@ -1816,7 +1816,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
-    case '07_18_dish5',
+    case '07_18_dish5'
         % Graph good
         data.path = strcat(root, ...
             '07_18_2009\mCherry_MEF_dish05\');
@@ -1835,7 +1835,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
-    case '07_18_syf1', % need_mask = 0
+    case '07_18_syf1' % need_mask = 0
         % only part of the cell, not very good.
         data.path = strcat(root, ...
             '07_18_2009\mCherry_SYF_dish01\');
@@ -1853,7 +1853,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         %'07_18_syf2' lost cell after pdgf.
-    case '07_18_syf3',
+    case '07_18_syf3'
         data.path = strcat(root, ...
             '07_18_2009\mCherry_SYF_dish03\');
                 data.prefix = 'MCHERRY_SYF_03';
@@ -1869,7 +1869,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
-    case '07_18_syf4', % cell migrating % 07_18_syf5 lost cell
+    case '07_18_syf4' % cell migrating % 07_18_syf5 lost cell
         data.path = strcat(root, ...
             '07_18_2009\mCherry_SYF_dish04\');
                 data.prefix = 'MCHERRY_SYF_04';
@@ -1885,7 +1885,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
-    case '07_28_syf2', % Could not detect FA; cell 3: Src was activated
+    case '07_28_syf2' % Could not detect FA; cell 3: Src was activated
         data.path = strcat(root, ...
             '07_28_2009\SYF_dish02\');
                 data.prefix = 'FRET';
@@ -1903,7 +1903,7 @@ switch name,
         data.fa.min_area = 50;
     % 07_22_2009 syf, >50% of the cells responsed to pdgf in Src ratio
     % those may be a bad batch of cells.
-    case '07_28_syf4', 
+    case '07_28_syf4' 
         data.path = strcat(root, ...
             '07_28_2009\SYF_dish04\');
                 data.prefix = 'FRET';
@@ -1920,7 +1920,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 2;
-    case '07_28_syf5', 
+    case '07_28_syf5' 
         data.path = strcat(root, ...
             '07_28_2009\SYF_dish05\');
                 data.prefix = 'FRET';
@@ -1936,7 +1936,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;    
-    case '07_28_syf6', 
+    case '07_28_syf6' 
         data.path = strcat(root, ...
             '07_28_2009\SYF_dish06_Cell2\');
                 data.prefix = 'FRET';
@@ -1953,7 +1953,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_01_fn10_mef1', 
+    case '08_01_fn10_mef1' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN10_dish01\');
                 data.prefix = 'FRET';
@@ -1970,7 +1970,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 3;
-    case '08_01_fn10_mef2', % low Src response 
+    case '08_01_fn10_mef2' % low Src response 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN10_dish02\');
                 data.prefix = 'FRET';
@@ -1987,7 +1987,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 0;
-    case '08_01_fn10_mef3', 
+    case '08_01_fn10_mef3' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN10_dish03\');
                 data.prefix = 'FRET';
@@ -2004,7 +2004,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_01_fn10_mef4', 
+    case '08_01_fn10_mef4' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN10_dish04\');
                 data.prefix = 'FRET';
@@ -2021,7 +2021,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans =1 ;
-    case '08_01_fn10_mef5', 
+    case '08_01_fn10_mef5' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN10_dish05\');
                 data.prefix = 'FRET';
@@ -2038,7 +2038,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 3;
-    case '08_01_fn5_mef1', 
+    case '08_01_fn5_mef1' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN5_dish01\');
                 data.prefix = 'FRET';
@@ -2055,7 +2055,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;   
         data.num_fans = 1;
-    case '08_01_fn5_mef2', 
+    case '08_01_fn5_mef2' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN5_dish02\');
                 data.prefix = 'FRET';
@@ -2071,7 +2071,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;   
-    case '08_01_fn5_mef3', 
+    case '08_01_fn5_mef3' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN5_dish03\');
                 data.prefix = 'FRET';
@@ -2088,7 +2088,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_01_fn5_mef4', 
+    case '08_01_fn5_mef4' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN5_dish04\');
                 data.prefix = 'FRET';
@@ -2106,7 +2106,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_01_fn5_mef5', 
+    case '08_01_fn5_mef5' 
         data.path = strcat(root, ...
             '08_01_2009\MEF_FN5_dish05\');
                 data.prefix = 'FRET';
@@ -2124,7 +2124,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 2;
-    case '08_04_mef1', 
+    case '08_04_mef1' 
         data.path = strcat(root, ...
             '08_04_2009\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -2140,7 +2140,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;   
-    case '08_04_mef2', 
+    case '08_04_mef2' 
         data.path = strcat(root, ...
             '08_04_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -2157,7 +2157,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_04_mef3', 
+    case '08_04_mef3' 
         data.path = strcat(root, ...
             '08_04_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -2174,7 +2174,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_04_mef4', 
+    case '08_04_mef4' 
         data.path = strcat(root, ...
             '08_04_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -2190,7 +2190,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;   
-    case '08_04_mef5', 
+    case '08_04_mef5' 
         data.path = strcat(root, ...
             '08_04_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -2207,7 +2207,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 3;
-    case '08_04_mef6', 
+    case '08_04_mef6' 
         data.path = strcat(root, ...
             '08_04_2009\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -2224,7 +2224,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_14_mef1', 
+    case '08_14_mef1' 
         data.path = strcat(root, ...
             '08_14_2009\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -2242,7 +2242,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1;
-    case '08_14_mef2', 
+    case '08_14_mef2' 
         data.path = strcat(root, ...
             '08_14_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -2258,7 +2258,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
-    case '08_14_mef3', 
+    case '08_14_mef3' 
         data.path = strcat(root, ...
             '08_14_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -2275,7 +2275,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1;
-    case '08_14_mef4', %This cell shrank
+    case '08_14_mef4' %This cell shrank
         data.path = strcat(root, ...
             '08_14_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -2291,7 +2291,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
-    case '08_14_mef5', % This cell shrank a lot
+    case '08_14_mef5' % This cell shrank a lot
         data.path = strcat(root, ...
             '08_14_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -2308,7 +2308,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_21_mef1', 
+    case '08_21_mef1' 
         data.path = strcat(root, ...
             '08_21_2009\MEF_SrcKD_dish01\');
                 data.prefix = 'FRET';
@@ -2324,7 +2324,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
-    case '08_21_mef2', 
+    case '08_21_mef2' 
         data.path = strcat(root, ...
             '08_21_2009\MEF_SrcKD_dish02\');
                 data.prefix = 'FRET';
@@ -2340,7 +2340,7 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
-    case '08_21_mef3', 
+    case '08_21_mef3' 
         data.path = strcat(root, ...
             '08_21_2009\MEF_SrcKD_dish03\');
                 data.prefix = 'FRET';
@@ -2357,7 +2357,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans= 3;
-    case '08_21_mef4', 
+    case '08_21_mef4' 
         data.path = strcat(root, ...
             '08_21_2009\MEF_SrcKD_dish04\');
                 data.prefix = 'FRET';
@@ -2375,7 +2375,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans =1;
-    case '08_21_mef5', 
+    case '08_21_mef5' 
         data.path = strcat(root, ...
             '08_21_2009\MEF_SrcKD_dish05\');
                 data.prefix = 'FRET';
@@ -2392,7 +2392,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50;
         data.num_fans = 1;
-    case '08_29_mef1', 
+    case '08_29_mef1' 
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -2409,7 +2409,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 0 ;
-    case '08_29_mef3', 
+    case '08_29_mef3' 
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -2426,7 +2426,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '08_29_mef4', 
+    case '08_29_mef4' 
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -2443,7 +2443,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '08_29_mef5', 
+    case '08_29_mef5' 
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -2460,7 +2460,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '08_29_mef7', 
+    case '08_29_mef7' 
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish07\');
                 data.prefix = 'FRET';
@@ -2477,7 +2477,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '08_29_mef8', 
+    case '08_29_mef8' 
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish08\');
                 data.prefix = 'FRET';
@@ -2494,7 +2494,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 3 ;
-    case '08_29_mef2', % Src did not respond
+    case '08_29_mef2' % Src did not respond
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -2511,7 +2511,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 4 ;
-    case '08_29_mef6', %low Src response
+    case '08_29_mef6' %low Src response
         data.path = strcat(root, ...
             '08_29_2009\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -2528,7 +2528,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 4 ;
-    case '09_02_mef1', 
+    case '09_02_mef1' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_dish01_cell02\');
                 data.prefix = 'FRET';
@@ -2545,7 +2545,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '09_02_mef6_NZ', 
+    case '09_02_mef6_NZ' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_NZ_dish06\');
                 data.prefix = 'FRET';
@@ -2562,7 +2562,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_02_mef7_NZ', 
+    case '09_02_mef7_NZ' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_NZ_dish07\');
                 data.prefix = 'FRET';
@@ -2579,7 +2579,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '09_02_mef8_NZ', 
+    case '09_02_mef8_NZ' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_NZ_dish08\');
                 data.prefix = 'FRET';
@@ -2596,7 +2596,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '09_02_mef2', 
+    case '09_02_mef2' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -2613,7 +2613,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 3 ;
-    case '09_02_mef3', 
+    case '09_02_mef3' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -2630,7 +2630,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 3 ;
-    case '09_02_mef4', 
+    case '09_02_mef4' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -2647,7 +2647,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 3 ;
-    case '09_02_mef5', 
+    case '09_02_mef5' 
         data.path = strcat(root, ...
             '09_02_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -2664,7 +2664,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '09_11_mef1_NZ', 
+    case '09_11_mef1_NZ' 
         data.path = strcat(root, ...
             '09_11_2009\MEF_NZ_dish01\');
                 data.prefix = 'FRET';
@@ -2681,7 +2681,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         % data.num_fans = 1 ;
-    case '09_11_mef2_NZ', 
+    case '09_11_mef2_NZ' 
         data.path = strcat(root, ...
             '09_11_2009\MEF_NZ_dish02\');
                 data.prefix = 'FRET';
@@ -2698,7 +2698,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '09_11_mef3_NZ', 
+    case '09_11_mef3_NZ' 
         data.path = strcat(root, ...
             '09_11_2009\MEF_NZ_dish03\');
                 data.prefix = 'FRET';
@@ -2715,7 +2715,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '09_11_mef4_NZ', %not include b/c there was some problem with the excitation light
+    case '09_11_mef4_NZ' %not include b/c there was some problem with the excitation light
         data.path = strcat(root, ...
             '09_11_2009\MEF_NZ_dish04\');
                 data.prefix = 'FRET';
@@ -2732,7 +2732,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         % data.num_fans = 1 ;
-    case '09_11_mef5_NZ', 
+    case '09_11_mef5_NZ' 
         data.path = strcat(root, ...
             '09_11_2009\MEF_NZ_dish05\');
                 data.prefix = 'FRET';
@@ -2749,7 +2749,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '09_11_mef6_NZ', 
+    case '09_11_mef6_NZ' 
         data.path = strcat(root, ...
             '09_11_2009\MEF_NZ_dish06\');
                 data.prefix = 'FRET';
@@ -2766,7 +2766,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_16_mef1', 
+    case '09_16_mef1' 
         data.path = strcat(root, ...
             '09_16_2009\MEF_dish1_FN20\');
                 data.prefix = 'FRET';
@@ -2783,7 +2783,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_16_mef2', 
+    case '09_16_mef2' 
         data.path = strcat(root, ...
             '09_16_2009\MEF_dish2_FN20\');
                 data.prefix = 'FRET';
@@ -2800,7 +2800,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '09_16_mef3', 
+    case '09_16_mef3' 
         data.path = strcat(root, ...
             '09_16_2009\MEF_dish3_FN20\');
                 data.prefix = 'FRET';
@@ -2817,7 +2817,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_16_mef4', 
+    case '09_16_mef4' 
         data.path = strcat(root, ...
             '09_16_2009\MEF_dish4_FN20\');
                 data.prefix = 'FRET';
@@ -2834,7 +2834,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_16_mef5_NZ', 
+    case '09_16_mef5_NZ' 
         data.path = strcat(root, ...
             '09_16_2009\MEF_dish5_NZ\');
                 data.prefix = 'FRET';
@@ -2851,7 +2851,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_16_mef6_NZ', 
+    case '09_16_mef6_NZ' 
         data.path = strcat(root, ...
             '09_16_2009\MEF_dish6_NZ\');
                 data.prefix = 'FRET';
@@ -2868,7 +2868,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 2 ;
-    case '09_22_mef1', 
+    case '09_22_mef1' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -2885,7 +2885,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '09_22_mef2', 
+    case '09_22_mef2' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -2902,7 +2902,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '09_22_mef3', 
+    case '09_22_mef3' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -2919,7 +2919,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '09_22_mef4', 
+    case '09_22_mef4' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -2936,7 +2936,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 1 ;
-    case '09_22_mef5', 
+    case '09_22_mef5' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -2953,7 +2953,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 1 ;
-    case '09_22_mef6', 
+    case '09_22_mef6' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -2970,7 +2970,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 3 ;
-    case '09_22_mef7', 
+    case '09_22_mef7' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish07\');
                 data.prefix = 'FRET';
@@ -2987,7 +2987,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '09_22_mef8', 
+    case '09_22_mef8' 
         data.path = strcat(root, ...
             '09_22_2009\MEF_dish08\');
                 data.prefix = 'FRET';
@@ -3004,7 +3004,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_14_mef1', 
+    case '10_14_mef1' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -3021,7 +3021,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '10_14_mef2', 
+    case '10_14_mef2' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -3038,7 +3038,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_14_mef3', 
+    case '10_14_mef3' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -3055,7 +3055,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '10_14_mef4', 
+    case '10_14_mef4' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -3072,7 +3072,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_14_mef5', 
+    case '10_14_mef5' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -3089,7 +3089,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '10_14_mef6', 
+    case '10_14_mef6' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -3106,7 +3106,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_14_mef7', 
+    case '10_14_mef7' 
         data.path = strcat(root, ...
             '10_14_2009\MEF_dish07\');
                 data.prefix = 'FRET';
@@ -3123,7 +3123,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 1 ;
-    case '10_22_mef1', 
+    case '10_22_mef1' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -3140,7 +3140,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_22_mef2', 
+    case '10_22_mef2' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -3157,7 +3157,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_22_mef3', 
+    case '10_22_mef3' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -3174,7 +3174,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '10_22_mef4', 
+    case '10_22_mef4' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -3191,7 +3191,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '10_22_mef5', 
+    case '10_22_mef5' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -3208,7 +3208,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '10_22_mef6', 
+    case '10_22_mef6' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -3225,7 +3225,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '10_22_mef7', 
+    case '10_22_mef7' 
         data.path = strcat(root, ...
             '10_22_2009\MEF_dish07\');
                 data.prefix = 'FRET';
@@ -3242,7 +3242,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_30_mef2', 
+    case '10_30_mef2' 
         % Out of focus from 17~34 and 43~47
         data.path = strcat(root, ...
             '10_30_2009\MEF_dish02\');
@@ -3260,7 +3260,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 1 ;
-    case '10_30_mef3', 
+    case '10_30_mef3' 
         data.path = strcat(root, ...
             '10_30_2009\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -3277,7 +3277,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_30_mef4', 
+    case '10_30_mef4' 
         data.path = strcat(root, ...
             '10_30_2009\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -3294,7 +3294,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_30_mef5', 
+    case '10_30_mef5' 
         data.path = strcat(root, ...
             '10_30_2009\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -3311,7 +3311,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '10_30_mef6', 
+    case '10_30_mef6' 
         data.path = strcat(root, ...
             '10_30_2009\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -3328,7 +3328,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '01_11_mef1', 
+    case '01_11_mef1' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish01\');
                 data.prefix = 'FRET';
@@ -3345,7 +3345,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '01_11_mef2', 
+    case '01_11_mef2' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish02\');
                 data.prefix = 'FRET';
@@ -3362,7 +3362,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 2 ;
-    case '01_11_mef3', 
+    case '01_11_mef3' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish03\');
                 data.prefix = 'FRET';
@@ -3379,7 +3379,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 2 ;
-    case '01_11_mef4', 
+    case '01_11_mef4' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish04\');
                 data.prefix = 'FRET';
@@ -3396,7 +3396,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 2 ;
-    case '01_11_mef5', 
+    case '01_11_mef5' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish05\');
                 data.prefix = 'FRET';
@@ -3413,7 +3413,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 2 ;
-    case '01_11_mef6', 
+    case '01_11_mef6' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish06\');
                 data.prefix = 'FRET';
@@ -3430,7 +3430,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
        % data.num_fans = 2 ;
-    case '01_11_mef7', 
+    case '01_11_mef7' 
         data.path = strcat(root, ...
             '01_11_2010\MEF_dish07\');
                 data.prefix = 'FRET';
@@ -3447,7 +3447,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '01_22_mef1', 
+    case '01_22_mef1' 
         data.path = strcat(root, ...
             '01_22_2010\MEF_FN2_dish01\');
                 data.prefix = 'FLUOR';
@@ -3467,7 +3467,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '01_22_mef2', 
+    case '01_22_mef2' 
         data.path = strcat(root, ...
             '01_22_2010\MEF_FN2_dish02\');
                 data.prefix = 'FRET';
@@ -3484,7 +3484,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         data.num_fans = 1 ;
-    case '01_22_mef3', 
+    case '01_22_mef3' 
         data.path = strcat(root, ...
             '01_22_2010\MEF_FN2_dish03\');
                 data.prefix = 'FLUOR';
@@ -3504,7 +3504,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '01_22_mef4', 
+    case '01_22_mef4' 
         data.path = strcat(root, ...
             '01_22_2010\MEF_FN2_dish04\');
                 data.prefix = 'FRET';
@@ -3521,7 +3521,7 @@ switch name,
         data.fa.single_min_area = 30;
         data.fa.min_area = 50; 
         %data.num_fans = 1 ;
-    case '01_22_mef5', 
+    case '01_22_mef5' 
         data.path = strcat(root, ...
             '01_22_2010\MEF_FN2_dish05\');
                 data.prefix = 'FLUOR';
@@ -3541,7 +3541,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '01_28_mef1', 
+    case '01_28_mef1' 
         data.path = strcat(root, ...
             '01_28_2010\MEF_dish01\');
                 data.prefix = 'FLUOR';
@@ -3561,7 +3561,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '01_28_mef3', 
+    case '01_28_mef3' 
         data.path = strcat(root, ...
             '01_28_2010\MEF_dish03\');
                 data.prefix = 'FLUOR';
@@ -3581,7 +3581,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '01_28_mef4', 
+    case '01_28_mef4' 
         data.path = strcat(root, ...
             '01_28_2010\MEF_dish04\');
                 data.prefix = 'FLUOR';
@@ -3601,7 +3601,7 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 3;
         % data.num_fans = 1 ;
-    case '01_28_mef5', 
+    case '01_28_mef5' 
         data.path = strcat(root, ...
             '01_28_2010\MEF_dish05\');
                 data.prefix = 'FLUOR';
@@ -3621,7 +3621,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '01_28_mef6', 
+    case '01_28_mef6' 
         data.path = strcat(root, ...
             '01_28_2010\MEF_dish06\');
                 data.prefix = 'FLUOR';
@@ -3641,7 +3641,7 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 3;
         % data.num_fans = 1 ;
-    case '01_28_mef7', 
+    case '01_28_mef7' 
         data.path = strcat(root, ...
             '01_28_2010\MEF_dish07\');
                 data.prefix = 'FLUOR';
@@ -3661,7 +3661,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_01_mef1', 
+    case '02_01_mef1' 
         data.path = strcat(root, ...
             '02_01_2010\MEF_dish01\');
                 data.prefix = 'FLUOR';
@@ -3681,7 +3681,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_01_mef2', 
+    case '02_01_mef2' 
         data.path = strcat(root, ...
             '02_01_2010\MEF_dish02\');
                 data.prefix = 'FLUOR';
@@ -3701,7 +3701,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_01_mef3', 
+    case '02_01_mef3' 
         data.path = strcat(root, ...
             '02_01_2010\MEF_dish03\');
                 data.prefix = 'FLUOR';
@@ -3721,7 +3721,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_01_mef4', 
+    case '02_01_mef4' 
         data.path = strcat(root, ...
             '02_01_2010\MEF_dish04\');
                 data.prefix = 'FLUOR';
@@ -3741,7 +3741,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_01_mef5', 
+    case '02_01_mef5' 
         data.path = strcat(root, ...
             '02_01_2010\MEF_dish05\');
                 data.prefix = 'FLUOR';
@@ -3761,7 +3761,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_01_mef6', 
+    case '02_01_mef6' 
         data.path = strcat(root, ...
             '02_01_2010\MEF_dish06\');
                 data.prefix = 'FLUOR';
@@ -3781,7 +3781,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '02_09_FN2_mef1', 
+    case '02_09_FN2_mef1' 
         data.path = strcat(root, ...
             '02_09_2010\MEF_FN2_dish01\');
                 data.prefix = 'FLUOR';
@@ -3801,7 +3801,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '03_02_control1', 
+    case '03_02_control1' 
         data.path = strcat(root, ...
             '03_02_2010\MEF_FN10_control\');
                 data.prefix = 'FLUOR';
@@ -3821,7 +3821,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '03_02_control2', 
+    case '03_02_control2' 
         data.path = strcat(root, ...
             '03_02_2010\MEF_FN10_control2\');
                 data.prefix = 'FLUOR';
@@ -3841,7 +3841,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '03_10_control1', 
+    case '03_10_control1' 
         data.path = strcat(root, ...
             '03_10_2010\MEF_control1\');
                 data.prefix = 'FLUOR';
@@ -3861,7 +3861,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '03_10_control2', 
+    case '03_10_control2' 
         data.path = strcat(root, ...
             '03_10_2010\MEF_control2\');
                 data.prefix = 'FLUOR';
@@ -3881,7 +3881,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_dish01', 
+    case '04_13_FN10_dish01' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_FN10_dish01\');
                 data.prefix = 'FLUOR';
@@ -3901,7 +3901,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_dish02', 
+    case '04_13_FN10_dish02' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_FN10_dish02\');
                 data.prefix = 'FLUOR';
@@ -3921,7 +3921,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_dish03', 
+    case '04_13_FN10_dish03' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_FN10_dish03\');
                 data.prefix = 'FLUOR';
@@ -3941,7 +3941,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_dish04', 
+    case '04_13_FN10_dish04' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_FN10_dish04\');
                 data.prefix = 'FLUOR';
@@ -3961,7 +3961,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_dish06', 
+    case '04_13_FN10_dish06' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_FN10_dish06\');
                 data.prefix = 'FLUOR';
@@ -3981,7 +3981,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_14_FN10_dish01', 
+    case '04_14_FN10_dish01' 
         data.path = strcat(root, ...
             '04_14_2010\MEF_FN10_dish01\');
                 data.prefix = 'FLUOR';
@@ -4001,7 +4001,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_control01', 
+    case '04_13_FN10_control01' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_control01\');
                 data.prefix = 'FLUOR';
@@ -4021,7 +4021,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_13_FN10_control02', 
+    case '04_13_FN10_control02' 
         data.path = strcat(root, ...
             '04_13_2010\MEF_control02\');
                 data.prefix = 'FLUOR';
@@ -4041,7 +4041,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_14_FN10_control01', 
+    case '04_14_FN10_control01' 
         data.path = strcat(root, ...
             '04_14_2010\MEF_control1\');
                 data.prefix = 'FLUOR';
@@ -4061,7 +4061,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_control01', 
+    case '04_21_FN10_control01' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_control1\');
                 data.prefix = 'FLUOR';
@@ -4081,7 +4081,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef1', 
+    case '04_21_FN10_mef1' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish01\');
                 data.prefix = 'FLUOR';
@@ -4101,7 +4101,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef2', 
+    case '04_21_FN10_mef2' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish02\');
                 data.prefix = 'FLUOR';
@@ -4121,7 +4121,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef3', 
+    case '04_21_FN10_mef3' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish03\');
                 data.prefix = 'FLUOR';
@@ -4141,7 +4141,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef4', 
+    case '04_21_FN10_mef4' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish04\');
                 data.prefix = 'FLUOR';
@@ -4161,7 +4161,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef5', 
+    case '04_21_FN10_mef5' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish05\');
                 data.prefix = 'FLUOR';
@@ -4181,7 +4181,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef6', 
+    case '04_21_FN10_mef6' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish06\');
                 data.prefix = 'FLUOR';
@@ -4201,7 +4201,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_21_FN10_mef7', 
+    case '04_21_FN10_mef7' 
         data.path = strcat(root, ...
             '04_21_2010\MEF_dish07\');
                 data.prefix = 'FLUOR';
@@ -4221,7 +4221,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_28_FN10_control1', 
+    case '04_28_FN10_control1' 
         data.path = strcat(root, ...
             '04_28_2010\MEF_control01\');
                 data.prefix = 'FLUOR';
@@ -4241,7 +4241,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_28_FN10_control2', 
+    case '04_28_FN10_control2' 
         data.path = strcat(root, ...
             '04_28_2010\MEF_control02\');
                 data.prefix = 'FLUOR';
@@ -4261,7 +4261,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_28_FN10_control3', 
+    case '04_28_FN10_control3' 
         data.path = strcat(root, ...
             '04_28_2010\MEF_control03\');
                 data.prefix = 'FLUOR';
@@ -4281,7 +4281,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_28_FN10_control4', 
+    case '04_28_FN10_control4' 
         data.path = strcat(root, ...
             '04_28_2010\MEF_control04\');
                 data.prefix = 'FLUOR';
@@ -4301,7 +4301,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_28_FN10_control5', 
+    case '04_28_FN10_control5' 
         data.path = strcat(root, ...
             '04_28_2010\MEF_control05\');
                 data.prefix = 'FLUOR';
@@ -4321,7 +4321,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_28_FN10_mef1', 
+    case '04_28_FN10_mef1' 
         data.path = strcat(root, ...
             '04_28_2010\MEF_dish01\');
                 data.prefix = 'FLUOR';
@@ -4341,7 +4341,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_14_FN2_mef1', 
+    case '04_14_FN2_mef1' 
         data.path = strcat(root, ...
             '04_14_2010\MEF_FN2_dish01\');
                 data.prefix = 'FLUOR';
@@ -4361,7 +4361,7 @@ switch name,
         data.cfp_channel = 1;
         data.yfp_channel = 2;
         data.pax_channel = 3;
-    case '04_14_FN2_mef2', 
+    case '04_14_FN2_mef2' 
         data.path = strcat(root, ...
             '04_14_2010\MEF_FN2_dish02\');
                 data.prefix = 'FLUOR';
@@ -4383,16 +4383,16 @@ switch name,
         data.pax_channel = 3;
     % Yi's data from the Nikon microscope
     % multiple acquisition and the file names are different.
-    case '07_20_2s1',
+    case '07_20_2s1'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p1\');
         data.path_all = {data.path,
             strcat(root, '07_20_2010_RacV12_fn25\2\pdgf\p1\')};
-        data.first_cfp_file_all = {'fret5_w2CFP_s1_t1.TIF','fret5_w2CFP_s1_t1.TIF'};
+        data.first_cfp_file_all = {'fret5_w2CFP_s1_t1.TIF''fret5_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.0015;
         data.pax_cbound = [0 300];
@@ -4402,21 +4402,21 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 2 ;
-        data.num_layers = 3;
-%         batch_detect_cell_bws('07_20_2s1', 'save_file', 0, 'image_index', {1,[]},...
-% 'cbound', [1 200]);
-% batch_detect_fa_labels('07_20_2s1', 'save_file', 1);
+        data.num_roi = 3;
+%         batch_detect_cell_bws('07_20_2s1' 'save_file' 0, 'image_index' {1,[]},...
+% 'cbound' [1 200]);
+% batch_detect_fa_labels('07_20_2s1' 'save_file' 1);
 %
-    case '07_20_2s2',
+    case '07_20_2s2'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p2\');
         data.path_all = {data.path,
             strcat(root, '07_20_2010_RacV12_fn25\2\pdgf\p2\')};
-        data.first_cfp_file_all = {'fret5_w2CFP_s2_t1.TIF','fret5_w2CFP_s2_t1.TIF'};
+        data.first_cfp_file_all = {'fret5_w2CFP_s2_t1.TIF''fret5_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.0025;
         data.pax_cbound = [0 300];
@@ -4426,16 +4426,16 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 3 ;
-        data.num_layers = 5;
-    case '07_20_2s3',
+        data.num_roi = 5;
+    case '07_20_2s3'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p3\');
         data.path_all = {data.path, strcat(root, '07_20_2010_RacV12_fn25\2\pdgf\p3\')};
-        data.first_cfp_file_all = {'fret5_w2CFP_s3_t1.TIF','fret5_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'fret5_w2CFP_s3_t1.TIF''fret5_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.007;
         data.pax_cbound = [0 500];
@@ -4445,17 +4445,17 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 1 ;
-        data.num_layers = 5;
-    case '07_20_2s4',
+        data.num_roi = 5;
+    case '07_20_2s4'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p4\');
         data.path_all = {data.path,
             strcat(root, '07_20_2010_RacV12_fn25\2\pdgf\p4\')};
-        data.first_cfp_file_all = {'fret5_w2CFP_s4_t1.TIF','fret5_w2CFP_s4_t1.TIF'};
+        data.first_cfp_file_all = {'fret5_w2CFP_s4_t1.TIF''fret5_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.007;
         data.pax_cbound = [0 800];
@@ -4465,17 +4465,17 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 1;
-        data.num_layers = 5;
-    case '07_20_2s5',
+        data.num_roi = 5;
+    case '07_20_2s5'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_20_2010_RacV12_fn25\2\p5\');
         data.path_all = {data.path,
             strcat(root, '07_20_2010_RacV12_fn25\2\pdgf\p5\')};
-        data.first_cfp_file_all = {'fret5_w2CFP_s5_t1.TIF','fret5_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'fret5_w2CFP_s5_t1.TIF''fret5_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.004;
         data.pax_cbound = [0 500];
@@ -4485,17 +4485,17 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 1;
-        data.num_layers = 5;
-    case '07_29_1s1',
+        data.num_roi = 5;
+    case '07_29_1s1'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s1\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\1\+pdgf\s1\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s1_t1.TIF','fret6_w2CFP_s1_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s1_t1.TIF''fret6_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.002; 
         data.pax_cbound = [0 400];
@@ -4505,18 +4505,18 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 3;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.need_mask = 1;
-    case '07_29_1s2',
+    case '07_29_1s2'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s2\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\1\+pdgf\s2\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s2_t1.TIF','fret6_w2CFP_s2_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s2_t1.TIF''fret6_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.0045; 
         data.pax_cbound = [0 400];
@@ -4526,17 +4526,17 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 2;
-        data.num_layers = 5;
-    case '07_29_1s3',
+        data.num_roi = 5;
+    case '07_29_1s3'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s3\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\1\+pdgf\s3\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s3_t1.TIF','fret6_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s3_t1.TIF''fret6_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:45, 47:51};
         data.threshold = 0.0015; 
         data.pax_cbound = [0 200];
@@ -4546,18 +4546,18 @@ switch name,
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
         data.num_fans = 2;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.need_mask = 1;
-    case '07_29_1s4',
+    case '07_29_1s4'
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s4\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\1\+pdgf\s4\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s4_t1.TIF','fret6_w2CFP_s4_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s4_t1.TIF''fret6_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.004; 
         data.pax_cbound = [0 400];
@@ -4566,18 +4566,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-    case '07_29_1s5', % image too dim cannot detect cell well
+    case '07_29_1s5' % image too dim cannot detect cell well
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\1\s5\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\1\+pdgf\s5\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s5_t1.TIF','fret6_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s5_t1.TIF''fret6_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10, 1:51};
         data.threshold = 0.001; 
         data.need_mask = 1;
@@ -4587,18 +4587,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-    case '07_29_2s1', 
+    case '07_29_2s1' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\2\s1\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\2\+pdgf\s1\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s1_t1.TIF','fret6_w2CFP_s1_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s1_t1.TIF''fret6_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:30};
         data.threshold = 0.0025; 
         data.pax_cbound = [0 200];
@@ -4607,18 +4607,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-    case '07_29_2s2', 
+    case '07_29_2s2' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\2\s2\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\2\+pdgf\s2\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s2_t1.TIF','fret6_w2CFP_s2_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s2_t1.TIF''fret6_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:30};
         data.threshold = 0.003; 
         data.pax_cbound = [0 200];
@@ -4627,18 +4627,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-    case '07_29_2s3', 
+    case '07_29_2s3' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\2\s3\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\2\+pdgf\s3\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s3_t1.TIF','fret6_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s3_t1.TIF''fret6_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1, 3, 5, 7:30};
         data.threshold = 0.035;
         data.need_mask = 1;
@@ -4648,18 +4648,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-    case '07_29_2s4', 
+    case '07_29_2s4' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\2\s4\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\2\+pdgf\s4\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s4_t1.TIF','fret6_w2CFP_s4_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s4_t1.TIF''fret6_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:30};
         data.threshold = 0.005;
         data.need_mask = 0;
@@ -4669,18 +4669,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-    case '07_29_2s5', 
+    case '07_29_2s5' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\2\s5\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\2\+pdgf\s5\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s5_t1.TIF','fret6_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s5_t1.TIF''fret6_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:30};
         data.threshold = 0.005;
         data.need_mask = 0;
@@ -4690,18 +4690,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-    case '07_29_3s3', 
+    case '07_29_3s3' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\3\s3\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\3\+pdgf\s3\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s3_t1.TIF','fret6_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s3_t1.TIF''fret6_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:46};
         data.threshold = 0.0035;
         data.need_mask = 0;
@@ -4711,18 +4711,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
-    case '07_29_3s4', 
+    case '07_29_3s4' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\3\s4\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\3\+pdgf\s4\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s4_t1.TIF','fret6_w2CFP_s4_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s4_t1.TIF''fret6_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:46};
         data.threshold = 0.0035;
         data.need_mask = 1;
@@ -4732,18 +4732,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-    case '07_29_3s5', 
+    case '07_29_3s5' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\3\s5\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\3\+pdgf\s5\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s5_t1.TIF','fret6_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s5_t1.TIF''fret6_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:46};
         data.threshold = 0.007;
         data.need_mask = 0;
@@ -4753,17 +4753,17 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
-    case '07_29_3s6', 
+        data.num_roi = 5;
+    case '07_29_3s6' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '07_29_2010_RacV12_fn25\3\s6\');
         data.path_all = {data.path,
             strcat(root, '07_29_2010_RacV12_fn25\3\+pdgf\s6\')};
-        data.first_cfp_file_all = {'fret6_w2CFP_s6_t1.TIF','fret6_w2CFP_s6_t1.TIF'};
+        data.first_cfp_file_all = {'fret6_w2CFP_s6_t1.TIF''fret6_w2CFP_s6_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:46};
         data.threshold = 0.0055;
         data.need_mask = 0;
@@ -4773,19 +4773,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
      % 08_06_1s1 fret 10 1:10, 1:51, [1 500], [1 500]
-     case '08_06_1s1', 
+     case '08_06_1s1' 
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\1\s1\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\1\+pdgf\s1\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s1_t1.TIF','fret10_w2CFP_s1_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s1_t1.TIF''fret10_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -4795,19 +4795,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-     case '08_06_1s2', 
+     case '08_06_1s2' 
          % [0 500]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\1\s2\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\1\+pdgf\s2\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s2_t1.TIF','fret10_w2CFP_s2_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s2_t1.TIF''fret10_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.002;
         data.need_mask = 0;
@@ -4817,19 +4817,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-     case '08_06_1s3', 
+     case '08_06_1s3' 
          % [0 5000]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\1\s3\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\1\+pdgf\s3\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s3_t1.TIF','fret10_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s3_t1.TIF''fret10_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.03;
         data.need_mask = 0;
@@ -4839,19 +4839,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_06_1s5', 
+     case '08_06_1s5' 
          % [0 1000]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\1\s5\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\1\+pdgf\s5\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s5_t1.TIF','fret10_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s5_t1.TIF''fret10_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.01;
         data.need_mask = 0;
@@ -4861,19 +4861,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-     case '08_06_1s6', 
+     case '08_06_1s6' 
          % [0 1800]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\1\s6\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\1\+pdgf\s6\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s6_t1.TIF','fret10_w2CFP_s6_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s6_t1.TIF''fret10_w2CFP_s6_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.01;
         data.need_mask = 0;
@@ -4883,19 +4883,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-     case '08_06_2s1', 
+     case '08_06_2s1' 
          % [0 800]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\2\s1\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\2\+pdgf\s1\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s1_t1.TIF','fret10_w2CFP_s1_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s1_t1.TIF''fret10_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.003;
         data.need_mask = 0;
@@ -4905,19 +4905,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-     case '08_06_2s2', 
+     case '08_06_2s2' 
          % [0 4000]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\2\s2\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\2\+pdgf\s2\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s2_t1.TIF','fret10_w2CFP_s2_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s2_t1.TIF''fret10_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.05;
         data.need_mask = 1;
@@ -4927,19 +4927,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_06_2s3', 
+     case '08_06_2s3' 
          % [0 500]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\2\s3\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\2\+pdgf\s3\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s3_t1.TIF','fret10_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s3_t1.TIF''fret10_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.004;
         data.need_mask = 0;
@@ -4949,19 +4949,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_06_2s4', 
+     case '08_06_2s4' 
          % [0 200]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\2\s4\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\2\+pdgf\s4\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s4_t1.TIF','fret10_w2CFP_s4_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s4_t1.TIF''fret10_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.0025;
         data.need_mask = 1;
@@ -4971,19 +4971,19 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-     case '08_06_2s5', 
+     case '08_06_2s5' 
          % [0 300]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\2\s5\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\2\+pdgf\s5\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s5_t1.TIF','fret10_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s5_t1.TIF''fret10_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.0025;
         data.need_mask = 1;
@@ -4993,18 +4993,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
-     case '08_06_2s6', 
+        data.num_roi = 5;
+     case '08_06_2s6' 
          % [0 400]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_06_2010_RacV12_fn20\2\s6\');
         data.path_all = {data.path,
             strcat(root, '08_06_2010_RacV12_fn20\2\+pdgf\s6\')};
-        data.first_cfp_file_all = {'fret10_w2CFP_s6_t1.TIF','fret10_w2CFP_s6_t1.TIF'};
+        data.first_cfp_file_all = {'fret10_w2CFP_s6_t1.TIF''fret10_w2CFP_s6_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:10, 1:51};
         data.threshold = 0.0025;
         data.need_mask = 0;
@@ -5014,20 +5014,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_19_fn25_1s1',  %RacV12_fn25
+     case '08_19_fn25_1s1'  %RacV12_fn25
          % [0 200]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\1\s1\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s1\'), strcat(root, '08_19_2010\fn2.5\1\+pdgf\s1\2\')};
-        data.first_cfp_file_all = {'dish4-2_w2CFP_s1_t1.TIF','dish4-2_w2CFP_s1_t1.TIF',...
+        data.first_cfp_file_all = {'dish4-2_w2CFP_s1_t1.TIF''dish4-2_w2CFP_s1_t1.TIF'...
             'dish4-3_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:7, 1:20, 1:20};
         data.threshold = 0.004;
         data.need_mask = 0;
@@ -5037,22 +5037,22 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_19_fn25_1s2',  
+     case '08_19_fn25_1s2'  
          % [0 100]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\1\s2\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s2\'),...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s2\2\')};
-        data.first_cfp_file_all = {'dish4-2_w2CFP_s2_t1.TIF',...
-            'dish4-2_w2CFP_s2_t1.TIF',...
+        data.first_cfp_file_all = {'dish4-2_w2CFP_s2_t1.TIF'...
+            'dish4-2_w2CFP_s2_t1.TIF'...
             'dish4-3_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {[1:3], 1:24, 1:20};
         % pdgf time occurs between 1st acquisition, image 7 
         % and 2nd acquisition, image 1 
@@ -5065,20 +5065,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_19_fn25_1s3',  
+     case '08_19_fn25_1s3'  
          % [0 100]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\1\s3\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s3\'), strcat(root, '08_19_2010\fn2.5\1\+pdgf\s3\2\')};
-        data.first_cfp_file_all = {'dish4-2_w2CFP_s3_t1.TIF','dish4-2_w2CFP_s3_t1.TIF',...
+        data.first_cfp_file_all = {'dish4-2_w2CFP_s3_t1.TIF''dish4-2_w2CFP_s3_t1.TIF'...
             'dish4-3_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {[1:4, 6], [1:4, 6:24], [1:5, 7:20]};
         data.time_before_after = [1 7; 2 1];
         data.threshold = 0.0015;
@@ -5089,20 +5089,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
-     case '08_19_fn25_1s5',  
+     case '08_19_fn25_1s5'  
          % [0 1000]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\1\s5\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s5\'), strcat(root, '08_19_2010\fn2.5\1\+pdgf\s5\2\')};
-        data.first_cfp_file_all = {'dish4-2_w2CFP_s5_t1.TIF','dish4-2_w2CFP_s5_t1.TIF',...
+        data.first_cfp_file_all = {'dish4-2_w2CFP_s5_t1.TIF''dish4-2_w2CFP_s5_t1.TIF'...
             'dish4-3_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:7, 1:19, 5:19};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -5112,22 +5112,22 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_19_fn25_1s6',  
+     case '08_19_fn25_1s6'  
          % [0 100]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\1\s6\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s6\'), ...
             strcat(root, '08_19_2010\fn2.5\1\+pdgf\s6\2\')};
-        data.first_cfp_file_all = {'dish4-2_w2CFP_s6_t1.TIF', ...
-            'dish4-2_w2CFP_s6_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-2_w2CFP_s6_t1.TIF' ...
+            'dish4-2_w2CFP_s6_t1.TIF' ...
             'dish4-3_w2CFP_s6_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:7, 8:24, 1:7};
         data.time_before_after = [1 7; 2 1];
         data.threshold = 0.002;
@@ -5138,20 +5138,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-     case '08_19_fn25_2s2',  
+     case '08_19_fn25_2s2'  
          % [0 500]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\2\s2\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\2\+pdgf\s1\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s2_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s2_t1.TIF' ...
             'dish4-3_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {3:8, 1:51};
         data.threshold = 0.007;
         data.need_mask = 0;
@@ -5161,20 +5161,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-     case '08_19_fn25_2s3',  
+     case '08_19_fn25_2s3'  
          % [0 200]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\2\s3\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\2\+pdgf\s2\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s3_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s3_t1.TIF' ...
             'dish4-3_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:8, 1:51};
         data.threshold = 0.004;
         data.need_mask = 1;
@@ -5184,17 +5184,17 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-     case '08_19_fn25_2s4',  % [0 500]
+     case '08_19_fn25_2s4'  % [0 500]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\2\s4\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\2\+pdgf\s3\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s4_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s4_t1.TIF' ...
             'dish4-3_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'}; data.yfp_channel = {'w1FRET'};
-        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.', '_t%d.'};
+        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:8, 1:51};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -5202,17 +5202,17 @@ switch name,
         data.ref_pax_intensity =  99344663; % total paxillin intensity
         data.fa.min_water = 40 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layers = 2.5;
+        data.fa.single_min_area = 30; data.num_roi = 2.5;
         data.num_fans = 1;
-     case '08_19_fn25_2s5',  % [0 700]
+     case '08_19_fn25_2s5'  % [0 700]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\2\s5\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\2\+pdgf\s4\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s5_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s5_t1.TIF' ...
             'dish4-3_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'}; data.yfp_channel = {'w1FRET'};
-        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.', '_t%d.'};
+        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:8, 1:46};
         data.threshold = 0.006;
         data.need_mask = 0;
@@ -5220,17 +5220,17 @@ switch name,
         data.ref_pax_intensity =  87369028; % total paxillin intensity
         data.fa.min_water = 50 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layers = 5;
+        data.fa.single_min_area = 30; data.num_roi = 5;
         data.num_fans = 2;
-     case '08_19_fn25_2s6',  % [0 100]
+     case '08_19_fn25_2s6'  % [0 100]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\2\s6\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\2\+pdgf\s5\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s6_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s6_t1.TIF' ...
             'dish4-3_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'}; data.yfp_channel = {'w1FRET'};
-        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.', '_t%d.'};
+        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:8, [1:15, 17:41, 43:48, 50:51]};
         data.threshold = 0.0015;
         data.need_mask = 0;
@@ -5238,17 +5238,17 @@ switch name,
         data.ref_pax_intensity =  7141833; % total paxillin intensity
         data.fa.min_water = 20 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layers = 5;
+        data.fa.single_min_area = 30; data.num_roi = 5;
         data.num_fans = 3;
-     case '08_19_fn25_2s7',  % [0 80]
+     case '08_19_fn25_2s7'  % [0 80]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn2.5\2\s7\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn2.5\2\+pdgf\s6\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s7_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s7_t1.TIF' ...
             'dish4-3_w2CFP_s6_t1.TIF'};
         data.cfp_channel = {'w2CFP'}; data.yfp_channel = {'w1FRET'};
-        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.', '_t%d.'};
+        data.pax_channel = {'w4MCherry-dim'}; data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:8, 1:51};
         data.threshold = 0.0008;
         data.need_mask = 1;
@@ -5256,25 +5256,25 @@ switch name,
         data.ref_pax_intensity =  3912049; % total paxillin intensity
         data.fa.min_water = 15 ; 
         data.fa.brightness_factor = 1; data.fa.filter_size = 61; 
-        data.fa.single_min_area = 30; data.num_layers = 5;
+        data.fa.single_min_area = 30; data.num_roi = 5;
         data.num_fans = 1;
 
         
         
-      case '08_19_fn20_1s2',  % RacV12 FN20
+      case '08_19_fn20_1s2'  % RacV12 FN20
          % [0 200]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\1\s2\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn20\1\+pdgf\s2\1\'), ...
             strcat(root, '08_19_2010\fn20\1\+pdgf\s2\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s2_t1.TIF', ...
-            'dish4-3_w2CFP_s2_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s2_t1.TIF' ...
+            'dish4-3_w2CFP_s2_t1.TIF' ...
             'dish4-4_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:7, 1:2, 1:50};
         data.time_before_after = [ 1 8; 2 1];
         data.threshold = 0.0045;
@@ -5285,22 +5285,22 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '08_19_fn20_1s3',  % RacV12 FN20 s6-s3
+      case '08_19_fn20_1s3'  % RacV12 FN20 s6-s3
          % [0 100]
         data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\1\s6\');
         data.path_all = {data.path, ...
             strcat(root, '08_19_2010\fn20\1\+pdgf\s3\1\'), ...
             strcat(root, '08_19_2010\fn20\1\+pdgf\s3\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s6_t1.TIF', ...
-            'dish4-3_w2CFP_s3_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s6_t1.TIF' ...
+            'dish4-3_w2CFP_s3_t1.TIF' ...
             'dish4-4_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:8, 1:2, 1:51};
         data.threshold = 0.0025;
         data.need_mask = 0;
@@ -5310,9 +5310,9 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      %case '08_19_fn20_1s4',  % RacV12 FN20 s7-s4
+      %case '08_19_fn20_1s4'  % RacV12 FN20 s7-s4
       % did not analyze since the the cells could not be detected
       % correctly
 %          % [0 100]
@@ -5321,23 +5321,23 @@ switch name,
 %         data.path_all = {data.path, ...
 %             strcat(root, '08_19_2010\fn20\1\+pdgf\s4\1\'), ...
 %             strcat(root, '08_19_2010\fn20\1\+pdgf\s4\')};
-%         data.first_cfp_file_all = {'dish4-3_w2CFP_s7_t1.TIF', ...
-%             'dish4-3_w2CFP_s4_t1.TIF', ...
+%         data.first_cfp_file_all = {'dish4-3_w2CFP_s7_t1.TIF' ...
+%             'dish4-3_w2CFP_s4_t1.TIF' ...
 %             'dish4-4_w2CFP_s4_t1.TIF'};
 %       data.pax_cbound = [0 400];
-      case '08_19_fn20_1s5',  % ??-s5 
+      case '08_19_fn20_1s5'  % ??-s5 
           % cannot be used for CC analysis because the PDGF time was
           % not correct
          % [0 100]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\1\+pdgf\s5\1\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\1\+pdgf\s5\')};
-        data.first_cfp_file_all = {'dish4-3_w2CFP_s5_t1.TIF', ...
+        data.first_cfp_file_all = {'dish4-3_w2CFP_s5_t1.TIF' ...
             'dish4-4_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:2, 1:51};
         data.threshold = 0.002;
         data.need_mask = 0;
@@ -5347,20 +5347,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '08_19_fn20_2s1',  
+      case '08_19_fn20_2s1'  
          % [0 100]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\2\s1\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\2\+pdgf\s1\1\'), ...
             strcat(root, '08_19_2010\fn20\2\+pdgf\s1\')};
-        data.first_cfp_file_all = {'dish4-4_w2CFP_s1_t1.TIF', ...
-            'dish4-4_w2CFP_s1_t1.TIF', 'dish4-5_w2CFP_s1_t1.TIF'};
+        data.first_cfp_file_all = {'dish4-4_w2CFP_s1_t1.TIF' ...
+            'dish4-4_w2CFP_s1_t1.TIF' 'dish4-5_w2CFP_s1_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {[3, 4, 6, 8:15], [1:2,4:5], [2, 3, 5:8, 12:15, 18:20, 22:23, 30:31]};
         % data.time_before_after = [1 15; 2 1];
         data.threshold = 0.0015;
@@ -5371,20 +5371,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '08_19_fn20_2s2',  
+      case '08_19_fn20_2s2'  
          % [0 100]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\2\s2\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\2\+pdgf\s2\1\'), ...
             strcat(root, '08_19_2010\fn20\2\+pdgf\s2\')};
-        data.first_cfp_file_all = {'dish4-4_w2CFP_s2_t1.TIF', ...
-            'dish4-4_w2CFP_s2_t1.TIF', 'dish4-5_w2CFP_s2_t1.TIF'};
+        data.first_cfp_file_all = {'dish4-4_w2CFP_s2_t1.TIF' ...
+            'dish4-4_w2CFP_s2_t1.TIF' 'dish4-5_w2CFP_s2_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:15, [1:3, 5:13], [1:3, 5:10, 12:19, 21:35]};
         data.threshold = 0.0015;
         data.need_mask = 0;
@@ -5394,20 +5394,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '08_19_fn20_2s3',  
+      case '08_19_fn20_2s3'  
          % [0 500]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\2\s3\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\2\+pdgf\s3\1\'), ...
             strcat(root, '08_19_2010\fn20\2\+pdgf\s3\')};
-        data.first_cfp_file_all = {'dish4-4_w2CFP_s3_t1.TIF', ...
-            'dish4-4_w2CFP_s3_t1.TIF', 'dish4-5_w2CFP_s3_t1.TIF'};
+        data.first_cfp_file_all = {'dish4-4_w2CFP_s3_t1.TIF' ...
+            'dish4-4_w2CFP_s3_t1.TIF' 'dish4-5_w2CFP_s3_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:15, 1:13, 1:35};
         data.threshold = 0.007;
         data.need_mask = 0;
@@ -5417,20 +5417,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '08_19_fn20_2s4',  
+      case '08_19_fn20_2s4'  
          % [0 80]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\2\s4\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\2\+pdgf\s4\1\'), ...
             strcat(root, '08_19_2010\fn20\2\+pdgf\s4\')};
-        data.first_cfp_file_all = {'dish4-4_w2CFP_s4_t1.TIF', ...
-            'dish4-4_w2CFP_s4_t1.TIF', 'dish4-5_w2CFP_s4_t1.TIF'};
+        data.first_cfp_file_all = {'dish4-4_w2CFP_s4_t1.TIF' ...
+            'dish4-4_w2CFP_s4_t1.TIF' 'dish4-5_w2CFP_s4_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {[1:13,15], [2:9, 11, 13], [1,2,4:6, 8:16, 18:19, 21:26, 28:31]};
         data.time_before_after = [1 15; 2 1];
         data.threshold = 0.001;
@@ -5441,20 +5441,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '08_19_fn20_2s5',  
+      case '08_19_fn20_2s5'  
          % [0 100]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\2\s5\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\2\+pdgf\s5\1\'), ...
             strcat(root, '08_19_2010\fn20\2\+pdgf\s5\')};
-        data.first_cfp_file_all = {'dish4-4_w2CFP_s5_t1.TIF', ...
-            'dish4-4_w2CFP_s5_t1.TIF', 'dish4-5_w2CFP_s5_t1.TIF'};
+        data.first_cfp_file_all = {'dish4-4_w2CFP_s5_t1.TIF' ...
+            'dish4-4_w2CFP_s5_t1.TIF' 'dish4-5_w2CFP_s5_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:15, 1:13, [1:9, 11:15, 17:35]};
         data.threshold = 0.0015;
         data.need_mask = 0;
@@ -5464,20 +5464,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '08_19_fn20_2s6',  
+      case '08_19_fn20_2s6'  
          % [0 100]
          data.multiple_acquisition = 1;
         data.path = strcat(root, '08_19_2010\fn20\2\s6\');
         data.path_all = {data.path, strcat(root, '08_19_2010\fn20\2\+pdgf\s6\1\'), ...
             strcat(root, '08_19_2010\fn20\2\+pdgf\s6\')};
-        data.first_cfp_file_all = {'dish4-4_w2CFP_s6_t1.TIF', ...
-            'dish4-4_w2CFP_s6_t1.TIF', 'dish4-5_w2CFP_s6_t1.TIF'};
+        data.first_cfp_file_all = {'dish4-4_w2CFP_s6_t1.TIF' ...
+            'dish4-4_w2CFP_s6_t1.TIF' 'dish4-5_w2CFP_s6_t1.TIF'};
         data.cfp_channel = {'w2CFP'};
         data.yfp_channel = {'w1FRET'};
         data.pax_channel = {'w4MCherry-dim'};
-        data.index_pattern = {'_t1.', '_t%d.'};
+        data.index_pattern = {'_t1.' '_t%d.'};
         data.index = {1:15, [1, 3:4, 6:13], 1:35};
         data.threshold = 0.0015;
         data.need_mask = 0;
@@ -5487,22 +5487,22 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
 % RhoV14
-      case '11_11_RhoV14_1p1',  
+      case '11_11_RhoV14_1p1'  
          data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p1\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p1\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p1\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p1\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s1_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s1_t1.TIF', 'dish1-after PDGF-2_w1CFP_s1_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s1_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s1_t1.TIF' 'dish1-after PDGF-2_w1CFP_s1_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:5, [1:28, 30:31], 1:20}; % removed seqence2: 6-7, seq3:32-34
         data.threshold = 0.11;
         data.need_mask = 0;
@@ -5512,21 +5512,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_1p2',  
+      case '11_11_RhoV14_1p2'  
          data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p2\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p2\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p2\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p2\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s2_t1.TIF', 'dish1-after PDGF-2_w1CFP_s2_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s2_t1.TIF' 'dish1-after PDGF-2_w1CFP_s2_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:7, 1:34, 1:20}; 
         data.threshold = 0.16;
         data.need_mask = 0;
@@ -5536,21 +5536,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_1p3',  
+      case '11_11_RhoV14_1p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p3\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p3\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p3\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p3\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s3_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s3_t1.TIF', 'dish1-after PDGF-2_w1CFP_s3_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s3_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s3_t1.TIF' 'dish1-after PDGF-2_w1CFP_s3_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:7, 1:2, 1:20}; % remove seq3: 3-34
         data.threshold = 0.08;
         data.need_mask = 0;
@@ -5560,21 +5560,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_1p4',  
+      case '11_11_RhoV14_1p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p4\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p4\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p4\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p4\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s4_t1.TIF', 'dish1-after PDGF-2_w1CFP_s4_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s4_t1.TIF' 'dish1-after PDGF-2_w1CFP_s4_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:5, [1:11,18:34], 1:20}; % removed: seq2: 6-7; seq3: 12:17.  
         data.threshold = 0.04;
         data.need_mask = 0;
@@ -5584,21 +5584,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_1p5',  
+      case '11_11_RhoV14_1p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p5\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p5\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p5\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p5\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s5_t1.TIF', 'dish1-after PDGF-2_w1CFP_s5_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s5_t1.TIF' 'dish1-after PDGF-2_w1CFP_s5_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:7, 1:29, 1:20}; %Removed seq3:30-34
         data.threshold = 0.4;
         data.need_mask = 0;
@@ -5608,21 +5608,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_1p6',  
+      case '11_11_RhoV14_1p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p6\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p6\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p6\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p6\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s6_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s6_t1.TIF', 'dish1-after PDGF-2_w1CFP_s6_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s6_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s6_t1.TIF' 'dish1-after PDGF-2_w1CFP_s6_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:7, 1:29, 1:20}; % Removed seq3: 30-34
         data.threshold = 0.2;
         data.need_mask = 0;
@@ -5632,21 +5632,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_1p7',  
+      case '11_11_RhoV14_1p7'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p7\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p7\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p7\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p7\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s7_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s7_t1.TIF', 'dish1-after PDGF-2_w1CFP_s7_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s7_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s7_t1.TIF' 'dish1-after PDGF-2_w1CFP_s7_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s7_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:7, 1:33, 1:20}; % Removed Seq3:34
         data.threshold = 0.13;
         data.need_mask = 0;
@@ -5656,21 +5656,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_1p8',  
+      case '11_11_RhoV14_1p8'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\1\p8\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\1\p8\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\1\p8\after_2\'),...
             strcat(root, '11_11_2010\RhoV14\1\p8\after_3\')};
-        data.first_cfp_file_all = {'dish1_w1CFP_s8_t1.TIF', ...
-            'dish1-after PDGF_w1CFP_s8_t1.TIF', 'dish1-after PDGF-2_w1CFP_s8_t1.TIF',...
+        data.first_cfp_file_all = {'dish1_w1CFP_s8_t1.TIF' ...
+            'dish1-after PDGF_w1CFP_s8_t1.TIF' 'dish1-after PDGF-2_w1CFP_s8_t1.TIF'...
             'dish1-after PDGF-3_w1CFP_s8_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:7, [1,3:7,9:18, 20:34], [1:2,5]}; % Removed Seq3: 2 8 19; Seq4:6-20
         data.threshold = 0.08;
         data.need_mask = 0;
@@ -5680,18 +5680,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_2p1',  
+      case '11_11_RhoV14_2p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\2\p1\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\2\p1\after\')};
-        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF', ...
+        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF' ...
             'dish2-after PDGF_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:51}; % 
         data.threshold = 0.025;
         data.need_mask = 0;
@@ -5701,18 +5701,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_2p2',  
+      case '11_11_RhoV14_2p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\2\p2\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\2\p2\after\')};
-        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF', ...
+        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF' ...
             'dish2-after PDGF_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,[1:38, 42:47, 50]}; %Removed seq2:39-41,48-49, 51 
         data.threshold = 0.2;
         data.need_mask = 0;
@@ -5722,18 +5722,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_2p3',  
+      case '11_11_RhoV14_2p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\2\p3\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\2\p3\after\')};
-        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF', ...
+        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF' ...
             'dish2-after PDGF_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,[1:4, 24:42, 49, 51]}; %
         data.threshold = 0.1;
         data.need_mask = 0;
@@ -5743,18 +5743,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_2p4',  
+      case '11_11_RhoV14_2p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\2\p4\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\2\p4\after\')};
-        data.first_cfp_file_all = {'dish2_w1CFP_s4_t1.TIF', ...
+        data.first_cfp_file_all = {'dish2_w1CFP_s4_t1.TIF' ...
             'dish2-after PDGF_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,[1:16,20:33,36:51]}; %
         data.threshold = 0.1;
         data.need_mask = 0;
@@ -5764,18 +5764,18 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_2p5',  
+      case '11_11_RhoV14_2p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\2\p5\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\2\p5\after\')};
-        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF', ...
+        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF' ...
             'dish2-after PDGF_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:49}; %Removed Seq2: 50-51
         data.threshold = 0.27;
         data.need_mask = 0;
@@ -5785,20 +5785,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_3p1',  
+      case '11_11_RhoV14_3p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\3\p1\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\3\p1\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\3\p1\after_2\')};
-        data.first_cfp_file_all = {'dish3_w1CFP_s1_t1.TIF', ...
-            'dish3-after PDGF_w1CFP_s1_t1.TIF', ...
+        data.first_cfp_file_all = {'dish3_w1CFP_s1_t1.TIF' ...
+            'dish3-after PDGF_w1CFP_s1_t1.TIF' ...
             'dish3-after PDGF1_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {2:10,1:3, [1:2,14:16,18, 22,25:27, 30:32, 35:44, 46:49]}; %
         data.threshold = 0.033;
         data.need_mask = 0;
@@ -5808,20 +5808,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_3p2',  
+      case '11_11_RhoV14_3p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\3\p2\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\3\p2\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\3\p2\after_2\')};
-        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF', ...
-            'dish3-after PDGF_w1CFP_s2_t1.TIF', ...
+        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF' ...
+            'dish3-after PDGF_w1CFP_s2_t1.TIF' ...
             'dish3-after PDGF1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:4, [3:11, 16:33, 36:39, 41:51]}; %Removed seq2:4, seq3:13-14
         data.threshold = 0.11;
         data.need_mask = 0;
@@ -5831,20 +5831,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '11_11_RhoV14_3p3',  
+      case '11_11_RhoV14_3p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\3\p3\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\3\p3\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\3\p3\after_2\')};
-        data.first_cfp_file_all = {'dish3_w1CFP_s3_t1.TIF', ...
-            'dish3-after PDGF_w1CFP_s3_t1.TIF', ...
+        data.first_cfp_file_all = {'dish3_w1CFP_s3_t1.TIF' ...
+            'dish3-after PDGF_w1CFP_s3_t1.TIF' ...
             'dish3-after PDGF1_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:10,1:4, [3:22,28:36,38:39, 41:43, 45:51]}; %Removed seq2:4, seq3:1-2
         data.threshold = 0.09;
         data.need_mask = 0;
@@ -5854,20 +5854,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_3p4',  
+      case '11_11_RhoV14_3p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\3\p4\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\3\p4\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\3\p4\after_2\')};
-        data.first_cfp_file_all = {'dish3_w1CFP_s4_t1.TIF', ...
-            'dish3-after PDGF_w1CFP_s4_t1.TIF', ...
+        data.first_cfp_file_all = {'dish3_w1CFP_s4_t1.TIF' ...
+            'dish3-after PDGF_w1CFP_s4_t1.TIF' ...
             'dish3-after PDGF1_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {6:8,1:3, [4:5,42,44:46,48:51]}; 
         %Removed seq1:1-5,9-10, seq2:4-5, seq3:1-2,6-41,43
         data.threshold = 0.035;
@@ -5878,20 +5878,20 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '11_11_RhoV14_3p5',  % too much noise, did not include in analysis
+      case '11_11_RhoV14_3p5'  % too much noise, did not include in analysis
         data.multiple_acquisition = 1;
         data.path = strcat(root, '11_11_2010\RhoV14\3\p5\before\');
         data.path_all = {data.path, strcat(root, '11_11_2010\RhoV14\3\p5\after_1\'), ...
             strcat(root, '11_11_2010\RhoV14\3\p5\after_2\')};
-        data.first_cfp_file_all = {'dish3_w1CFP_s5_t1.TIF', ...
-            'dish3-after PDGF_w1CFP_s5_t1.TIF', ...
+        data.first_cfp_file_all = {'dish3_w1CFP_s5_t1.TIF' ...
+            'dish3-after PDGF_w1CFP_s5_t1.TIF' ...
             'dish3-after PDGF1_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[1,3, 10],[1,4:5], [1:3,6,9,12,16:17,20,23:26,28,30,31,36,43:47]}; 
         data.threshold = 0.035;
         data.need_mask = 0;
@@ -5901,21 +5901,21 @@ switch name,
         data.fa.brightness_factor = 1 ;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_1p1',  
+      case '01_27_fn25_1p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\1\p1\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\1\p1\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\1\p1\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s1_t1.TIF', ...
-            'dish1-add PDGF_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s1_t1.TIF' ...
+            'dish1-add PDGF_w1CFP_s1_t1.TIF' ...
             'dish1-add PDGF-2_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {7:8,[1:5], [1:6, 8:9,11:12, 14:15, 17:21]}; 
         data.threshold = 0.035;
         data.need_mask = 0;
@@ -5925,21 +5925,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_1p2',  
+      case '01_27_fn25_1p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\1\p2\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\1\p2\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\1\p2\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF', ...
-            'dish1-add PDGF_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF' ...
+            'dish1-add PDGF_w1CFP_s2_t1.TIF' ...
             'dish1-add PDGF-2_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,1:20, [1:8, 10, 13:17]}; 
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -5950,21 +5950,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_1p3',  
+      case '01_27_fn25_1p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\1\p3\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\1\p3\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\1\p3\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s3_t1.TIF', ...
-            'dish1-add PDGF_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s3_t1.TIF' ...
+            'dish1-add PDGF_w1CFP_s3_t1.TIF' ...
             'dish1-add PDGF-2_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {5:8,2:19, [1:5, 7:14, 16:17, 19:21]}; 
         data.threshold = 0.01;
         data.need_mask = 0;
@@ -5975,21 +5975,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_1p4',  
+      case '01_27_fn25_1p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\1\p4\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\1\p4\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\1\p4\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF', ...
-            'dish1-add PDGF_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF' ...
+            'dish1-add PDGF_w1CFP_s4_t1.TIF' ...
             'dish1-add PDGF-2_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {6:8,[1:2,4:14,16:19], [3:5, 6:11, 14]}; 
         data.threshold = 0.04;
         data.need_mask = 0;
@@ -6000,21 +6000,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_1p5',  
+      case '01_27_fn25_1p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\1\p5\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\1\p5\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\1\p5\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF', ...
-            'dish1-add PDGF_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF' ...
+            'dish1-add PDGF_w1CFP_s5_t1.TIF' ...
             'dish1-add PDGF-2_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,1:19, [1:2, 4:22]}; 
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -6025,21 +6025,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_2p1',  
+      case '01_27_fn25_2p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\2\p1\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\2\p1\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\2\p1\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF', ...
-            'dish2-add PDGF_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF' ...
+            'dish2-add PDGF_w1CFP_s1_t1.TIF' ...
             'dish2-add PDGF-2_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {3:8,1:2, 5:36}; 
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -6050,21 +6050,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_2p2',  
+      case '01_27_fn25_2p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\2\p2\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\2\p2\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\2\p2\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF', ...
-            'dish2-add PDGF_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF' ...
+            'dish2-add PDGF_w1CFP_s2_t1.TIF' ...
             'dish2-add PDGF-2_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,[], [2:4, 6:38]}; 
         data.threshold = 0.02;
         data.need_mask = 0;
@@ -6075,21 +6075,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_2p3',  
+      case '01_27_fn25_2p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\2\p3\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\2\p3\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\2\p3\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF', ...
-            'dish2-add PDGF_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF' ...
+            'dish2-add PDGF_w1CFP_s3_t1.TIF' ...
             'dish2-add PDGF-2_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {2:8,3:4, [1:3,6:12,19:35, 38:39]}; 
         data.threshold = 0.015;
         data.need_mask = 1;
@@ -6100,23 +6100,23 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
         % p4 time course too short not using
-      case '01_27_fn25_2p5',  
+      case '01_27_fn25_2p5'  
           % data unstable before pdgf, not using.
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax\2\p5\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax\2\p5\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax\2\p5\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF', ...
-            'dish2-add PDGF_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF' ...
+            'dish2-add PDGF_w1CFP_s5_t1.TIF' ...
             'dish2-add PDGF-2_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,1:4, 1:39}; 
         data.threshold = 0.025;
         data.need_mask = 0;
@@ -6127,21 +6127,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_1p1',  
+      case '01_27_fn25_racn17_1p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p1\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p1\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p1\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s1_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s1_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s1_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,1:31, 1:12}; 
         data.threshold = 0.0045;
         data.need_mask = 0;
@@ -6152,22 +6152,22 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racn17_1p21',  
+      case '01_27_fn25_racn17_1p21'  
           % two cells -- this one is the lower left cell
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p2\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p2\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p2\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s2_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {2:3,[1:9, 11:17, 19:29, 31], [1:4, 6:7, 9:10,12]}; 
         data.threshold = 0.006;
         data.need_mask = 1;
@@ -6178,22 +6178,22 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_1p22',  
+      case '01_27_fn25_racn17_1p22'  
           % two cells -- this one is the top right cell
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p22\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p22\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p22\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s2_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {2:3,[1:14,16:18,20:29,31], [1:5,7, 9:11]}; 
         data.threshold = 0.005;
         data.need_mask = 1;
@@ -6204,21 +6204,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racn17_1p3',  
+      case '01_27_fn25_racn17_1p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p3\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p3\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p3\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s3_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s3_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s3_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,[1:18, 20:30], [1:11]}; 
         data.threshold = 0.015;
         data.need_mask = 1;
@@ -6229,22 +6229,22 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_1p4',  
+      case '01_27_fn25_racn17_1p4'  
           % unstable before pdgf, not using.
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p4\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p4\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p4\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s4_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,1:31, [1:12]}; 
         data.threshold = 0.01;
         data.need_mask = 1;
@@ -6255,21 +6255,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_1p5',  
+      case '01_27_fn25_racn17_1p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p5\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p5\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p5\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s5_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8,1:31, 1:12}; 
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -6280,21 +6280,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racn17_1p6',  
+      case '01_27_fn25_racn17_1p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p6\');
         data.path_all = {data.path, strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p6\'), ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\1\p6\')};
-        data.output_path_all = {'output\before\', 'output\after_1\', 'output\after_2\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s6_t1.TIF', ...
-            'dish1-add PDGF-1_w1CFP_s6_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after_1\' 'output\after_2\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s6_t1.TIF' ...
+            'dish1-add PDGF-1_w1CFP_s6_t1.TIF' ...
             'dish1-add PDGF--3_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, [1:10, 12:16],1:11};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -6305,20 +6305,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_2p1',  
+      case '01_27_fn25_racn17_2p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p1\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p1\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[3:4, 6:7], [1:7, 9, 11:26, 28:42]};
         data.threshold = 0.025;
         data.need_mask = 0;
@@ -6329,20 +6329,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 30;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_2p2',  
+      case '01_27_fn25_racn17_2p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p2\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p2\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {2:8, [2:22, 24:29, 31:42]};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -6353,21 +6353,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 20;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_2p3',  
+      case '01_27_fn25_racn17_2p3'  
           % did not use, the paxillin was unstable before pdgf.
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p3\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p3\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, [1:34, 36:39, 41:42]};
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -6378,21 +6378,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 20;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_2p4',  
+      case '01_27_fn25_racn17_2p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p4\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p4\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s4_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
-        data.index = {[1:2, 4:8], [1:42]};
+        data.index_pattern = {'t1' 't%d'};
+        data.index = {[1:2, 4:8], 1:42};
         data.threshold = 0.0045;
         data.need_mask = 0;
         data.pax_cbound = [0 150];
@@ -6402,20 +6402,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
-      case '01_27_fn25_racn17_2p5',  
+      case '01_27_fn25_racn17_2p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p5\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p5\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {4:8, [1:3, 6:30, 33:35, 40:41]};
         data.threshold = 0.005;
         data.need_mask = 0;
@@ -6426,20 +6426,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
-      case '01_27_fn25_racn17_2p6',  
+      case '01_27_fn25_racn17_2p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p6\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\2\p6\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s6_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s6_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[3,5:8], 1:42};
         data.threshold = 0.012;
         data.need_mask = 0;
@@ -6450,20 +6450,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_3p1',  
+      case '01_27_fn25_racn17_3p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p1\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p1\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s1_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:40};
         data.threshold = 0.02;
         data.need_mask = 0;
@@ -6474,21 +6474,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_3p21',  
+      case '01_27_fn25_racn17_3p21'  
           % two cells -- this one is the top left cell
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p2\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p2\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {4:6, [2:4, 6:7, 9:13, 15, 18:34, 37:40]};
         data.threshold = 0.0055;
         data.need_mask = 1;
@@ -6499,21 +6499,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racn17_3p22',  
+      case '01_27_fn25_racn17_3p22'  
           % some near nuclear unspecificity, not using the data.
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p22\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p22\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:40};
         data.threshold = 0.0055;
         data.need_mask = 1;
@@ -6524,20 +6524,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_3p3',  
+      case '01_27_fn25_racn17_3p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p3\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p3\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s3_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:40};
         data.threshold = 0.015;
         data.need_mask = 1;
@@ -6548,20 +6548,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_3p4',  
+      case '01_27_fn25_racn17_3p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p4\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p4\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s4_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, [1:2, 9:20, 24:30,33, 36:40]};
         data.threshold = 0.006;
         data.need_mask = 0;
@@ -6572,20 +6572,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racn17_3p5',  
+      case '01_27_fn25_racn17_3p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p5\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p5\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s5_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:40};
         data.threshold = 0.006;
         data.need_mask = 0;
@@ -6596,20 +6596,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racn17_3p6',  
+      case '01_27_fn25_racn17_3p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p6\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RaCN17\3\p6\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s6_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s6_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, [1:17, 19:20, 22:29, 31:40]};
         data.threshold = 0.005;
         data.need_mask = 0;
@@ -6620,20 +6620,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racv12_1p2',  
+      case '01_27_fn25_racv12_1p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p2\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p2\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s2_t1.TIF' ...
             'dish1-add PDGF-1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {3:8, 1:35};
         data.threshold = 0.009;
         data.need_mask = 0;
@@ -6644,21 +6644,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racv12_1p4',  
+      case '01_27_fn25_racv12_1p4'  
           % cell not stable before pdgf, not using.
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p4\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p4\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s4_t1.TIF' ...
             'dish1-add PDGF-1_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:40};
         data.threshold = 0.03;
         data.need_mask = 0;
@@ -6669,20 +6669,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_1p5',  
+      case '01_27_fn25_racv12_1p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p5\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p5\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s5_t1.TIF' ...
             'dish1-add PDGF-1_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {4:8, [1:7, 9, 11:17, 19:27, 30:39]};
         data.threshold = 0.04;
         data.need_mask = 0;
@@ -6693,20 +6693,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_1p6',  
+      case '01_27_fn25_racv12_1p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p6\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\1\p6\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish1_w1CFP_s6_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish1_w1CFP_s6_t1.TIF' ...
             'dish1-add PDGF-1_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[4, 7:8], [1:4, 6:40]};
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -6717,20 +6717,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_2p1',  
+      case '01_27_fn25_racv12_2p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p1\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p1\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s1_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[3 5 6:7], [1, 3:9, 11:14, 16:51]};
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -6741,21 +6741,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 4;
-      case '01_27_fn25_racv12_2p2',  
+      case '01_27_fn25_racv12_2p2'  
           % unstable before pdgf not using
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p2\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p2\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s2_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {6:8, 1:51};
         data.threshold = 0.008;
         data.need_mask = 1;
@@ -6766,20 +6766,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_2p3',  
+      case '01_27_fn25_racv12_2p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p3\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p3\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s3_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {3:6, [2:6, 8:9, 11:34, 36, 38, 40, 42:43,46, 48:49]};
         data.threshold = 0.035;
         data.need_mask = 0;
@@ -6790,21 +6790,21 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_2p4',  
+      case '01_27_fn25_racv12_2p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p4\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p4\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s4_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
-        data.index = {1:8, [1:51]};
+        data.index_pattern = {'t1' 't%d'};
+        data.index = {1:8, 1:51};
         data.threshold = 0.015;
         data.need_mask = 1;
         data.pax_cbound = [0 300];
@@ -6814,20 +6814,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_2p5',  
+      case '01_27_fn25_racv12_2p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p5\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p5\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s5_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[1:2,4, 6,8], [1:32,34:51]};
         data.threshold = 0.02;
         data.need_mask = 0;
@@ -6838,20 +6838,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 2;
-      case '01_27_fn25_racv12_2p6',  
+      case '01_27_fn25_racv12_2p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p6\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\2\p6\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish2_w1CFP_s6_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish2_w1CFP_s6_t1.TIF' ...
             'dish2-add PDGF-1_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {6:8, [1:4, 6:51]};
         data.threshold = 0.012;
         data.need_mask = 0;
@@ -6862,20 +6862,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racv12_3p1',  
+      case '01_27_fn25_racv12_3p1'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p1\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p1\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s1_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s1_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s1_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, [1:12, 15:44]};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -6886,20 +6886,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 3;
-      case '01_27_fn25_racv12_3p2',  
+      case '01_27_fn25_racv12_3p2'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p2\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p2\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s2_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s2_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:27};
         data.threshold = 0.008;
         data.need_mask = 0;
@@ -6910,20 +6910,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_3p3',  
+      case '01_27_fn25_racv12_3p3'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p3\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p3\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s3_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s3_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s3_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[1:2,4:8], [2:19, 21:30, 32:44]};
         data.threshold = 0.03;
         data.need_mask = 0;
@@ -6934,20 +6934,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_3p4',  
+      case '01_27_fn25_racv12_3p4'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p4\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p4\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s4_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s4_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s4_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {[1:4, 7:8], [1:21,23:27]};
         data.threshold = 0.04;
         data.need_mask = 0;
@@ -6958,20 +6958,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
-      case '01_27_fn25_racv12_3p5',  
+      case '01_27_fn25_racv12_3p5'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p5\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p5\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s5_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s5_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s5_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:44};
         data.threshold = 0.015;
         data.need_mask = 0;
@@ -6982,20 +6982,20 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 0;
-      case '01_27_fn25_racv12_3p6',  
+      case '01_27_fn25_racv12_3p6'  
         data.multiple_acquisition = 1;
         data.path = strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p6\');
         data.path_all = {data.path, ...
             strcat(root, '01_27_2011\Lyn_src-pax-RacV12\3\p6\')};
-        data.output_path_all = {'output\before\', 'output\after\'};
-        data.first_cfp_file_all = {'dish3_w1CFP_s6_t1.TIF', ...
+        data.output_path_all = {'output\before\' 'output\after\'};
+        data.first_cfp_file_all = {'dish3_w1CFP_s6_t1.TIF' ...
             'dish3-add PDGF-1_w1CFP_s6_t1.TIF'};
         data.cfp_channel = {'w1CFP'};
         data.yfp_channel = {'w2FRET'};
         data.pax_channel = {'w4MCherry'};
-        data.index_pattern = {'t1', 't%d'};
+        data.index_pattern = {'t1' 't%d'};
         data.index = {1:8, 1:44};
         data.threshold = 0.06;
         data.need_mask = 0;
@@ -7006,13 +7006,13 @@ switch name,
         data.fa.brightness_factor = 1;
         data.fa.filter_size = 61; 
         data.fa.single_min_area = 10;
-        data.num_layers = 5;
+        data.num_roi = 5;
         data.num_fans = 1;
        
         
         
        %%% Jihye's data.
-    case 'fak_pax_1_1',
+    case 'fak_pax_1_1'
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\1\1\');
         data.prefix = '1-1';
         data.index = 1:39;
@@ -7028,11 +7028,11 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 4;
         data.pax_cbound = [0 700];
-        % batch_detect_cell_bws('fak_pax_1_1', 'save_file', 0, ...
-        % 'image_index', [1 10 30], 'cbound', [1 10000]);
-        % batch_detect_fa_labels('fak_pax_1_1', 'save_file', 1);
+        % batch_detect_cell_bws('fak_pax_1_1' 'save_file' 0, ...
+        % 'image_index' [1 10 30], 'cbound' [1 10000]);
+        % batch_detect_fa_labels('fak_pax_1_1' 'save_file' 1);
         % compute_fa_properties('fak_pax_1_1');
-     case 'fak_pax_1_2', % this cell did not have significant spatial difference
+     case 'fak_pax_1_2' % this cell did not have significant spatial difference
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\1\2\');
         data.prefix = '2-1';
         data.index = [1:6, 9:37];
@@ -7047,7 +7047,7 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 4;
         data.pax_cbound = [0 2000];
-     case 'fak_pax_1_3', 
+     case 'fak_pax_1_3' 
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\1\3\');
         data.prefix = '3-1';
         data.index = 1:36;
@@ -7063,7 +7063,7 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 4;
         data.pax_cbound = [0 2000];
-     case 'fak_pax_1_4', 
+     case 'fak_pax_1_4' 
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\1\4\');
         data.prefix = '4-1';
         data.index = 3:39;
@@ -7080,7 +7080,7 @@ switch name,
         data.pax_channel = 4;
         data.pax_cbound = [0 1000];
         data.need_mask = 1;
-     case 'fak_pax_1_5', 
+     case 'fak_pax_1_5' 
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\1\5\');
         data.prefix = '5-1';
         data.index = 4:38;
@@ -7097,7 +7097,7 @@ switch name,
         data.pax_channel = 4;
         data.pax_cbound = [0 1000];
         data.need_mask = 1;
-     case 'fak_pax_2_1', 
+     case 'fak_pax_2_1' 
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\2\1\');
         data.prefix = '1';
         data.index = [4:11, 18:47];
@@ -7113,7 +7113,7 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 4;
         data.pax_cbound = [0 1500];
-     case 'fak_pax_2_2', 
+     case 'fak_pax_2_2' 
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\2\2\');
         data.prefix = '2';
         data.index = 4:37;
@@ -7129,7 +7129,7 @@ switch name,
         data.yfp_channel = 2;
         data.pax_channel = 4;
         data.pax_cbound = [0 1500];
-     case 'fak_pax_2_3', 
+     case 'fak_pax_2_3' 
         data.path = strcat(root, 'jihye_LynFAK_mCherryPax_08_2010\2\3\');
         data.prefix = '3';
         data.index = 3:36;
@@ -7147,5 +7147,5 @@ switch name,
         data.num_fans = 2;
        
 
-end;
+end
 return;

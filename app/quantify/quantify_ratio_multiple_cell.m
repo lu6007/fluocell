@@ -12,107 +12,124 @@
 % >> [intensity, ratio] = quantify_ratio_multiple_cell(data);
 % >> figure; plot(intensity(:,3), ratio(:,1),'*'); 
 % >> xlabel('FI 3'); ylabel('Ratio');
+% >> figure; hist(ratio, 100); title('Ratio');
 %
 % Sample data is in D:/sof/data/quantify/ 
-% Copyright: Shaoying Lu 2015
+% Copyright: Shaoying Lu 2015-2017
 % shaoying.lu@gmail.com
 function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, varargin)
-para_name = {'add_channel'};
-para_default = {0};
+para_name = {'add_channel','enable_high_pass_filter'};
+para_default = {0, 0};
 add_channel = parse_parameter(para_name, para_default, varargin);
+%
+qfun = quantify_fun();
+max_num_cell = 1000;
+detect_type = 4; % combine channels 1 and 2 for detection
 
-max_ratio = 10.0;
-min_intensity = 1000;
-num_images = length(data.image_index);
+num_image = length(data.image_index);
 switch data.detection
     case 'manual'
         manual_select = 1;
     case 'auto'
         manual_select = 0;
-end;
-intensity_value = inf*ones(500,4);
-ratio_value = inf*ones(500,1);
+end
+intensity_value = inf*ones(max_num_cell,4);
+ratio_value = inf*ones(max_num_cell,1);
 
 % Protocol: 'FRET-Intennsity-DIC'; 
 % file{1} - FI 1; 2 - FI 2 ;  3- FI 3, 4- DIC
-num_cells  = 0;
+num_cell  = 0;
 file = cell(4,1);
 im = cell(4,1);
-ratio_im = cell(1,1);
-for i = 1:num_images,
+for i = 1:num_image
     index_i = sprintf(data.index_pattern{2}, data.image_index(i));
     % Load image and calulate ratio
     file{1} = regexprep(data.first_file, data.index_pattern{1}, index_i);
-    temp = imread(strcat(data.path, file{1}));
-    if ~exist(strcat(data.path, 'output/'), 'dir'),
-        mkdir(strcat(data.path, 'output/'));
-    end;
+    temp1 = imread(strcat(data.path, file{1}));
     bg_file = strcat(data.path, 'output/background_', index_i, '.mat');
-    data.bg_bw = get_background(temp, bg_file, 'method', 'auto');
-    im{1} = preprocess(temp, data); clear temp;
     file{2} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{2});
-    temp = imread(strcat(data.path, file{2}));
-    im{2} = preprocess(temp, data); clear temp;
+    temp2 = imread(strcat(data.path, file{2}));
+    if ~exist(strcat(data.path, 'output/'), 'dir')
+        mkdir(strcat(data.path, 'output/'));
+    end
+    %temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
+    temp = temp2;
+    if isfield(data, 'subtract_background') && data.subtract_background
+        data.bg_bw = get_background(temp, bg_file, 'method', 'manual'); clear temp;
+    end
+    im{1} = preprocess(temp1, data); clear temp1;
+    im{2} = preprocess(temp2, data); clear temp2;
     ratio = compute_ratio(im{1}, im{2});
     % ratio_im
-    ratio_im{1} = get_imd_image(ratio, max(im{1}, im{2}), ...
+    ratio_im = get_imd_image(ratio, max(im{1}, im{2}), ...
             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
         
-    if add_channel, % add 1 additional channel
+    if add_channel % add 1 additional channel
         file{3} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{3});
         temp = imread(strcat(data.path, file{3}));
         im{3} = preprocess(temp,data); clear temp;
-    end;
+    end
     
     i8 = mod(i,8);
-    if i8 == 0,
+    if i8 == 0
         i8 = 8;
-    end; 
-    if i8 == 1,
+    end 
+    if i8 == 1
         my_figure;
-    end;
-    subplot(2,4, i8); hold on;
-    % display all detected object in red
-    display_boundary(data.bg_bw, 'im', ratio_im{1}, 'line_color', 'r', 'new_figure', 0);
-
-    % Select ROIs by hand
-    % Kathy 02/21/2016 for manual selection, this need to update to allow user to input num_rois
-    %temp = uint16(im{1});
-    temp = uint16(im{2});
-    if manual_select,
+        tight_subplot(2, 4, [.01 .01], [.01 .01], [.01 .01]); hold on;
+    end
+    subplot(2,4, i8); % hold on;
+    
+    % im_detect is the image used for detection. 
+    im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
+    if isfield(data, 'bg_bw') 
+        display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
+    % display_boundary(data.bg_bw, 'im', im{2}, 'line_color', 'r', 'new_figure', 0, 'type', 2);
+    else
+        display_boundary([], 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
+    end
+       
+    %%% 
+    if manual_select
         % temp = uint16(temp);
-        num_rois = 1; 
+        num_roi = 1; 
         display_text=strcat('Please Select : ',...
-            num2str(num_rois), ' Regions of Interest');
+            num2str(num_roi), ' Regions of Interest');
         roi_file = strcat(p, 'output\ROI', '_', image_index, '.mat');
-        [roi_bw, ~] = get_polygon(temp, roi_file, display_text, ...
-            'num_polygons', num_rois);
+        [roi_bw, ~] = get_polygon(im_detect, roi_file, display_text, ...
+            'num_polygons', num_roi);
         [~, label] = bwgoundaries (roi_bw, 8, 'noholes');
     else % Automatic detection
-%         threshold = graythresh(temp); 
-%         bw_image = im2bw(temp, threshold*data.brightness_factor);
-%%% Modify here 11/3/2016 %%%
-        bw_image = (temp>15000); 
+        threshold = graythresh(im_detect);
+        if strcmp(version, 'R2017')||strcmp(version, 'R2018')
+            bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
+        else % older versions
+            bw_image = im2bw(im_detect, threshold*data.brightness_factor);
+        end
+% % %%% Modify here 11/3/2016 %%%
+% %         bw_image = (im_detect>15000); 
         bw_image_open = bwareaopen(bw_image, data.min_area);
         [bd, label] = bwboundaries(bw_image_open,8,'noholes');
-        num_rois = length(bd);
+        num_roi = length(bd);
         clear bw_image bw_image_open bd temp; 
-    end; % if manual_select
+    end % if manual_select
     clear temp;
     % display ob
-    if max(max(label))>0,
-        display_boundary(label, 'im', [], 'color', 'k', 'show_label', 1, 'new_figure', 0);
-    end; 
+    if max(max(label))>0
+        display_boundary(label, 'im', [], 'color', 'w', 'show_label', 0, 'new_figure', 0);
+    end 
    
-    for j = 1:num_rois,
+    for j = 1:num_roi
         mask = double(label==j);
         area = sum(sum(mask));
         rr = sum(sum(ratio.*mask))/area;
         fi1 = sum(sum(im{1}.*mask))/area;
         fi2 = sum(sum(im{2}.*mask))/area;
-        if add_channel,
+        if add_channel
             fi3 = sum(sum(im{3}.*mask))/area;
-        end;
+        end
+        % max_ratio = 10.0;
+        % min_intensity = 500;
         % if rr<max_ratio && fi1>= min_intensity && fi2>= min_intensity ,
         % A cell is detected if FRET > 15000
         % A cell is selected if the ratio values is less than 0.5 to exclude dead cells, 
@@ -122,27 +139,25 @@ for i = 1:num_images,
         % if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>5000, % && fi3>7000, 
         % cytosolic mCherry >5000
         % mCherry-Lck>500 
-         if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>500, 
-            num_cells = num_cells+1;
-            ratio_value(num_cells,1) = rr;
-            intensity_value(num_cells,1) = fi1;
-            intensity_value(num_cells,2) = fi2;
-            if add_channel,
-                 intensity_value(num_cells,3) = fi3;
-            end;
-            display_boundary(mask, 'im', [], 'color', 'w', 'show_label', 0, 'new_figure', 0);
-        end;
+        % if rr<0.5 && fi1>= min_intensity && fi2<=40000 && fi3>500 
+            num_cell = num_cell+1;
+            ratio_value(num_cell,1) = rr;
+            intensity_value(num_cell,1) = fi1;
+            intensity_value(num_cell,2) = fi2;
+            if add_channel
+                 intensity_value(num_cell,3) = fi3;
+            end
+            % end
         clear mask;
-    end;
+    end
     clear roi_poly roi_bw file im ratio ratio_im mask;
-    % display_boundary(label, 'im', [], 'color', 'w', 'show_label',1,'new_figure', 0);
     title(strcat('Intensity Ratio - ', index_i));
     
-end; %i
+end % for i = 1:num_image
 temp = intensity_value; clear intensity_value;
-intensity_value = temp(1:num_cells,:); clear temp;
+intensity_value = temp(1:num_cell,:); clear temp;
 temp = ratio_value; clear ratio_value;
-ratio_value = temp(1:num_cells, :); clear temp;
+ratio_value = temp(1:num_cell, :); clear temp;
 my_figure; hist(ratio_value(:,1), 20); 
 xlabel('Ratio'); ylabel('Count'); 
 

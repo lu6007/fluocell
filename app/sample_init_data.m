@@ -51,10 +51,10 @@ switch name
                 data.ref_pax_intensity = 8829698;
                 data.fa.min_water = 30;
                 data.fa.single_min_area = 10;
-                data.num_layers = 5;
+                data.num_roi = 5;
                 % data.num_fans = 1;
                 data.is_cfp_over_fret = 0;
-        end; % switch function_name  
+        end % switch function_name  
 
 case 'akt_1'
         data.path = strcat(root, 'PH-Akt-GFP_1/');
@@ -76,5 +76,5 @@ case 'tracking_ex'
         data.path = strcat(root, 'tracking_ex/');
         data.first_file = strcat(data.path, 'cfp_t1.tif');
         
-end; % switch name (cell_name)
+end % switch name (cell_name)
 return;

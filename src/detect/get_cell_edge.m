@@ -33,7 +33,18 @@ if ~threshold
     threshold = my_graythresh(im);
 end
 
-bw_image = imbinarize( im, threshold*brightness_factor);
+temp = version;
+tt = temp(15:19);
+if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
+    bw_image = imbinarize(im, threshold*brightness_factor);
+elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
+        strcmp(tt, 'R2012')
+    bw_image = im2bw(im, threshold*brightness_factor);
+else 
+    disp('Function get_cell_edge warning: ');
+    disp('MATLAB version not in the range 2012-2018.');
+end
+clear temp tt;
 % get rid of objects with size less than min_area
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;

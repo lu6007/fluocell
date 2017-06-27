@@ -14,7 +14,7 @@ if method ==1, % high pass filter
     im_fa = medfilt2(im_fa, [3, 3]);
 
     % Normalized the FA images with total_pax_intensity
-    if mask_with_cell, 
+    if mask_with_cell
         total_pax_intensity = sum(sum(double(im_fa).*double(cell_bw)))
     else
         total_pax_intensity = sum(sum(double(im_fa)))
@@ -23,20 +23,20 @@ if method ==1, % high pass filter
     % High pass filter
     im_fa = high_pass_filter(im_fa, fa.filter_size);
     %figure; imagesc(im_fa);
-    if mask_with_cell,
+    if mask_with_cell
         im_fa = im_fa.*double(cell_bw);
     end;
     % Here we use either the water algorithm or regular segmentation
-    switch algorithm,
-        case 'water',
+    switch algorithm
+        case 'water'
             % The Water Algorithm
             fa_label = water(im_fa, fa.min_water, fa.max_water, ...
             fa.single_min_area, fa.min_area);
-        case 'segmentation',
+        case 'segmentation'
             % Regular segmentation
             fa_label = fa_segment(im_fa, fa.min_water, fa.single_min_area);
     end;
-elseif method ==2,  % tophat highpass filter
+elseif method ==2  % tophat highpass filter
     parameter_name = {'mask_with_cell', 'filter_size', 'threshold', 'min_area'};
     default_value = {1, 61, 30, 5};
     [mask_with_cell, filter_size, threshold, min_area] = ...
@@ -44,11 +44,15 @@ elseif method ==2,  % tophat highpass filter
 
     % tophat highpass filter
     se = strel('disk', filter_size);
-    temp = imtophat(im_fa, se); clear im_fa;
-    im_fa = temp; clear temp;
-    if mask_with_cell,
-        temp = im_fa.*double(cell_bw); clear im_fa;
-        im_fa = temp; clear temp;
+    temp = imtophat(im_fa, se); 
+    clear im_fa;
+    im_fa = temp; 
+    clear temp;
+    if mask_with_cell
+        temp = im_fa.*double(cell_bw); 
+        clear im_fa;
+        im_fa = temp; 
+        clear temp;
     end;
     fa_label= fa_segment(im_fa, threshold, min_area);   
 end;

@@ -14,7 +14,7 @@ has_fak_total_intensity = 1;
 has_pax_total_intensity = 1;
 
 % Now populate track_with_frame with subtracks
-for i = 1:num_tracks,
+for i = 1:num_tracks
 %     fa_index = tracksFinal(i).tracksFeatIndxCG; 
     object_index = tracksFinal(i).tracksFeatIndxCG; 
 %     num_subtracks = size(fa_index, 1);
@@ -22,7 +22,7 @@ for i = 1:num_tracks,
     first_frame = tracksFinal(i).seqOfEvents(1,1);
     twf_c{i,1} = num_subtracks; 
     subtrack_c = cell(num_subtracks, num_subtrack_fields);
-    for ii = 1:num_subtracks,
+    for ii = 1:num_subtracks
 %         frame_index = find(fa_index(ii,:))';
         frame_index = find(object_index(ii,:))';
 %         this_fa_index = fa_index(ii, frame_index);
@@ -36,31 +36,31 @@ for i = 1:num_tracks,
         subtrack_c{ii, 3} = this_object_index;
         clear frame_index num_dots index centroid this_object_index temp ...
             this_frame_index;
-    end; %ii
+    end %ii
     % subtrack
     twf_c{i,2}= cell2struct(subtrack_c, subtrack_fields, 2);
     clear subtrack_c;
-end; %i
+end %i
 
 % Now populate additional field: frame_index, fak_intensity, pax_intensity,
 % ratio, velocity, time, etc
-if ~isfield(movie_info(1),'fak_total_intensity'),
+if ~isfield(movie_info(1),'fak_total_intensity')
     has_fak_total_intensity = 0;
-    display('Warning: get_track_frame - No fak_total_intensity');
-end;
-if ~isfield(movie_info(1), 'pax_total_intensity'),
+    disp('Warning: get_track_frame - No fak_total_intensity');
+end
+if ~isfield(movie_info(1), 'pax_total_intensity')
     has_pax_total_intensity = 0;
-    display('Warning: get_track_frame - No pax_total_intensity');
-end;
-for i = 1:num_tracks,
+    disp('Warning: get_track_frame - No pax_total_intensity');
+end
+for i = 1:num_tracks
     % initialize the track variables
     num_subtracks = twf_c{i,1};
     frame_index = cell(num_subtracks,1);
-    for k = 1:num_subtracks,
+    for k = 1:num_subtracks
         subtrack = twf_c{i,2}(k);
         frame_index{k} = subtrack.frame_index;
         clear subtrack;
-    end;
+    end
     long_frame_index = cat(1, frame_index{:}); 
     unique_frame_index = unique(long_frame_index);
     clear frame_index long frame_index;
@@ -75,38 +75,38 @@ for i = 1:num_tracks,
     num_pixels = zeros(num_frames, 1); 
     centroid = zeros(num_frames,2);
 %     num_fas = zeros(num_frames, 1);
-    num_objects = zeros(num_frames, 1);
+    num_object = zeros(num_frames, 1);
     
     % Now populate the track variables
-    for j = 1:num_frames,
+    for j = 1:num_frames
         jj = frame_index(j);
-        for k = 1:num_subtracks,
+        for k = 1:num_subtracks
             subtrack = twf_c{i,2}(k);
             index = find(subtrack.frame_index==jj);
-            if isempty(index),
+            if isempty(index)
                 continue;
             else
                 %assert(length(index)==1);
 %                 num_fas(j) = num_fas(j)+1;
-                num_objects(j) = num_objects(j)+1;
+                num_object(j) = num_object(j)+1;
 %                 fa_index = subtrack.fa_index(index); % a number, not a vector
                 object_index = subtrack.object_index(index); % a number, not a vector
 %                 centroid(j,:) = centroid(j,:)+[movie_info(jj).xCoord(fa_index), ...
 %                     movie_info(jj).yCoord(fa_index)];
                 centroid(j,:) = centroid(j,:)+[movie_info(jj).xCoord(object_index), ...
                     movie_info(jj).yCoord(object_index)];
-                if has_fak_total_intensity,
+                if has_fak_total_intensity
 %                     fak_intensity(j) = fak_intensity(j)+...
 %                         movie_info(jj).fak_total_intensity(fa_index);
                     fak_intensity(j) = fak_intensity(j)+...
                         movie_info(jj).fak_total_intensity(object_index);
-                end;
-                if has_pax_total_intensity,
+                end
+                if has_pax_total_intensity
 %                     pax_intensity(j) = pax_intensity(j)+...
 %                         movie_info(jj).pax_total_intensity(fa_index);
                     pax_intensity(j) = pax_intensity(j)+...
                         movie_info(jj).pax_total_intensity(object_index);
-                end;
+                end
 %                 average_amp(j) = average_amp(j)+movie_info(jj).amp(fa_index);
                 average_amp(j) = average_amp(j)+movie_info(jj).amp(object_index);   
 %                 num_pixels(j) = num_pixels(j) +movie_info(jj).num_pixels(fa_index);
@@ -115,7 +115,7 @@ for i = 1:num_tracks,
             clear subtrack;
         end % for k
 %         centroid(j,:) = centroid(j,:)/num_fas(j);
-        centroid(j,:) = centroid(j,:)/num_objects(j);
+        centroid(j,:) = centroid(j,:)/num_object(j);
         ratio(j) = fak_intensity(j)/(pax_intensity(j)+1.0); %+1 eliminate the division by zero problem
         average_amp(j) = average_amp(j)/num_pixels(j);
     end % for j
@@ -135,8 +135,8 @@ for i = 1:num_tracks,
     twf_c{i,10} = num_pixels;
     
     clear frame_index fak_intensity pax_intensity ratio centroid dt dc velocity ...
-       num_objects num_pixels time amp;
-end; % for i
+       num_object num_pixels time amp;
+end % for i
 
 %
 track_with_frame = cell2struct(twf_c, twf_fields, 2);
