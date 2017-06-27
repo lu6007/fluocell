@@ -18,7 +18,7 @@ function fret_file = get_fret_file(data, first_channel_file)
        if strcmp(first_channel_file((l1 + 1) : (l2 - length(post_fix))), data.channel_pattern{1})
            fret_file = [regexprep(temp_file, data.channel_pattern{1}, 'ratio'), post_fix(2:end)];
        else
-           fret_file = strcat(pstr, 'ratio',post_fix(2:end));
+           fret_file = strcat(temp_file,post_fix(2:end));
        end
        clear temp_file;
        %fret_file = regexprep(data.file{1}, data.channel_pattern{1}, 'ratio');

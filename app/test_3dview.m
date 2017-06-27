@@ -20,9 +20,9 @@ function test_3dview(data)
 
 p = data.path;
 z_dist = 1.0*15; % 1um *15 pixel/um
-image_index = (1:20)';
-iso_value = 3000;%550;
-% surface_file = 't1surface';
+image_index = (11:31)'; % (1:20)';
+iso_value = 450; %3000
+surface_file = 't1surface';
 intensity_base = 1.0e-4;
 ratio_bound = [0.5 3.5]; 
 ratio_factor = 1.5; % ratio_factor = (ratio_bound(1)+ratio_bound(2))/2;
@@ -57,13 +57,13 @@ fret_im = zeros(nsize(1), nsize(2), num_frame);
 cfp_im = zeros(size(fret_im));
 
 for i = 1:num_frame 
-%     j = image_index(i);
-%     j_str = sprintf(data.index_pattern{2}, j);
-%     file_name = regexprep(data.first_file, data.index_pattern{1}, j_str);
-%     temp = imread(file_name); 
+    j = image_index(i);
+    j_str = sprintf(data.index_pattern{2}, j);
+    file_name = regexprep(data.first_file, data.index_pattern{1}, j_str);
+    temp = imread(file_name); 
 
-    file_name = data.first_file;
-    temp = imread(file_name, i);
+%     file_name = data.first_file;
+%     temp = imread(file_name, i);
 
     fret_im(:,:,i) = preprocess(temp, data); 
     clear temp; temp = file_name; clear file_name;
