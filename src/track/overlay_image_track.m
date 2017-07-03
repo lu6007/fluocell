@@ -5,7 +5,7 @@
 % cell_name = 'fak_pax';
 % movie_info = get_movie_info(cell_name);
 % tracksFinal = get_track( movie_info);
-% frame_with_track = get_frame_with_track(tracksFinal, movie_info);
+% frame_with_track = get_frame_track(tracksFinal, movie_info);
 % overlay_image_track need to have the same image_index as 
 % the array frame_with_track. If frame_with_track was not extracted with
 % image_index, then use frame_with_track(image_index) as the input.
