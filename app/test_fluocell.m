@@ -19,10 +19,16 @@ temp = sample_init_data('src_pax','');
 data_file = strcat(temp.path, 'output/data.mat');
 res = load(data_file);
 data = res.data;
+% backward compatibility, 6/23/2017 --- Kathy
+if strcmp(data.protocol, 'FRET') && length(data.f) <3
+  data.f(3) = figure; 
+  data.num_figure = 3;
+  disp('Save data file for backward compatibility.');
+  save(data_file, 'data');
+end
+%
 data.path = temp.path;
 data.first_file = strcat(data.path, '2-11.001');
-% data.num_figures = 3;
-% data.f(3) = figure;
 save(data_file, 'data');
 batch_update_figure(data);
 
@@ -64,12 +70,18 @@ temp = sample_init_data('tracking_ex', '');
 data_file =strcat(temp.path, 'output/data.mat');
 res = load(data_file);
 data = res.data; 
+% backward compatibility, 6/23/2017 --- Kathy
+if strcmp(data.protocol, 'FRET') && length(data.f) <3
+  data.f(3) = figure; 
+  data.num_figure = 3;
+  disp('Save data file for backward compatibility.');
+  save(data_file, 'data');
+end
+%
 data.path = temp.path;
 data.output_path = strcat(data.path, 'output/');
 data.first_file = strcat(data.path, 'cfp_t1.tif');
 data.num_roi = 3;
-% data.num_figures = 3;
-% data.f(3) = figure;
 save(data_file, 'data');
 %
 data = batch_update_figure(data);
