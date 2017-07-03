@@ -15,7 +15,7 @@ if method ==1, % simply subtract the background in the region
     % subtract background
     sum_bw = sum(sum(bw));
     bg = sum(sum(double(im)/sum_bw.*bw));
-    im = im-bg;
+    im = double(im)-bg;
 elseif method ==2, % use the wavelet functions
     wavelet_type = data.wavelet_type;
     wavelet_fun_num = data.wavelet_fun_num;
@@ -28,6 +28,6 @@ elseif method ==3, % data = bw
     bw = double(data);
     sum_bw = sum(sum(bw));
     bg = sum(sum(double(im)/sum_bw.*bw));
-    im = im-bg;
+    im = double(im)-bg;
 end;
 return;

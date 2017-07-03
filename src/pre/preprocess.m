@@ -39,10 +39,12 @@ function [new_im, data] = preprocess(im, data)
                         data.bg_bw = get_background(im, bg_file, 'method', 'auto');
                 end
             end
-            bw = double(data.bg_bw);
-            bg_value = sum(sum(double(im).*bw))/sum(sum(bw));
-            im_sub = double(im)-bg_value;
-            clear im; im = max(im_sub, 0); clear im_sub;
+            %Performs background subtraction.
+            im_sub = subtract_background(im, data, 'method', 1);
+%             bw = double(data.bg_bw); %background selection region
+%             bg_value = sum(sum(double(im).*bw))/sum(sum(bw)); %avg bg value from selected region of bg
+%             im_sub = double(im)-bg_value; %subtract avg bg intensity value from entire image
+            clear im; im = max(im_sub, 0); clear im_sub; %remove any negatives if they occured
             clear bw bg_value bg_bd bg_index;
         end
         if isfield(data, 'rotate_image') && data.rotate_image
