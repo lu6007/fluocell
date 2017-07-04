@@ -13,6 +13,13 @@
 % mode=1: overlay the ratio image with the track number
 % mode = 2: overlay the lag time with the track number
 
+%% Usage w/ multiple object tracking.
+% fluocell_data = batch_update_figure(fluocell_data);
+% coordInfo = multiple_object.getCoord(fluocell_data);
+% [fluocell_data, cell_location] = multiple_object.simpletracking(fluocell_data,coordInfo,'output_cell_location',1);
+% frame_with_track = multiple_object.create_frame_track(cell_location);
+% overlay_image_track(fluocell_data, frame_with_track);
+
 function overlay_image_track(data, frame_with_track, varargin)
     parameter = {'mode', 'image_index', 'track_index','load_file', 'save_file',...
         'output_prefix', 'file_type'};
@@ -106,7 +113,7 @@ function overlay_image_track(data, frame_with_track, varargin)
                 %colormap(my_hsv); nn = length(my_hsv);
                 %colorbar('YTick', [1; nn], 'YTickLabel', ratio_bound');
                 imagesc(double(im)); hold on;
-                colormap(gray); caxis(data.cbound);
+                colormap(gray); %caxis(data.cbound); %Not used?
 %             elseif mode ==2,
 %                 imagesc(im_ratio); hold on; 
 %                 caxis(ratio_bound); 
