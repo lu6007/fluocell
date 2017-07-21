@@ -41,8 +41,15 @@ switch method
             rad_y,'width_factor',wf,'brightness_factor',bf);
 end
 
+%Checks if any objects were detected. -SJL 7/7/2017
+if isempty(bd)
+    bw = false(size(im)); %sets bw to an 'empty' (false) mask.
+    bd = cell(0,1); %create empty 0x1 cell. Same output as clean_up_boundary.
+    
+else
 [bw, bd] = clean_up_boundary(im, bd, with_smoothing,...
     smoothing_factor);
+end
 %temp = bw; clear bw; bw{1} = temp;
 
 % Lexie on 10/19/2015
