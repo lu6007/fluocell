@@ -16,20 +16,7 @@ temp = sample_init_data('src_pax','');
 % When success, run
 % >> data = fluocell_data;
 % >> save(strcat(data.path, 'output/data.mat'), 'data');
-data_file = strcat(temp.path, 'output/data.mat');
-res = load(data_file);
-data = res.data;
-% backward compatibility, 6/23/2017 --- Kathy
-if strcmp(data.protocol, 'FRET') && length(data.f) <3
-  data.f(3) = figure; 
-  data.num_figure = 3;
-  disp('Save data file for backward compatibility.');
-  save(data_file, 'data');
-end
-%
-data.path = temp.path;
-data.first_file = strcat(data.path, '2-11.001');
-save(data_file, 'data');
+data = load_data(temp.path);
 batch_update_figure(data);
 
 %% o  2.1.2  FRET ANALYSIS- Make Movies   ********* Run the section 2.1.1 first;
@@ -43,17 +30,11 @@ end
 close all; clear data; 
 
 %% o   2.2  INTENSITY ANALYSIS-Polarity Analysis *********
-temp = sample_init_data('akt_1', '');
-data_file= strcat(temp.path, 'output/data.mat');
-res = load(data_file);
-data = res.data;
-data.path = temp.path;
-data.first_file = strcat(data.path, '2-11.001');
-save(data_file, 'data');
+data = sample_init_data('akt_1');
 batch_update_figure(data);
 
-cell_name = 'akt_1';
-data = sample_init_data(cell_name);
+% cell_name = 'akt_1';
+% data = sample_init_data(cell_name);
 single_cell_analyzer('akt_1',data);
 if enable_pause
     disp(pause_str);
@@ -67,21 +48,9 @@ close all; clear data;
 % res = load(data_file);
 % data = res.data;
 temp = sample_init_data('tracking_ex', '');
-data_file =strcat(temp.path, 'output/data.mat');
-res = load(data_file);
-data = res.data; 
-% backward compatibility, 6/23/2017 --- Kathy
-if strcmp(data.protocol, 'FRET') && length(data.f) <3
-  data.f(3) = figure; 
-  data.num_figure = 3;
-  disp('Save data file for backward compatibility.');
-  save(data_file, 'data');
-end
-%
-data.path = temp.path;
-data.output_path = strcat(data.path, 'output/');
-data.first_file = strcat(data.path, 'cfp_t1.tif');
+data = load_data(temp.path);
 data.num_roi = 3;
+data_file = strcat(temp.path, 'output/data.mat');
 save(data_file, 'data');
 %
 data = batch_update_figure(data);

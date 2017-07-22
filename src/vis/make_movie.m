@@ -7,7 +7,7 @@
 % info.path = 'C:\sof\fluocell_4.1\data\10_24_08_Src_fret_pax\';
 % info.first_file = 'output\0.3-0.8\ratio.001.tiff';
 % info.index_pattern = {'001', '%03d'};
-% info.image_index = 1:10;
+% info.image_index = (1:10)';
 % info.movie_name = strcat(info.path,'output\fret.avi');
 % movie = make_movie(info);
 %
@@ -70,12 +70,12 @@ else
 end
 
 %
-num_frames = length(movie_info.image_index);
+num_frame = length(movie_info.image_index);
 %h = figure('Position', [100, 100, 600, 600]);
 screen_size = get(0,'ScreenSize');
 h = figure('Position',[1 1 screen_size(4) screen_size(4)],'color', 'w');
 first_file = strcat(movie_info.path, movie_info.first_file);
-movie_F = cell(num_frames,2);
+movie_F = cell(num_frame,2);
 fields = {'cdata', 'colormap'};
 
 
@@ -84,7 +84,7 @@ fields = {'cdata', 'colormap'};
     event_location = movie_info.event_location;
  end
 
-for j = 1:num_frames
+for j = 1:num_frame
     i = movie_info.image_index(j);
     pattern = movie_info.index_pattern;
     file_name = regexprep(first_file, pattern{1}, sprintf(pattern{2},i));
