@@ -34,9 +34,9 @@ end
 % When parallel processing is disabled.
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
-    % loop through the row vector image_index
+    % loop through the row vector of image_index
     new_first_file = 1;
-    for i = data.image_index 
+    for i = (data.image_index)' 
         data.index = i;
         data = get_image(data, new_first_file);
         if ~isempty(data.im{1})
@@ -92,7 +92,7 @@ else %Parallel processing enabled.
         
         % Kathy: there is a warning which says that the range of parfor
         % has to be consecutive numbers. 09/13/2016
-        for i = data.image_index(2:end) 
+        for i = (data.image_index(2:end))' 
 %         for i = data.image_index(2:end)
             %Update temp_data.index to the new index point based on image_index
             temp_data = data;
@@ -116,7 +116,7 @@ else %Parallel processing enabled.
             temp_channel1_bg(i) = temp_data.channel1_bg(i);
             temp_channel2_bg(i) = temp_data.channel2_bg(i);
 
-        end % parfor i = data.image_index(2:end),
+        end % parfor i = (data.image_index(2:end))',
 %         for k = 1 : num_roi
 %             temp_ratio{k}(temp_ratio{k} == 0) = NaN;
 %         end

@@ -18,7 +18,7 @@ switch magnification
     case 100
       %100 times, 60 pixels = 4 um
       %factor = 4.0/60.0; % used before 2011
-      factor = 1/6.4; 
-end;
+      factor = 1/6.4; % updated on 7/21/2017 now 1/6.28 
+end
 p = p_old*factor;
 return;

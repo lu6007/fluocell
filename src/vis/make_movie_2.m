@@ -2,7 +2,7 @@
 % Example:
 % >> 
 % data = init_data('10_24_dish21');
-% image_index = [8:10, 12:14, 16:17, 19:24,28:36,43:55];
+% image_index = [8:10, 12:14, 16:17, 19:24,28:36,43:55]';
 % movie.path = data.path;
 % movie.first_file = data.first_cfp_file;
 % movie.channel_pattern = data.channel_pattern;
@@ -41,125 +41,125 @@
 
 function movie=make_movie_2(movie_info)
 
-if isfield(movie_info, 'time'),
+if isfield(movie_info, 'time')
 time = movie_info.time; %minute
-end;
+end
 %
-if isfield(movie_info, 'path_all'),
+if isfield(movie_info, 'path_all')
     movie_info.multiple_folder = 1;
 else
     movie_info.multiple_folder = 0;
-end;
+end
 %
 
 movie_info.median_filter = 1;
 movie_info.subtract_background = 1;
 
-if movie_info.multiple_folder,
+if movie_info.multiple_folder
     % initialize figure
     im = imread(strcat(movie_info.path_all{1}, movie_info.first_file{1}));
-    [num_rows num_cols] = size(im);
+    [num_row, num_col] = size(im);
     base = 100;
-    switch movie_info.type,
-        case 1, % intensity only
-            h = figure('Position', [base,base,base+num_cols, base+num_rows]);
-        case 2, % fret 
-            h = figure('Position', [base,base,base+num_cols, base+num_rows]);
-        case 3, % fret and intensity
-            h = figure('Position', [base,base,base+2*num_cols, base+2*num_rows]);
-        case 4, % intensity with detected cell boundary and FAs
-            h = figure('Position', [base,base,base+num_cols, base+num_rows]);
-    end;
+    switch movie_info.type
+        case 1 % intensity only
+            h = figure('Position', [base,base,base+num_col, base+num_row]);
+        case 2 % fret 
+            h = figure('Position', [base,base,base+num_col, base+num_row]);
+        case 3 % fret and intensity
+            h = figure('Position', [base,base,base+2*num_col, base+2*num_row]);
+        case 4 % intensity with detected cell boundary and FAs
+            h = figure('Position', [base,base,base+num_col, base+num_row]);
+    end
     % draw each frame
-    num_folders = length(movie_info.path_all);
+    num_folder = length(movie_info.path_all);
     jj = 1;
-    for kk = 1:num_folders,
+    for kk = 1:num_folder
         movie_info.current_folder = kk;
-        num_frames = length(movie_info.image_index{kk});
-        for j = 1:num_frames,
+        num_frame = length(movie_info.image_index{kk});
+        for j = 1:num_frame
             i = movie_info.image_index{kk}(j);
-            switch movie_info.type,
-                case 1, % intensity only
+            switch movie_info.type
+                case 1 % intensity only
                     draw_intensity_frame(h, i, movie_info);
-                case 2, % fret only
+                case 2 % fret only
                     draw_fret_frame(h, i, movie_info);
-                case 3, % fret with intensity.
+                case 3 % fret with intensity.
                     draw_fret_intensity_frame(h, i, movie_info);
-                case 4,
+                case 4
                     draw_cell_with_detected_fas(h, i, movie_info);
-            end;
-            if isfield(movie_info, 'time_location'),
+            end
+            if isfield(movie_info, 'time_location')
             tl = movie_info.time_location;
             el = movie_info.event_location;
             text(tl(1), tl(2), strcat(sprintf('%3.1f ', time(jj)), ' min'),...
                 'Color', 'w','FontSize', 16,'FontWeight', 'bold');
-            if movie_info.has_event(jj),
+            if movie_info.has_event(jj)
                 text(el(1), el(2), movie_info.event_text, ...
                     'Color', 'w', 'FontSize', 16,'FontWeight', 'bold');
             end
             end
-            if isfield(movie_info, 'title'),
+            if isfield(movie_info, 'title')
             title(movie_info.title);
             end
             movie(jj) = getframe(h);
             jj = jj+1;
-        end; % for j = 1:num_frames
-    end; % for kk = 1:num_folders,
+        end % for j = 1:num_frame
+    end % for kk = 1:num_folder,
 else % multiple_folder = 0;       
-    num_frames = length(movie_info.image_index);
+    num_frame = length(movie_info.image_index);
     im = imread(strcat(movie_info.path, movie_info.first_file));
-    [num_rows num_cols] = size(im);
+    [num_row, num_col] = size(im);
     base = 100;
-    switch movie_info.type,
-        case 1, % intensity only
-            h = figure('Position', [base,base,base+num_cols, base+num_rows]);
-        case 2, % fret 
-            h = figure('Position', [base,base,base+num_cols, base+num_rows]);
-        case 3, % fret and intensity
-            h = figure('Position', [base,base,base+2*num_cols, base+2*num_rows]);
-        case 4, % intensity with detected cell boundary and FAs
-            h = figure('Position', [base,base,base+num_cols, base+num_rows]);
-    end;
-    for j = 1:num_frames,
+    switch movie_info.type
+        case 1 % intensity only
+            h = figure('Position', [base,base,base+num_col, base+num_row]);
+        case 2 % fret 
+            h = figure('Position', [base,base,base+num_col, base+num_row]);
+        case 3 % fret and intensity
+            h = figure('Position', [base,base,base+2*num_col, base+2*num_row]);
+        case 4 % intensity with detected cell boundary and FAs
+            h = figure('Position', [base,base,base+num_col, base+num_row]);
+    end
+    for j = 1:num_frame
         i = movie_info.image_index(j);
-        switch movie_info.type,
-            case 1, % intensity only
+        switch movie_info.type
+            case 1 % intensity only
                 draw_intensity_frame(h, i, movie_info);
-            case 2, % fret only
+            case 2 % fret only
                 draw_fret_frame(h, i, movie_info);
-            case 3, % fret with intensity.
+            case 3 % fret with intensity.
                 draw_fret_intensity_frame(h, i, movie_info);
-            case 4,
+            case 4
                 draw_cell_with_detected_fa(h, i, movie_info);
-        end;
-        if isfield(movie_info, 'time_location'),
+        end
+        if isfield(movie_info, 'time_location')
         tl = movie_info.time_location;
         el = movie_info.event_location;
         text(tl(1), tl(2), strcat(sprintf('%3.1f ', time(i)), ' min'),...
             'Color', 'w','FontSize', 16,'FontWeight', 'bold');
-        if movie_info.has_event(j),
+        if movie_info.has_event(j)
             text(el(1), el(2), movie_info.event_text, ...
                 'Color', 'w', 'FontSize', 16,'FontWeight', 'bold');
         end
         end
-        if isfield(movie_info, 'title'),
+        if isfield(movie_info, 'title')
         title(movie_info.title);
         end
         movie(j) = getframe(h);
-    end;
-end; % multiple_folder = 0;
+    end
+end % multiple_folder = 0;
 
 % save the avi file
 system_type = computer;
-switch system_type,
+switch system_type
     case 'PCWIN32'
         co = 'Cinepak';
-    case 'PCWIN64',
+    case 'PCWIN64'
         %co = 'FFDS';
         co = 'None';
-    otherwise,
+    otherwise
         co = 'Cinepak';
-end;
+end
 
 movie2avi(movie, strcat(movie_info.path,movie_info.file_name), ...
     'Compression', co, 'fps',6, 'quality', 75);
@@ -173,7 +173,7 @@ function draw_intensity_frame(h, i, info)
         first_file = strcat(info.path_all{kk}, info.first_file{kk});
     else % info.multiple_foder = 0;
         first_file = strcat(info.path, info.first_file);    
-    end; % if info.multiple_folder
+    end % if info.multiple_folder
     file_name = regexprep(first_file, info.index_pattern{1}, this_index);
 %     if ~exist(file_name), ???
     im = imread(file_name); im = medfilt2(im);
@@ -188,7 +188,7 @@ function draw_fret_frame(h, i, info)
         first_file = strcat(info.path_all{kk}, info.first_file{kk});
     else % info.multiple_foder = 0;
         first_file = strcat(info.path, info.first_file);    
-    end; % if info.multiple_folder
+    end % if info.multiple_folder
     cfp_file = regexprep(first_file, info.index_pattern{1}, this_index);
     cfp_im = imread(cfp_file); cfp_im = medfilt2(cfp_im);
     yfp_file = regexprep(cfp_file, info.channel_pattern{1}, ...
@@ -214,7 +214,7 @@ function draw_fret_intensity_frame(h, i, info)
     else % info.multiple_foder = 0;
         first_file = strcat(info.path, info.first_file);
         bg_file = strcat(info.path, 'output\', 'background.mat');
-    end; % if info.multiple_folder
+    end % if info.multiple_folder
     cfp_file = regexprep(first_file, info.index_pattern{1}, this_index);
     cfp_im = imread(cfp_file); 
     info.bg_bw = get_background(cfp_im, bg_file);
@@ -236,13 +236,13 @@ function draw_fret_intensity_frame(h, i, info)
     fret_rgb = get_imd_image(ratio, yfp_im, 'ratio_bound', info.rbound,...
         'intensity_bound', info.ibound);
     rfp_ind = floor(0.5+imscale(rfp_im, 1, 128, info.cbound));
-    if strcmp(info.color_type, 'rgb'),
+    if strcmp(info.color_type, 'rgb')
         rfp_rgb = ind2rgb(rfp_ind, jet(128));
-    elseif strcmp(info.color_type, 'gray'),
+    elseif strcmp(info.color_type, 'gray')
         rfp_rgb = ind2rgb(rfp_ind, gray(128));
     else
-        display('Function make_movie: Wrong color type\n');
-    end;
+        fprintf('Function make_movie: Wrong color type\n');
+    end
     im = [fret_rgb rfp_rgb];
     %im = [fret_rgb(:,60:430, :) rfp_rgb(:, 60:430, :)];
     figure(h); 

@@ -17,12 +17,12 @@
 % All Rights Reserved
 
 function result = phospho_methyl_model(data, varargin)
-para_name = {'a1', 'a2', 'show_figure','b'}; 
-para_default = {data.a(1), data.a(2), 0, data.b}; 
-[a1, a2, show_figure, b] = parse_parameter(para_name, ...
+para_name = {'a1', 'a2', 'show_figure','b', 'methyl_ko'}; 
+para_default = {data.a(1), data.a(2), 0, data.b, 0}; 
+[a1, a2, show_figure, b, methyl_ko] = parse_parameter(para_name, ...
     para_default, varargin);
 
-max_phosphor_enzyme = data.max_phosphor_enzyme; 
+max_phospho_enzyme = data.max_phospho_enzyme; 
 num_histone = data.num_histone;  % 60M 60000; 
 max_methyl_enzyme = data.max_methyl_enzyme;
 dt = data.time_step;
@@ -38,39 +38,41 @@ num_dt = size(time, 1);
 % State variable y
 num_var = 6;
 y = zeros(num_var, num_dt);
-y(1, 1) = data.base_phosphor; % H3S10 phosphorylation
+c = zeros(num_var, num_dt);
+y(1, 1) = data.base_phospho; % H3S10 phosphorylation
 y(2, 1) = data.base_kinase; % kinase
 y(3, 1) = data.base_phosphotase; % phosphotase
 y(4, 1) = data.base_methyl; % K9 methylation
 y(5, 1) = data.base_methyltransferase; % methyltransferaze
 y(6, 1) = data.base_demethylase; % demethylase
 y_min = [0; 0; 0; 0; 0; min_kdm];
-y_max = [num_histone; max_phosphor_enzyme; max_phosphor_enzyme; ...
+y_max = [num_histone; max_phospho_enzyme; max_phospho_enzyme; ...
     num_histone; max_methyl_enzyme; max_methyl_enzyme];
 
 % molecules/min were processed by each enzyme 
 % considering recruiting and biochemical reaction. 
 % phosphorylation repels methyltransferase and recruits demethylase
 signal_matrix = zeros(num_var);
-signal_matrix(1, [2 3]) = [b -1]*1.67;
-signal_matrix(4, [5 6]) = [1 -1]*1.33;
-M2 = eye(6);
+signal_matrix(1, [2 3]) = [b -1]*1.67; 
+signal_matrix(4, [5 6]) = [1 -1]*1.33; 
+M2 = zeros(6,6);
 M2(5, 1) = -a1;
 M2(6, 1) = a2;
-signal_matrix = M2*signal_matrix;
+signal_matrix = M2+signal_matrix;
 %
 temp = sparse(signal_matrix); clear signal_matrix;
 signal_matrix = temp; clear temp;
 if show_figure
     test = full(signal_matrix);
     figure(100); imagesc(test); colormap jet;
-    caxis([-0.5 0.5]); colorbar; 
+    caxis([-0.01 0.01]); colorbar; 
     clear test;
 end
 
 %
 data.time_phospho = 0;
 data.num_var = 6;
+data.methyl_ko = methyl_ko; 
 ss = 0;
 for i = 1:num_dt-1
     v = signal_matrix*y(:,i);
@@ -79,17 +81,20 @@ for i = 1:num_dt-1
     data.time_i = time(i);
     data.y_i = temp;
     [ss, c_new, data] = model_state(ss, data);
-    c = M2*c_new; clear c_new; 
+    %c(:,i) = c_new+M2*c_new;  
+    c(:,i) = c_new; 
+    clear c_new;
     
-    y(:,i+1) = temp+c;
+    y(:,i+1) = temp+c(:,i);
 
     % modulated by y_min and y_max
     y(:, i+1) = max(y(:, i+1), y_min);
     y(:, i+1) = min(y(:, i+1), y_max);
-    clear v temp;
+    clear v temp c_new;
 end
 
 % Plot results
+fs = 24;
 lw = 3;
 if show_figure
     title_str = {'Phospho', 'Kinase', 'PTP', 'Methyl', 'Methyltrans', 'KDMS'};
@@ -98,17 +103,21 @@ if show_figure
         subplot(3, 2,j);
         plot(time, y(j,:)', 'LineWidth', lw); 
         xlabel('Time (min)'); ylabel(strcat('y', num2str(j), '-', title_str{j}));
-        set(gca, 'FontSize', 24, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',lw);
+        set(gca, 'FontSize', fs, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',lw);
     end
-    my_figure; hold on;
-    plot(time, y(1,:)', 'LineWidth', lw);
-    xlabel('Time (min)'); ylabel(strcat('y', num2str(j), '-', title_str{j}));
-    set(gca, 'FontSize', 24, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',lw);  
+    
+    %
+    my_figure('font_size', fs, 'line_width', 3); hold on;
+    plot(time, (c([2,3,5,6],:))', 'LineWidth', lw);
+    xlabel('Time (min)'); ylabel('In and Out Fluxes');
+    title('In and out fluxes');
+    legend('kinase', 'phosphotase', 'methyltransferase', 'demethylase'); 
 end
 
 result.time = time;
 result.phosphorylation = y(1,:)';
 result.methylation = y(4,:)';
+result.c = c;
 return; 
 
 
@@ -128,6 +137,7 @@ time_step = data.time_step;
 max_time_phospho = data.max_time_phospho; 
 more_methyl = data.more_methyl; %150
 more_kinase = data.more_kinase;
+methyl_ko = data.methyl_ko; % 0 or 1
 num_var = data.num_var;
 
 tt = mod(t, data.time(2)); % make tt>=0 && tt<data.time(2)
@@ -138,7 +148,7 @@ if s ==0 && tt>0 && tt<data.time(1)
     % kinase and methyltransferace both increase
     s = 1; 
     c(2) = more_kinase;
-    c(5) = more_methyl;
+    c(5) = more_methyl*(1-methyl_ko);
 elseif s==1 && time_phospho < max_time_phospho
     time_phospho = time_phospho + y(1)*time_step;
     c([2 5]) = 0;
@@ -148,20 +158,22 @@ elseif s==1 && time_phospho >= max_time_phospho
     s = 2;
     time_phospho = 0;
     c(2) = -2*more_kinase;
-    c(5) = 0; 
+    c(5) = 0;
 elseif s==2 && y(4)< base_methyl
-    c([2 5]) = 0;
-    
+    % c([2 5]) = 0;
+    c(5) = more_methyl; 
+    c(6) = -more_methyl;
 % Additional measures to stabilize the model
 % toward the end of simulation after the cell exits state 2. 
 elseif s==2 && y(4)>= base_methyl
     % When the methylation level recovers, interphase starts.
     % Kinase and mehtyltransferace level recover to the interphase baseline.  
     s = 0;
-    c(2) = y(3)-y(2); % reset y(2) to y(3)
-    c(5) = y(6)-y(5); % reset y(5) to y(6)
+    % c(2) = y(3)-y(2); % reset y(2) to y(3)
+    % c(5) = y(6)-y(5); % reset y(5) to y(6)
+    c([5 6]) = 0;
 elseif s==0 && (y(4)>base_methyl+10 || y(1)>10)
-    c(2) = y(3)-y(2); 
+    c(2) = y(3)-y(2);
     c(5) = y(6)-y(5); % reset y(5) to y(6) again to stabilize the model
 elseif s==0 && y(4)>= base_methyl
     c([2 5]) = 0; 
