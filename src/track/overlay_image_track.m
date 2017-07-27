@@ -56,6 +56,11 @@ function overlay_image_track(data, frame_with_track, varargin)
     end
     screen_size = get(0,'ScreenSize');
     load my_hsv.mat;
+    
+    %Removes nonexistant frames from image_index.
+    nonexistant_frames = get_data.nonexistant_frames(data);
+    image_index = image_index(~ismember(image_index,nonexistant_frames));
+    
     for k = 1:length(image_index), 
         i = image_index(k);
         index = sprintf(pattern, i);
