@@ -57,7 +57,7 @@ if show_figure
 end
 
 index_str = sprintf(data.index_pattern{2}, data.index);
-output_file = strcat(data.output_path, 'cell_bw.', index_str);
+output_file = strcat(data.output_path, 'cell_bw_', index_str);
 if(isfield(data,'save_processed_image')&& data.save_processed_image)
     cell_bw = data.cell_bw;
     save([output_file, '.mat'], 'cell_bw');

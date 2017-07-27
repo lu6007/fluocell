@@ -79,7 +79,7 @@ function overlay_image_track(data, frame_with_track, varargin)
            % 01/08/2016
            switch file_type
                case 'cell'
-                   object_file = strcat(data.path, 'output/cell_bw.', index, '.mat');
+                   object_file = strcat(data.path, 'output/cell_bw_', index, '.mat');
                    object_result = load(object_file);
                    object_bw = object_result.cell_bw;
                case 'fa'

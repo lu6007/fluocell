@@ -55,8 +55,11 @@ if nargin == 2
 end
 
 % Get cell_bw
-temp_file_mat = strcat(data.output_path, 'cell_bw.t', num2str(data.index), '.mat');
-%temp_file_tiff = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
+% temp_file_mat = strcat(data.output_path, 'cell_bw_t', num2str(data.index), '.mat');
+index_str = sprintf(data.index_pattern{2}, data.index);
+temp_file_mat = strcat(data.output_path, 'cell_bw_', index_str, '.mat');
+
+%temp_file_tiff = strcat(data.output_path, 'cell_bw_t', num2str(data.index));
 if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
 %    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
