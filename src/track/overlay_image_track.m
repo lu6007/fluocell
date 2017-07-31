@@ -13,6 +13,13 @@
 % mode=1: overlay the ratio image with the track number
 % mode = 2: overlay the lag time with the track number
 
+%% Usage w/ multiple object tracking.
+% fluocell_data = batch_update_figure(fluocell_data);
+% coordInfo = multiple_object.getCoord(fluocell_data);
+% [fluocell_data, cell_location] = multiple_object.simpletracking(fluocell_data,coordInfo,'output_cell_location',1);
+% frame_with_track = multiple_object.create_frame_track(cell_location);
+% overlay_image_track(fluocell_data, frame_with_track);
+
 function overlay_image_track(data, frame_with_track, varargin)
     parameter = {'mode', 'image_index', 'track_index','load_file', 'save_file',...
         'output_prefix', 'file_type'};
@@ -49,6 +56,11 @@ function overlay_image_track(data, frame_with_track, varargin)
     end
     screen_size = get(0,'ScreenSize');
     load my_hsv.mat;
+    
+    %Removes nonexistant frames from image_index.
+    nonexistant_frames = get_data.nonexistant_frames(data);
+    image_index = image_index(~ismember(image_index,nonexistant_frames));
+    
     for k = 1:length(image_index) 
         i = image_index(k);
         index = sprintf(pattern, i);
@@ -67,7 +79,7 @@ function overlay_image_track(data, frame_with_track, varargin)
            % 01/08/2016
            switch file_type
                case 'cell'
-                   object_file = strcat(data.path, 'output/cell_bw.', index, '.mat');
+                   object_file = strcat(data.path, 'output/cell_bw_', index, '.mat');
                    object_result = load(object_file);
                    object_bw = object_result.cell_bw;
                case 'fa'
@@ -81,11 +93,11 @@ function overlay_image_track(data, frame_with_track, varargin)
                 im = preprocess(temp(:,:,1),data);
                 clear im_file temp;
 %             elseif mode ==2,
-%                 num_tracks = frame_with_track(k).num_tracks;
+%                 num_track = frame_with_track(k).num_track;
 %                 im_ratio = -30*ones(size(fa_bw));
-%                 if num_tracks>0,
-%                     centroid = frame_with_track(k).centroid(1:num_tracks, :);
-%                     for j = 1:num_tracks,
+%                 if num_track>0,
+%                     centroid = frame_with_track(k).centroid(1:num_track, :);
+%                     for j = 1:num_track,
 %                         ic= floor(centroid(j,:)+0.5);
 %                         ybound = (max(ic(1)-5, 1): min(ic(1)+5, size(im_ratio,2)));
 %                         xbound = (max(ic(2)-5, 1): min(ic(2)+5, size(im_ratio,1)));
@@ -106,19 +118,19 @@ function overlay_image_track(data, frame_with_track, varargin)
                 %colormap(my_hsv); nn = length(my_hsv);
                 %colorbar('YTick', [1; nn], 'YTickLabel', ratio_bound');
                 imagesc(double(im)); hold on;
-                colormap(gray); caxis(data.cbound);
+                colormap(gray); %caxis(data.cbound); %Not used?
 %             elseif mode ==2,
 %                 imagesc(im_ratio); hold on; 
 %                 caxis(ratio_bound); 
 %                 colorbar;
             end % if mode
-                num_tracks = frame_with_track(k).num_tracks;
-                if num_tracks>0
-                    centroid = frame_with_track(k).centroid(1:num_tracks,:);
-                    this_track_index = frame_with_track(k).track_index(1:num_tracks);
+                num_track = frame_with_track(k).num_track;
+                if num_track>0
+                    centroid = frame_with_track(k).centroid(1:num_track,:);
+                    this_track_index = frame_with_track(k).track_index(1:num_track);
                     if ~isempty(track_index)
-                        this_track_index = frame_with_track(k).track_index(1:num_tracks);
-                        temp = zeros(frame_with_track(k).num_tracks,1);
+                        this_track_index = frame_with_track(k).track_index(1:num_track);
+                        temp = zeros(frame_with_track(k).num_track,1);
                         num_display_tracks = 0;
                         for kk = 1:length(track_index)
                             ii_index = find(this_track_index == track_index(kk),1);

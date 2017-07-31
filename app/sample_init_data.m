@@ -70,7 +70,6 @@ case 'akt_1'
         data.flip_cell = 1;
         data.subtract_background = 1;
         data.median_filter = 1;
-        data.crop_image = 1;
         data.protocol = 'Intensity';
         data.index_pattern = {'001', '%03d'};
         data.need_apply_mask = 0;

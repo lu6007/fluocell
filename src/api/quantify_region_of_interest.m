@@ -21,7 +21,8 @@ default_value = {0};
 [save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
 %Lexie on 3/10/2015 make the show_figure option work for both situations,
 %w/o show_figure field
-show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
+% show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
+
 % Process data.quantify_roi
 switch data.quantify_roi
     case 0 % Do not quantify ROI
@@ -40,11 +41,6 @@ end
 % data.quantify_roi = 2: more than 1 roi which can only be automatically tracked.  
 if data.quantify_roi == 1 || data.quantify_roi ==2
     num_object = 1;
-    if isfield(data,'num_roi')
-        num_roi = data.num_roi;
-    else
-        num_roi = 1;
-    end
 end
 
 if isfield(data, 'num_roi')
@@ -59,8 +55,11 @@ if nargin == 2
 end
 
 % Get cell_bw
-temp_file_mat = strcat(data.output_path, 'cell_bw.t', num2str(data.index), '.mat');
-%temp_file_tiff = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
+% temp_file_mat = strcat(data.output_path, 'cell_bw_t', num2str(data.index), '.mat');
+index_str = sprintf(data.index_pattern{2}, data.index);
+temp_file_mat = strcat(data.output_path, 'cell_bw_', index_str, '.mat');
+
+%temp_file_tiff = strcat(data.output_path, 'cell_bw_t', num2str(data.index));
 if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
 %    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...

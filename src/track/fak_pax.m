@@ -34,7 +34,7 @@ file_crop = strcat(path, 'rectangle.mat');
 rect = get_rectangle(im, file_crop);
 im_crop = imcrop(im, rect);
 region_file = strcat(path, 'region.mat');
-[regions, region_bd] = get_rois(im_crop, region_file);
+[regions, region_bd] = get_roi(im_crop, region_file);
 %num_roi = length(regions);
 num_roi = length(regions)-1;
 figure; imagesc(im_crop); hold on;
@@ -196,7 +196,7 @@ legend('Total Intensity', 'Average Intensity', 'Portion of Pixels');
 end
 return;
 
-function [regions, region_bd] = get_rois(im, region_file)
+function [regions, region_bd] = get_roi(im, region_file)
 num_roi = 4;
 regions= cell(num_roi,1);
 region_bd = cell(num_roi,1);
