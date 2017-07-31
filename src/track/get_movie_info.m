@@ -42,7 +42,7 @@ else
 % Lexie on 1/4/2016
         switch file_type
             case 'cell'
-                file_name = strcat(data.path, 'output\cell_bw.', index_str, '.mat');
+                file_name = strcat(data.path, 'output\cell_bw_', index_str, '.mat');
                 result = load(file_name);
                 object_bw = result.cell_bw;
             case 'fa'
