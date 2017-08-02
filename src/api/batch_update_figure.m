@@ -142,9 +142,9 @@ end
 %Modify output w/ simpletracker() to get more accurate tracks.
 %Output data in the same format so that compute_time_course() can plot.
 if isfield(data, 'multiple_object') && data.multiple_object
-    data = multiple_object.postprocessing(data);
+    data = multiple_object.postProcess(data);
     coordInfo = multiple_object.getCoord(data);
-    data = multiple_object.simpletracking(data, coordInfo);
+    data = multiple_object.simpleTrack(data, coordInfo);
 end
 
 return;

@@ -2,7 +2,7 @@ classdef multiple_object
     %multiple_object contains functions for tracking multiple objects in
     %one frame.
     methods (Static)
-        function [data, cell_location] = simpletracking(data, coordInfo, varargin)
+        function [data, cell_location] = simpleTrack(data, coordInfo, varargin)
             %Parameters
             %data: fluocell_data
             %coordInfo: from multiple_object.getCoord()
@@ -45,7 +45,7 @@ classdef multiple_object
                 parse_parameter(parameter_name, default_value, varargin);
             
 
-            %Debug multiple_object.simpletracking() parameters
+            %Debug multiple_object.simpleTrack() parameters
 %             remove_short_track = 1;
 % %             min_track_length = 8;
 %             plot_cell_split = 1;
@@ -264,7 +264,7 @@ classdef multiple_object
                 clear i j k; %Clear counter variables.
             end
             
-            %% Option for cell_location w/out simpletracking. (For Fluocell paper)
+            %% Option for cell_location w/out simpleTrack. (For Fluocell paper)
             %Convert coordInfo to a data structure that simpletracker can use.
             if output_cell_location
                 numCoordFrames = length(coordInfo);
@@ -354,7 +354,7 @@ classdef multiple_object
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        function data = postprocessing(data)
+        function data = postProcess(data)
             %Shortens data.--- if 
             
             %lengthen all cells of

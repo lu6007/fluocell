@@ -16,7 +16,7 @@
 %% Usage w/ multiple object tracking.
 % fluocell_data = batch_update_figure(fluocell_data);
 % coordInfo = multiple_object.getCoord(fluocell_data);
-% [fluocell_data, cell_location] = multiple_object.simpletracking(fluocell_data,coordInfo,'output_cell_location',1);
+% [fluocell_data, cell_location] = multiple_object.simpleTrack(fluocell_data,coordInfo,'output_cell_location',1);
 % frame_with_track = multiple_object.create_frame_track(cell_location);
 % overlay_image_track(fluocell_data, frame_with_track);
 
