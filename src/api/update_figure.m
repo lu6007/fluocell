@@ -216,7 +216,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image)
-                if isfield(data, 'quantify_roi') && data.quantify_roi == 1
+                if ~isfield(data, 'quantify_roi') || data.quantify_roi <= 1
                     polygon_type = 'draggable';
                 else
                     % Note that drawing draggable polygons are very slow
