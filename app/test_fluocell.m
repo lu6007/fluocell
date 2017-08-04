@@ -1,4 +1,4 @@
-% test_Fluocell
+% test_fluocell
 % o   2.1.1   FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images
 % o   2.1.2   FRET ANALYSIS- Make Movies
 % o   2.2     INTENSITY ANALYSIS- Polarity Analysis
