@@ -263,36 +263,7 @@ classdef multiple_object
 %                 num_track = num_track - k; %Updating value of num_track.
                 clear i j k; %Clear counter variables.
             end
-            
-            %% Option for cell_location w/out simpleTrack. (For Fluocell paper)
-            %Convert coordInfo to a data structure that simpletracker can use.
-            if output_cell_location
-                numCoordFrames = length(coordInfo);
-                d = cell(numCoordFrames,1);
-                for i = 1:numCoordFrames
-                    d{i,1}=cell2mat(coordInfo(i,:));
-                end
-                coordInfo = d;
-                clear i d;
-                
-                % Accounting for empty frames before running simpletracker().
-                % removedFramesIndex = find(cellfun('isempty',coordInfo))'; %Getting the indices for empty frames.
-                % frameIndex = data.image_index(removedFramesIndex);
-                frameIndex = find(~cellfun('isempty',coordInfo))';
-                coordInfo = coordInfo(frameIndex);
-                
-                num_tracks = length(data.ratio);
-                temp_location = repmat({nan},size(coordInfo,1),num_tracks);
-                % temp_location = cell(size(coordInfo,1),num_tracks);
-                
-                for i = 1 : numCoordFrames
-                    for j = 1 : size(coordInfo{i},1)
-                        temp_location{i,j} = coordInfo{i}(j,:);
-                    end
-                end
-                clear i j
-            end
-          
+                     
             %% Exporting the processed data.
             data.ratio = temp_ratio;
             data.channel1 = temp_channel1;
@@ -422,20 +393,28 @@ classdef multiple_object
         function frame_with_track = create_frame_track(cell_location)
             % Creates frame_with_track to be used with overlay_image_track.
             
+            %Removes rows w/out any coordinates. i.e. for empty/nonexistant frames.
+            cell_location(all(cellfun(@(x) any(isnan(x)),cell_location),2),:) = [];
+            
             %Parameters.
-            fields = {'num_tracks','centroid','track_index'};
-            num_fields = length(fields);
-            num_frames = length(cell_location);
+            fields = {'num_track','centroid','track_index'};
+            num_field = length(fields);
+            num_frame = length(cell_location);
             
             %Initialize cell to hold data.
-            frame_with_track = cell(num_frames, num_fields);
+            frame_with_track = cell(num_frame, num_field);
             frame_with_track = cell2struct(frame_with_track, fields, 2);
             
-            for i = 1 : num_frames
-                frame_with_track(i).num_tracks = sum(~cellfun(@(V) any(isnan(V(:))),cell_location(i,:)));
-                for j = 1 : frame_with_track(i).num_tracks
-                    frame_with_track(i).centroid(j,:) = cell_location{i,j};
-                    frame_with_track(i).track_index(j,1) = j;
+            for i = 1 : num_frame
+                frame_with_track(i).num_track = sum(~cellfun(@(V) any(isnan(V(:))),cell_location(i,:)));
+%                 for j = 1 : frame_with_track(i).num_track
+                for j = 1 : size(cell_location,2)
+                    if ~isnan(cell_location{i,j})
+%                         frame_with_track(i).centroid(j,:) = cell_location{i,j};
+%                         frame_with_track(i).track_index(j,1) = j;
+                        frame_with_track(i).centroid = [frame_with_track(i).centroid; cell_location{i,j}];
+                        frame_with_track(i).track_index = [frame_with_track(i).track_index; j];
+                    end
                 end
             end
         end
