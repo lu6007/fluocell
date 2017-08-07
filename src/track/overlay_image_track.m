@@ -1,6 +1,18 @@
 
-% function overlay_image_track(cell_name, frame_with_track, varargin)
-% Overlay the ratio image of FAK/paxillin with a cross and the
+% Usage w/ multiple object tracking.
+% function overlay_image_track(data, frame_with_track, varargin)
+%     parameter = {'mode', 'image_index', 'track_index','load_file', 'save_file',...
+%         'output_prefix', 'file_type'};
+%     default_value = {1, data.image_index, [], 0, 0, 'fa_track', 'cell'};
+%
+% Example: 
+% fluocell_data = batch_update_figure(fluocell_data);
+% coordInfo = multiple_object.getCoord(fluocell_data);
+% [fluocell_data, cell_location] = multiple_object.simpleTrack(fluocell_data,coordInfo,'output_cell_location',1);
+% frame_with_track = multiple_object.create_frame_track(cell_location);
+% overlay_image_track(fluocell_data, frame_with_track);
+
+% A previous version overlay the ratio image of FAK/paxillin with a cross and the
 % corresponding track number
 % cell_name = 'fak_pax';
 % movie_info = get_movie_info(cell_name);
@@ -9,16 +21,10 @@
 % overlay_image_track need to have the same image_index as 
 % the array frame_with_track. If frame_with_track was not extracted with
 % image_index, then use frame_with_track(image_index) as the input.
-
 % mode=1: overlay the ratio image with the track number
 % mode = 2: overlay the lag time with the track number
 
-%% Usage w/ multiple object tracking.
-% fluocell_data = batch_update_figure(fluocell_data);
-% coordInfo = multiple_object.getCoord(fluocell_data);
-% [fluocell_data, cell_location] = multiple_object.simpleTrack(fluocell_data,coordInfo,'output_cell_location',1);
-% frame_with_track = multiple_object.create_frame_track(cell_location);
-% overlay_image_track(fluocell_data, frame_with_track);
+% Copyright: Shannon Laub and Shaoying Lu 2017
 
 function overlay_image_track(data, frame_with_track, varargin)
     parameter = {'mode', 'image_index', 'track_index','load_file', 'save_file',...
@@ -58,8 +64,8 @@ function overlay_image_track(data, frame_with_track, varargin)
     load my_hsv.mat;
     
     %Removes nonexistant frames from image_index.
-    nonexistant_frames = get_data.nonexistant_frames(data);
-    image_index = image_index(~ismember(image_index,nonexistant_frames));
+    absent_frame = get_data.absent_frame(data);
+    image_index = image_index(~ismember(image_index,absent_frame));
     
     for k = 1:length(image_index) 
         i = image_index(k);
@@ -109,10 +115,10 @@ function overlay_image_track(data, frame_with_track, varargin)
 % 
             % now overlay with a cross and the track number.
             % save image  
-            figure('Position',[1 1 screen_size(4) screen_size(4)],'color', 'w');
-            set(gca, 'FontSize',16, 'FontWeight', 'bold','Box', 'off', 'LineWidth', 2);
         %    im_imd = get_imd_image(im_ratio, double(im_fak)+factor*double(im_pax),...
         %          'ratio_bound', ratio_bound, 'intensity_bound', intensity_bound);
+            figure(data.f(1)); 
+
             if mode ==1
                 %imagesc(double(im).*double(fa_bw)); hold on;
                 %colormap(my_hsv); nn = length(my_hsv);
@@ -161,6 +167,8 @@ function overlay_image_track(data, frame_with_track, varargin)
                 axis(image_axis); 
             end
             set(gca, 'YDir', 'reverse');
+            my_title('FI', i, 'data', data);
+            pause(0.3); 
             if save_file
                 F = getframe(gcf);
                 if isempty(image_frame)

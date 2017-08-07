@@ -44,6 +44,8 @@ if ~strcmp(data.path, p)
     data.output_path = strcat(data.path, 'output/');
     [~, name, ext] = fileparts(data.first_file);
     data.first_file = strcat(data.path, name, ext);
+    data.prefix = name;
+    data.postfix = ext;
     save_data = 1;
 end
 

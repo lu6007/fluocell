@@ -2,14 +2,14 @@ classdef get_data
     %multiple_object contains functions for tracking multiple objects in
     %one frame.
     methods (Static)
-        function [nonexistant_index] = nonexistant_frames(data)
-            %Returns index of nonexistant frames.
+        function [absent_index] = absent_frame(data)
+            %Returns index of absent frames.
             %Example use of output:
-            %image_index = image_index(~ismember(image_index,nonexistant_frames));
-            %Removes nonexistant frames from image_index array.
+            %image_index = image_index(~ismember(image_index,absent_frames));
+            %Removes absent frames from image_index array.
             
             %Initialize variables.
-            nonexistant_index = [];
+            absent_index = [];
             frame_index = cell(1,2); %{1} is old index, {2} is current index.
             
             %Bases file_name off of data.first_file. Not sure if this would
@@ -36,7 +36,7 @@ classdef get_data
                 %Check if file exists.
                 if ~exist(filename,'file')
                    %Record index where file does not exist.
-                   nonexistant_index = [nonexistant_index index]; 
+                   absent_index = [absent_index index]; 
                 end
                 
                 frame_index{1} = frame_index{2};

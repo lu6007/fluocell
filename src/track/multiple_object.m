@@ -70,14 +70,14 @@ classdef multiple_object
             clear i d;
             
             % Accounting for empty frames before running simpletracker().
-%             removedFramesIndex = find(cellfun('isempty',coordInfo))'; %Getting the indices for empty frames.
-% %             frameIndex = data.image_index(removedFramesIndex);
+%             absentFrameIndex = find(cellfun('isempty',coordInfo))'; %Getting the indices for empty frames.
+% %             frameIndex = data.image_index(absentFrameIndex);
 %             frameIndex = find(~cellfun('isempty',coordInfo))';
 %             coordInfo = coordInfo(frameIndex);
             
-            removedFramesIndex = get_data.nonexistant_frames(data); %Getting the indices for empty frames.
+            absentFrameIndex = get_data.absent_frame(data); %Getting the indices for empty frames.
             image_index = data.image_index;
-            frameIndex = image_index(~ismember(image_index,removedFramesIndex));
+            frameIndex = image_index(~ismember(image_index,absentFrameIndex));
             coordInfo = coordInfo(frameIndex);
             
             % Running simpletracker.
@@ -148,7 +148,7 @@ classdef multiple_object
                adjIndex = 1;
                for j = 1:numFrame
                    %Adding NaN values where a frame was removed.
-                   if any(removedFramesIndex == j)
+                   if any(absentFrameIndex == j)
                        for b = 1:num_track
                            temp_ratio{b}(j,1) = nan;
                            temp_channel1{b}(j,1) = nan;
@@ -393,7 +393,7 @@ classdef multiple_object
         function frame_with_track = create_frame_track(cell_location)
             % Creates frame_with_track to be used with overlay_image_track.
             
-            %Removes rows w/out any coordinates. i.e. for empty/nonexistant frames.
+            %Removes rows w/out any coordinates. i.e. for empty/absent frames.
             cell_location(all(cellfun(@(x) any(isnan(x)),cell_location),2),:) = [];
             
             %Parameters.
