@@ -12,18 +12,6 @@
 % frame_with_track = multiple_object.create_frame_track(cell_location);
 % overlay_image_track(fluocell_data, frame_with_track);
 
-% A previous version overlay the ratio image of FAK/paxillin with a cross and the
-% corresponding track number
-% cell_name = 'fak_pax';
-% movie_info = get_movie_info(cell_name);
-% tracksFinal = get_track( movie_info);
-% frame_with_track = get_frame_track(tracksFinal, movie_info);
-% overlay_image_track need to have the same image_index as 
-% the array frame_with_track. If frame_with_track was not extracted with
-% image_index, then use frame_with_track(image_index) as the input.
-% mode=1: overlay the ratio image with the track number
-% mode = 2: overlay the lag time with the track number
-
 % Copyright: Shannon Laub and Shaoying Lu 2017
 
 function overlay_image_track(data, frame_with_track, varargin)
@@ -158,9 +146,6 @@ function overlay_image_track(data, frame_with_track, varargin)
                     text_str = num2str(this_track_index);
                     text(centroid(:,1)+2, centroid(:,2),...
                         text_str, 'color', 'r','FontWeight', 'bold');
-                    % Display the FA index number for debugging purpose.
-                %     clear text_str; text_str = num2str(frame_with_track(k).fa_index);
-                %     text(centroid(:,1)+5, centroid(:,2), text_str, 'color', 'y');
                 end % if num_traks>0
             set(gca, 'FontSize', 32, 'FontWeight', 'bold','Box', 'off', 'LineWidth', 2);
             if ~isempty(image_axis)
@@ -182,16 +167,6 @@ function overlay_image_track(data, frame_with_track, varargin)
             clear index im_ratio;
             clear output_file fak_fa_file fak_result pax_fa_file pax_result object_bw text_str;
             clear im_imd  centroid h this_track_index;
-    %     % Double check the index numbers by drawing the images with FA index.
-    %     clear centroid;
-    %     h = figure('Position',[1 screen_size(4) screen_size(3) screen_size(4)]);
-    %     imshow(im_imd); hold on;
-    %     centroid = [movie_info(k).xCoord(:,1) movie_info(k).yCoord(:,1)];
-    %     plot(centroid(:,1), centroid(:,2), 'w+');
-    %     num_fas = size(centroid,1);
-    %     text_str = num2str([1:num_fas]');
-    %     text(centroid(:,1), centroid(:,2), text_str, 'color', 'y');
-    %     axis([47 411 90 495]); 
         end % if exist file
 
     end % for k 

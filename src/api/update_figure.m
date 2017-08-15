@@ -22,7 +22,13 @@ if isfield(data,'quantify_roi') && ...
     end
 end
 
+
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
+    if isfield(data,'frame_with_track') 
+        frame_with_track_i = data.frame_with_track(data.index);
+    else 
+        frame_with_track_i = [];
+    end
 
     switch data.protocol
         case {'FRET', 'Ratio', 'FLIM'}
@@ -30,9 +36,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             second_channel_im = preprocess(data.im{2}, data);
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
-            
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
+                data.file{3}, data.f(1), 'save_bw_file', save_bw_file,...
+                'this_frame_with_track', frame_with_track_i);
             data.im{3} = ratio_im;
             
             % Lexie on 3/2/2015
@@ -211,9 +217,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             % and return to the java interface. 
             % The background region is only shown if the image was not cropped.
 
-    % 1/27/2015 Lexie: when there is no field called 'crop_image', background
-    % will be displayed
-
+            % When there is no field called 'crop_image', background
+            % will be displayed
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image)
                 if ~isfield(data, 'quantify_roi') || data.quantify_roi <= 1

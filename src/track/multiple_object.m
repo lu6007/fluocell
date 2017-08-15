@@ -81,7 +81,7 @@ classdef multiple_object
             coordInfo = coordInfo(frameIndex);
             
             % Running simpletracker.
-            [ tracks, adjacency_tracks ] = simpletracker(coordInfo,...
+            [ track, adjacency_track ] = simpletracker(coordInfo,...
                 'MaxLinkingDistance', maxLinkingDistance, ...
                 'MaxGapClosing', maxGapClosing, ...
                 'Debug', debug);
@@ -91,7 +91,7 @@ classdef multiple_object
             
             %Initialize new data.ratio, channel1, channel2, etc.
             %num_track is the number of objects that simpletracker has determined!
-            num_track = numel(tracks);
+            num_track = numel(track);
             
             %Initialize temp variables.
             temp_ratio = cell(1,num_track);
@@ -100,50 +100,12 @@ classdef multiple_object
             temp_cellSize = cell(1,num_track);
             temp_location = cell(size(coordInfo,1),num_track);
             
-            %Initialize variables.
-            dataRatio = [];
-            dataChannel1 = [];
-            dataChannel2 = [];
-            dataCellSize = [];
-
-            allRatio = [];
-            allChannel1 = [];
-            allChannel2 = [];
-            allCellSize = [];
-            
-            %Converting cell array to a double array.
-            for i = 1:length(data.ratio)
-                dataRatio = [dataRatio data.ratio{i}];
-                dataChannel1 = [dataChannel1 data.channel1{i}];
-                dataChannel2 = [dataChannel2 data.channel2{i}];
-                dataCellSize = [dataCellSize data.cell_size{i}];
-            end; clear i;
-            
-            %Concatenating values.
-            for i = 1:numFrame
-                allRatio = [allRatio horzcat(dataRatio(i,:))];
-                allChannel1 = [allChannel1 horzcat(dataChannel1(i,:))];
-                allChannel2 = [allChannel2 horzcat(dataChannel2(i,:))];
-                allCellSize = [allCellSize horzcat(dataCellSize(i,:))];
-            end; clear i;
-            
-            %Remove NaN values.
-            allRatio(isnan(allRatio(:)) ) = [];
-            allChannel1(isnan(allChannel1(:)) ) = [];
-            allChannel2(isnan(allChannel2(:)) ) = [];
-            allCellSize(isnan(allCellSize(:)) ) = [];
-
-            %Convert row to column.
-            allRatio = allRatio';
-            allChannel1 = allChannel1';
-            allChannel2 = allChannel2';
-            allCellSize = allCellSize';
             allLocation = vertcat(coordInfo{:});
 
             %% Reformatting the data using information from simpletracker(), Part 2 of 2.
             %Reformat data using tracking information from simpletracker().
             for i = 1:num_track
-               %Account for the different row indexing of tracks and adjacency_tracks.
+               %Account for the different row indexing of track and adjacency_track.
                trackIndex = 1;
                adjIndex = 1;
                for j = 1:numFrame
@@ -156,25 +118,27 @@ classdef multiple_object
                            temp_cellSize{b}(j,1) = nan;
                            temp_location{j,b} = nan;
                        end
-                   %Save NaN value if 'tracks' from simpletracker was NaN at frame number 'j'.
-                   elseif isnan(tracks{i}(trackIndex))
+                   %Save NaN value if 'track' from simpletracker was NaN at frame number 'j'.
+                   elseif isnan(track{i}(trackIndex))
                        temp_ratio{i}(j,1) = nan;
                        temp_channel1{i}(j,1) = nan;
                        temp_channel2{i}(j,1) = nan;
                        temp_cellSize{i}(j,1) = nan;
                        temp_location{j,i} = nan;
                        trackIndex = trackIndex + 1;
-                   else %if 'tracks' is not NaN
-                       temp_ratio{i}(j,1) = allRatio(adjacency_tracks{i}(adjIndex));
-                       temp_channel1{i}(j,1) = allChannel1(adjacency_tracks{i}(adjIndex));
-                       temp_channel2{i}(j,1) = allChannel2(adjacency_tracks{i}(adjIndex));
-                       temp_cellSize{i}(j,1) = allCellSize(adjacency_tracks{i}(adjIndex));
-                       temp_location{j,i} = allLocation(adjacency_tracks{i}(adjIndex),:);
+                   else %if 'track' is not NaN
+                       b = track{i}(trackIndex);
+                       temp_ratio{i}(j,1) = data.ratio{b}(j); 
+                       temp_channel1{i}(j,1) = data.channel1{b}(j);
+                       temp_channel2{i}(j,1) = data.channel2{b}(j);
+                       temp_cellSize{i}(j,1) = data.cell_size{b}(j);
+
+                       temp_location{j,i} = allLocation(adjacency_track{i}(adjIndex),:);
                        adjIndex = adjIndex + 1;
                        trackIndex = trackIndex + 1;
                    end
-               end
-            end
+               end % for j = 1:numFrame
+            end % for i = 1:num_track
             clear i j b trackIndex adjIndex
             
       
@@ -245,7 +209,7 @@ classdef multiple_object
                 end
             end
             
-            %% Option for removing very short tracks.
+            %% Option for removing very short track.
             %Function parameter: min_track_length >> default = 2
             if remove_short_track == 1
                 k = 0; %Initialize for tracking the number of removed tracks.
@@ -326,27 +290,30 @@ classdef multiple_object
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         function data = postProcess(data)
-            %Shortens data.--- if 
+            % Interface Fluocell data with simpleTrack
+            % Prepare for tracking, Kathy: ??? consider rename to initTrack
+            % or prepareTrack 08/15/2017
+            % Shortens data.--- if 
             
-            %lengthen all cells of
+            % lengthen all cells of
             % data.channel1, channel2, ratio to 1 x image_index
             % change zeros to NaN
             % shorten the first cell to the length of image_index, instead of 200
             num_object = length(data.ratio);
-            num_timeframe = length(data.image_index);
+            num_time_frame = length(data.image_index);
             
             %Updating length of each cell that contains an object.
             for i = 1:num_object
-                num_indices = length(data.ratio{i});
+                num_indice = length(data.ratio{i});
                 track_length = length(data.ratio{i}(:));
                 
-                %Truncates data.--- if it is longer than num_timeframe.
+                %Truncates data.--- if it is longer than num_time_frame.
                 %Currently, data.---{1} is set to 200 by default.
-                if track_length > num_timeframe
-                    data.ratio{i}(num_timeframe+1:num_indices,:) = [];
-                    data.channel1{i}(num_timeframe+1:num_indices,:) = [];
-                    data.channel2{i}(num_timeframe+1:num_indices,:) = [];
-                    data.cell_size{i}(num_timeframe+1:num_indices,:) = [];
+                if track_length > num_time_frame
+                    data.ratio{i}(num_time_frame+1:num_indice,:) = [];
+                    data.channel1{i}(num_time_frame+1:num_indice,:) = [];
+                    data.channel2{i}(num_time_frame+1:num_indice,:) = [];
+                    data.cell_size{i}(num_time_frame+1:num_indice,:) = [];
                     %at data.cell_size, "Matrix index is out of range for deletion."
                     %cell_size is not initialized to a longer length like
                     %data.ratio, channel1 and channel2
@@ -355,19 +322,19 @@ classdef multiple_object
                     %data.cell_size{1} is not set to 200 by default.
                     %Lengthens data.cell_size{1} if it is shorter than the
                     %other data.--- variables.
-%                     if length(data.cell_size{i}(:)) < num_timeframe
-%                         num_indices = length(data.cell_size{i});
-%                         data.cell_size{i}(num_indices+1:num_timeframes,:) = nan;
-%                     elseif length(data.cell_size{i}(:)) > num_timeframes
-%                          num_indices = length(data.cell_size{i});
-%                          data.cell_size{i}(num_timeframes+1:num_indices,:) = [];
+%                     if length(data.cell_size{i}(:)) < num_time_frame
+%                         num_indice = length(data.cell_size{i});
+%                         data.cell_size{i}(num_indice+1:num_time_frames,:) = nan;
+%                     elseif length(data.cell_size{i}(:)) > num_time_frames
+%                          num_indice = length(data.cell_size{i});
+%                          data.cell_size{i}(num_time_frames+1:num_indice,:) = [];
 %                     end
                 else
                     %Lengthening truncated tracks. Make new entries NaN
-                    data.ratio{i}(num_indices+1:num_timeframe,:) = nan;
-                    data.channel1{i}(num_indices+1:num_timeframe,:) = nan;
-                    data.channel2{i}(num_indices+1:num_timeframe,:) = nan;
-                    data.cell_size{i}(num_indices+1:num_timeframe,:) = nan;
+                    data.ratio{i}(num_indice+1:num_time_frame,:) = nan;
+                    data.channel1{i}(num_indice+1:num_time_frame,:) = nan;
+                    data.channel2{i}(num_indice+1:num_time_frame,:) = nan;
+                    data.cell_size{i}(num_indice+1:num_time_frame,:) = nan;
                 end
             end
             
@@ -393,8 +360,8 @@ classdef multiple_object
         function frame_with_track = create_frame_track(cell_location)
             % Creates frame_with_track to be used with overlay_image_track.
             
-            %Removes rows w/out any coordinates. i.e. for empty/absent frames.
-            cell_location(all(cellfun(@(x) any(isnan(x)),cell_location),2),:) = [];
+%             %Removes rows w/out any coordinates. i.e. for empty/absent frames.
+%             cell_location(all(cellfun(@(x) any(isnan(x)),cell_location),2),:) = [];
             
             %Parameters.
             fields = {'num_track','centroid','track_index'};
@@ -417,7 +384,7 @@ classdef multiple_object
                     end
                 end
             end
-        end
+        end % function frame_with_track = create_frame_track(cell_location)
         
     end
 end
