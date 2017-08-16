@@ -289,10 +289,9 @@ classdef multiple_object
         
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-        function data = postProcess(data)
+        function data = prepareTrack(data)
             % Interface Fluocell data with simpleTrack
-            % Prepare for tracking, Kathy: ??? consider rename to initTrack
-            % or prepareTrack 08/15/2017
+            % Prepare for tracking, 
             % Shortens data.--- if 
             
             % lengthen all cells of
