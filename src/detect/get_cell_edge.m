@@ -34,7 +34,12 @@ if ~threshold
 end
 
 temp = version;
-tt = temp(15:19);
+% Kathy 08/16/2017, make compatible with Windows MATLAB R2013
+if length(temp)>=19
+    tt = temp(15:19);
+else
+    tt = temp(12:16);
+end
 if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
     bw_image = imbinarize(im, threshold*brightness_factor);
 elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
