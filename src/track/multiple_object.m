@@ -20,6 +20,7 @@ classdef multiple_object
             default_plot_cell_split= 0;
             default_max_distance = 0.40;
             default_output_cell_location = 0;
+            default_max_linking_distance = 70;
             
             if isfield(data, 'track_option') 
                 track_option = data.track_option;
@@ -32,16 +33,21 @@ classdef multiple_object
                     default_max_distance = track_option.max_distance;
                     default_output_cell_location = track_option.output_cell_location;
                 end
+                %
+                if isfield(track_option, 'max_linking_distance')
+                    default_max_linking_distance = track_option.max_linking_distance; 
+                end
             end
 
             %Initializing parameter/variable values.
             parameter_name = {'remove_short_track', 'min_track_length',...
-                'plot_cell_split','max_distance','output_cell_location'};
+                'plot_cell_split','max_distance','output_cell_location', 'max_linking_disance'};
             default_value = {default_remove_short_track, default_min_track_length, ...
-                default_plot_cell_split, default_max_distance,default_output_cell_location};
+                default_plot_cell_split, default_max_distance,default_output_cell_location, ...
+            default_max_linking_distance};
             
             [remove_short_track, min_track_length,...
-                plot_cell_split, max_distance, output_cell_location] =...
+                plot_cell_split, max_distance, output_cell_location, max_linking_distance] =...
                 parse_parameter(parameter_name, default_value, varargin);
             
 
@@ -51,13 +57,11 @@ classdef multiple_object
 %             plot_cell_split = 1;
 %             max_distance = 0.40;
                    
-            %simpletracker parameters
-            maxLinkingDistance = 5000;
+            % Simpletracker parameters
+            % Consider putting all these parameters in fluocell_data
+            maxLinkingDistance = max_linking_distance; %5000; Unit:pixel
             maxGapClosing = 3;
             debug = true;
-%             maxLinkingDistance = 500000;
-%             maxGapClosing = 30;
-%             debug = true;
             
             %Convert coordInfo to a data structure that simpletracker can use.
             coordInfo = struct2cell(coordInfo)';

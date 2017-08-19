@@ -1,7 +1,6 @@
 % function data = batch_update_figure(data)
 
 % Copyright: Shaoying Lu, Shannon Laub and Yingxiao Wang 2011
-
 function data = batch_update_figure(data, varargin)
 parameter_name = {'save_bw_file'};
 default_value = {0};
