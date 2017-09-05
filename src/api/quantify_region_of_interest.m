@@ -71,7 +71,7 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
     if save_bw_file 
         save(temp_file_mat, 'cell_bw');
     end
-    [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
+    [cell_bd, cell_label] = bwboundaries(cell_bw, 4, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_object = length(cell_bd);
     obj = cell(num_object, 1);
