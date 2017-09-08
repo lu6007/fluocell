@@ -47,8 +47,12 @@ if isempty(bd)
     bd = cell(0,1); %create empty 0x1 cell. Same output as clean_up_boundary.
     
 else
-[bw, bd] = clean_up_boundary(im, bd, with_smoothing,...
+[temp, ~] = clean_up_boundary(im, bd, with_smoothing,...
     smoothing_factor);
+
+ bw = detect_watershed(uint16(im), temp, 'segment_method', segment_method);
+ bd = bwboundaries(bw, 8,'noholes');
+ clear temp;
 end
 %temp = bw; clear bw; bw{1} = temp;
 

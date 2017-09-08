@@ -271,7 +271,7 @@ classdef multiple_object
                 object_bw = result.cell_bw;
                 clear result;
                 
-                [~, object_label] = bwboundaries(object_bw, 4, 'noholes');
+                [~, object_label] = bwboundaries(object_bw, 8, 'noholes');
                 object_prop = regionprops(object_label, 'Centroid', 'PixelList');
                 object_centroid = cat(1, object_prop.Centroid);
                 

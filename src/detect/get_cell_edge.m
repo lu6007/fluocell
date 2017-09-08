@@ -54,13 +54,6 @@ clear temp tt;
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
 
-
-% Apply different segmentation methods
-temp_im_bw = bw_image;
-clear bw_image
-bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
-
-
 if ~isempty(mask_bw)
     bw_image = bw_image.*mask_bw;
 end
