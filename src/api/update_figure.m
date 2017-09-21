@@ -167,7 +167,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
-                data = show_detected_boundary(data.im{2}, data); 
+                data = get_boundary(data.im{2}, data); 
             end
             
              if isfield(data,'quantify_roi') && data.quantify_roi
@@ -189,7 +189,6 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             imagesc(data.im{3}); caxis(data.intensity_bound);
             axis off; my_title('Processed',data.index, 'data', data);
 
-            %show_detected_boundary(data.im{3}, data, data.f(3));
             if isfield(data,'quantify_roi') && data.quantify_roi
                 data = quantify_region_of_interest(data, data.im{3});
             end

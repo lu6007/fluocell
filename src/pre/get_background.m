@@ -31,6 +31,7 @@ switch method
             'Automatically detect the background region.', 'method', 'auto');
         bw = bw_cell{1};
         poly = poly_cell{1};
+        
 end        
         
 return;

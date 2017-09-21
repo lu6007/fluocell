@@ -42,7 +42,9 @@ end
 if ~strcmp(data.path, p)
     data.path = p; 
     data.output_path = strcat(data.path, 'output/');
-    [~, name, ext] = fileparts(data.first_file);
+    % For Windows Mac compatibility
+    temp = regexprep(data.first_file, '\\', '\/');
+    [~, name, ext] = fileparts(temp);
     data.first_file = strcat(data.path, name, ext);
     data.prefix = name;
     data.postfix = ext;

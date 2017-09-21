@@ -369,7 +369,7 @@ classdef multiple_object
             %Parameters.
             fields = {'num_track','centroid','track_index'};
             num_field = length(fields);
-            num_frame = length(cell_location);
+            num_frame = size(cell_location,1);
             
             %Initialize cell to hold data.
             frame_with_track = cell(num_frame, num_field);

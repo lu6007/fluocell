@@ -1,9 +1,9 @@
-% function data=show_detected_boundary(im, data)
+% function data=get_boundary(im, data)
 % This function detect the mask of the cell (data.cell_bw), 
 % and add the boundary to the image and save the detected boundary
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
-function data=show_detected_boundary(im, data)
+function data=get_boundary(im, data)
 show_figure = (isfield(data, 'show_figure') && data.show_figure) || ~isfield(data, 'show_figure');
 
 if isfield(data, 'need_apply_mask')&& data.need_apply_mask
@@ -45,7 +45,10 @@ clear mask_bw;
 
 if show_figure
     hold on;
-    % For Molly's data on multiple region detection, Lexie on 10/19/2015
+    % Draw background
+    bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
+    plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
+    % Draw the regions detection, Lexie on 10/19/2015
     if ~isfield(data, 'multiple_object') || ~data.multiple_object 
         plot(data.cell_bd(:,2),data.cell_bd(:,1),'r', 'LineWidth',2);
     else

@@ -1,7 +1,6 @@
 % function [bd, bw] = detect_cell(im, varargin)
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
-
 function [bd, bw] = detect_cell(im, varargin)
 parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor', 'multiple_object', 'min_area', 'segment_method'};
 default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
@@ -49,8 +48,11 @@ if isempty(bd)
 else
 [temp, ~] = clean_up_boundary(im, bd, with_smoothing,...
     smoothing_factor);
-
  bw = detect_watershed(uint16(im), temp, 'segment_method', segment_method);
+ if ~any(any(bw))
+     bw = temp;
+ end
+ 
  bd = bwboundaries(bw, 8,'noholes');
  clear temp;
 end

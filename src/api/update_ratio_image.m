@@ -58,9 +58,9 @@ default_value = {0, []};
     % show_figure = 0. 
     if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
         if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
-            data = show_detected_boundary(data.third_channel_im * 2, data);
+            data = get_boundary(data.third_channel_im * 2, data);
         else
-            data = show_detected_boundary(first_channel_im + second_channel_im, data);
+            data = get_boundary(first_channel_im + second_channel_im, data);
         end
     end
     
