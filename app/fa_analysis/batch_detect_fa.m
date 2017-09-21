@@ -105,13 +105,13 @@ for k = 1:num_acquisitions
                    'min_water', data.fa.min_water, ...
                    'ref_pax_intensity', data.ref_pax_intensity);
             end
-           fa_bd = get_boundary(fa_bw, fa_file);
+           fa_bd = get_fa_boundary(fa_bw, fa_file);
 %            if save_file,
 %                 %imwrite(uint16(fa_label), fa_file, 'tiff');
 %             end;
         else
              %fa_label = imread(fa_file,'tiff');
-             fa_bd = get_boundary([], fa_file, save_file);
+             fa_bd = get_fa_boundary([], fa_file, save_file);
         end
 
         % show figure

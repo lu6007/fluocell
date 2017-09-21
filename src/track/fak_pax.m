@@ -66,7 +66,7 @@ for k =1:length(channel)
     %Adjust threshold;
     fa_bw = im_filt>thresh(k);
     file_fa = strcat(path, channel{k}, '_fa_', first_pattern, '.mat');
-    fa_bd = get_boundary(fa_bw, file_fa);
+    fa_bd = get_fa_boundary(fa_bw, file_fa);
     num_fas = length(fa_bd);
     figure('color', 'w'); imshow(im_crop); caxis ([0 400]); hold on;
     set(gca, 'FontSize', 16, 'Box', 'off', 'LineWidth',2); axis off;
