@@ -22,9 +22,9 @@ end
 % data = close_button_callback(data);
 
 if isfield(data,'multiple_object') && data.multiple_object == 1
-   save_bw_file = 1; 
-   disp('Function batch_update_figure warning: ');
-   disp('save_bw_file has been set to 1 for multiple object tracking.');
+    data.save_processed_image = 1;
+    disp('Function batch_update_figure warning: ');
+    disp('data.save_processed_image has been set to 1 for multiple object tracking.');
 end
 
 %% Option for parallel processing. - Shannon 8/10/2016

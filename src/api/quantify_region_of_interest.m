@@ -55,11 +55,6 @@ if nargin == 2
 end
 
 % Get cell_bw
-% temp_file_mat = strcat(data.output_path, 'cell_bw_t', num2str(data.index), '.mat');
-index_str = sprintf(data.index_pattern{2}, data.index);
-temp_file_mat = strcat(data.output_path, 'cell_bw_', index_str, '.mat');
-
-%temp_file_tiff = strcat(data.output_path, 'cell_bw_t', num2str(data.index));
 if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
 %    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
@@ -68,10 +63,8 @@ if data.quantify_roi == 2 || data.quantify_roi == 3
      % In update_figure.m show_detected_boundary is forced to be 1. So
      % there are no other possibilities
     cell_bw = data.cell_bw;
-    if save_bw_file 
-        save(temp_file_mat, 'cell_bw');
-    end
-    [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
+    cell_bd = data.cell_bd;
+    [~, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_object = length(cell_bd);
     obj = cell(num_object, 1);

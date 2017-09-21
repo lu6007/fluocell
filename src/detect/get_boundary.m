@@ -65,7 +65,6 @@ if(isfield(data,'save_processed_image')&& data.save_processed_image)
     cell_bw = data.cell_bw;
     save([output_file, '.mat'], 'cell_bw');
     clear cell_bw
-%     imwrite(logical(data.cell_bw), output_file, 'tiff');
 end
 
 return;
