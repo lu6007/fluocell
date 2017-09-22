@@ -2,12 +2,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function data= update_figure(data, varargin)
-parameter_name = {'save_bw_file'};
-default_value = {0};
-[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
-
-%Lexie on 03/09/2015
+function data= update_figure(data)
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 
 if isfield(data,'quantify_roi') && ...
@@ -37,7 +32,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1), 'save_bw_file', save_bw_file,...
+                data.file{3}, data.f(1), ...
                 'this_frame_with_track', frame_with_track_i);
             data.im{3} = ratio_im;
             

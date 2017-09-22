@@ -1,11 +1,7 @@
 % function data = batch_update_figure(data)
 
 % Copyright: Shaoying Lu, Shannon Laub and Yingxiao Wang 2011
-function data = batch_update_figure(data, varargin)
-parameter_name = {'save_bw_file'};
-default_value = {0};
-[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
-
+function data = batch_update_figure(data)
 %Store initial index value for later retrieval for consistency.
 if isfield(data,'index')
     temp_index = data.index;
@@ -41,7 +37,7 @@ if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
         if ~isempty(data.im{1})
             new_first_file = 0;
         end
-        data = update_figure(data, 'save_bw_file', save_bw_file);
+        data = update_figure(data);
     end
     
 else %Parallel processing enabled.

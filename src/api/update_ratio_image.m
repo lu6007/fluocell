@@ -3,9 +3,9 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2014-2017
 function [data, ratio_im] = update_ratio_image(first_channel_im,...
     second_channel_im, data, file, handle, varargin)
-parameter_name = {'save_bw_file','this_frame_with_track'};
-default_value = {0, []};
-[save_bw_file, this_frame_with_track] = parse_parameter(parameter_name, default_value, varargin);
+parameter_name = {'this_frame_with_track'};
+default_value = {[]};
+[this_frame_with_track] = parse_parameter(parameter_name, default_value, varargin);
 
     % data.file{3} -> ratio_im -> data.im{3} -> data.f(1)
     if ~exist(file, 'file') || (isfield(data,'quantify_roi') && data.quantify_roi)
@@ -94,7 +94,7 @@ default_value = {0, []};
     % quantification of roi
     if isfield(data,'quantify_roi') && data.quantify_roi
         data = quantify_region_of_interest(data, ratio, first_channel_im,...
-            second_channel_im, 'save_bw_file', save_bw_file);
+            second_channel_im);
     end
 return;
 

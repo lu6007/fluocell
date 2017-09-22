@@ -5,7 +5,7 @@
 % (2) To use subcellular layers instead of ROIs:
 % fluocell_data.quantify_roi = 3;
 % fluocell_data.num_roi = 3;
-% by change the value of parameter save_bw_file, you could 
+% by change the value of parameter save_processed_image, you could 
 % decide save the cell_bw file of not
 % default save_bw_file = 0 ( not saving those file)
 % save_bw_file = 1 (save cell_bw file)
@@ -15,14 +15,7 @@
 % (4) To allow n regions: fluocell_data.num_roi = 3; 
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
-function data = quantify_region_of_interest(data, ratio, cfp, yfp, varargin)
-parameter_name = {'save_bw_file'};
-default_value = {0};
-[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
-%Lexie on 3/10/2015 make the show_figure option work for both situations,
-%w/o show_figure field
-% show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
-
+function data = quantify_region_of_interest(data, ratio, cfp, yfp)
 % Process data.quantify_roi
 switch data.quantify_roi
     case 0 % Do not quantify ROI
