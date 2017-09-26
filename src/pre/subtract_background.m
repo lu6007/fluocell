@@ -29,5 +29,8 @@ elseif method ==3 % data = bw
     sum_bw = sum(sum(bw));
     bg = sum(sum(double(im)/sum_bw.*bw));
     im = double(im)-bg;
+elseif method == 4 % data = value
+    bg = double(data);
+    im = double(im)-bg;
 end
 return;

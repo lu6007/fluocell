@@ -41,9 +41,6 @@ function [new_im, data] = preprocess(im, data)
             end
             %Performs background subtraction.
             im_sub = subtract_background(im, data, 'method', 1);
-%             bw = double(data.bg_bw); %background selection region
-%             bg_value = sum(sum(double(im).*bw))/sum(sum(bw)); %avg bg value from selected region of bg
-%             im_sub = double(im)-bg_value; %subtract avg bg intensity value from entire image
             clear im; im = max(im_sub, 0); clear im_sub; %remove any negatives if they occured
             clear bw bg_value bg_bd bg_index;
         end
