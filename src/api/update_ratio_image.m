@@ -11,32 +11,10 @@ default_value = {[]};
     if ~exist(file, 'file') || (isfield(data,'quantify_roi') && data.quantify_roi)
         ratio = compute_ratio(first_channel_im, second_channel_im);
     end
-    
-% 7/27/2016 Shannon: Quanty optimization so get_imd_image does not run
-% under certain conditions. 
-% i.e. when data.show_figure==0 && save_processed_image==0
-% 8/14/2017 Kathy: This optimization dose not seem to speed up the program
-% significantly. Now get_imd_image run in all cases. 
-%     if isfield(data,'save_processed_image') && data.save_processed_image
-%         save_processed_image = 1;
-%     else
-%         save_processed_image = 0;
-%     end
-    
+        
     if ~exist(file, 'file')
         ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-%         if (~isfield(data,'show_figure') ...
-%             || ( isfield(data,'show_figure') &&  data.show_figure==1 )) && ~save_processed_image
-%             ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
-%                 'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-%         elseif save_processed_image
-%             ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
-%                 'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-%             imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
-%         else
-%             ratio_im = [];
-%         end
     else 
         ratio_im = imread(file, 'tiff');
     end
@@ -80,11 +58,11 @@ default_value = {[]};
     
     if isfield(data, 'save_processed_image') && data.save_processed_image && ~exist(file,'file')
         if (isfield(data, 'show_figure') && data.show_figure == 1)...
-            || ~isfield(data, 'show_figure') % option for displaying figure
+           || ~isfield(data, 'show_figure') % option for displaying figure
             [process_im, ~] = frame2im(getframe);
             imwrite(process_im, file, 'tiff', 'Compression', 'none');
         else
-            imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
+           imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
         end
     end
     

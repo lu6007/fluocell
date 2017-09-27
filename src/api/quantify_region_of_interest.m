@@ -5,10 +5,6 @@
 % (2) To use subcellular layers instead of ROIs:
 % fluocell_data.quantify_roi = 3;
 % fluocell_data.num_roi = 3;
-% by change the value of parameter save_processed_image, you could 
-% decide save the cell_bw file of not
-% default save_bw_file = 0 ( not saving those file)
-% save_bw_file = 1 (save cell_bw file)
 % To allow mask: fluocell_data.need_apply_mask = 1;
 % To stop mask: fluocell_data.need_apply_mask = 0;
 % (3) To stop quantification: fluocell_data.quantify_roi = 0;
