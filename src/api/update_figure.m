@@ -53,9 +53,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             clear first_channel_im second_channel_im ratio_im;
         case 'FRET-Intensity'
-            first_channel_im = preprocess(data.im{1}, data);
-            second_channel_im = preprocess(data.im{2}, data);
-            im_3 = preprocess(data.im{3}, data);
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
             if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
                 data.third_channel_im =  im_3;
             end
@@ -78,10 +78,10 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             clear first_channel_im second_channel_im im_3 ratio_im;
 
         case 'FRET-Intensity-2'
-            first_channel_im = preprocess(data.im{1}, data);
-            second_channel_im = preprocess(data.im{2}, data);
-            im_3 = preprocess(data.im{3}, data);
-            im_4 = preprocess(data.im{4}, data);
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
+            im_4 = preprocess(data.im{4}, data, 'bg_value', bg_value(4));
             if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
                 data.third_channel_im =  im_3;
             end
@@ -104,8 +104,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             clear first_channel_im second_channel_im im_3 im_4 ratio_im;
 
         case 'FRET-DIC'
-            first_channel_im = preprocess(data.im{1}, data);
-            second_channel_im = preprocess(data.im{2}, data);
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             % file{4} -> ratio_im -> data.f(1)
@@ -121,9 +121,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 axis off; my_title('DIC', data.index, 'data', data);
             end
         case 'FRET-Intensity-DIC'
-            first_channel_im = preprocess(data.im{1}, data);
-            second_channel_im = preprocess(data.im{2}, data);
-            im_3 = preprocess(data.im{3}, data);
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
             % file{5} -> ratio_im -> data.f(1), im{5}
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{5}, data.f(1), 'save_bw_file', save_bw_file);
@@ -145,8 +145,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 		 clear im_3;
 
       case 'STED'
-            first_channel_im = preprocess(data.im{1}(:,:,1), data);
-            second_channel_im = preprocess(data.im{2}(:,:,3), data);
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, sted_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
