@@ -128,7 +128,7 @@ end
 % Draw the rois,
 % Quantify the FI and ratio in the ROIs.
 data.time(data.index,1) = data.index;
-data.time(data.index, 2) = get_time(data.file{1}, 'method',2);
+data.time(data.index,2) = get_time(data.file{1}, 'method',2);
 % Draw ROIs
 % provide option for displaying figure, Lexie in 03/06/2015
 if (isfield(data, 'show_figure') && data.show_figure == 1)...
@@ -151,8 +151,19 @@ end; clear i j
     
 % quantify background
 if isfield(data, 'subtract_background') && data.subtract_background
-    data.channel1_bg(data.index) = compute_average_value(data.im{1}, data.bg_bw);
-    data.channel2_bg(data.index) = compute_average_value(data.im{2}, data.bg_bw);
+    switch data.subtract_background
+%         case 0 
+%             bg_value1 = 0;
+%             bg_value2 = 0;
+        case {1, 2}
+            bg_value1 = compute_average_value(data.im{1}, data.bg_bw);
+            bg_value2 = compute_average_value(data.im{2}, data.bg_bw);
+        case 3
+            bg_value1 = data.bg_value(1);
+            bg_value2 = data.bg_value(2);
+    end
+    data.channel1_bg(data.index) = bg_value1;
+    data.channel2_bg(data.index) = bg_value2;
 end
 
 

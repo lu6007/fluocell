@@ -24,11 +24,18 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
     else 
         frame_with_track_i = [];
     end
+    
+    % for subtract constant background
+    if isfield(data, 'bg_value')
+        bg_value = data.bg_value;
+    else
+        bg_value = zeros(10, 1);
+    end
 
     switch data.protocol
         case {'FRET', 'Ratio', 'FLIM'}
-            first_channel_im = preprocess(data.im{1}, data);
-            second_channel_im = preprocess(data.im{2}, data);
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...

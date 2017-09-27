@@ -11,8 +11,11 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2011-2013
 % Email: shaoying.lu@gmail.com
 
-function [new_im, data] = preprocess(im, data)
+function [new_im, data] = preprocess(im, data, varargin)
 % need to add varargin to allow flexible median_filter window size
+para_name = {'bg_value'};
+default_value = {0};
+bg_value = parse_parameter(para_name, default_value, varargin);
         if isfield(data, 'median_filter') && data.median_filter
             % filter_win = [3, 3];
             % im_filt = medfilt2(im, filter_win);
@@ -27,22 +30,23 @@ function [new_im, data] = preprocess(im, data)
         end
 
         if isfield(data, 'subtract_background') && data.subtract_background
-%             if ~isfield(data,'bg_bw'),
-%                 data.bg_bw = get_background(im, strcat(data.path, 'output\background.mat'));
-%             end;
             bg_file = strcat(data.path, 'output/background.mat');
             if ~isfield(data,'bg_bw')
                 switch data.subtract_background
                     case 1
                         data.bg_bw = get_background(im, bg_file, 'method', 'manual');
-                    case 2
+                    case {2, 3}
                         data.bg_bw = get_background(im, bg_file, 'method', 'auto');
                 end
             end
             %Performs background subtraction.
-            im_sub = subtract_background(im, data, 'method', 1);
+            switch data.subtract_background
+                case {1, 2}
+                    im_sub = subtract_background(im, data, 'method', 1);
+                case 3
+                    im_sub = subtract_background(im, bg_value, 'method', 4);
+            end
             clear im; im = max(im_sub, 0); clear im_sub; %remove any negatives if they occured
-            clear bw bg_value bg_bd bg_index;
         end
         if isfield(data, 'rotate_image') && data.rotate_image
             im_rot = imrotate(im, data.angle);

@@ -4,6 +4,7 @@
 % 0 - no background subtraction
 % 1 - manually choose background
 % 2 - automatically select background
+% 3 - automatically select background to calculate a constant value
 % provide two methods to get the background:
 % method "auto": Automatically select a background region with the minimal 
 % intensity value among the four corners.
@@ -12,7 +13,7 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 % Modified by Lexie Qin Qin and Shaoyng Lu 2014
 
-function [bw, poly] =get_background(im, file_bg, varargin)
+function [bw, poly, value] =get_background(im, file_bg, varargin)
 parameter_name = {'method'};
 default_value = {'manual'};
 method = parse_parameter(parameter_name, default_value,varargin);
@@ -24,14 +25,18 @@ switch method
         bw = bw_cell{1};
         poly = poly_cell{1};
         
-    case {'auto','a', 2}
+    case {'auto','a', 2, 3}       % Automatic selection and use the first value
         %Automatically select a background region with the minimal 
         %intensity value among the four corners.
         [bw_cell, poly_cell] = get_background_auto(im, file_bg); 
         bw = bw_cell{1};
         poly = poly_cell{1};
         
-end        
+end
+
+double_bw = double(bw);
+sum_bw = sum(sum(double_bw));
+value = sum(sum(double(im)/sum_bw.*double_bw));
         
 return
 
