@@ -7,7 +7,10 @@
 
 %%For each part, please right click and choose "Evaluate current section"
 %%or use ctrl+enter.
-enable_pause = 1;
+if ~exist('enable_pause', 'var')
+    enable_pause = 1;
+end
+fprintf('test_flucell: enable_pause = %d\n', enable_pause);
 
 %% o   2.1.1  FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images   **********
 % p = strcat(root, 'fluocell_sample/');

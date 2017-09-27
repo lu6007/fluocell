@@ -50,14 +50,10 @@ end
 % Get cell_bw
 if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
-%    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
-%            isfield(data, 'cell_bw')
-     % Kathy 05/03/2017
-     % In update_figure.m show_detected_boundary is forced to be 1. So
-     % there are no other possibilities
     cell_bw = data.cell_bw;
     cell_bd = data.cell_bd;
-    [~, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
+    cell_label = data.cell_label;
+    % [~, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_object = length(cell_bd);
     obj = cell(num_object, 1);

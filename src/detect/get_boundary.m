@@ -24,8 +24,13 @@ else
 end
 if isfield(data,'cell_bw')
     temp = rmfield(data,'cell_bw'); clear data;
-    data = rmfield(temp,'cell_bd'); clear temp;           
+    data = rmfield(temp,'cell_bd'); clear temp; 
 end
+if isfield(data, 'cell_label')
+    temp = rmfield(data, 'cell_label'); clear data;
+    data = temp; clear temp;
+end
+
 
 if ~isfield(data, 'multiple_object') || ~data.multiple_object 
     data.multiple_object = 0;
@@ -37,7 +42,7 @@ if ~isfield(data, 'segment_method')
     data.segment_method = 0;
 end
 % If the file already exists, we can load the cell_bw files. 
-[data.cell_bd, data.cell_bw] = detect_cell(uint16(im), 'brightness_factor', data.brightness_factor, ...
+[data.cell_bd, data.cell_bw, data.cell_label] = detect_cell(uint16(im), 'brightness_factor', data.brightness_factor, ...
        'show_figure', 1, 'mask_bw', data.mask_bw, 'multiple_object', data.multiple_object, ...
        'min_area', data.min_area, 'segment_method', data.segment_method);
 
@@ -48,13 +53,9 @@ if show_figure
     % Draw background
     bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
     plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
-    % Draw the regions detection, Lexie on 10/19/2015
-    if ~isfield(data, 'multiple_object') || ~data.multiple_object 
-        plot(data.cell_bd(:,2),data.cell_bd(:,1),'r', 'LineWidth',2);
-    else
-        for n = 1 : length(data.cell_bd)
-            plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',4);
-        end
+    % Draw detected cells
+    for n = 1 : length(data.cell_bd)
+        plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',4);
     end
     hold off;
 end

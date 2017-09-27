@@ -313,6 +313,7 @@ end
 
 % Calculate background_value from the first image
 if new_first_file
+    num_int_channel = 1;
     switch data.protocol
         case {'FRET', 'Ratio', 'FRET-DIC', 'FLIM'}
             num_int_channel = 2;

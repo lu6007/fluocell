@@ -1,7 +1,7 @@
 % function [bd, bw] = detect_cell(im, varargin)
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
-function [bd, bw] = detect_cell(im, varargin)
+function [bd, bw, label] = detect_cell(im, varargin)
 parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor', 'multiple_object', 'min_area', 'segment_method'};
 default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
 [method, with_smoothing, smoothing_factor, brightness_factor, multiple_object, min_area, segment_method] =...
@@ -53,14 +53,9 @@ else
      bw = temp;
  end
  
- bd = bwboundaries(bw, 8,'noholes');
+ [bd, label] = bwboundaries(bw, 8,'noholes');
  clear temp;
 end
 %temp = bw; clear bw; bw{1} = temp;
-
-% Lexie on 10/19/2015
-if ~multiple_object
-    bd = bd{1};
-end
 
 return;
