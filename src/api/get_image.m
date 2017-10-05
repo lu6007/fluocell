@@ -148,11 +148,11 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
     end
     
     % Load the ROIs
-    if ~isfield(data,'roi_poly') && (data.quantify_roi ==1 || data.quantify_roi ==2)
+    if ~isfield(data,'roi_bw') && (data.quantify_roi ==1 || data.quantify_roi ==2)
         %im = imread(data.file{1});
         [data.roi_bw, data.roi_poly] = ...
             get_polygon(im, roi_file, 'Please choose the ROI now.', ...
-            'polygon_type', 'any', 'num_polygons', num_roi);
+            'polygon_type', 'any', 'num_polygon', num_roi);
         %clear im;
     end 
 end % if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
