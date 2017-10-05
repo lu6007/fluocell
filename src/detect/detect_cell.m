@@ -44,6 +44,7 @@ end
 if isempty(bd)
     bw = false(size(im)); %sets bw to an 'empty' (false) mask.
     bd = cell(0,1); %create empty 0x1 cell. Same output as clean_up_boundary.
+    label = []; 
     
 else
 [temp, ~] = clean_up_boundary(im, bd, with_smoothing,...

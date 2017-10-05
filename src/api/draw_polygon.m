@@ -1,4 +1,6 @@
-% Function draw_polygon(gca, this_poly, color, file_name)
+% function draw_polygon(gca, this_poly, color, file_name, varargin)
+% par_name = {'type'};
+% default_value = {'draggable'}; % 'draggable', 'undraggable', etc
 % Draw the dragable polygon if version is higher than 2008a and 
 % if there is only 1 polygon. Set the global variable fluocell_data_roi_move 
 % to 1 if this roi has been moved. 
@@ -6,9 +8,9 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
 % function new_poly = draw_polygon(gca, this_poly, color, file_name)
 function draw_polygon(gca, this_poly, color, file_name, varargin)
-par_name = {'type','roi_label'};
-default_value = {'draggable',1}; % 'draggable', 'undraggable', etc
-[type, roi_label] = parse_parameter(par_name, default_value, varargin);
+par_name = {'type'};
+default_value = {'draggable'}; % 'draggable', 'undraggable', etc
+type = parse_parameter(par_name, default_value, varargin);
 
 % For compatibility
     if ~iscell(this_poly)
