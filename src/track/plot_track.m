@@ -19,8 +19,13 @@ gray = my_color.gray;
 
 
 num_cc_curves = 0;
+<<<<<<< HEAD
 num_tracks = length(track_index);
 cc_curve = cell(num_tracks,1);
+=======
+num_track = length(track_index);
+cc_curve = cell(num_track,1);
+>>>>>>> current/master
 figure_num_pixels = figure('color', 'w'); hold on;
 set(gca, 'FontSize', 16, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
 title('Number of Pixels');
@@ -30,9 +35,15 @@ title('Average Amp');
 
 
 % User defined separation process
+<<<<<<< HEAD
 if separation,
     % Find the longest track and regard it as a main
     for i = 1 : num_tracks
+=======
+if separation
+    % Find the longest track and regard it as a main
+    for i = 1 : num_track
+>>>>>>> current/master
         ii = track_index(i);
         frame_index = track_with_frame(ii).frame_index; 
         if length(frame_index) == length(data.image_index)
@@ -40,7 +51,11 @@ if separation,
         end
     end
 
+<<<<<<< HEAD
     for i = 1:num_tracks,
+=======
+    for i = 1:num_track
+>>>>>>> current/master
         % initialize the track variables
         ii = track_index(i);
         frame_index = track_with_frame(ii).frame_index;      
@@ -101,6 +116,7 @@ if separation,
 
         % Pad the curves with zeros before birth and after death.
         % These are essential in recognizing the birth and death events. 
+<<<<<<< HEAD
         num_frames = length(data.image_index);
         z_before = zeros(frame_index(1)-1,1);
 %         z_before = zeros(data.image_index(1)-1,1);
@@ -108,6 +124,15 @@ if separation,
 %         z_after = zeros(num_frames-max(data.image_index),1);
         temp = cat(1, (1:frame_index(1)-1)', frame_index,...
             (max(frame_index)+1:num_frames)'); clear frame_index;
+=======
+        num_frame = length(data.image_index);
+        z_before = zeros(frame_index(1)-1,1);
+%         z_before = zeros(data.image_index(1)-1,1);
+        z_after = zeros(num_frame-max(frame_index),1);
+%         z_after = zeros(num_frame-max(data.image_index),1);
+        temp = cat(1, (1:frame_index(1)-1)', frame_index,...
+            (max(frame_index)+1:num_frame)'); clear frame_index;
+>>>>>>> current/master
         frame_index = temp; clear temp;
         time = (data.image_index(frame_index)-1)*3;
         temp = cat(1, z_before, velocity, z_after); clear velocity;
@@ -124,7 +149,11 @@ if separation,
         average_amp = temp; clear temp;
 
         % plot the intensity and velocity for each track
+<<<<<<< HEAD
         if debug,
+=======
+        if debug
+>>>>>>> current/master
             figure('color', 'w'); hold on;
             set(gca, 'FontSize', 16, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
             plot(frame_index, velocity, 'k', 'LineWidth',2);
@@ -135,7 +164,11 @@ if separation,
             legend('Velocity', 'Fak', 'Pax', 'Fak/Pax Ratio');
             axis([0 90 0 3.5]);
             xlabel('Frame Number'); 
+<<<<<<< HEAD
         end;
+=======
+        end
+>>>>>>> current/master
         figure(figure_num_pixels); plot(frame_index, num_pixels,'k--','LineWidth', 2);
         figure(figure_amp); plot(frame_index, average_amp, 'b--','LineWidth',2);
 
@@ -167,7 +200,11 @@ if separation,
 
         clear frame_index fak_intensity pax_intensity ratio velocity time this_index;
         clear num_pixels average_amp;
+<<<<<<< HEAD
     end; % for i
+=======
+    end % for i
+>>>>>>> current/master
     %Plot the separation point for the event
     figure(figure_num_pixels); plot(separation_index, separation_num_pixels,'ro','LineWidth', 2);
     figure(figure_amp); plot(separation_index, separation_average_amp, 'ro','LineWidth',2);
@@ -192,9 +229,15 @@ end
 
 
 % plot the lag time and the peak values of cc_curve.
+<<<<<<< HEAD
 % peak_time = zeros(num_tracks,1);
 % peak_value = zeros(num_tracks,1);
 % for i = 1:num_tracks,
+=======
+% peak_time = zeros(num_track,1);
+% peak_value = zeros(num_track,1);
+% for i = 1:num_track,
+>>>>>>> current/master
 %     [cc_max, j] = max(abs(cc_curve{i}));
 %     peak_time(i) = cc_time(j);
 %     peak_value(i) = cc_curve{i}(j);

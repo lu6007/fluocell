@@ -2,12 +2,16 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
+<<<<<<< HEAD
 function data= update_figure(data, varargin)
 parameter_name = {'save_bw_file'};
 default_value = {0};
 [save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
 
 %Lexie on 03/09/2015
+=======
+function data= update_figure(data)
+>>>>>>> current/master
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 
 if isfield(data,'quantify_roi') && ...
@@ -22,6 +26,7 @@ if isfield(data,'quantify_roi') && ...
     end
 end
 
+<<<<<<< HEAD
 if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
     switch data.protocol
@@ -33,6 +38,32 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{3}, data.f(1), 'save_bw_file', save_bw_file);
+=======
+
+if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
+    if isfield(data,'frame_with_track') 
+        frame_with_track_i = data.frame_with_track(data.index);
+    else 
+        frame_with_track_i = [];
+    end
+    
+    % for subtract constant background
+    if isfield(data, 'bg_value')
+        bg_value = data.bg_value;
+    else
+        bg_value = zeros(10, 1);
+    end
+
+    switch data.protocol
+        case {'FRET', 'Ratio', 'FLIM'}
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+
+            % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
+            [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
+                data.file{3}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
+>>>>>>> current/master
             data.im{3} = ratio_im;
             
             % Lexie on 3/2/2015
@@ -45,9 +76,15 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             clear first_channel_im second_channel_im ratio_im;
         case 'FRET-Intensity'
+<<<<<<< HEAD
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             im_3 = preprocess(data.im{3}, data);
+=======
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
+>>>>>>> current/master
             if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
                 data.third_channel_im =  im_3;
             end
@@ -70,10 +107,17 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             clear first_channel_im second_channel_im im_3 ratio_im;
 
         case 'FRET-Intensity-2'
+<<<<<<< HEAD
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             im_3 = preprocess(data.im{3}, data);
             im_4 = preprocess(data.im{4}, data);
+=======
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
+            im_4 = preprocess(data.im{4}, data, 'bg_value', bg_value(4));
+>>>>>>> current/master
             if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
                 data.third_channel_im =  im_3;
             end
@@ -96,8 +140,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             clear first_channel_im second_channel_im im_3 im_4 ratio_im;
 
         case 'FRET-DIC'
+<<<<<<< HEAD
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
+=======
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+>>>>>>> current/master
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{4}, data.f(1), 'save_bw_file', save_bw_file);
             % file{4} -> ratio_im -> data.f(1)
@@ -113,9 +162,15 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 axis off; my_title('DIC', data.index, 'data', data);
             end
         case 'FRET-Intensity-DIC'
+<<<<<<< HEAD
             first_channel_im = preprocess(data.im{1}, data);
             second_channel_im = preprocess(data.im{2}, data);
             im_3 = preprocess(data.im{3}, data);
+=======
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
+>>>>>>> current/master
             % file{5} -> ratio_im -> data.f(1), im{5}
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{5}, data.f(1), 'save_bw_file', save_bw_file);
@@ -137,8 +192,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 		 clear im_3;
 
       case 'STED'
+<<<<<<< HEAD
             first_channel_im = preprocess(data.im{1}(:,:,1), data);
             second_channel_im = preprocess(data.im{2}(:,:,3), data);
+=======
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+>>>>>>> current/master
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, sted_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
@@ -161,7 +221,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
+<<<<<<< HEAD
                 data = show_detected_boundary(data.im{2}, data); 
+=======
+                data = get_boundary(data.im{2}, data); 
+>>>>>>> current/master
             end
             
              if isfield(data,'quantify_roi') && data.quantify_roi
@@ -183,7 +247,10 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             imagesc(data.im{3}); caxis(data.intensity_bound);
             axis off; my_title('Processed',data.index, 'data', data);
 
+<<<<<<< HEAD
             %show_detected_boundary(data.im{3}, data, data.f(3));
+=======
+>>>>>>> current/master
             if isfield(data,'quantify_roi') && data.quantify_roi
                 data = quantify_region_of_interest(data, data.im{3});
             end
@@ -211,12 +278,20 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             % and return to the java interface. 
             % The background region is only shown if the image was not cropped.
 
+<<<<<<< HEAD
     % 1/27/2015 Lexie: when there is no field called 'crop_image', background
     % will be displayed
 
             if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
                     ~data.crop_image)
                 if isfield(data, 'quantify_roi') && data.quantify_roi == 1
+=======
+            % When there is no field called 'crop_image', background
+            % will be displayed
+            if ~isfield(data, 'crop_image') || (isfield(data,'crop_image')&&...
+                    ~data.crop_image)
+                if ~isfield(data, 'quantify_roi') || data.quantify_roi <= 1
+>>>>>>> current/master
                     polygon_type = 'draggable';
                 else
                     % Note that drawing draggable polygons are very slow

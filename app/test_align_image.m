@@ -8,8 +8,13 @@ p = 'D:\doc\paper\2016\yijia_0830\data\ts12\';
 data_file = strcat(p, 'output\', 'data.mat');
 load(data_file);
 
+<<<<<<< HEAD
 %data.image_index = (1:10:124);
 data.image_index = (1:124);
+=======
+%data.image_index = (1:10:124)';
+data.image_index = (1:124)';
+>>>>>>> current/master
 data = init_figure(data);
 
 data.index = data.image_index(1);
@@ -25,7 +30,11 @@ cc_matrix = normxcorr2(fret, cfp);
 shift = - [i_row, i_col]+size(cfp);
 clear fret cfp cc_matrix;
 
+<<<<<<< HEAD
 for i = data.image_index,
+=======
+for i = data.image_index'
+>>>>>>> current/master
     data.index = i;
     data = get_image(data, 0); 
     data = update_figure(data);

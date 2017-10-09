@@ -1,3 +1,14 @@
 /src/gui/java/build/
 /src/gui/java/dist/
+<<<<<<< HEAD
 /src/gui/java/default.properties
+=======
+/src/gui/java/default.property
+*.m~
+
+src/gui/java/hs_err_pid652.log
+
+doc/~$e Fluocell User's Guide.docx
+
+*.log
+>>>>>>> current/master

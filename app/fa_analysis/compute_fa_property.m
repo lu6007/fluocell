@@ -121,6 +121,7 @@ if ~exist(result_file, 'file')
             yfp = medfilt2(temp); clear temp;
 
             % cell_bw;
+<<<<<<< HEAD
             file = strcat(output_path, 'cell_bw.', index, '.mat');
 %             cell_bw_ii = imread(strcat(output_path, 'cell_bw.',index),'tiff');
             % Backward compatible
@@ -129,6 +130,16 @@ if ~exist(result_file, 'file')
                 cell_bw_ii = temp_cell_bw.cell_bw;
             else
                  cell_bw_ii = imread(strcat(output_path, 'cell_bw.',index),'tiff');
+=======
+            file = strcat(output_path, 'cell_bw_', index, '.mat');
+%             cell_bw_ii = imread(strcat(output_path, 'cell_bw_',index),'tiff');
+            % Backward compatible
+            if exist(file, 'file') 
+                temp_cell_bw = load([output_path, 'cell_bw_',index, '.mat']);
+                cell_bw_ii = temp_cell_bw.cell_bw;
+            else
+                 cell_bw_ii = imread(strcat(output_path, 'cell_bw_',index),'tiff');
+>>>>>>> current/master
             end
             clear old_cell_bw; old_cell_bw{1} = uint16(cell_bw_ii);           
             % Take the out-most layer and quantify there.

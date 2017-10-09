@@ -23,7 +23,11 @@
 % Calculate the FA property in each layer of the cell.
 %
 % data = initialize_data('07_29_dish1');
+<<<<<<< HEAD
 % cell_bw = imread(strcat(data.path, 'cell_bw.001'));
+=======
+% cell_bw = imread(strcat(data.path, 'cell_bw_001'));
+>>>>>>> current/master
 % n = 5
 % [bd_layer, label_layer] = divide_layer(cell_bw, n);
 % figure; imagesc(label_layer); hold on;
