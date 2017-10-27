@@ -8,27 +8,17 @@ default_value = {'-mat'};
 [format] = parse_parameter(parameter_name, default_value, varargin);
 %
 p = fileparts(rectangle_file); %path
-<<<<<<< HEAD
 if ~exist(p, 'dir'),
     mkdir(p);
 end;
 
 % define the cropping rectangle
 if ~exist(rectangle_file, 'file'),
-=======
-if ~exist(p, 'dir')
-    mkdir(p);
-end
-
-% define the cropping rectangle
-if ~exist(rectangle_file, 'file')
->>>>>>> current/master
     h = figure; imagesc(im); title('Please draw the cropping rectangle.');
     [~, rect] = imcrop;
     save(rectangle_file, 'rect', format);
     clear im_crop; close(h);
 else
-<<<<<<< HEAD
     switch format,
         case '-mat',
             res = load(rectangle_file);
@@ -37,13 +27,3 @@ else
             rect = load(rectangle_file);
     end;
 end;
-=======
-    switch format
-        case '-mat'
-            res = load(rectangle_file);
-            rect = res.rect;
-        case '-ascii'
-            rect = load(rectangle_file);
-    end
-end
->>>>>>> current/master

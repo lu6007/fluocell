@@ -2,18 +2,13 @@
 % define the region of interest.
 % Allow the choice of more than 1 polygon. 
 % The output are two cells of vectors.
-<<<<<<< HEAD
 % parameter_names = {'num_polygons', 'polygon_type','diameter','method'};
-=======
-% parameter_names = {'num_polygon', 'polygon_type','diameter','method'};
->>>>>>> current/master
 % default_values = {1, 'any', 200,'manual'};
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 % Modified by Lexie Qin Qin and Shaoyng Lu 2014
 
 function [bw, poly] = get_polygon(im, file_roi, title_str, varargin)
-<<<<<<< HEAD
 parameter_names = {'num_polygons', 'polygon_type','diameter', 'method'};
 default_values = {1, 'any', 200,'manual'};
 [num_polygons, polygon_type, diameter, method] = ...
@@ -97,32 +92,6 @@ if ~exist(file_roi,'file')
 %            plot(poly{1}(:,1), poly{1}(:,2), 'r', 'LineWidth', 1);
 %            close(h);
            clear temp_bw temp_poly;
-=======
-parameter_names = {'num_polygon', 'polygon_type','diameter'};
-default_values = {1, 'any', 200};
-[num_polygon, polygon_type, diameter] = ...
-    parse_parameter(parameter_names, default_values, varargin);
-if ~exist(file_roi,'file')
-    h = figure; imagesc(im); colormap jet; title(title_str); hold on;
-    bw = cell(num_polygon, 1);
-    poly = cell(num_polygon, 1);
-    for j = 1:num_polygon
-        switch polygon_type
-            case 'any'
-                [bw{j}, x, y] = roipoly;
-                poly{j} = [x y];
-                plot(x, y, 'r', 'LineWidth', 1);
-                clear x y;
-                continue;
-            case 'circle with fixed diameter'
-                theta = (0:0.2:2*pi)';
-                x = 200+diameter*cos(theta)/2;
-                y = 50+diameter*sin(theta)/2;
-                bw{j} = roipoly(im, x, y);
-                poly{j} = [x y];                    
-        end
-        close(h);
->>>>>>> current/master
     end
     if ~isempty(file_roi)
         save(file_roi, 'bw', 'poly');  

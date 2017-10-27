@@ -947,12 +947,9 @@
           </FontInfo>
         </Property>
       </Properties>
-<<<<<<< HEAD
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Processing Option"/>
       </AccessibilityProperties>
-=======
->>>>>>> current/master
 
       <Layout>
         <DimensionLayout dim="0">

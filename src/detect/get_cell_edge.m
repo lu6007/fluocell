@@ -34,16 +34,7 @@ if ~threshold
 end
 
 temp = version;
-<<<<<<< HEAD
 tt = temp(15:19);
-=======
-% Kathy 08/16/2017, make compatible with Windows MATLAB R2013
-if length(temp)>=19
-    tt = temp(15:19);
-else
-    tt = temp(12:16);
-end
->>>>>>> current/master
 if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
     bw_image = imbinarize(im, threshold*brightness_factor);
 elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
@@ -58,7 +49,6 @@ clear temp tt;
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
 
-<<<<<<< HEAD
 
 % Apply different segmentation methods
 temp_im_bw = bw_image;
@@ -66,8 +56,6 @@ clear bw_image
 bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
 
 
-=======
->>>>>>> current/master
 if ~isempty(mask_bw)
     bw_image = bw_image.*mask_bw;
 end

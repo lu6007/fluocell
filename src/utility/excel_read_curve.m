@@ -42,23 +42,14 @@ for i = 1:num_sheet
     % only reads the numerical values
     data = xlsread(file_name, sheet_name{i});
     switch method
-<<<<<<< HEAD
     case 1 % read the format time ratio time ratio etc.
         num_cell = size(data,2)/2;
         exp{i}.num_cell = num_cell;
         exp{i}.name = sheet_name{i};
-=======
-    case 1 % read the format: time ratio time ratio etc.
-        num_cell = size(data,2)/2;
-        exp{i}.num_cell = num_cell;
-        exp{i}.name = sheet_name{i};
-        temp_cell = cell(num_cell,2);
->>>>>>> current/master
          for j =1:num_cell  
              % find the last non-nan entry
             num_row = find(~isnan(data(:,j*2-1)),1, 'last');
             if isempty(num_row)
-<<<<<<< HEAD
                 time = data(:, j*2-1);
                 value = data(:,j*2);
             else
@@ -77,25 +68,5 @@ for i = 1:num_sheet
         exp{i}.ratio = data(:,2:end);        
     end; % switch method
 end; % for i = 1:num_sheet,
-=======
-                temp_cell{j,1} = data(:, j*2-1);
-                temp_cell{j,2} = data(:,j*2);
-            else
-                temp_cell{j,1} = data(1:num_row, j*2-1);
-                temp_cell{j,2} = data(1:num_row, j*2);
-            end
-            clear time value;
-         end
-         exp{i}.cell = cell2struct(temp_cell, {'time', 'value'}, 2);
-         clear temp_cell;
-
-    case 2 % read the format: time ratio ratio ratio
-        exp{i}.name = sheet_name{i};
-        exp{i}.time = data(:,1);
-        exp{i}.ratio = data(:,2:end);  
-    % case 3, read the format: time ratio time ratio ratio ratio time ratio
-    end % switch method
-end % for i = 1:num_sheet,
->>>>>>> current/master
 
 return;

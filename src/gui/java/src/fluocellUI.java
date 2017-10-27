@@ -1108,11 +1108,7 @@ public class fluocellUI extends javax.swing.JFrame {
     private void imageIndexFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_imageIndexFocusLost
         try {
             proxy.setVariable("image_index", imageIndex.getText());
-<<<<<<< HEAD
             proxy.eval("fluocell_data.image_index = str2num(image_index);");
-=======
-            proxy.eval("fluocell_data.image_index = str2num(image_index)';");
->>>>>>> current/master
             //proxy.eval("fluocell_data = batch_update_figure(fluocell_data);");
         } catch (MatlabInvocationException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);

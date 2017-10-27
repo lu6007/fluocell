@@ -1,5 +1,4 @@
 function data = track_init_data(cell_name)
-<<<<<<< HEAD
 %root = 'C:\sylu\copy_07_19_2009-xxx\sof\fluocell_2.1\data\fak_pax\';
 root = 'F:\data\yingli_0307\';
 switch cell_name,
@@ -11,23 +10,6 @@ switch cell_name,
         data.channel = {'FAK', 'Pax'};
         data.index_pattern = '%02d';
         data.image_index = [1:9, 11:53]';
-=======
-root = '/Users/kathylu/Documents/doc/paper/fluocell_0420/quanty_dataset_2/fig5/track/fak_pax/';
-data.cell_name = cell_name; 
-switch cell_name
-    case 'fak_pax'
-        % This cell is extending at the front with no flow
-        data.path = strcat(root, 'fak_pax/fak_paxillin/');
-        data_file = strcat(data.path, 'output/data.mat');
-        test = load(data_file);
-        test.data.path = data.path; % Need a general function: set_path(test.data, data.path)
-        data = test.data;
-%         data.first_file = 'leona20x5_w1FITC_t01.TIF';
-%         data.pattern = {'1FITC', '2TRITC'}; 
-%         data.channel = {'FAK', 'Pax'};
-%         data.index_pattern = {'t01','%02d'};
-%         data.image_index = [1:9, 11:53]';
->>>>>>> current/master
         % For plotting
         data.lines = {'-', '--'};
         data.region_name = {'Nascent', 'Front', 'Intermediate', 'Body'};
@@ -39,7 +21,6 @@ switch cell_name
         % For displaying images and plotting tracks
         data.image_axis = [47 411 90 495]'; %front
         data.track_index = [333:335 341 383 385:386 387 389 414 415 448]';
-<<<<<<< HEAD
         % data.track_index = [333:335 341 383 385:389 413:415 448 610 648]';
         %data.image_frame = [53 813 82 809]';
         % data.movie_frame = [35 791 83 809]';
@@ -47,9 +28,6 @@ switch cell_name
         %data.track_index = [5 6 7 81 92 150 163 315 399 444]';
         % data.image_frame = ?
     case 'ct01',
-=======
-    case 'ct01'
->>>>>>> current/master
         % This Cell is contracting at the back with no flow
         data.path = strcat(root, 'ct01\ct01\');
         data.first_file = 'fm02_w2EGFP Olympus_t002.TIF';
@@ -66,11 +44,7 @@ switch cell_name
         data.image_frame = [18 694 107 721]';
         data.track_index =  [28 31 33 36 37 49 51]';
         data.movie_frame = [31 709 83 696]';
-<<<<<<< HEAD
     case 'ct06',
-=======
-    case 'ct06'
->>>>>>> current/master
         data.path = strcat(root, 'ct06\');
         data.first_file = 'leona20x_w1FITC_t01.TIF';
         data.pattern = {'1FITC', '2TRITC'};
@@ -88,11 +62,7 @@ switch cell_name
         data.track_index =...
             [462 478 569 600 482 724 313 423 498 330 361 1277]';
         %data.movie_frame = [31 709 83 696]';
-<<<<<<< HEAD
     case 'ct03',
-=======
-    case 'ct03'
->>>>>>> current/master
         data.path = strcat(root, 'ct03\');
         data.first_file = 'leona20x7_w1FITC_t01.TIF';
         data.pattern = {'1FITC', '2TRITC'};
@@ -153,13 +123,8 @@ switch cell_name
         data.thresh = [60 30]; %Because the FAs was not very dynamics, 
         % these threshold values have not been adjusted yet. I only made
         % the filtered FAK and Pax images and looked at the FRET ratio.
-<<<<<<< HEAD
     case '09_08', % This is a good cell with significant extension at the front
         data.path = strcat(root, '09_08_2010\');
-=======
-    case '09_08' % This is a good cell with significant extension at the front
-        data.path = strcat(root, '09_08_2010/');
->>>>>>> current/master
         data.first_file = 'ct03_3m60x_w2FITC-EGFP 490-528 side_t01.TIF';
         data.pattern = {'w2FITC-EGFP 490-528', 'w3TRITC 555-617'};
         data.channel = {'FAK', 'Pax'};
@@ -172,11 +137,7 @@ switch cell_name
         data.thresh = [60 30];
         data.image_axis = [781 1291 195 770]';
         data.track_index = [248 417 505 485 589 622 618 619 662 748 757 735 803]'; % front
-<<<<<<< HEAD
     case 'ct31',
-=======
-    case 'ct31'
->>>>>>> current/master
         data.path = strcat(root, '08_20_2011\');
         data.first_file = 'ct31_2m_w2488-528 FITC_t02.TIF';
         data.pattern = {'w2488-528 FITC', 'w3568-617 TRITC'};
@@ -192,9 +153,5 @@ switch cell_name
         %data.image_frame = [18 694 107 721]';
         %data.track_index =  [27 55 56 26 36 90 53 216 162]';
         %data.movie_frame = [31 709 83 696]';
-<<<<<<< HEAD
 end;
-=======
-end
->>>>>>> current/master
 return;

@@ -18,15 +18,10 @@ make_movie = parse_parameter(parameter_name, default_value, varargin);
 time = get_time(data, 'ref_time', data.PDGF_time,'method',1);	
 index_before = find(time>=-5&time<=0); 
 index_after = find(time>=20&time<=30);
-<<<<<<< HEAD
 data.image_index = [index_before' index_after'];
 image_index = data.image_index;
 channel_number = data.channel_number;
 channel_index = strcat(num2str(channel_number),'.');
-=======
-data.image_index = [index_before; index_after];
-image_index = data.image_index;
->>>>>>> current/master
 
 %% Preprocessing images
 % 1. Subtract background; 2. median filter; 3. Rotate image; 4. Crop image.
@@ -34,7 +29,6 @@ image_index = data.image_index;
 % angle = data.angle;
 num_frames = data.time_pt;
 im = cell(num_frames, 1);
-<<<<<<< HEAD
 for i = data.image_index,
     % Initialization
     index_pattern = sprintf('%03d', i);
@@ -50,23 +44,6 @@ for i = data.image_index,
             data.rectangle = get_rectangle(t_im, ...
                 strcat(data.path, 'output/rectangle.mat'));
         end;
-=======
-for i = data.image_index'
-    % Initialization
-    index_pattern = sprintf('%03d', i);
-    file = strcat(data.path, data.prefix, '.', index_pattern); 
-    processed_file = strcat(data.path, 'processed_im_', index_pattern, '.tiff');
-
-    if ~exist(processed_file, 'file')
-        if exist(file, 'file')
-        t_im = imread(file);
-        if ~isfield(data,'bg_bw')
-            [data.bg_bw, data.bg_poly] = get_background(t_im,...
-                strcat(data.path, 'output/background.mat'));
-            data.rectangle = get_rectangle(t_im, ...
-                strcat(data.path, 'output/rectangle.mat'));
-        end
->>>>>>> current/master
         temp = preprocess(t_im, data);
         im{i} = uint16(temp); 
 %         im_sub = subtract_background_1(t_im, data.path);
@@ -76,33 +53,20 @@ for i = data.image_index'
 %         im{i} = im_crop;
         clear t_im temp;        
         imwrite(im{i}, processed_file, 'tiff','Compression', 'none');
-<<<<<<< HEAD
         end;
-=======
-        end
->>>>>>> current/master
     else
         im{i} = imread(processed_file);
     end
     clear processed_file index_pattern file
-<<<<<<< HEAD
 end;
 
 %% Apply threshold, detect cell edge, rotate the image, and calculate the average intensity
 cell_info_file = strcat(data.path, 'cell_info.mat');
 if ~exist(cell_info_file),
-=======
-end
-
-%% Apply threshold, detect cell edge, rotate the image, and calculate the average intensity
-cell_info_file = strcat(data.path, 'cell_info.mat');
-if ~exist(cell_info_file, 'file')
->>>>>>> current/master
     th = data.threshold;
     sf = 3;
     bf = 1.0;
     distance = (0:0.002:1)';
-<<<<<<< HEAD
     for i = 1:num_frames,
         if ~isempty(im{i}),
            if isfield(data, 'need_apply_mask')&& data.need_apply_mask,
@@ -118,39 +82,17 @@ if ~exist(cell_info_file, 'file')
         end;
         % detect the angle and rotate the image and the mask
         if ~isfield(data, 'angle'),
-=======
-    for i = 1:num_frames
-        if ~isempty(im{i})
-           if isfield(data, 'need_apply_mask')&& data.need_apply_mask
-               mask_bw = get_background(uint16(im{i}), strcat(data.path, 'output/mask.mat'));
-           else
-               mask_bw = [];
-           end  
-           % 1/5/2016 should use detect_cell instead of get_cell_edge
-        [bd, bw] = get_cell_edge(im{i}, 'brightness_factor', bf,...
-           'threshold', th,'show_figure',0,'mask_bw', mask_bw);
-        if isempty(bd)
-            continue,
-        end
-        % detect the angle and rotate the image and the mask
-        if ~isfield(data, 'angle')
->>>>>>> current/master
             prop = regionprops(bw, 'Orientation');
             data.angle = - prop.Orientation;
             clear prop;
         end
         temp = imrotate(im{i}, data.angle);
-<<<<<<< HEAD
         if data.flip_cell,
-=======
-        if data.flip_cell
->>>>>>> current/master
             im{i} = imrotate(temp, 180);
         else 
             im{i} = temp;
         end; clear temp;
         
-<<<<<<< HEAD
         if ~isempty(mask_bw),
             temp = imrotate(mask_bw, data.angle);
             clear mask_bw; mask_bw = temp; clear temp;
@@ -165,42 +107,17 @@ if ~exist(cell_info_file, 'file')
             show_figure = 1; % show figure
         end;
         if show_figure,
-=======
-        if ~isempty(mask_bw)
-            temp = imrotate(mask_bw, data.angle);
-            clear mask_bw; mask_bw = temp; clear temp;
-            if data.flip_cell
-                temp = imrotate(mask_bw, 180);
-                clear mask_bw; mask_bw = temp; clear temp;
-            end
-        end
-        clear bd bw;
-        show_figure = 0;
-        if i==max(index_before)|| i == max(index_after)
-            show_figure = 1; % show figure
-        end
-        if show_figure
->>>>>>> current/master
             ss = size(im{i})/3*2;
             figure('color','w','Position', [100 100 ss(2) ss(1)]); 
             set(gca, 'FontSize', 12, 'FontWeight', 'bold','Box', 'off', 'LineWidth',2);
             imagesc(im{i}); hold on; axis off; 
             title(strcat('frame : ', num2str(i)));
-<<<<<<< HEAD
         end;        
         [bd, bw] = detect_cell(im{i}, 'brightness_factor', bf,...
             'smoothing_factor', sf,'threshold', th,'mask_bw', mask_bw);
         if show_figure,
             plot(bd(:,2), bd(:,1),'r','LineWidth',2);
         end;
-=======
-        end        
-        [bd, bw] = detect_cell(im{i}, 'brightness_factor', bf,...
-            'smoothing_factor', sf,'threshold', th,'mask_bw', mask_bw);
-        if show_figure
-            plot(bd(:,2), bd(:,1),'r','LineWidth',2);
-        end
->>>>>>> current/master
         clear mask_bw;
         % Quantify the normalized intensity on the cell.
         sum_bw = sum(bw);
@@ -217,13 +134,8 @@ if ~exist(cell_info_file, 'file')
         intensity_smooth = smooth(distance, intensity_interp, 0.1, 'rloess');
         cell_info(i).intensity = intensity_smooth;
         clear intensity intensity_interp intensity_smooth
-<<<<<<< HEAD
         end;
     end; %for i = 1:num_frames,
-=======
-        end
-    end %for i = 1:num_frames,
->>>>>>> current/master
     
     
     save(cell_info_file, 'distance', 'cell_info', 'time');
@@ -231,17 +143,10 @@ if ~exist(cell_info_file, 'file')
 else
     load(cell_info_file);
     %display(sprintf('cell_length = %f', (max(cell_info(1).x)-min(cell_info(1).x))/2.56));
-<<<<<<< HEAD
 end;
 
 % make movie
 if make_movie,
-=======
-end
-
-% make movie
-if make_movie
->>>>>>> current/master
     info.path = data.path;
     info.first_file = 'movie_im_001';
     info.index_pattern = {'001', '%03d'};
@@ -263,17 +168,10 @@ if make_movie
     info.has_event = zeros(num_frames, 1);
     ii = find(info.image_index>=data.PDGF_add+1,1, 'first');
     info.has_event(ii:ii+5) = 1;
-<<<<<<< HEAD
     if isfield(data, 'DRUG_add'),
         ii = find(info.image_index>=data.DRUG_add+1, 1, 'first');
         info.has_event(ii:ii+5) = 2;
     end;   
-=======
-    if isfield(data, 'DRUG_add')
-        ii = find(info.image_index>=data.DRUG_add+1, 1, 'first');
-        info.has_event(ii:ii+5) = 2;
-    end   
->>>>>>> current/master
     
     movie = make_movie_3(info);
 end
@@ -285,15 +183,9 @@ cell_info = temp; clear temp;
 % 3D plot
 figure('color', 'w'); hold on;
 set(gca, 'FontSize',12, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',2);
-<<<<<<< HEAD
 for i = 1:5:length(time),
     plot3(time(i)*ones(size(distance)), distance, cell_info(i).intensity, 'LineWidth', 2);
 end;
-=======
-for i = 1:5:length(time)
-    plot3(time(i)*ones(size(distance)), distance, cell_info(i).intensity, 'LineWidth', 2);
-end
->>>>>>> current/master
 axis([-10 40 0 1 0.3 2.5]);
 set(gca,'YTick', [0; 0.5; 1], 'XTick', [-10; [0:20: 80]']);
 az = -31; el = 48; view(az,el);
@@ -320,11 +212,7 @@ if ~strcmp(data.DRUG_add,'none'), % check if the drug had been added
     T_point = (data.DRUG_time-data.PDGF_time)/6000; PC = 'b';
     h = surf([T_point T_point], [InitY EndY], [InitZ EndZ; InitZ EndZ]);
     set(h, 'LineStyle', 'none','FaceColor', PC, 'FaceAlpha', 0.5);
-<<<<<<< HEAD
 end;
-=======
-end
->>>>>>> current/master
 
 clear cell_info intensity_matrix time distance;
 

@@ -71,11 +71,7 @@ for k = 1:num_acquisitions
     data.this_path = path;
     for i = this_image_index
         index = sprintf(data.index_pattern{2},i);
-<<<<<<< HEAD
         output_file = strcat(output_path, 'cell_bw.', index);
-=======
-        output_file = strcat(output_path, 'cell_bw_', index);
->>>>>>> current/master
         data.multiple_cell_name = multiple_cell_name;
         [im, data] = get_image_detect_cell(data,index,protocol);
         if ~exist(output_file, 'file')% when the output is not there.

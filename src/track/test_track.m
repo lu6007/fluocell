@@ -1,14 +1,9 @@
 %%
-<<<<<<< HEAD
 %cell_name = 'fak_pax';
-=======
-cell_name = 'fak_pax';
->>>>>>> current/master
 % cell_name = 'ct01';
 % cell_name = 'sh01';
 % cell_name = 'ct06';
 % cell_name = 'ct03';
-<<<<<<< HEAD
 cell_name = '09_08';
 
 data = init_data(cell_name);
@@ -16,20 +11,6 @@ data = init_data(cell_name);
 %%
 movie_info = get_movie_info(data, 'load_file',0);
 frame_index = 1:length(data.image_index);
-=======
-% cell_name = '09_08';
-
-data = track_init_data(cell_name);
-data.protocol = 'FRET';
-data.index = 1;
-data = init_figure(data);
-data = get_image(data, 0);
-data = batch_update_figure(data);
-
-%%
-movie_info = get_movie_info(data, 'load_file',0);
-frame_index = (1:length(data.image_index))';
->>>>>>> current/master
 tracksFinal = get_track(cell_name, movie_info(frame_index), 'load_file', 1, 'save_file', 0);
 frame_with_track = get_frame_track(tracksFinal,movie_info(frame_index));
 track_with_frame= get_track_frame(cell_name, tracksFinal, movie_info(frame_index));

@@ -36,11 +36,7 @@ end
 intensity_value = inf*ones(max_num_cell,4);
 ratio_value = inf*ones(max_num_cell,1);
 
-<<<<<<< HEAD
 % Protocol: 'FRET-Intennsity-DIC'; 
-=======
-% Protocol: 'FRET-Intensity-DIC'; 
->>>>>>> current/master
 % file{1} - FI 1; 2 - FI 2 ;  3- FI 3, 4- DIC
 num_cell  = 0;
 file = cell(4,1);

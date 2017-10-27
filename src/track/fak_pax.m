@@ -34,11 +34,7 @@ file_crop = strcat(path, 'rectangle.mat');
 rect = get_rectangle(im, file_crop);
 im_crop = imcrop(im, rect);
 region_file = strcat(path, 'region.mat');
-<<<<<<< HEAD
 [regions, region_bd] = get_rois(im_crop, region_file);
-=======
-[regions, region_bd] = get_roi(im_crop, region_file);
->>>>>>> current/master
 %num_roi = length(regions);
 num_roi = length(regions)-1;
 figure; imagesc(im_crop); hold on;
@@ -70,11 +66,7 @@ for k =1:length(channel)
     %Adjust threshold;
     fa_bw = im_filt>thresh(k);
     file_fa = strcat(path, channel{k}, '_fa_', first_pattern, '.mat');
-<<<<<<< HEAD
     fa_bd = get_boundary(fa_bw, file_fa);
-=======
-    fa_bd = get_fa_boundary(fa_bw, file_fa);
->>>>>>> current/master
     num_fas = length(fa_bd);
     figure('color', 'w'); imshow(im_crop); caxis ([0 400]); hold on;
     set(gca, 'FontSize', 16, 'Box', 'off', 'LineWidth',2); axis off;
@@ -204,11 +196,7 @@ legend('Total Intensity', 'Average Intensity', 'Portion of Pixels');
 end
 return;
 
-<<<<<<< HEAD
 function [regions, region_bd] = get_rois(im, region_file)
-=======
-function [regions, region_bd] = get_roi(im, region_file)
->>>>>>> current/master
 num_roi = 4;
 regions= cell(num_roi,1);
 region_bd = cell(num_roi,1);

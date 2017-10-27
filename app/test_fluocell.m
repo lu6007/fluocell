@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 % test_Fluocell
-=======
-% test_fluocell
->>>>>>> current/master
 % o   2.1.1   FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images
 % o   2.1.2   FRET ANALYSIS- Make Movies
 % o   2.2     INTENSITY ANALYSIS- Polarity Analysis
@@ -11,14 +7,7 @@
 
 %%For each part, please right click and choose "Evaluate current section"
 %%or use ctrl+enter.
-<<<<<<< HEAD
 enable_pause = 1;
-=======
-if ~exist('enable_pause', 'var')
-    enable_pause = 1;
-end
-fprintf('test_flucell: enable_pause = %d\n', enable_pause);
->>>>>>> current/master
 
 %% o   2.1.1  FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images   **********
 % p = strcat(root, 'fluocell_sample/');
@@ -27,7 +16,6 @@ temp = sample_init_data('src_pax','');
 % When success, run
 % >> data = fluocell_data;
 % >> save(strcat(data.path, 'output/data.mat'), 'data');
-<<<<<<< HEAD
 data_file = strcat(temp.path, 'output/data.mat');
 res = load(data_file);
 data = res.data;
@@ -36,9 +24,6 @@ data.first_file = strcat(data.path, '2-11.001');
 % data.num_figures = 3;
 % data.f(3) = figure;
 save(data_file, 'data');
-=======
-data = load_data(temp.path);
->>>>>>> current/master
 batch_update_figure(data);
 
 %% o  2.1.2  FRET ANALYSIS- Make Movies   ********* Run the section 2.1.1 first;
@@ -52,7 +37,6 @@ end
 close all; clear data; 
 
 %% o   2.2  INTENSITY ANALYSIS-Polarity Analysis *********
-<<<<<<< HEAD
 temp = sample_init_data('akt_1', '');
 data_file= strcat(temp.path, 'output/data.mat');
 res = load(data_file);
@@ -64,13 +48,6 @@ batch_update_figure(data);
 
 cell_name = 'akt_1';
 data = sample_init_data(cell_name);
-=======
-data = sample_init_data('akt_1');
-batch_update_figure(data);
-
-% cell_name = 'akt_1';
-% data = sample_init_data(cell_name);
->>>>>>> current/master
 single_cell_analyzer('akt_1',data);
 if enable_pause
     disp(pause_str);
@@ -84,7 +61,6 @@ close all; clear data;
 % res = load(data_file);
 % data = res.data;
 temp = sample_init_data('tracking_ex', '');
-<<<<<<< HEAD
 data_file =strcat(temp.path, 'output/data.mat');
 res = load(data_file);
 data = res.data; 
@@ -94,11 +70,6 @@ data.first_file = strcat(data.path, 'cfp_t1.tif');
 data.num_roi = 3;
 % data.num_figures = 3;
 % data.f(3) = figure;
-=======
-data = load_data(temp.path);
-data.num_roi = 3;
-data_file = strcat(temp.path, 'output/data.mat');
->>>>>>> current/master
 save(data_file, 'data');
 %
 data = batch_update_figure(data);

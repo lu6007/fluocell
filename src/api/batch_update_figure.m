@@ -1,16 +1,12 @@
 % function data = batch_update_figure(data)
 
 % Copyright: Shaoying Lu, Shannon Laub and Yingxiao Wang 2011
-<<<<<<< HEAD
 
 function data = batch_update_figure(data, varargin)
 parameter_name = {'save_bw_file'};
 default_value = {0};
 [save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
 
-=======
-function data = batch_update_figure(data)
->>>>>>> current/master
 %Store initial index value for later retrieval for consistency.
 if isfield(data,'index')
     temp_index = data.index;
@@ -27,15 +23,9 @@ end
 % data = close_button_callback(data);
 
 if isfield(data,'multiple_object') && data.multiple_object == 1
-<<<<<<< HEAD
    save_bw_file = 1; 
    disp('Function batch_update_figure warning: ');
    disp('save_bw_file has been set to 1 for multiple object tracking.');
-=======
-    data.save_cell_bw = 1;
-    disp('Function batch_update_figure warning: ');
-    disp('data.save_cell_bw has been set to 1 for multiple object tracking.');
->>>>>>> current/master
 end
 
 %% Option for parallel processing. - Shannon 8/10/2016
@@ -44,25 +34,15 @@ end
 % When parallel processing is disabled.
 if ~(isfield(data,'parallel_processing') && data.parallel_processing == 1)
     % Parallel processing disabled. Default procedure.
-<<<<<<< HEAD
     % loop through the row vector image_index
     new_first_file = 1;
     for i = data.image_index 
-=======
-    % loop through the row vector of image_index
-    new_first_file = 1;
-    for i = (data.image_index)' 
->>>>>>> current/master
         data.index = i;
         data = get_image(data, new_first_file);
         if ~isempty(data.im{1})
             new_first_file = 0;
         end
-<<<<<<< HEAD
         data = update_figure(data, 'save_bw_file', save_bw_file);
-=======
-        data = update_figure(data);
->>>>>>> current/master
     end
     
 else %Parallel processing enabled.
@@ -112,11 +92,7 @@ else %Parallel processing enabled.
         
         % Kathy: there is a warning which says that the range of parfor
         % has to be consecutive numbers. 09/13/2016
-<<<<<<< HEAD
         for i = data.image_index(2:end) 
-=======
-        for i = (data.image_index(2:end))' 
->>>>>>> current/master
 %         for i = data.image_index(2:end)
             %Update temp_data.index to the new index point based on image_index
             temp_data = data;
@@ -140,11 +116,7 @@ else %Parallel processing enabled.
             temp_channel1_bg(i) = temp_data.channel1_bg(i);
             temp_channel2_bg(i) = temp_data.channel2_bg(i);
 
-<<<<<<< HEAD
         end % parfor i = data.image_index(2:end),
-=======
-        end % parfor i = (data.image_index(2:end))',
->>>>>>> current/master
 %         for k = 1 : num_roi
 %             temp_ratio{k}(temp_ratio{k} == 0) = NaN;
 %         end
@@ -169,20 +141,10 @@ end
     
 %Modify output w/ simpletracker() to get more accurate tracks.
 %Output data in the same format so that compute_time_course() can plot.
-<<<<<<< HEAD
 if isfield(data, 'multiple_object') && data.multiple_object
     data = multiple_object.postprocessing(data);
     coordInfo = multiple_object.getCoord(data);
     data = multiple_object.simpletracking(data, coordInfo);
-=======
-if isfield(data, 'multiple_object') && data.multiple_object 
-    data = multiple_object.prepareTrack(data);
-    coordInfo = multiple_object.getCoord(data);
-    [data, cell_location] = multiple_object.simpleTrack(data, coordInfo);
-    if ~isfield(data, 'frame_with_track')
-        data.frame_with_track = multiple_object.create_frame_track(cell_location);
-    end
->>>>>>> current/master
 end
 
 return;

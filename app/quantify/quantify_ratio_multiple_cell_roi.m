@@ -27,11 +27,7 @@ intensity_bound = data.intensity_bound;
 
 num_images = length(image_data);
 total_num_cells= 0;
-<<<<<<< HEAD
 for i = 1:num_images,
-=======
-for i = 1:num_images
->>>>>>> current/master
     total_num_cells = total_num_cells + image_data{i}{2};
 end
 average_ratio = zeros(total_num_cells, 1);
@@ -48,11 +44,7 @@ qd_size = cell(total_num_cells, 1);
 
 %
 i_index = 1;
-<<<<<<< HEAD
 for i = 1:num_images,
-=======
-for i = 1:num_images
->>>>>>> current/master
     image_index = image_data{i}{1};
     num_cells = image_data{i}{2};
 
@@ -77,42 +69,24 @@ for i = 1:num_images
     % figure; imagesc(fret); caxis([0 1000]);
     
     % Calculate the qd_rois
-<<<<<<< HEAD
     if is_donor_over_fret,
         ratio = compute_ratio(donor, fret);
     else
         ratio = compute_ratio(fret,donor);
     end;
-=======
-    if is_donor_over_fret
-        ratio = compute_ratio(donor, fret);
-    else
-        ratio = compute_ratio(fret,donor);
-    end
->>>>>>> current/master
     
     % Detect QD dots
     donor_filt = high_pass_filter(donor, filter_size);
     qd_bw = (donor_filt>threshold)&(ratio<100); %figure; imagesc(qd_bw);
-<<<<<<< HEAD
     [qd_bd, qd_bw] = get_boundary(qd_bw, qd_file);
-=======
-    [qd_bd, qd_bw] = get_fa_boundary(qd_bw, qd_file);
->>>>>>> current/master
    
     
     % show QD intensity image 
     figure; imagesc(donor); caxis([1 10000]); colormap gray; hold on;
     % plot the detected QD regions
-<<<<<<< HEAD
     for j = 1:length(qd_bd),
         plot(qd_bd{j}(:,2), qd_bd{j}(:,1), 'r', 'LineWidth',2);
     end;
-=======
-    for j = 1:length(qd_bd)
-        plot(qd_bd{j}(:,2), qd_bd{j}(:,1), 'r', 'LineWidth',2);
-    end
->>>>>>> current/master
     
     
     % show ratio image
@@ -122,26 +96,16 @@ for i = 1:num_images
     % plot background region
     plot(para.bg_poly(:,1), para.bg_poly(:,2), 'r', 'LineWidth', 2);
     % plot the detected QD regions
-<<<<<<< HEAD
     for j = 1:length(qd_bd),
         plot(qd_bd{j}(:,2), qd_bd{j}(:,1), 'k', 'LineWidth',2);
     end;
-=======
-    for j = 1:length(qd_bd)
-        plot(qd_bd{j}(:,2), qd_bd{j}(:,1), 'k', 'LineWidth',2);
-    end
->>>>>>> current/master
     display_text=strcat('Please Select : ',...
         num2str(num_cells), ' Regions of Interest');
     roi_file = strcat(p, 'output\ROI', '_', image_index, '.mat');
     [roi_bw, roi_poly] = get_polygon(dic, roi_file, display_text, ...
         'num_polygons', num_cells);
     % plot the cell regions
-<<<<<<< HEAD
     for j = 1:num_cells,
-=======
-    for j = 1:num_cells
->>>>>>> current/master
         plot(roi_poly{j}(:,1), roi_poly{j}(:,2), 'w', 'LineWidth', 2);
         prop = regionprops(roi_bw{j},'Centroid');
         cc = [prop.Centroid(1); prop.Centroid(2)];
@@ -168,22 +132,14 @@ for i = 1:num_images
         qd_size{i_index} = zeros(num_dots(i_index), 1);
         qd_intensity{i_index} = zeros(num_dots(i_index), 1);
         qd_ratio{i_index} = zeros(num_dots(i_index), 1);
-<<<<<<< HEAD
         for k = 1:num_dots(i_index),
-=======
-        for k = 1:num_dots(i_index)
->>>>>>> current/master
             pl_k = pl(pv==k);
             num_pl_k = length(pl_k);
             qd_size{i_index}(k) = num_pl_k;
             qd_intensity{i_index}(k) = sum(donor(pl_k))/num_pl_k;
             qd_ratio{i_index}(k) = sum(ratio(pl_k))/num_pl_k;
             clear pl_k num_pl_k;
-<<<<<<< HEAD
        end;
-=======
-        end
->>>>>>> current/master
         
         % Calculate pixelsize Ratio and Intensity
         %prop = regionprops(mask,'PixelIdxList');
@@ -194,17 +150,10 @@ for i = 1:num_images
         %figure; hist(intensity_list{i_index}, 100); title('Intensity');
         i_index = i_index+1;
         clear mask cell_mask cc xx yy prop pl;
-<<<<<<< HEAD
     end;
     clear roi_poly donor_file fret_file dic_file fret dic;
     
 end; %i
-=======
-    end
-    clear roi_poly donor_file fret_file dic_file fret dic;
-    
-end %i
->>>>>>> current/master
 save(out_file, 'cell_size', 'average_ratio', 'norm_intensity', 'num_dots',...
     'ratio_list', 'intensity_list','qd_size','qd_intensity', 'qd_ratio');
 clear cell_size average_ratio norm_intensity num_dots;
