@@ -36,7 +36,7 @@ end
 intensity_value = inf*ones(max_num_cell,4);
 ratio_value = inf*ones(max_num_cell,1);
 
-% Protocol: 'FRET-Intennsity-DIC'; 
+% Protocol: 'FRET-Intensity-DIC'; 
 % file{1} - FI 1; 2 - FI 2 ;  3- FI 3, 4- DIC
 num_cell  = 0;
 file = cell(4,1);
@@ -100,6 +100,8 @@ for i = 1:num_image
             'num_polygons', num_roi);
         [~, label] = bwgoundaries (roi_bw, 8, 'noholes');
     else % Automatic detection
+        % for the watershed method to work, need to replace "graythresh" by
+        % "detect_cell" 
         threshold = graythresh(im_detect);
         if strcmp(version, 'R2017')||strcmp(version, 'R2018')
             bw_image = imbinarize(im_detect, threshold*data.brightness_factor);

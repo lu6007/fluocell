@@ -99,19 +99,19 @@ for k = 1:num_acquisitions
                    'min_water', data.fa.min_water,...
                    'normalize', 0,'need_high_pass_filter', 0);
             else     
-               cell_bw = imread(strcat(output_path, 'cell_bw.',index),'tiff');            
+               cell_bw = imread(strcat(output_path, 'cell_bw_',index),'tiff');            
                [fa_bw, ~, im_filt] = detect_focal_adhesion(im, 'mask_with_cell',1, ...
                    'cell_bw', cell_bw, 'min_area', data.fa.single_min_area,...
                    'min_water', data.fa.min_water, ...
                    'ref_pax_intensity', data.ref_pax_intensity);
             end
-           fa_bd = get_boundary(fa_bw, fa_file);
+           fa_bd = get_fa_boundary(fa_bw, fa_file);
 %            if save_file,
 %                 %imwrite(uint16(fa_label), fa_file, 'tiff');
 %             end;
         else
              %fa_label = imread(fa_file,'tiff');
-             fa_bd = get_boundary([], fa_file, save_file);
+             fa_bd = get_fa_boundary([], fa_file, save_file);
         end
 
         % show figure
@@ -122,7 +122,7 @@ for k = 1:num_acquisitions
              set(gca, 'FontSize', 16, 'Box', 'off', 'LineWidth',2); axis off;
              title(strcat('Paxillin image overlayed with boundary and FAs',index));
              if mask_with_cell
-                 cell_bw = imread(strcat(output_path, 'cell_bw.',index),'tiff');
+                 cell_bw = imread(strcat(output_path, 'cell_bw_',index),'tiff');
                  cell_bd = find_longest_boundary(cell_bw);
                  plot(cell_bd(:,2), cell_bd(:,1),'g', 'LineWidth', 2);
              end

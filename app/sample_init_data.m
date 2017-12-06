@@ -7,7 +7,7 @@ switch name
         % General parameters
         data.path = strcat(root, '10_24_08_Src_fret_pax/');
         data.index_pattern = {'001', '%03d'};
-        data.image_index = 1:10;
+        data.image_index = (1:10)';
         switch function_name
             case 'make_movie'
                 % Making Movie
@@ -22,7 +22,7 @@ switch name
                 data.cfp_channel = {'2-11'};
                 data.yfp_channel = {'2-12'};
                 data.pax_channel = {'2-14'};
-                data.index = data.image_index';
+                data.index = data.image_index;
                 data.subtract_background = 1;
                 data.median_filter = 1;
                 data.threshold = 0.04; % for cell_detection;
@@ -43,7 +43,7 @@ switch name
                 data.cfp_channel = {'2-11'};
                 data.yfp_channel = {'2-12'};
                 data.pax_channel = {'2-14'};
-                data.index = data.image_index';
+                data.index = data.image_index;
                 data.need_mask = 0;
                 data.pdgf_between_frame = [5; 6];
                 data.pax_cbound = [0 300];
@@ -58,10 +58,11 @@ switch name
 
 case 'akt_1'
         data.path = strcat(root, 'PH-Akt-GFP_1/');
-        data.output_path = strcat(data.path, 'output/');
-        data.prefix = 'AKT-PH-YFP_PDGF5';
-        data.channel_number = 2;
-        data.time_pt = 119; % the largest time point in the analysis.
+        data  = load_data(data.path);
+        % data.output_path = strcat(data.path, 'output/');
+        data.prefix = 'AKT-PH-YFP_PDGF52';
+        data.postfix = '.001';
+        data.time_pt = 27; % the largest time point in the analysis.
         data.PDGF_add = 68; % the frame before PDGF was added.
         data.PDGF_time = 497160;
         data.DRUG_add = 'none';
@@ -69,8 +70,12 @@ case 'akt_1'
         data.flip_cell = 1;
         data.subtract_background = 1;
         data.median_filter = 1;
-        data.crop_image = 1;
-        
+        data.protocol = 'Intensity';
+        data.index_pattern = {'001', '%03d'};
+        data.need_apply_mask = 0;
+        data.num_roi = 1;
+        data.quantify_roi = 3;
+        data.crop_image = 0;
 case 'tracking_ex'
         % General parameters
         data.path = strcat(root, 'tracking_ex/');

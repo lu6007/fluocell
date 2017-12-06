@@ -28,12 +28,12 @@ else
     end
 
     % initialize movie_info
-    num_frames = length(data.image_index);
+    num_frame = length(data.image_index);
     field = {'xCoord', 'yCoord', 'amp', 'num_pixels'};
     num_fields = length(field);
-    c = cell(num_frames, num_fields);
+    c = cell(num_frame, num_fields);
     
-    for k = 1:num_frames
+    for k = 1:num_frame
         data.index = data.image_index(k);
         data = get_image(data, 0);
         
@@ -42,7 +42,7 @@ else
 % Lexie on 1/4/2016
         switch file_type
             case 'cell'
-                file_name = strcat(data.path, 'output\cell_bw.', index_str, '.mat');
+                file_name = strcat(data.path, 'output/cell_bw_', index_str, '.mat');
                 result = load(file_name);
                 object_bw = result.cell_bw;
             case 'fa'

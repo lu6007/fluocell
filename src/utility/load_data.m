@@ -15,6 +15,8 @@ data_file = strcat(p, 'output/data.mat');
 res = load(data_file);
 data = res.data;
 
+data.output_path = strcat(p,'output/');
+
 save_data = 0;
 % backward compatibility, 6/23/2017 --- Kathy
 if strcmp(data.protocol, 'FRET') && length(data.f) <3

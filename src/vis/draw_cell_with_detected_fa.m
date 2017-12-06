@@ -10,7 +10,7 @@ index_pattern = sprintf(info.index_pattern{2}, i);
 rfp_file = regexprep(rfp_file, info.index_pattern{1}, index_pattern);
 rfp_im = imread(strcat(info.path,rfp_file)); temp = medfilt2(rfp_im);
 clear rfp_im; rfp_im = temp; clear temp;
-cell_bw_file = sprintf('%scell_bw.%s', info.path,index_pattern);
+cell_bw_file = sprintf('%scell_bw_%s', info.path,index_pattern);
 cell_bw = imread(cell_bw_file);
 fa_label_file = sprintf('%sfa_label_water.%s', info.path, index_pattern);
 fa_label = imread(fa_label_file);

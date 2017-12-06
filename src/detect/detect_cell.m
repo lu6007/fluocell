@@ -1,12 +1,12 @@
 % function [bd, bw] = detect_cell(im, varargin)
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
-
-function [bd, bw] = detect_cell(im, varargin)
-parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor', 'multiple_object', 'min_area', 'segment_method'};
+function [bd, bw, label] = detect_cell(im, varargin)
+parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor',...
+    'multiple_object', 'min_area', 'segment_method'};
 default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
-[method, with_smoothing, smoothing_factor, brightness_factor, multiple_object, min_area, segment_method] =...
-    parse_parameter(parameter_name, default_value, varargin);
+[method, with_smoothing, smoothing_factor, brightness_factor, multiple_object, ...
+    min_area, segment_method] = parse_parameter(parameter_name, default_value, varargin);
 
 %
 switch method
@@ -20,7 +20,7 @@ switch method
 %             'smoothing_factor', sf, 'show_figure', show_figure,'mask_bw', mask_bw);
         [bd, ~, ~] = get_cell_edge(im, 'brightness_factor', bf, ...
             'show_figure', show_figure, 'mask_bw', mask_bw, 'multiple_object', multiple_object,...
-            'min_area', min_area, 'segment_method', segment_method);
+            'min_area', min_area);
     case 'kmean'         
         p = {'num_cluster'};
         d = {3};
@@ -41,13 +41,23 @@ switch method
             rad_y,'width_factor',wf,'brightness_factor',bf);
 end
 
-[bw, bd] = clean_up_boundary(im, bd, with_smoothing,...
+%Checks if any objects were detected. -SJL 7/7/2017
+if isempty(bd)
+    bw = false(size(im)); %sets bw to an 'empty' (false) mask.
+    bd = cell(0,1); %create empty 0x1 cell. Same output as clean_up_boundary.
+    label = []; 
+    
+else
+[temp, ~] = clean_up_boundary(im, bd, with_smoothing,...
     smoothing_factor);
-%temp = bw; clear bw; bw{1} = temp;
-
-% Lexie on 10/19/2015
-if ~multiple_object
-    bd = bd{1};
+ bw = detect_watershed(uint16(im), temp, 'segment_method', segment_method);
+ if ~any(any(bw))
+     bw = temp;
+ end
+ 
+ [bd, label] = bwboundaries(bw, 8,'noholes');
+ clear temp;
 end
+%temp = bw; clear bw; bw{1} = temp;
 
 return;

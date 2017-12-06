@@ -1,4 +1,4 @@
-% test_Fluocell
+% test_fluocell
 % o   2.1.1   FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images
 % o   2.1.2   FRET ANALYSIS- Make Movies
 % o   2.2     INTENSITY ANALYSIS- Polarity Analysis
@@ -7,7 +7,10 @@
 
 %%For each part, please right click and choose "Evaluate current section"
 %%or use ctrl+enter.
-enable_pause = 1;
+if ~exist('enable_pause', 'var')
+    enable_pause = 1;
+end
+fprintf('test_flucell: enable_pause = %d\n', enable_pause);
 
 %% o   2.1.1  FRET ANALYSIS- Visualize the ECFP/FRET Ratio Images   **********
 % p = strcat(root, 'fluocell_sample/');
@@ -16,14 +19,7 @@ temp = sample_init_data('src_pax','');
 % When success, run
 % >> data = fluocell_data;
 % >> save(strcat(data.path, 'output/data.mat'), 'data');
-data_file = strcat(temp.path, 'output/data.mat');
-res = load(data_file);
-data = res.data;
-data.path = temp.path;
-data.first_file = strcat(data.path, '2-11.001');
-% data.num_figures = 3;
-% data.f(3) = figure;
-save(data_file, 'data');
+data = load_data(temp.path);
 batch_update_figure(data);
 
 %% o  2.1.2  FRET ANALYSIS- Make Movies   ********* Run the section 2.1.1 first;
@@ -37,17 +33,11 @@ end
 close all; clear data; 
 
 %% o   2.2  INTENSITY ANALYSIS-Polarity Analysis *********
-temp = sample_init_data('akt_1', '');
-data_file= strcat(temp.path, 'output/data.mat');
-res = load(data_file);
-data = res.data;
-data.path = temp.path;
-data.first_file = strcat(data.path, '2-11.001');
-save(data_file, 'data');
+data = sample_init_data('akt_1');
 batch_update_figure(data);
 
-cell_name = 'akt_1';
-data = sample_init_data(cell_name);
+% cell_name = 'akt_1';
+% data = sample_init_data(cell_name);
 single_cell_analyzer('akt_1',data);
 if enable_pause
     disp(pause_str);
@@ -61,15 +51,9 @@ close all; clear data;
 % res = load(data_file);
 % data = res.data;
 temp = sample_init_data('tracking_ex', '');
-data_file =strcat(temp.path, 'output/data.mat');
-res = load(data_file);
-data = res.data; 
-data.path = temp.path;
-data.output_path = strcat(data.path, 'output/');
-data.first_file = strcat(data.path, 'cfp_t1.tif');
+data = load_data(temp.path);
 data.num_roi = 3;
-% data.num_figures = 3;
-% data.f(3) = figure;
+data_file = strcat(temp.path, 'output/data.mat');
 save(data_file, 'data');
 %
 data = batch_update_figure(data);

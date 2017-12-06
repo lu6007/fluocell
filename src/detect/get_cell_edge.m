@@ -8,11 +8,10 @@
 function [bd, bw, threshold] = get_cell_edge(im, varargin)
 % set up the parameter values by input
 % or the default values.
-% 10/14/2015 Lexie - add new parameter multiple_object to detect more one object
 parameter_name = {'brightness_factor', ...
-    'min_area','threshold', 'mask_bw', 'multiple_object', 'segment_method'};
-default_value = {1.0, 500, 0, [], 0, 0};
-[brightness_factor, min_area, threshold, mask_bw, multiple_object, segment_method]...
+    'min_area','threshold', 'mask_bw', 'multiple_object'};
+default_value = {1.0, 500, 0, [], 0};
+[brightness_factor, min_area, threshold, mask_bw, multiple_object]...
     = parse_parameter(parameter_name, default_value, varargin);
 
 % for molly's data, Lexie on 10/15/2015
@@ -34,7 +33,12 @@ if ~threshold
 end
 
 temp = version;
-tt = temp(15:19);
+% Kathy 08/16/2017, make compatible with Windows MATLAB R2013
+if length(temp)>=19
+    tt = temp(15:19);
+else
+    tt = temp(12:16);
+end
 if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
     bw_image = imbinarize(im, threshold*brightness_factor);
 elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
@@ -48,13 +52,6 @@ clear temp tt;
 % get rid of objects with size less than min_area
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
-
-
-% Apply different segmentation methods
-temp_im_bw = bw_image;
-clear bw_image
-bw_image = detect_watershed(im, temp_im_bw, 'segment_method', segment_method);
-
 
 if ~isempty(mask_bw)
     bw_image = bw_image.*mask_bw;

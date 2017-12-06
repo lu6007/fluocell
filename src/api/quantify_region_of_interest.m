@@ -5,23 +5,13 @@
 % (2) To use subcellular layers instead of ROIs:
 % fluocell_data.quantify_roi = 3;
 % fluocell_data.num_roi = 3;
-% by change the value of parameter save_bw_file, you could 
-% decide save the cell_bw file of not
-% default save_bw_file = 0 ( not saving those file)
-% save_bw_file = 1 (save cell_bw file)
 % To allow mask: fluocell_data.need_apply_mask = 1;
 % To stop mask: fluocell_data.need_apply_mask = 0;
 % (3) To stop quantification: fluocell_data.quantify_roi = 0;
 % (4) To allow n regions: fluocell_data.num_roi = 3; 
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
-function data = quantify_region_of_interest(data, ratio, cfp, yfp, varargin)
-parameter_name = {'save_bw_file'};
-default_value = {0};
-[save_bw_file] = parse_parameter(parameter_name, default_value, varargin);
-%Lexie on 3/10/2015 make the show_figure option work for both situations,
-%w/o show_figure field
-show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
+function data = quantify_region_of_interest(data, ratio, cfp, yfp)
 % Process data.quantify_roi
 switch data.quantify_roi
     case 0 % Do not quantify ROI
@@ -40,11 +30,6 @@ end
 % data.quantify_roi = 2: more than 1 roi which can only be automatically tracked.  
 if data.quantify_roi == 1 || data.quantify_roi ==2
     num_object = 1;
-    if isfield(data,'num_roi')
-        num_roi = data.num_roi;
-    else
-        num_roi = 1;
-    end
 end
 
 if isfield(data, 'num_roi')
@@ -59,20 +44,12 @@ if nargin == 2
 end
 
 % Get cell_bw
-temp_file_mat = strcat(data.output_path, 'cell_bw.t', num2str(data.index), '.mat');
-%temp_file_tiff = strcat(data.output_path, 'cell_bw.t', num2str(data.index));
 if data.quantify_roi == 2 || data.quantify_roi == 3
     data.track_cell = 1;
-%    if isfield(data,'show_detected_boundary') && data.show_detected_boundary && ...
-%            isfield(data, 'cell_bw')
-     % Kathy 05/03/2017
-     % In update_figure.m show_detected_boundary is forced to be 1. So
-     % there are no other possibilities
     cell_bw = data.cell_bw;
-    if save_bw_file 
-        save(temp_file_mat, 'cell_bw');
-    end
-    [cell_bd, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
+    cell_bd = data.cell_bd;
+    cell_label = data.cell_label;
+    % [~, cell_label] = bwboundaries(cell_bw, 8, 'noholes');
     cell_prop = regionprops(cell_label, 'Area'); 
     num_object = length(cell_bd);
     obj = cell(num_object, 1);
@@ -143,7 +120,7 @@ end
 % Draw the rois,
 % Quantify the FI and ratio in the ROIs.
 data.time(data.index,1) = data.index;
-data.time(data.index, 2) = get_time(data.file{1}, 'method',2);
+data.time(data.index,2) = get_time(data.file{1}, 'method',2);
 % Draw ROIs
 % provide option for displaying figure, Lexie in 03/06/2015
 if (isfield(data, 'show_figure') && data.show_figure == 1)...
@@ -166,8 +143,19 @@ end; clear i j
     
 % quantify background
 if isfield(data, 'subtract_background') && data.subtract_background
-    data.channel1_bg(data.index) = compute_average_value(data.im{1}, data.bg_bw);
-    data.channel2_bg(data.index) = compute_average_value(data.im{2}, data.bg_bw);
+    switch data.subtract_background
+%         case 0 
+%             bg_value1 = 0;
+%             bg_value2 = 0;
+        case {1, 2}
+            bg_value1 = compute_average_value(data.im{1}, data.bg_bw);
+            bg_value2 = compute_average_value(data.im{2}, data.bg_bw);
+        case 3
+            bg_value1 = data.bg_value(1);
+            bg_value2 = data.bg_value(2);
+    end
+    data.channel1_bg(data.index) = bg_value1;
+    data.channel2_bg(data.index) = bg_value2;
 end
 
 

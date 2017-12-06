@@ -51,8 +51,10 @@ clear mask_bw;
 if show_figure
     hold on;
     % Draw background
-    bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
-    plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
+    if isfield(data, 'subtract_background') && data.subtract_background 
+        bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
+        plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
+    end 
     % Draw detected cells
     for n = 1 : length(data.cell_bd)
         plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',4);
