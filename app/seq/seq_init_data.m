@@ -95,14 +95,14 @@ switch lib_name
         data.num_code = 21;
         
     case 's2' % Corresponding to LIB02
-        data.path = strcat(root, '2017/mint/0320');
+        data.path = strcat(root, '2017/mint/0320/');
         data.library_file = 'YW002_S2_L001_R1_001.fastq';
         data.start_seq = 1;         
         data.start_code = 1;
         data.num_code = 21;
 
     case 's1' % Corresponding to LIB01
-        data.path = strcat(root, '0217/mint/0320');
+        data.path = strcat(root, '2017/mint/0320/');
         data.library_file = 'YW001_S1_L001_R1_001.fastq';
         data.start_seq = 1;         
         data.start_code = 1;
@@ -122,6 +122,31 @@ switch lib_name
         data.start_code = 21;
         data.num_code = 21;
 
+    % 03/07/2018
+    case '1ka_lib2_low'
+        data.path = strcat(root, '2017/mint/HiSeq4000_0306_2018/');
+        data.library_file = '1_KA-Lib2-Low_S10_L006_R1_001.fastq';
+        data.start_seq = 1;
+        data.start_code = 21;
+        data.num_code = 21;   
+    case '1km_lib2_high'
+        data.path = strcat(root, '2017/mint/HiSeq4000_0306_2018/');
+        data.library_file = '1_KM-Lib2-High_S11_L006_R1_001.fastq';
+        data.start_seq = 1;
+        data.start_code = 21;
+        data.num_code = 21;   
+    case '1ka_lib1_low'
+        data.path = strcat(root, '2017/mint/HiSeq4000_0306_2018/');
+        data.library_file = '1_KA-Lib1-Low_S6_L006_R1_001.fastq';
+        data.start_seq = 1;
+        data.start_code = 21;
+        data.num_code = 21;      
+    case '1km_lib1_high'
+        data.path = strcat(root, '2017/mint/HiSeq4000_0306_2018/');
+        data.library_file = '1_KM-Lib1-High_S7_L006_R1_001.fastq';
+        data.start_seq = 1;
+        data.start_code = 21;
+        data.num_code = 21;      
 end
 return;
 

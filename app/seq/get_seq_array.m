@@ -27,7 +27,7 @@ if get_info
     clear info; 
 else
     total_num_seq = 0;
-end;
+end
 
 end_seq = start_seq+ num_seq - 1;
 % start_code = 40; num_code = 21;

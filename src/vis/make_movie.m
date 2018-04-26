@@ -62,7 +62,7 @@ end
 if strcmp(computer, 'PCWIN64') || strcmp(computer, 'MACI64')
     use_video_writer = 1;
     video_object = VideoWriter(movie_info.movie_name, 'Motion JPEG AVI');
-    video_object.FrameRate = 10;
+    video_object.FrameRate = 3;
     video_object.Quality = 100;
     open(video_object);
 else

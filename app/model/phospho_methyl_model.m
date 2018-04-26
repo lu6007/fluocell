@@ -74,16 +74,22 @@ data.time_phospho = 0;
 data.num_var = 6;
 data.methyl_ko = methyl_ko; 
 ss = 0;
+
+% dt: the length of time step (1 second)
+% num_dt-1: number of steps in the simulation
 for i = 1:num_dt-1
     v = signal_matrix*y(:,i);
-    
+ 
+    % temp: temporary variable holding the intermediate 
+    % vector between y(:,i) and y(:,i+1)
     temp = y(:,i)+dt*v; 
+    
+    % ss: model state
+    % c_new: flux into nucleus    
     data.time_i = time(i);
     data.y_i = temp;
     [ss, c_new, data] = model_state(ss, data);
-    %c(:,i) = c_new+M2*c_new;  
     c(:,i) = c_new; 
-    clear c_new;
     
     y(:,i+1) = temp+c(:,i);
 

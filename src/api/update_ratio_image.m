@@ -56,13 +56,16 @@ default_value = {[]};
         end % if num_traks>0   
     end
     
+    fun = get_my_function();
     if isfield(data, 'save_processed_image') && data.save_processed_image && ~exist(file,'file')
         if (isfield(data, 'show_figure') && data.show_figure == 1)...
            || ~isfield(data, 'show_figure') % option for displaying figure
             [process_im, ~] = frame2im(getframe);
-            imwrite(process_im, file, 'tiff', 'Compression', 'none');
+            % imwrite(process_im, file, 'tiff', 'Compression', 'none');
+            fun.my_imwrite(process_im, file, data);
         else
-           imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
+           % imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
+           fun.my_imwrite(ratio_im, file, data);
         end
     end
     

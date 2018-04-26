@@ -100,6 +100,13 @@ elseif isfield(data, 'crop_image') && data.crop_image...
     im = temp; clear temp;
 end
 
+% Initialize data.is_z_stack
+if ~isfield(data, 'image_type')|| ~strcmp(data.image_type, 'z-stack')
+    data.is_z_stack = false;
+else 
+    data.is_z_stack = true;
+end
+
 % Initialize data.time, data.ratio, data.donor, data.acceptor
 % set data.num_roi, and data.roi_poly
 

@@ -20,7 +20,8 @@ parameter_default = {0, data.num_seq, 0, 1, false};
     parse_parameter(parameter_name, parameter_default, varargin);
 
 output = true;
-output_num_seq = 10;
+output_num_seq = 200;
+get_info = false;
 
 %% Load sequences
 % Initialize library information
@@ -61,7 +62,7 @@ for i = 1:length(output_seq)
         num_seq = num_res;
     end
     seq_array = get_seq_array(strcat(p, library_file), 'start_seq', start_seq, 'num_seq', num_seq, ...
-    'start_code', start_code, 'num_code', num_code, 'get_info', false, ...
+    'start_code', start_code, 'num_code', num_code, 'get_info', get_info, ...
     'select_good_sequence', select_good_sequence);
     if count_sanger
        count_sanger_sequence(seq_array, title_str);

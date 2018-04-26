@@ -134,9 +134,14 @@ end
 for i = 1 : num_object
     for j = 1:num_roi %subcellular layers
         %Modified to try to shrink the area that needs to be computed. - Shannon 8/4/2016
-        data.ratio{i}(data.index, j) = compute_average_value(ratio, roi_bw{j,i});
-        data.channel1{i}(data.index, j) = compute_average_value(cfp, roi_bw{j,i});
-        data.channel2{i}(data.index, j) = compute_average_value(yfp, roi_bw{j,i});
+        if data.is_z_stack
+            ii = data.z_index;
+        else
+            ii = data.index;
+        end
+        data.ratio{i}(ii, j) = compute_average_value(ratio, roi_bw{j,i});
+        data.channel1{i}(ii, j) = compute_average_value(cfp, roi_bw{j,i});
+        data.channel2{i}(ii, j) = compute_average_value(yfp, roi_bw{j,i});
     end
 end; clear i j
 %%

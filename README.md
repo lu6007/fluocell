@@ -1,13 +1,10 @@
 # fluocell-current
-<<<<<<< HEAD
-Fluocell: A Software Package for Analysis and Visualization of Fluorescence Image of Live Cells
+Fluocell: A Software Package for Analysis and Visualization of Ratiometric Fluorescence Image of Live Cells
 
-Fluocell is a software package for the analysis and visualization of fluorescence images of live cells, with applications in 
-migration and cancer invasion. The main package contains a visualization and quantification tool for fluorescence intensity 
-and FRET ratio images. Optional modules of diffusion analysis and polarity analysis can be obtained upon request. This package 
-is mainly written in MATLAB. It is being developed by a group of researchers in the "Molecular Engineering for Single Cell Imaging and Reprogramming Laboratory" at University of California, San Diego. As developers, we are open for collaboration on
-using the software or developing additional features. If you find this software package of interest or useful for your work, 
-please take the time to cite our work and write an email to tell us, since positive feedbacks are important to secure continuous 
+Fluocell is a software package for the analysis and visualization of fluorescence images of live cells, with applications in  migration and cancer invasion. The main package contains a visualization and quantification tool for fluorescence intensity and FRET ratio images. Optional modules of diffusion analysis and polarity analysis can be obtained upon request. This package is mainly written in MATLAB. It is being developed by a group of researchers in the "Molecular Engineering for Single Cell 
+Imaging and Reprogramming" at University of California, San Diego. As developers, we are open for collaboration on using the 
+software or developing additional features. If you find this software package of interest or useful for your work, please 
+take the time to cite our work and write an email to tell us, since positive feedbacks are important to secure continuous 
 support for this software.
 
 Citations for publication:
@@ -18,8 +15,3 @@ in micro-patterned live cells.
 
 Email Contact Shaoying (Kathy) Lu : shaoying.lu@gmail.com
 
-<<<<<<< HEAD
-Version: 6.1.0
-
-=======
->>>>>>> current/master

@@ -1,4 +1,6 @@
-% function intensity_value = quantify_ratio_multiple_cell(data, varargin)
+% function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, varargin)
+% para_name = {'add_channel','load_result', 'save_result'};
+% para_default = {0, 0, 0};
 % allows the quantification of many cells per image
 % by manual selection or automatic detection. 
 % Output: intensity_value, ratio_value
@@ -18,13 +20,24 @@
 % Copyright: Shaoying Lu 2015-2017
 % shaoying.lu@gmail.com
 function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, varargin)
-para_name = {'add_channel','enable_high_pass_filter'};
-para_default = {0, 0};
-add_channel = parse_parameter(para_name, para_default, varargin);
+para_name = {'add_channel','load_result', 'save_result'};
+para_default = {0, 0, 0};
+[add_channel, load_result, save_result] = parse_parameter(para_name, para_default, varargin);
+
+% Load file
+result_file = strcat(data.path, 'output/result.mat');
+if exist(result_file, 'file') && load_result
+    res = load(result_file);
+    intensity_value = res.intensity_value;
+    ratio_value = res.ratio_value;
+    return
+end
+
 %
 qfun = quantify_fun();
 max_num_cell = 1000;
 detect_type = 4; % combine channels 1 and 2 for detection
+
 
 num_image = length(data.image_index);
 switch data.detection
@@ -55,7 +68,7 @@ for i = 1:num_image
     %temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
     temp = temp2;
     if isfield(data, 'subtract_background') && data.subtract_background
-        data.bg_bw = get_background(temp, bg_file, 'method', 'manual'); clear temp;
+        data.bg_bw = get_background(temp, bg_file, 'method', data.subtract_background); clear temp;
     end
     im{1} = preprocess(temp1, data); clear temp1;
     im{2} = preprocess(temp2, data); clear temp2;
@@ -97,8 +110,8 @@ for i = 1:num_image
             num2str(num_roi), ' Regions of Interest');
         roi_file = strcat(p, 'output\ROI', '_', image_index, '.mat');
         [roi_bw, ~] = get_polygon(im_detect, roi_file, display_text, ...
-            'num_polygons', num_roi);
-        [~, label] = bwgoundaries (roi_bw, 8, 'noholes');
+            'num_polygon', num_roi);
+        [~, label] = bwboundaries (roi_bw, 8, 'noholes');
     else % Automatic detection
         % for the watershed method to work, need to replace "graythresh" by
         % "detect_cell" 
@@ -163,6 +176,10 @@ ratio_value = temp(1:num_cell, :); clear temp;
 my_figure; hist(ratio_value(:,1), 20); 
 xlabel('Ratio'); ylabel('Count'); 
 
+%
+if save_result
+    save(result_file, 'intensity_value', 'ratio_value');
+end
 return;
     
     
