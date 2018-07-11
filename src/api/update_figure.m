@@ -11,6 +11,7 @@ if isfield(data,'quantify_roi') && ...
        data.show_detected_boundary = 1;
        disp('Function update_figure warning: ');
        disp('data.show_detected_boundary has been set to 1 for quantify_roi == 2 or 3.');
+       disp('To revert this, check and uncheck the related box under 'Tools/Adjust Brightness Factor'. Or set data.show_detected_boundary = 0.');
        if ~isfield(data, 'brightness_factor')
            data.brightness_factor = 1.0;
        end
