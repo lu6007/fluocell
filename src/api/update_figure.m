@@ -56,9 +56,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
             second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
             im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
-            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
-                data.third_channel_im =  im_3;
-            end
+            data.third_channel_im = im_3;
+            % 
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{4}, data.f(1));
@@ -82,9 +81,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
             im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
             im_4 = preprocess(data.im{4}, data, 'bg_value', bg_value(4));
-            if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
-                data.third_channel_im =  im_3;
-            end
+            data.third_channel_im = im_3;
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{4}, data.f(1));
@@ -124,6 +121,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
             second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
             im_3 = preprocess(data.im{3}, data, 'bg_value', bg_value(3));
+            data.third_channel_im = im_3;
+
             % file{5} -> ratio_im -> data.f(1), im{5}
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
                 data.file{5}, data.f(1));

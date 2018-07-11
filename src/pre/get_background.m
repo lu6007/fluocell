@@ -34,10 +34,17 @@ switch method
         
 end
 
+if method == 4
+    bw = []; poly = [];
+    fun = get_my_function();
+    value = fun.get_image_percentile(im, 50);
+    return;
+end
+
 double_bw = double(bw);
 sum_bw = sum(sum(double_bw));
 value = sum(sum(double(im)/sum_bw.*double_bw));
-        
+
 return
 
 function [bg_bw, bg_poly] = get_background_auto(im, file_bg)

@@ -47,17 +47,19 @@ if isempty(bd)
     bd = cell(0,1); %create empty 0x1 cell. Same output as clean_up_boundary.
     label = []; 
     
-else
-[temp, ~] = clean_up_boundary(im, bd, with_smoothing,...
-    smoothing_factor);
- bw = detect_watershed(uint16(im), temp, 'segment_method', segment_method);
- if ~any(any(bw))
-     bw = temp;
- end
+else 
+%    if min_area >= 500
+    [temp, ~] = clean_up_boundary(im, bd, with_smoothing,...
+        smoothing_factor);
+    bw = detect_watershed(uint16(im), temp, 'segment_method', segment_method);
+%    end
+    if ~any(any(bw))
+        bw = temp;
+    end
  
- [bd, label] = bwboundaries(bw, 8,'noholes');
- clear temp;
+    [bd, label] = bwboundaries(bw, 8,'noholes');
+    clear temp;
 end
 %temp = bw; clear bw; bw{1} = temp;
 
-return;
+return

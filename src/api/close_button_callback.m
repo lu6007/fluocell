@@ -20,7 +20,7 @@ if isfield(data, 'f')
         close(data.f(i));
     end
     data = rmfield(data,'f');
-end;
+end
 return;
 
 %  Clean up data
@@ -28,33 +28,37 @@ function data = clean_up(data)
 if isfield(data,'bg_bw')
     data = rmfield(data,'bg_bw');
     data = rmfield(data,'bg_poly');
-end;
+end
 if isfield(data,'rectangle')
     data = rmfield(data,'rectangle');
-end;
+end
 if isfield(data, 'roi_bw')
     data = rmfield(data, 'roi_bw');
     data = rmfield(data, 'roi_poly');
-end;
+end
 
 if isfield(data, 'ratio')
     data = rmfield(data, {'time','ratio', 'cell_size', 'channel1', 'channel2'}); 
-end;
+end
 % Lexie on 3/2/2015; delete im after close figure
 if isfield(data, 'ref_centroid')
     data = rmfield(data, 'ref_centroid');
-end;
+end
 if isfield(data,'roi_poly')
     data = rmfield(data, 'roi_poly');
     data = rmfield(data, 'roi_bw');
-end;
+end
 if isfield(data, 'mask')
     data = rmfield(data, 'mask');
-end;
+end
 if isfield(data,'mask_bw')
     data = rmfield(data,'mask_bw');
-end;
+end
 if isfield(data,'mask_bg')
     data = rmfield(data,'mask_bg');
-end;
+end
+% For tracking information
+if isfield(data, 'frame_with_track')
+    data = rmfield(data,'frame_with_track'); 
+end
 return;

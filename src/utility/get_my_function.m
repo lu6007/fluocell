@@ -10,6 +10,7 @@
 function function_handle = get_my_function()
 fun.my_imwrite = @my_imwrite; 
 fun.fast_imread = @fast_imread;
+fun.get_image_percentile = @get_image_percentile; 
 function_handle = fun;
 return
 
@@ -58,4 +59,11 @@ function test = fast_imread(file_name)
     end
     tifflib('close',FileID);
     test = FinalImage;
+return;
+
+function value = get_image_percentile(im, perc)
+[num_row, num_col] = size(im);
+im_vector = reshape(im, [num_row*num_col, 1]);
+value = prctile(double(im_vector), perc);
+clear im_vector; 
 return;

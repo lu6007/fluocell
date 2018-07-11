@@ -8,11 +8,13 @@ default_value = {[]};
 [this_frame_with_track] = parse_parameter(parameter_name, default_value, varargin);
 
     % data.file{3} -> ratio_im -> data.im{3} -> data.f(1)
-    if ~exist(file, 'file') || (isfield(data,'quantify_roi') && data.quantify_roi)
+    if ~exist(file, 'file') || (isfield(data,'quantify_roi') && data.quantify_roi) || ...
+            (isfield(data, 'save_processed_image') && data.save_processed_image ==2)
         ratio = compute_ratio(first_channel_im, second_channel_im);
     end
         
-    if ~exist(file, 'file')
+    if ~exist(file, 'file') || ...
+            (isfield(data, 'save_processed_image') && data.save_processed_image ==2)
         ratio_im = get_imd_image(ratio, max(first_channel_im, second_channel_im), ...
             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
     else 
@@ -34,11 +36,14 @@ default_value = {[]};
     
     % This part is needed for detecing cell_bw for quantifcation even when
     % show_figure = 0. 
-    if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
+    if isfield(data, 'show_detected_boundary') && data.show_detected_boundary 
         if isfield(data, 'need_apply_mask')  && data.need_apply_mask == 3
             data = get_boundary(data.third_channel_im * 2, data);
-        else
+        elseif data.show_detected_boundary == 1
             data = get_boundary(first_channel_im + second_channel_im, data);
+        elseif data.show_detected_boundary == 3
+            im_3 = high_pass_filter(data.third_channel_im, 61);
+            data = get_boundary(uint8(im_3*8), data);
         end
     end
     
@@ -49,23 +54,26 @@ default_value = {[]};
             centroid = fwt_k.centroid(1:num_track,:);
             this_track_index = fwt_k.track_index(1:num_track);
             figure(handle); hold on; 
-            plot(centroid(:,1), centroid(:,2), 'r+');
+            plot(centroid(:,1), centroid(:,2), 'k+');
             text_str = num2str(this_track_index);
             text(centroid(:,1)+2, centroid(:,2),...
-                text_str, 'color', 'r','FontWeight', 'bold','FontSize', 18);
+                text_str, 'color', 'k','FontWeight', 'bold','FontSize', 18);
         end % if num_traks>0   
     end
     
     fun = get_my_function();
-    if isfield(data, 'save_processed_image') && data.save_processed_image && ~exist(file,'file')
-        if (isfield(data, 'show_figure') && data.show_figure == 1)...
-           || ~isfield(data, 'show_figure') % option for displaying figure
-            [process_im, ~] = frame2im(getframe);
-            % imwrite(process_im, file, 'tiff', 'Compression', 'none');
-            fun.my_imwrite(process_im, file, data);
-        else
-           % imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
-           fun.my_imwrite(ratio_im, file, data);
+    if isfield(data, 'save_processed_image') 
+        if data.save_processed_image == 1 && ~exist(file,'file') ...
+                || data.save_processed_image == 2 
+            if (isfield(data, 'show_figure') && data.show_figure == 1)...
+               || ~isfield(data, 'show_figure') % option for displaying figure
+                [process_im, ~] = frame2im(getframe);
+                % imwrite(process_im, file, 'tiff', 'Compression', 'none');
+                fun.my_imwrite(process_im, file, data);
+            else
+               % imwrite(ratio_im, file, 'tiff', 'Compression', 'none');
+               fun.my_imwrite(ratio_im, file, data);
+            end
         end
     end
     

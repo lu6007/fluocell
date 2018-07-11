@@ -158,6 +158,10 @@ if isfield(data, 'subtract_background') && data.subtract_background
         case 3
             bg_value1 = data.bg_value(1);
             bg_value2 = data.bg_value(2);
+        case 4
+            fun = get_my_function(); 
+            bg_value1 = fun.get_image_percentile(data.im{1}, 50);
+            bg_value2 = fun.get_image_percentile(data.im{2}, 50);
     end
     data.channel1_bg(data.index) = bg_value1;
     data.channel2_bg(data.index) = bg_value2;

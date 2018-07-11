@@ -20,9 +20,9 @@
 % Copyright: Shaoying Lu 2015-2017
 % shaoying.lu@gmail.com
 function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, varargin)
-para_name = {'add_channel','load_result', 'save_result'};
-para_default = {0, 0, 0};
-[add_channel, load_result, save_result] = parse_parameter(para_name, para_default, varargin);
+para_name = {'add_channel','load_result', 'save_result', 'detect_type'};
+para_default = {0, 0, 0, 4};
+[add_channel, load_result, save_result, detect_type] = parse_parameter(para_name, para_default, varargin);
 
 % Load file
 result_file = strcat(data.path, 'output/result.mat');
@@ -36,8 +36,6 @@ end
 %
 qfun = quantify_fun();
 max_num_cell = 1000;
-detect_type = 4; % combine channels 1 and 2 for detection
-
 
 num_image = length(data.image_index);
 switch data.detection
@@ -65,22 +63,26 @@ for i = 1:num_image
     if ~exist(strcat(data.path, 'output/'), 'dir')
         mkdir(strcat(data.path, 'output/'));
     end
-    %temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
-    temp = temp2;
+    if add_channel % add 1 additional channel
+        file{3} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{3});
+        temp3 = imread(strcat(data.path, file{3}));
+    end
+
+    temp = qfun.get_image_detect({temp1, temp2, temp3}, data, 'type', detect_type);
     if isfield(data, 'subtract_background') && data.subtract_background
-        data.bg_bw = get_background(temp, bg_file, 'method', data.subtract_background); clear temp;
+        data.bg_bw = get_background(temp, bg_file, 'method', data.subtract_background); 
     end
     im{1} = preprocess(temp1, data); clear temp1;
     im{2} = preprocess(temp2, data); clear temp2;
     ratio = compute_ratio(im{1}, im{2});
+    im_detect = uint8(preprocess(temp, data)); 
     % ratio_im
-    ratio_im = get_imd_image(ratio, max(im{1}, im{2}), ...
+    ratio_im = get_imd_image(ratio, im_detect, ...
             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
+    clear temp;
         
     if add_channel % add 1 additional channel
-        file{3} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{3});
-        temp = imread(strcat(data.path, file{3}));
-        im{3} = preprocess(temp,data); clear temp;
+        im{3} = preprocess(temp3,data); clear temp3;
     end
     
     i8 = mod(i,8);
@@ -94,7 +96,7 @@ for i = 1:num_image
     subplot(2,4, i8); % hold on;
     
     % im_detect is the image used for detection. 
-    im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
+    % im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
     if isfield(data, 'bg_bw') 
         display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
     % display_boundary(data.bg_bw, 'im', im{2}, 'line_color', 'r', 'new_figure', 0, 'type', 2);
@@ -115,7 +117,7 @@ for i = 1:num_image
     else % Automatic detection
         % for the watershed method to work, need to replace "graythresh" by
         % "detect_cell" 
-        threshold = graythresh(im_detect);
+        threshold = graythresh(uint8(im_detect));
         if strcmp(version, 'R2017')||strcmp(version, 'R2018')
             bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
         else % older versions
@@ -173,8 +175,8 @@ temp = intensity_value; clear intensity_value;
 intensity_value = temp(1:num_cell,:); clear temp;
 temp = ratio_value; clear ratio_value;
 ratio_value = temp(1:num_cell, :); clear temp;
-my_figure; hist(ratio_value(:,1), 20); 
-xlabel('Ratio'); ylabel('Count'); 
+% my_figure; hist(ratio_value(:,1), 20); 
+% xlabel('Ratio'); ylabel('Count'); 
 
 %
 if save_result

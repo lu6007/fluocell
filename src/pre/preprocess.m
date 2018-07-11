@@ -43,7 +43,7 @@ bg_value = parse_parameter(para_name, default_value, varargin);
             switch data.subtract_background
                 case {1, 2}
                     im_sub = subtract_background(im, data, 'method', 1);
-                case 3
+                case {3, 4}
                     im_sub = subtract_background(im, bg_value, 'method', 4);
             end
             clear im; im = max(im_sub, 0); clear im_sub; %remove any negatives if they occured
