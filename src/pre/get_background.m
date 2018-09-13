@@ -5,42 +5,50 @@
 % 1 - manually choose background
 % 2 - automatically select background
 % 3 - automatically select background to calculate a constant value
+% 4 - (beta) the background value is chosen as a given percentile of the histogram   
+% 5 - (beta) the background is read from the TIFF image file output/background.tif
+
 % provide two methods to get the background:
 % method "auto": Automatically select a background region with the minimal 
 % intensity value among the four corners.
 % method "manual": Manually choose the region as the background.
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
-% Modified by Lexie Qin Qin and Shaoyng Lu 2014
+% Modified by Lexie Qin Qin and Shaoyng Lu 2014 and 2018
 
 function [bw, poly, value] =get_background(im, file_bg, varargin)
-parameter_name = {'method'};
-default_value = {'manual'};
-method = parse_parameter(parameter_name, default_value,varargin);
+parameter_name = {'method', 'percentile'};
+default_value = {'manual', 50};
+[method, percent] = parse_parameter(parameter_name, default_value,varargin);
 
 switch method
-    case {'manual','m', 1}        % 1 and 2 added Kathy 04/24/2016
+    case {'manual','m', 1}        
         [bw_cell, poly_cell] = get_polygon(im, file_bg,...
             'Please choose the background region.');
         bw = bw_cell{1};
         poly = poly_cell{1};
         
-    case {'auto','a', 2, 3}       % Automatic selection and use the first value
+    case {'auto','a', 2, 3}       
         %Automatically select a background region with the minimal 
         %intensity value among the four corners.
         [bw_cell, poly_cell] = get_background_auto(im, file_bg); 
         bw = bw_cell{1};
         poly = poly_cell{1};
         
+    case 4 % constant percentile background subtraction
+        bw = []; poly = [];
+        fun = get_my_function();
+        value = fun.get_image_percentile(im, percent);
+        return;
+        
+    case 5 % flatfield correction by an image file
+        % The background is provided by the image file of file_bg.  
+        % Output is saved in the bw file. 
+        bw = imread(file_bg); poly = [];
+        return;
 end
 
-if method == 4
-    bw = []; poly = [];
-    fun = get_my_function();
-    value = fun.get_image_percentile(im, 50);
-    return;
-end
-
+% 1 2 or 3
 double_bw = double(bw);
 sum_bw = sum(sum(double_bw));
 value = sum(sum(double(im)/sum_bw.*double_bw));

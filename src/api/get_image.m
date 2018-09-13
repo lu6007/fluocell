@@ -61,8 +61,14 @@ if fluocell_data_roi_move
 end
 
 if isfield(data,'subtract_background') && data.subtract_background
-    %im = imread(data.file{1})
-    bg_file = strcat(data.output_path, 'background.mat');
+    subtract_bg = data.subtract_background; 
+    assert(subtract_bg >= 1 && subtract_bg <=5, ...
+        'data.subtract_background should be an integer with a value between 1 and 5.' ); 
+    if subtract_bg <=4
+        bg_file = strcat(data.output_path, 'background.mat');
+    else % subtract_bg = 5
+        bg_file = strcat(data.output_path, 'background.tif');
+    end 
     if exist(bg_file, 'file')
         [temp.bw{1}, temp.poly{1}] = get_background(im, bg_file);
         data.bg_bw = temp.bw{1};
@@ -175,8 +181,8 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
 end % if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
 
 % Load the mask if needed. 
-% If data.need_apply_mask == 1,2,3, load mask from 'mask.mat', selected
-% from channels 1, 2, or 3
+% If data.need_apply_mask == 1,2,3, selected from channels 1, 2, or 3, respectivley. 
+% If there is a pre-selected mask saved in file, load it from the file 'output/mask.mat'. 
 % If data.need_apply_mask == 4, load mask from existing files with
 % 'data.mask_pattern' and changing indices. 
 if isfield(data, 'need_apply_mask') && data.need_apply_mask
@@ -184,26 +190,23 @@ if isfield(data, 'need_apply_mask') && data.need_apply_mask
         case {1, 2, 3}
             file_name = strcat(data.output_path, 'mask.mat');
             if ~isfield(data, 'mask')
-                % Correct the title for mask selection
-                % temp = get_polygon(data.im{1}, file_name, 'Please Choose the Mask Region');
-                    % Lexie on 10/28/2015
-                    % Kathy : problematic implementation for case 2 and 3,
-                    % 09/19/2016
-                    if data.need_apply_mask == 1
-                        temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
-                    elseif data.need_apply_mask == 2
-                        data.file{2} = regexprep(data.file{1}, data.channel_pattern{1}, data.channel_pattern{2});
-                        temp_im = imread(data.file{2});
-                        temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
-                        clear temp_im
-                    elseif data.need_apply_mask == 3
-                        data.file{3} = regexprep(data.file{1}, data.channel_pattern{1}, data.channel_pattern{3});
-                        temp_im = imread(data.file{3});
-                        temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
-                        clear temp_im
-                    else
-                        temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
-                    end   
+                if data.need_apply_mask == 1
+                    temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
+                elseif data.need_apply_mask == 2
+                    data.file{2} = regexprep(data.file{1}, data.channel_pattern{1}, ...
+                        data.channel_pattern{2});
+                    temp_im = imread(data.file{2});
+                    temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
+                    clear temp_im
+                elseif data.need_apply_mask == 3
+                    data.file{3} = regexprep(data.file{1}, data.channel_pattern{1}, ...
+                        data.channel_pattern{3});
+                    temp_im = imread(data.file{3});
+                    temp = get_polygon(temp_im, file_name, 'Please Choose the Mask Region');
+                    clear temp_im
+                else
+                    temp = get_polygon(im, file_name, 'Please Choose the Mask Region');
+                end   
                 data.mask = temp{1}; clear temp;
             end % if ~isfield(data, 'mask'),
         case 4
@@ -273,6 +276,7 @@ switch data.protocol
         fret_file = get_fret_file(data, data.file{1});
         data.file{4} = strcat(fret_file, '.', 'tiff');
         data.file{5} = 'tiff';
+        data.file{6} = strcat(data.output_path, 'dic_im', index_str,'.tiff');
 
     case 'FRET-Intensity-DIC'
         data.file{2} = regexprep(data.file{1}, data.channel_pattern{1},...

@@ -26,7 +26,7 @@ bg_value = parse_parameter(para_name, default_value, varargin);
         if isfield(data,'high_pass_filter') && data.high_pass_filter
             hps = data.high_pass_filter; 
             temp = high_pass_filter(im, hps); clear im;
-            im = temp; clear temp;
+            im = uint16(temp.*double(temp>0)); clear temp;
         end
 
         if isfield(data, 'subtract_background') && data.subtract_background
@@ -74,6 +74,7 @@ bg_value = parse_parameter(para_name, default_value, varargin);
             temp = im*data.scale_image; clear im;
             im = temp; clear temp;
         end
+        
         new_im = im;
         clear im;
 return;

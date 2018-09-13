@@ -4,6 +4,7 @@
 
 function data= update_figure(data)
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
+my_func = get_my_function();
 
 if isfield(data,'quantify_roi') && ...
         (data.quantify_roi == 2 ||data.quantify_roi == 3)
@@ -11,7 +12,8 @@ if isfield(data,'quantify_roi') && ...
        data.show_detected_boundary = 1;
        disp('Function update_figure warning: ');
        disp('data.show_detected_boundary has been set to 1 for quantify_roi == 2 or 3.');
-       disp('To revert this, check and uncheck the related box under 'Tools/Adjust Brightness Factor'. Or set data.show_detected_boundary = 0.');
+       disp('To revert this, check and uncheck the related box under Tools/Adjust Brightness Factor.');
+       disp('Or set data.show_detected_boundary = 0.');
        if ~isfield(data, 'brightness_factor')
            data.brightness_factor = 1.0;
        end
@@ -37,6 +39,19 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
         case {'FRET', 'Ratio', 'FLIM'}
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
             second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            
+%             % clean up images for ratio display
+%             im1 = first_channel_im;
+%             im2 = second_channel_im;
+%             mask = (im1 + im2)>2*200;
+%             mask_open = bwareaopen(mask, 25);
+%             se = strel('disk', 3);
+%             mask_smooth = imerode(imdilate(mask_open, se), se);
+%             clear first_channel_im second_channel_im mask mask_open se;
+%             first_channel_im = double(im1).*double(mask_smooth);
+%             second_channel_im = double(im2).*double(mask_smooth);
+%             clear mask_smooth im1 im2; 
+
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
@@ -73,7 +88,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 axis off; my_title(data.channel_pattern{3}, data.index, 'data', data);
             end
 
-            figure(data.f(3)); save_image(data, data.file{6}, im_3, caxis, 'my_color_map', 'jet');
+            figure(data.f(3)); 
+            my_func.save_image(data, data.file{6}, im_3, caxis, 'my_color_map', 'jet');
 
             clear first_channel_im second_channel_im im_3 ratio_im;
 
@@ -118,6 +134,12 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 colormap gray; 
                 axis off; my_title('DIC', data.index, 'data', data);
             end
+            
+            % The allows saving DIC images
+            if isfield(data, 'save_processed_image') && data.save_processed_image == 3
+                figure(data.f(4)); my_func.save_image(data, data.file{6}, data.im{3}, caxis);
+            end
+
         case 'FRET-Intensity-DIC'
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
             second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
@@ -141,7 +163,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 axis off; my_title('DIC', data.index, 'data', data);
                 clear first_channel_im second_channel_im ratio_im;
             end
-            figure(data.f(3)); save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
+            figure(data.f(3)); 
+            my_func.save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
 		 clear im_3;
 
       case 'STED'
@@ -176,7 +199,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 data = quantify_region_of_interest(data, data.im{2});
              end
 
-             figure(data.f(2)); save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
+             figure(data.f(2)); 
+             my_func.save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
              clear second_channel_im;
         case 'Intensity-DIC'
             figure(data.f(1)); my_imagesc(data.im{1}); 
@@ -195,10 +219,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
                 data = quantify_region_of_interest(data, data.im{3});
             end
             
-             figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
+             figure(data.f(3)); 
+             my_func.save_image(data, data.file{3}, data.im{3}, caxis);
              % The allows saving DIC images
-             if isfield(data, 'save_processed_image') && data.save_processed_image == 2
-                 figure(data.f(2)); save_image(data, data.file{5}, data.im{2}, caxis);
+             if isfield(data, 'save_processed_image') && data.save_processed_image == 3
+                 figure(data.f(2)); my_func.save_image(data, data.file{5}, data.im{2}, caxis);
              end
                 
     end %switch data.protocol
@@ -258,23 +283,4 @@ else
 end
 return;
 
-% figure(data.f(3)); save_image(data, data.file{3}, data.im{3}, caxis);
-function save_image(data, file, im, caxis, varargin)
-para_name = {'my_color_map'};
-para_default = {'gray'};
-my_color_map = parse_parameter(para_name, para_default, varargin);
-
-if ~exist(file, 'file') &&...
-    isfield(data, 'save_processed_image')&& data.save_processed_image                
-    temp = imscale(im, 0, 1, caxis);
-    switch my_color_map
-        case 'gray'
-            imwrite(temp, file, 'tiff','compression', 'none');
-        case 'jet'
-            clear im;
-            im = gray2ind(temp); 
-            imwrite(im, jet, file, 'tiff', 'compression', 'none');
-    end % switch
-end
-return;
 

@@ -33,7 +33,7 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
-function [bd_layer, label_layer]= divide_layer(cell_bw, num_roi,varargin)
+function [bd_layer, label_layer]= divide_layer(cell_bw, n,varargin)
 parameter_name = {'xylabel'};
 % method 1 - relative distance to the centroid
 % method 2 - distance transformation to the extracellular space
@@ -47,42 +47,11 @@ if ~iscell_cell_bw
     cell_bw = temp;
 end
 
+num_roi = n; 
 num_object = length(cell_bw);
 bd_layer = cell(num_object, num_roi);
 label_layer = cell(num_object, 1); 
-% we can remove method in the comments and the program 12/9/2015
-% if method == 1,
-%     % Compute the boundarys for the layers.
-%     % The layers are labelled from 1 to n from outside to 
-%     % the centroid.
-%     bd = bw2bd(cell_bw);
-%     bd_layer{1} = bd{1};
-%     cell_prop = regionprops(bwlabel(cell_bw), 'Centroid', 'Area');
-%     area = cat(1, cell_prop.Area);
-%     [max_area i] = max(area);
-%     c = cell_prop(i).Centroid;
-%     for i = 2:n,
-%         x = bd{1}(:,2);
-%         y = bd{1}(:,1);
-%         new_x = c(1)+(x-c(1))*(n-i+1)/n;
-%         new_y = c(2)+(y-c(2))*(n-i+1)/n;
-%         bd_layer{i} = [new_y new_x];
-%     end;
-% 
-%     % Compute the label matrix for the layered structure of the cell
-%     % the label matrix was numbered from 1 to n from
-%     % outside to the centroid.
-%     label_layer = zeros(size(cell_bw));
-%     label_layer = label_layer+double(cell_bw);
-%     for i = 2:n,
-%         cell_i = bd2im(cell_bw, bd_layer{i}(:,2), bd_layer{i}(:,1));
-%         label_layer = label_layer+double(cell_i).*double(cell_bw);
-%     end;
-% elseif method == 2,
-% Alternatively the label matrix can be computed by the distance transformation
-% function bwdist().
-% Then we use the function bw2bd() to calculate the boundaryies.
-%
+
 % Multiple detections with num_object
 for j = 1 : num_object
     im = bwdist(~cell_bw{j});

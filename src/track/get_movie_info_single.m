@@ -8,7 +8,7 @@ load_file = parse_parameter(parameter,default, varargin);
 data = init_data(cell_name);
 mi_file_name = strcat(data.path, 'movie_info.mat');
 
-if exist(mi_file_name, 'file') && load_file,
+if exist(mi_file_name, 'file') && load_file
     result = load(mi_file_name);
     movie_info = result.movie_info;
     return;
@@ -26,7 +26,7 @@ else
     num_fields = length(fields);
     c = cell(num_frames, num_fields);
 
-    for k = 1:num_frames, 
+    for k = 1:num_frames 
         i = data.image_index(k);
         index = sprintf(pattern, i);
         file_name = strcat(data.path, channel{1}, '_fa_', index, '.mat');
@@ -62,7 +62,7 @@ else
         pax_total_intensity = zeros(num_fas, 1);
         total_ratio = zeros(num_fas,1);
         num_pixels = zeros(num_fas, 1);
-        for j = 1:num_fas,
+        for j = 1:num_fas
             index = fa_props(j).PixelList; 
             % PixelList gives a num_fasx2 vector including 
             % (colum_number row_number)
@@ -75,7 +75,7 @@ else
             total_ratio(j) = sum(im_ratio(linear_index));
             fa_label(linear_index) = fa_total_intensity(j);
             clear index linear_index
-        end;
+        end
     %         figure; imagesc(fa_label); 
     %         hold on; plot(fa_centroids(:,1), fa_centroids(:,2), 'w+');
     % 
@@ -102,9 +102,9 @@ else
     %             'average_ratio', average_ratio);
             clear im_fak im_pax im_ratio fa_centroids fa_total_intensity fa_label...
                 fa_props fa_bd fak_total_intensity pax_total_intensity z
-        end; % for k = 1:5
+    end % for k = 1:5
     movie_info = cell2struct(c, fields, 2);
     save(mi_file_name, 'movie_info');
-end; %if exist(mi_file_name, 'file') && load_file,
+end %if exist(mi_file_name, 'file') && load_file,
 
 return;

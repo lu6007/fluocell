@@ -7,8 +7,8 @@ function my = my_function()
     %
     my.get_value_norm = @get_value_norm;
     my.get_value_before = @get_value_norm;
-    my.get_time_interp = @get_time_interp;
     my.normalize_time_value_array = @normalize_time_value_array;
+    my.get_time_interp = @get_time_interp;
     my.interpolate_time_value_array = @interpolate_time_value_array;
     my.statistic_test = @statistic_test;
     my.get_derivative = @get_derivative;
@@ -50,16 +50,35 @@ function list = my_dir(p)
     list = temp; clear temp; 
 return
 
-% function value_before = my_get_value_before(time, value)
+% function value_before = my_get_value_norm(time, value)
 % Find average value for time between -15 min and 0 min
-function value_norm = get_value_norm(time, value)
-    norm_index = (time>=-15) & (time<=0); 
-    % norm_index = (time>=70) & (time<=80);
+function value_norm = get_value_norm(norm_index, value)
     value_norm = nanmean(value(norm_index))';
     if isnan(value_norm) 
         % find the first non-nan value and use that to normalize
        ii = find(~isnan(value),1); 
        value_norm = value(ii);
+    end
+return
+
+% function norm_ratio_array = normalize_time_value_array(time_array, ratio_array )
+% Calculated normalized ratio array
+function norm_value_array = normalize_time_value_array(time_array, value_array, varargin)
+
+    para_name = {'time_bound'};
+    default_v = {[-15 0]};
+    time_bound = parse_parameter(para_name, default_v, varargin);
+    
+    [num_frame, num_cell] = size(time_array);
+    norm_value_array = nan(num_frame, num_cell);
+    time_index = @(time, bound) (time>=bound(1)) & (time<=bound(2));
+    for j = 1:num_cell
+        value = value_array(:,j);
+        time = time_array(:, j);
+        norm_index = time_index(time, time_bound);
+        value_norm = get_value_norm(norm_index, value);
+        norm_value_array(:,j) = value/value_norm;
+        clear value time norm_index;
     end
 return
 
@@ -76,34 +95,36 @@ function time_interp = get_time_interp(time_array, varargin)
         time_bound = [max(min(time_array)), min(max(time_array))]; 
     end % if isempty(time_bound)
     
-    time_interp = [time_bound(1):0.5:0, 0.1:0.1:10, 10.5:0.5:time_bound(2)]';
-return
-
-% function norm_ratio_array = normalize_time_value_array(time_array, ratio_array )
-% Calculated normalized ratio array
-function norm_value_array = normalize_time_value_array(time_array, value_array)
-    [num_frame, num_cell] = size(time_array);
-    norm_value_array = nan(num_frame, num_cell);
-    for j = 1:num_cell
-        value = value_array(:,j);
-        value_norm = get_value_norm(time_array(:,j), value);
-        norm_value_array(:,j) = value/value_norm;
-        clear value;
-    end
+    t_step = 0.5; 
+    % time_interp = [time_bound(1):t_step:0, 0.1:0.1:10, 10.5:t_step:time_bound(2)]';
+    if time_bound(1)<=t_step/5 
+        time_interp = [time_bound(1):t_step:0, t_step/5:t_step/5:t_step*20, ...
+            t_step*21:t_step:time_bound(2)]';
+    elseif time_bound(1)<=t_step*20
+        time_interp = [time_bound(1):t_step/5:t_step*20, t_step*21:t_step:time_bound(2)]';
+    else
+        time_interp = (time_bound(1):t_step:time_bound(2))';
+    end        
 return
 
 % function interp_value_array = interpolate_time_value_array(time_array, value_array,...
 %    time_interp)
 % Calculate interpolation of arrays
-function interp_value_array = interpolate_time_value_array(time_array, value_array,...
-    time_interp)
-    num_time = size(time_interp, 1);
-    num_cell = size(value_array, 2);
-    interp_value_array = nan(num_time, num_cell);
-    for j = 1:num_cell
-        interp_value_array(:, j) = my_interp(time_array(:,j),value_array(:, j), ...
-            time_interp, 'smooth_span', 9);
-    end 
+function [time_array_interp, interp_value_array] = ...
+    interpolate_time_value_array(time_array, value_array, varargin)
+    para_name = {'smooth_span', 'time_bound'};
+    default_value = {9, []};
+    [smooth_span, time_bound] = ... 
+        parse_parameter(para_name, default_value, varargin);
+
+        time_array_interp = get_time_interp(time_array, 'time_bound', time_bound);
+        num_time = size(time_array_interp, 1);
+        num_cell = size(value_array, 2);
+        interp_value_array = nan(num_time, num_cell);
+        for j = 1:num_cell
+            interp_value_array(:, j) = my_interp(time_array(:,j),value_array(:, j), ...
+                time_array_interp, 'smooth_span', smooth_span);
+        end 
 return;
 
 % function p = statistic_test(x, y, varargin)
@@ -177,3 +198,5 @@ index = (t>=t95)&(t<=t95+time_span);
 area_curve = trapz(t(index), y(index));
 area_ratio = area_curve/max_y_95*time_span;
 return
+
+

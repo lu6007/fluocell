@@ -48,6 +48,14 @@ end
 
 clear mask_bw;
 
+if isfield(data, 'min_area') && data.min_area <= 250
+    % use thin lines
+    lw =1 ; % line_width 
+else
+    % use thick lines
+    lw = 4;
+end
+
 if show_figure
     hold on;
     % Draw background
@@ -57,7 +65,7 @@ if show_figure
     end 
     % Draw detected cells
     for n = 1 : length(data.cell_bd)
-        plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',4);
+        plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',lw);
     end
     hold off;
 end

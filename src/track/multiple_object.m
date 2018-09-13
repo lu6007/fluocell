@@ -148,7 +148,7 @@ classdef multiple_object
       
             %% Checking and plotting cell splitting.
             %Run two checks when a new cell appears:
-            %Check cell size - seems to shrink ~half about 1-3 frames before split
+            %Check cell size - seems to shrink about 1-3 frames before split
             %Check cell location - ensure new and old cells are sufficiently close
             if plot_cell_split == 1
                 if num_track > 1                    
@@ -257,7 +257,9 @@ classdef multiple_object
             num_fields = length(field);
             c = cell(num_frame, num_fields);
                         
-            for k = (data.image_index)'                
+            %%% Kathy 7/28/2018
+            for k = (data.image_index)'  
+            %%%
                 data.index = data.image_index(k);
                 data = get_image(data, 0);
                 
@@ -341,7 +343,9 @@ classdef multiple_object
                 end
             end
             
+            %%% Kathy 7/22/2018
             for i = (data.image_index)'
+            %%% 
                 for j = 1:num_object
                     num_roi = size(data.ratio{j},2);%get the num of subcellular layers
                     % ^^ Could change this to if-statement for num_roi instead ^^

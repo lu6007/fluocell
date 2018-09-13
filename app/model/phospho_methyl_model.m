@@ -17,10 +17,12 @@
 % All Rights Reserved
 
 function result = phospho_methyl_model(data, varargin)
-para_name = {'a1', 'a2', 'show_figure','b', 'methyl_ko'}; 
-para_default = {data.a(1), data.a(2), 0, data.b, 0}; 
-[a1, a2, show_figure, b, methyl_ko] = parse_parameter(para_name, ...
-    para_default, varargin);
+para_name = {'a1', 'a2', 'show_figure', 'show_output', 'b', 'more_b', ...
+    'methyl_ko', 'max_t', 'model_type'}; 
+para_default = {data.a(1), data.a(2), 0, 1, data.b, data.more_b, 0, 400, ...
+    1}; 
+[a1, a2, show_figure, show_output, b, data.more_b, methyl_ko, max_t, model_type] = ...
+    parse_parameter(para_name, para_default, varargin);
 
 max_phospho_enzyme = data.max_phospho_enzyme; 
 num_histone = data.num_histone;  % 60M 60000; 
@@ -28,7 +30,7 @@ max_methyl_enzyme = data.max_methyl_enzyme;
 dt = data.time_step;
 min_kdm = data.min_demethylase;
 
-tspan =[-50, 350]; %[-100; 800]; % min
+tspan =[-50, max_t]; % [-50, 350]; %[-100; 800]; % min
 time = (tspan(1): dt: tspan(2))';
 num_dt = size(time, 1);
 
@@ -39,6 +41,7 @@ num_dt = size(time, 1);
 num_var = 6;
 y = zeros(num_var, num_dt);
 c = zeros(num_var, num_dt);
+state = zeros(num_dt, 1);
 y(1, 1) = data.base_phospho; % H3S10 phosphorylation
 y(2, 1) = data.base_kinase; % kinase
 y(3, 1) = data.base_phosphotase; % phosphotase
@@ -73,7 +76,17 @@ end
 data.time_phospho = 0;
 data.num_var = 6;
 data.methyl_ko = methyl_ko; 
+data.a1 = a1;
+data.a2 = a2; 
 ss = 0;
+
+if show_output
+    % output key parameters
+    fprintf('\n data = \n\n')
+    disp(data);
+    fprintf('\n signal_matrix = \n\n')
+    disp(signal_matrix);
+end
 
 % dt: the length of time step (1 second)
 % num_dt-1: number of steps in the simulation
@@ -88,7 +101,8 @@ for i = 1:num_dt-1
     % c_new: flux into nucleus    
     data.time_i = time(i);
     data.y_i = temp;
-    [ss, c_new, data] = model_state(ss, data);
+    % [ss, c_new, data] = model_state(ss, data, 'type', 1); 
+    [ss, c_new, data] = model_state(ss, data, 'type', model_type);
     c(:,i) = c_new; 
     
     y(:,i+1) = temp+c(:,i);
@@ -96,6 +110,7 @@ for i = 1:num_dt-1
     % modulated by y_min and y_max
     y(:, i+1) = max(y(:, i+1), y_min);
     y(:, i+1) = min(y(:, i+1), y_max);
+    state(i+1) = ss;
     clear v temp c_new;
 end
 
@@ -110,14 +125,23 @@ if show_figure
         plot(time, y(j,:)', 'LineWidth', lw); 
         xlabel('Time (min)'); ylabel(strcat('y', num2str(j), '-', title_str{j}));
         set(gca, 'FontSize', fs, 'FontWeight', 'bold', 'Box', 'off', 'LineWidth',lw);
+        if j == 3
+            axis([-100 400 0 6000]);
+        end
     end
     
     %
     my_figure('font_size', fs, 'line_width', 3); hold on;
     plot(time, (c([2,3,5,6],:))', 'LineWidth', lw);
+    axis([-100 400 -2000 5000]);
     xlabel('Time (min)'); ylabel('In and Out Fluxes');
     title('In and out fluxes');
     legend('kinase', 'phosphotase', 'methyltransferase', 'demethylase'); 
+    
+    my_figure('font_size', fs, 'line_width', 3); hold on;
+    plot(time, state, 'LineWidth', lw);
+    axis([-100 400 0 3]);
+    xlabel('Time (min)'); ylabel('Model states');
 end
 
 result.time = time;
@@ -125,67 +149,5 @@ result.phosphorylation = y(1,:)';
 result.methylation = y(4,:)';
 result.c = c;
 return; 
-
-
-% function [s, c, data] = model_state(s, data)
-% Determine the state of the model and the number of triggering molecules
-% s = 0, for t<=0, interphase
-% s = 1, for t>0, mitosis starts
-% s = 2, for t>dt1, exit mitosis
-% Outside these time frames, the model state and number of triggering molecules remain unchanged. 
-function [s, c, data] = model_state(s, data)
-t = data.time_i;
-y = data.y_i;
-% h3s10p=y(1); kinase=y(2); ptp=y(3); 
-% h3k9m=y(4); mt=y(5); kdm = y(6);
-time_phospho = data.time_phospho; 
-time_step = data.time_step;
-max_time_phospho = data.max_time_phospho; 
-more_methyl = data.more_methyl; %150
-more_kinase = data.more_kinase;
-methyl_ko = data.methyl_ko; % 0 or 1
-num_var = data.num_var;
-
-tt = mod(t, data.time(2)); % make tt>=0 && tt<data.time(2)
-base_methyl = data.base_methyl;
-c = zeros(num_var, 1);
-if s ==0 && tt>0 && tt<data.time(1)
-    % mitosis starts
-    % kinase and methyltransferace both increase
-    s = 1; 
-    c(2) = more_kinase;
-    c(5) = more_methyl*(1-methyl_ko);
-elseif s==1 && time_phospho < max_time_phospho
-    time_phospho = time_phospho + y(1)*time_step;
-    c([2 5]) = 0;
-elseif s==1 && time_phospho >= max_time_phospho 
-    % When the total phosphorylation accumulates for a certain period of time,
-    % mitosis ends, and kinase decreases.
-    s = 2;
-    time_phospho = 0;
-    c(2) = -2*more_kinase;
-    c(5) = 0;
-elseif s==2 && y(4)< base_methyl
-    % c([2 5]) = 0;
-    c(5) = more_methyl; 
-    c(6) = -more_methyl;
-% Additional measures to stabilize the model
-% toward the end of simulation after the cell exits state 2. 
-elseif s==2 && y(4)>= base_methyl
-    % When the methylation level recovers, interphase starts.
-    % Kinase and mehtyltransferace level recover to the interphase baseline.  
-    s = 0;
-    % c(2) = y(3)-y(2); % reset y(2) to y(3)
-    % c(5) = y(6)-y(5); % reset y(5) to y(6)
-    c([5 6]) = 0;
-elseif s==0 && (y(4)>base_methyl+10 || y(1)>10)
-    c(2) = y(3)-y(2);
-    c(5) = y(6)-y(5); % reset y(5) to y(6) again to stabilize the model
-elseif s==0 && y(4)>= base_methyl
-    c([2 5]) = 0; 
-end
-
-data.time_phospho = time_phospho;
-return;
 
 

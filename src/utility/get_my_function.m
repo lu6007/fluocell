@@ -11,8 +11,13 @@ function function_handle = get_my_function()
 fun.my_imwrite = @my_imwrite; 
 fun.fast_imread = @fast_imread;
 fun.get_image_percentile = @get_image_percentile; 
+%
+fun.save_image = @save_image;
+%
+fun.get_compute_ratio_function = @get_compute_ratio_function; 
+%
 function_handle = fun;
-return
+end
 
 function my_imwrite(im, file, data)
 
@@ -29,7 +34,33 @@ imwrite(im, file, 'tiff', 'Compression', 'none');
 %     for i = 2:num_z_plane
 %         imwrite(im2, file, 'WriteMode', 'append');
 %     end
-return
+end
+
+% function save_image(data, file, im, caxis, varargin)
+% Save gray images to "gray" or "jet" shape. Jet images will be stretched
+% to the min and max of the current caxis. If you don't want to stretch
+% choose the caxis = [0 65535]
+function save_image(data, file, im, caxis, varargin)
+para_name = {'my_color_map'};
+para_default = {'gray'};
+my_color_map = parse_parameter(para_name, para_default, varargin);
+
+if isfield(data, 'save_processed_image')
+    if data.save_processed_image && ~exist(file, 'file') ...
+        || data.save_processed_image == 2 
+        switch my_color_map
+            case 'gray'
+                temp = imscale(im, 0, 1, caxis);
+                imwrite(temp, file, 'tiff','compression', 'none');
+            case 'jet'
+                clear im;
+                temp = imscale(im, 0, 1, caxis);
+                im = gray2ind(temp, 65536); 
+                imwrite(im, jet, file, 'tiff', 'compression', 'none');
+        end % switch
+    end
+end
+end
 
 % Ref: Jerome, How to load Tiff stacks fast
 % http://www.matlabtips.com/how-to-load-tiff-stacks-fast-really-fast/
@@ -59,11 +90,20 @@ function test = fast_imread(file_name)
     end
     tifflib('close',FileID);
     test = FinalImage;
-return;
+end
 
 function value = get_image_percentile(im, perc)
-[num_row, num_col] = size(im);
-im_vector = reshape(im, [num_row*num_col, 1]);
-value = prctile(double(im_vector), perc);
-clear im_vector; 
-return;
+    [num_row, num_col] = size(im);
+    im_vector = reshape(im, [num_row*num_col, 1]);
+    value = prctile(double(im_vector), perc);
+    clear im_vector; 
+end
+
+function compute_ratio_function = get_compute_ratio_function(data)
+    if isfield(data, 'compute_ratio_function') 
+        compute_ratio_function = data.compute_ratio_function; 
+    else
+        compute_ratio_function = @compute_ratio; 
+    end 
+end
+

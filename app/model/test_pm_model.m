@@ -83,6 +83,46 @@ switch test_name
         title_str = 'Phosphor-methyl Model';
         legend_str = 'Simple Model';
 
+      case 'test6'
+        data = model_init_data('model5');
+        % 0. Run the original model
+        inhibitor = 0;
+        b = 1-inhibitor; 
+        num_sim = length(b);
+        res{1} = phospho_methyl_model(data, 'show_figure', 1, ...
+            'show_output', 1, 'model_type', 2);
+        title_str = 'Phosphor-methyl Model';
+        legend_str = 'Simple Model';
+
+     case 'test7'
+        data = model_init_data('model5');
+        % 1. Test the effect of phosphorylation inhibitor strength
+        inhibitor = [0; 0.60; 0.80; 1.0]; 
+        b = 1-inhibitor;
+        num_sim =  length(b);
+        res = cell(num_sim,1);
+        for i = 1:num_sim
+            data.more_b = b(i);
+            res{i} = phospho_methyl_model(data, 'show_figure', show_figure, ...
+                'max_t', 600, 'show_output', 0, 'model_type', 2);
+        end
+        title_str = 'Inhibitor Strength';
+        legend_str = strcat(num2str(100*inhibitor), '%');
+
+    case 'test8'
+        data = model_init_data('model5');
+        % 2. The effect of phosphorylation in recruiting kdms and repelling
+        % methyltransferase
+        a = [0.005 0.005; 0 0.005; 0.005 0; 0 0];
+        num_sim = size(a, 1);
+        res = cell(num_sim, 1);
+        for i = 1:num_sim
+            res{i} = phospho_methyl_model(data, 'a1', a(i, 1), 'a2', a(i,2), ...
+                'show_figure', show_figure, 'show_output', 0, 'model_type', 2);
+        end
+        title_str = 'Phospho Regulates Methyl';
+        legend_str = {'WT', '-MT', '-KDM', '-/-'};
+
 end % switch model_name
 
 % Making plots. 
@@ -100,7 +140,7 @@ xlabel('Time (min)'); ylabel('Normal. Methyl. Level');
 title(title_str);
 legend(legend_str);
 %
-if strcmp(test_name, 'test4') || strcmp(test_name, 'test5')
+if strcmp(test_name, 'test4') || strcmp(test_name, 'test5') || strcmp(test_name, 'test7')
     phospho = zeros(num_point, num_sim);
     for i = 1:num_sim
         phospho(:,i) = res{i}.phosphorylation;

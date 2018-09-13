@@ -26,6 +26,8 @@ elseif method ==3 % data = bw
 elseif method == 4 % data = value
     bg_value = double(data);
     im = double(im)-bg_value;
+elseif image == 5 % subtract the image
+    im = double(im) - double(bw);
 end
 
 return;

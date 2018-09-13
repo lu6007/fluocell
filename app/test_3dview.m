@@ -45,7 +45,7 @@ else
 end
 % data.first_file = regexprep(data.first_file, 't1', 't5');
 
-%% load images
+%% load images in time frames
 temp = imread(data.first_file);
 % data.high_pass_filter = 61;
 im = preprocess(temp, data); clear temp;
@@ -61,10 +61,6 @@ for i = 1:num_frame
     j_str = sprintf(data.index_pattern{2}, j);
     file_name = regexprep(data.first_file, data.index_pattern{1}, j_str);
     temp = imread(file_name); 
-
-%     file_name = data.first_file;
-%     temp = imread(file_name, i);
-
     fret_im(:,:,i) = preprocess(temp, data); 
     clear temp; temp = file_name; clear file_name;
     file_name = regexprep(temp, data.channel_pattern{1}, data.channel_pattern{2});
@@ -73,6 +69,8 @@ for i = 1:num_frame
     clear j_str temp file_name;
 end
 figure; imagesc(fret_im(:,:,8));
+
+% Compute ratio and intensity images
 ratio_im = compute_ratio(fret_im, cfp_im, 'shift', intensity_base);
 intensity_im = 1/(1+ratio_factor)*fret_im+ratio_factor/(1+ratio_factor)*cfp_im; 
 intensity_bound = [1 1023];
@@ -99,8 +97,9 @@ disp(strcat('z_dist = ', num2str(z_dist), '; 15 pixels - 1 um'));
 disp(strcat('intensity_bound = ', num2str(intensity_bound)));
 disp(strcat('ratio_bound = ', num2str(ratio_bound)));
 
-%% Calculate the ISO surface
-[xx, yy, zz] = meshgrid(1:nsize(2), 1:nsize(1), (1:num_frame)*z_dist); % 15 pixel/micron in z-plane
+%% Calculate visualize the ISO surface
+% 15 pixel/micron in z-plane
+[xx, yy, zz] = meshgrid(1:nsize(2), 1:nsize(1), (1:num_frame)*z_dist); 
 screen_size = get(0, 'ScreenSize');
 fig = figure('Position', [50 50 screen_size(4) screen_size(4)], ...
     'color', 'w');

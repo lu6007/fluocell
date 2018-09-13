@@ -1,14 +1,16 @@
-% function movie=make_movie(movie_info);
+% function my_movie=make_movie(movie_info, varargin)
+% parameter_name = {'color_bar', 'ratio_bound'};
+% default_value = {0, [0.2, 0.5]};
 % The function make_movie() takes pre-existing image and 
 % assemble them into movies. The MATLAB video writer object is 
 % used for MATLAB version 2010b and higher on windows 7 64 bit computers.
 % Example:
 %  
-% info.path = 'C:\sof\fluocell_4.1\data\10_24_08_Src_fret_pax\';
-% info.first_file = 'output\0.3-0.8\ratio.001.tiff';
+% info.path = 'C:\sof\fluocell_4.1\data\10_24_08_Src_fret_pax\output\';
+% info.first_file = '0.3-0.8\ratio.001.tiff';
 % info.index_pattern = {'001', '%03d'};
 % info.image_index = (1:10)';
-% info.movie_name = strcat(info.path,'output\fret.avi');
+% info.movie_name = strcat(info.path,'fret.avi');
 % movie = make_movie(info);
 %
 % The files for making movie is saved before hand, this function
@@ -26,25 +28,21 @@
 % info.event_text = {'Test1', 'Test2'};
 % movie = make_movie(info);
 % 
+% To turn DIC image on
+% info.show_dic = 1;
 
-% Copyright: Shaoying Lu and Yingxiao Wang 2011
+% Copyright: Shaoying Lu and Yingxiao Wang 2011-2018
 
 % Most of the movies are made using the 
 % vis/make_movie and vis/make_movie_2 functions. 
-% The function make_movie_2() make the images and 
-% then assemble them into movies.
-% info.time = info.image_index;
-% info.time_location = [700 100];
-% info.event_location = [700 250];
-% info.has_event(1:4) = 1;
-% info.has_event(5:13) = 2;
-% info.event_text = {'Test1', 'Test2'};
-% movie = make_movie(info);
 
 function my_movie=make_movie(movie_info, varargin)
-parameter_name = {'color_bar', 'movie_name','ratio_bound'};
-default_value = {0, 'FRET', [0.2, 0.5]};
-[color_bar, movie_name, ratio_bound] = parse_parameter(parameter_name, default_value, varargin);
+parameter_name = {'color_bar', 'ratio_bound'};
+default_value = {0, [0.2, 0.5]};
+[color_bar, ratio_bound] = parse_parameter(parameter_name, default_value, varargin);
+
+fprintf('path: %s\n', movie_info.path);
+fprintf('first_file: %s\n', movie_info.first_file);
 
 % Changed file_name to movie_name in the new versio of make_movie function
 % This is for backward compatibility. 
@@ -81,17 +79,33 @@ fields = {'cdata', 'colormap'};
 
  if isfield(movie_info, 'time_location')
     time_location = movie_info.time_location;
+    if ~isfield(movie_info, 'event_location')
+        movie_info.event_location = [];
+    end
     event_location = movie_info.event_location;
+    movie_info.has_event = zeros(size(movie_info.image_index));
  end
 
 for j = 1:num_frame
     i = movie_info.image_index(j);
     pattern = movie_info.index_pattern;
-    file_name = regexprep(first_file, pattern{1}, sprintf(pattern{2},i));
+    i_str = sprintf(pattern{2}, i);
+    file_name = regexprep(first_file, pattern{1}, i_str);
     if ~exist(file_name, 'file')
         continue
     end
-    im = imread(file_name);
+    
+    % load the image, specify to include dic
+    if(~isfield(movie_info, 'show_dic') || movie_info.show_dic ~= 1) 
+        im = imread(file_name);
+    else % with dic
+        second_file = strcat(movie_info.path2, movie_info.second_file);
+        second_file_name = regexprep(second_file, pattern{1}, i_str);
+        im1 = imread(file_name);
+        im2 = imread(second_file_name);
+        im = imfuse(im1, im2, 'montage');
+    end
+    
     if isfield(movie_info, 'resize_factor')>0
         tt = imresize(im, movie_info.resize_factor);
         clear im; im = tt; clear tt;
@@ -103,35 +117,35 @@ for j = 1:num_frame
     % insertText works for in MATLAB 2016b and higher,
     % but shows a problem with MATLAB 2014b or lower, although
     % movie making still works. 
-     if isfield(movie_info, 'time_location')
-        im_fig = insertText(im, time_location, [num2str(time_f), ' min'], ...
+     if isfield(movie_info, 'time_location') && ~isnan(time(j))
+        im_fig = insertText(im, time_location, ['Gem ', num2str(time_f), ' hour'], ...
         'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
         event_j = movie_info.has_event(j);
         if event_j
             im_fig = insertText(im_fig, event_location, movie_info.event_text{event_j}, ...
             'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
-        else
-            im_fig = insertText(im_fig, event_location, movie_name, ...
-                'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
+%         else
+%             im_fig = insertText(im_fig, event_location, movie_name, ...
+%                 'Boxcolor', 'Black', 'TextColor', 'white', 'FontSize', 30);
         end
      else
          im_fig = im;
      end
     figure(h); imshow(im_fig);
-%     % This is to correct some weird error in MATLAB on my Mac laptop
-%     % Kathy 11/18/2017
-%     temp = getframe(gcf);
-%     figure(h); imshow(im_fig);
-%     temp = getframe(gcf);
-%     % The end
+    % This is to correct some weird error in MATLAB on my Mac laptop
+    % Kathy 11/18/2017
+    temp = getframe(gcf);
+    figure(h); imshow(im_fig);
+    % The end
     
     if color_bar
         a1 = colorbar;
         colormap(jet);
         caxis(ratio_bound);
         ticks = get(a1, 'YTick');
-        l = length(ticks);
-        ticks = linspace(ratio_bound(1), ratio_bound(2), l);
+%         l = length(ticks);
+%         rb = ratio_bound; 
+%         ticks = linspace(rb(1), rb(2), l+1);
         set(a1, 'YTickLabel', ticks, 'fontsize', 16);
     end
     if isfield(movie_info, 'axis')>0 
