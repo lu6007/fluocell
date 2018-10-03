@@ -55,7 +55,7 @@ if fluocell_data_roi_move
     end
     if isfield(data, 'roi_poly')
         temp = rmfield(data, 'roi_poly'); clear data;
-        data = temp; clear temp;
+        data = rmfield(temp, 'roi_bw'); clear temp;
     end
     fluocell_data_roi_move = 0;
 end
