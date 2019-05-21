@@ -70,4 +70,6 @@ for i = 1:num_sheet
     end % switch method
 end % for i = 1:num_sheet,
 
+fprintf('Output: exp, disp(exp{1})\n'); 
+disp(exp{1}); 
 return;

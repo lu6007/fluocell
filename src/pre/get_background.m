@@ -18,7 +18,7 @@
 
 function [bw, poly, value] =get_background(im, file_bg, varargin)
 parameter_name = {'method', 'percentile'};
-default_value = {'manual', 50};
+default_value = {'manual', 1};
 [method, percent] = parse_parameter(parameter_name, default_value,varargin);
 
 switch method

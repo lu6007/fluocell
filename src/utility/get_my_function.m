@@ -16,6 +16,8 @@ fun.save_image = @save_image;
 %
 fun.get_compute_ratio_function = @get_compute_ratio_function; 
 %
+fun.get_R_square = @get_R_square;
+%
 function_handle = fun;
 end
 
@@ -37,7 +39,7 @@ imwrite(im, file, 'tiff', 'Compression', 'none');
 end
 
 % function save_image(data, file, im, caxis, varargin)
-% Save gray images to "gray" or "jet" shape. Jet images will be stretched
+% Save gray images to "gray" or "jet" colormaps. Jet images will be stretched
 % to the min and max of the current caxis. If you don't want to stretch
 % choose the caxis = [0 65535]
 function save_image(data, file, im, caxis, varargin)
@@ -53,7 +55,7 @@ if isfield(data, 'save_processed_image')
                 temp = imscale(im, 0, 1, caxis);
                 imwrite(temp, file, 'tiff','compression', 'none');
             case 'jet'
-                clear im;
+                % clear im;
                 temp = imscale(im, 0, 1, caxis);
                 im = gray2ind(temp, 65536); 
                 imwrite(im, jet, file, 'tiff', 'compression', 'none');
@@ -105,5 +107,17 @@ function compute_ratio_function = get_compute_ratio_function(data)
     else
         compute_ratio_function = @compute_ratio; 
     end 
+end
+
+function R_square = get_R_square(x, y)
+% index = (death_time<2100 & base_ratio > 4.5);
+% x = base_ratio(index);
+% y = death_time(index);
+poly = polyfit(x, y, 1);
+y_fit = polyval(poly, x);
+y_residual = y-y_fit;
+SS_residual = sum(y_residual.^2);
+SS_total = sum(length(y)-1)*var(y);
+R_square = 1-SS_residual/SS_total;
 end
 

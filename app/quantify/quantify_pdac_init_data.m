@@ -1,7 +1,8 @@
 function data = quantify_pdac_init_data(exp_name)
 % Update root with your data location
 % root = 'C:\Users\kathy_group\Documents\External Drive Sync\data\2017\Charlotte\';
-root = '/Volumes/KathyWD2TB/data/2017/yan_yuxin_1221/1215/';
+% root = '/Volumes/KathyWD2TB/data/2017/yan_yuxin_1221/1215/';
+root = '/Volumes/Kathy2018D2/yan_huang/Results_Image Experiments/';
 data.segment_method = 2;
 switch exp_name
     case 'sample'
@@ -19,6 +20,22 @@ switch exp_name
         data.alpha = 1.0; % average ratio between channels 1 and 2. 
         % 
         data.subtract_background = 1;
+        data.median_filter = 1;
+       
+    case 'pdac_nr_10171'
+        data.path = strcat(root, '1017/nr/');
+        data.first_file = '11.001';
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'11', '11', '11'}; 
+        data.detection = 'auto';
+        data.image_index = (1:1)'; %(1:30)';
+        data.intensity_bound = [];
+        data.ratio_bound = [0.5, 1.5];
+        data.brightness_factor = 1.0;
+        data.min_area = 1000;
+        data.alpha = 1.0; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 4; % subtract a constant=3000 passed in as "data"
         data.median_filter = 1;
         
     % 12/21/2017

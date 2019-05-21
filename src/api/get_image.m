@@ -64,9 +64,9 @@ if isfield(data,'subtract_background') && data.subtract_background
     subtract_bg = data.subtract_background; 
     assert(subtract_bg >= 1 && subtract_bg <=5, ...
         'data.subtract_background should be an integer with a value between 1 and 5.' ); 
-    if subtract_bg <=4
+    if subtract_bg <=3
         bg_file = strcat(data.output_path, 'background.mat');
-    else % subtract_bg = 5
+    elseif subtract_bg ==5 % subtract_bg = 4 is using a percentile value
         bg_file = strcat(data.output_path, 'background.tif');
     end 
     if exist(bg_file, 'file')

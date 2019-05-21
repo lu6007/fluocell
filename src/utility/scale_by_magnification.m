@@ -13,7 +13,7 @@ switch magnification
       % 10 times smaller than it should have been.
       factor = 1/2.56;
     case 60 % chien lab 60x confocal/frap
-        % factor = 1/3.84;
+        % factor = 1/3.84; 3.84 pixels = 1 um
         factor = 0.114;
     case 100
       %100 times, 60 pixels = 4 um

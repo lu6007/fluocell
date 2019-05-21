@@ -9,12 +9,19 @@
 % Modified by Lexie Qin Qin and Shaoyng Lu 2014
 
 function [bw, poly] = get_polygon(im, file_roi, title_str, varargin)
-parameter_names = {'num_polygon', 'polygon_type','diameter'};
-default_values = {1, 'any', 200};
-[num_polygon, polygon_type, diameter] = ...
+parameter_names = {'num_polygon', 'polygon_type','diameter', ...
+    'show_colorbar', 'cbound'};
+default_values = {1, 'any', 200, 0, []};
+[num_polygon, polygon_type, diameter, show_colorbar, cbound] = ...
     parse_parameter(parameter_names, default_values, varargin);
 if ~exist(file_roi,'file')
     h = figure; imagesc(im); colormap jet; title(title_str); hold on;
+    if show_colorbar
+        colorbar;
+    end
+    if ~isempty(cbound)
+        caxis(cbound);
+    end
     bw = cell(num_polygon, 1);
     poly = cell(num_polygon, 1);
     for j = 1:num_polygon

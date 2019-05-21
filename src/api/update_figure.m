@@ -76,7 +76,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             % 
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
             data.im{4} = ratio_im;
             
             if show_figure_option
@@ -101,7 +102,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.third_channel_im = im_3;
             % file{4} -> ratio_im -> im{4} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
             data.im{5} = ratio_im;
             
             if show_figure_option
@@ -121,7 +123,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
             second_channel_im = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{4}, data.f(1));
+                data.file{4}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
             % file{4} -> ratio_im -> data.f(1)
             data.im{4} = ratio_im;
 
@@ -148,7 +151,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             % file{5} -> ratio_im -> data.f(1), im{5}
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{5}, data.f(1));
+                data.file{5}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
             data.im{5} = ratio_im;
 
             if show_figure_option
@@ -173,7 +177,8 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, sted_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
-                data.file{3}, data.f(1));
+                data.file{3}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
             data.im{3} = sted_im;
        
             figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
@@ -188,7 +193,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             figure(data.f(1)); imagesc(second_channel_im); 
             axis off; my_title('Intensity',data.index, 'data', data);
             data.im{2}  = preprocess(data.im{1}, data); 
-            figure(data.f(2)); my_imagesc(data.im{2}); 
+            figure(data.f(2)); my_imagesc(data.im{2}, 'data', data); 
             axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
@@ -211,7 +216,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             axis off; my_title('DIC',data.index, 'data', data);
             data.im{3} = preprocess(data.im{1}, data); 
             figure(data.f(3));
-            my_imagesc(data.im{3});
+            my_imagesc(data.im{3}, 'data', data);
             imagesc(data.im{3}); caxis(data.intensity_bound);
             axis off; my_title('Processed',data.index, 'data', data);
 
@@ -261,7 +266,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
         end
 
     end
-else
+else % not if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
     disp('Function update_figure warning: ');
     disp('Please load the images or check the range of index.')
 end % if isfield(data, 'im'),
@@ -269,12 +274,22 @@ return;
 
 % Keep the caxis and colormap from the previous plot
 % Use caxis auto for a new figure
-function my_imagesc(im)
-temp = caxis;
-axis_vector = axis;
+function my_imagesc(im, varargin)
+para_name = {'data'};
+para_default = {[]};
+data = parse_parameter(para_name, para_default, varargin);
+temp = caxis; 
+if (temp(1)==0 && temp(2) ==1) 
+    keep_axis = 0;
+elseif ~isempty(data) && isfield(data, 'crop_image') && data.crop_image
+    keep_axis = 0;
+else
+    keep_axis = 1;
+end
+axis_vector = axis; % needed for keeping the zoom-in and out
 this_colormap = colormap(gca); 
 clf;
-if temp(1) ==0 && temp(2) ==1
+if ~keep_axis
     imagesc(im); 
 else
     imagesc(im, temp);

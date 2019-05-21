@@ -30,7 +30,12 @@ bg_value = parse_parameter(para_name, default_value, varargin);
         end
 
         if isfield(data, 'subtract_background') && data.subtract_background
-            bg_file = strcat(data.path, 'output/background.mat');
+            output_path = strcat(data.path, 'output/');
+            bg_file = strcat(output_path, 'background.mat');
+            if ~exist(output_path, 'dir') 
+                fprintf('preprocess function: making a new output folder ...\n'); 
+                mkdir(output_path);
+            end
             if ~isfield(data,'bg_bw')
                 switch data.subtract_background
                     case 1

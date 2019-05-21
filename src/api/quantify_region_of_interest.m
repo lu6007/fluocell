@@ -9,6 +9,7 @@
 % To stop mask: fluocell_data.need_apply_mask = 0;
 % (3) To stop quantification: fluocell_data.quantify_roi = 0;
 % (4) To allow n regions: fluocell_data.num_roi = 3; 
+% Require the intensities be be higher than intensity_bound{1}.
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
 function data = quantify_region_of_interest(data, ratio, cfp, yfp)
@@ -121,6 +122,12 @@ end
 % Quantify the FI and ratio in the ROIs.
 data.time(data.index,1) = data.index;
 data.time(data.index,2) = get_time(data.file{1}, 'method',2);
+if(data.index > 50 && data.time(data.index, 2) < data.time(data.index-1,2))
+    disp('Quqntify_region_of_interest(): ');
+    disp('Automatically fixing the time variable if imaging past midnight.');
+    data.time(data.index,2) = data.time(data.index,2) + 1440; %1440 min = whole day
+end
+
 % Draw ROIs
 % provide option for displaying figure, Lexie in 03/06/2015
 if (isfield(data, 'show_figure') && data.show_figure == 1)...
@@ -130,18 +137,27 @@ if (isfield(data, 'show_figure') && data.show_figure == 1)...
     draw_polygon(gca, roi_poly, 'red', roi_file, 'type', roi_type);
 end
 
-%% Modified the following for loop to shrink area of quantification. - Shannon 8/4/2016
+%% Modified the following for the requirement of min_intensity
+if isfield(data, 'enable_min_intensity') && data.min_intensity == 1
+    disp('quantify_region_of_interest(): data.enable_min_intensity == 1');
+    disp('Require the intensity values to be data.intensity_bound(1) or higher.');
+    min_intensity = data.intensity_bound(1);
+else
+    min_intensity = 0;
+end
 for i = 1 : num_object
     for j = 1:num_roi %subcellular layers
-        %Modified to try to shrink the area that needs to be computed. - Shannon 8/4/2016
         if data.is_z_stack
             ii = data.z_index;
         else
             ii = data.index;
         end
-        data.ratio{i}(ii, j) = compute_average_value(ratio, roi_bw{j,i});
-        data.channel1{i}(ii, j) = compute_average_value(cfp, roi_bw{j,i});
-        data.channel2{i}(ii, j) = compute_average_value(yfp, roi_bw{j,i});
+        % Require all intensity to be min_intensity or higher
+        mask = (cfp>= min_intensity) & (yfp>= min_intensity)& roi_bw{j,i};
+        data.ratio{i}(ii, j) = compute_average_value(ratio, mask);
+        data.channel1{i}(ii, j) = compute_average_value(cfp, mask);
+        data.channel2{i}(ii, j) = compute_average_value(yfp, mask);
+        clear mask; 
     end
 end; clear i j
 %%

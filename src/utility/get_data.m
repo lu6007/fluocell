@@ -20,7 +20,7 @@ classdef get_data
             absent_index = zeros(num_frame, 1);
             for index = (data.image_index)'
                 frame_index{2} = sprintf(data.index_pattern{2}, index);
-                filename = regexprep(data.first_file, frame_index{1}, frame_index{2})
+                filename = regexprep(data.first_file, frame_index{1}, frame_index{2});
                 
                 %Check if file exists.
                 if ~exist(filename,'file')
