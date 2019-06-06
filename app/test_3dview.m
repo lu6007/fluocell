@@ -1,5 +1,11 @@
+% function test_3dview(data)
+%
+% Example: 
+% data.root = '/Users/kathylu/Documents/sof/data/quanty_dataset_2/';
+% data.path = strcat(data.root, 'fig5/1111_h3k9_3/p2/dconv9/');
+% test_3dview(data)
 function test_3dview(data)
-%% Initiate data
+% Initiate data
 % % mef-1
 % root = 'C:\Users\kathy\Desktop\data\qin_peng\';
 % p = '1106_2014\MEF\5 0.5\dconv5\';
@@ -13,16 +19,12 @@ function test_3dview(data)
 % root = 'E:\data\2014\qin_peng\';
 % p = '1111\WTH3K9\3\p2\dconv9\';
 %
-% Example: 
-% data.root = '/Users/kathylu/Documents/doc/paper/fluocell_0420/quanty_dataset_2/';
-% data.path = strcat(data.root, 'fig6/1111_h3k9_3/p2/dconv9/');
-% test_3dview(data)
 
 p = data.path;
 z_dist = 1.0*15; % 1um *15 pixel/um
 image_index = (11:31)'; % (1:20)';
 iso_value = 450; %3000
-surface_file = 't1surface';
+% surface_file = 't1surface';
 intensity_base = 1.0e-4;
 ratio_bound = [0.5 3.5]; 
 ratio_factor = 1.5; % ratio_factor = (ratio_bound(1)+ratio_bound(2))/2;
@@ -101,7 +103,7 @@ disp(strcat('ratio_bound = ', num2str(ratio_bound)));
 % 15 pixel/micron in z-plane
 [xx, yy, zz] = meshgrid(1:nsize(2), 1:nsize(1), (1:num_frame)*z_dist); 
 screen_size = get(0, 'ScreenSize');
-fig = figure('Position', [50 50 screen_size(4) screen_size(4)], ...
+figure('Position', [50 50 screen_size(4) screen_size(4)], ...
     'color', 'w');
 isosurface(xx, yy, zz, intensity_im, iso_value, ratio_im);
 caxis(ratio_bound); shading interp; colormap jet;
@@ -110,7 +112,7 @@ camlight right;
 % view(0, 90) standard 2d view. % view(h_rotation, v_rotation);
 % view(180, -90); lightangle(180,-90); view from the bottom
 
-fig = figure('Position', [50 50 screen_size(4) screen_size(4)], ...
+figure('Position', [50 50 screen_size(4) screen_size(4)], ...
     'color', 'w');
 isosurface(xx/15, yy/15, zz/15, intensity_im, iso_value, ratio_im);
 caxis(ratio_bound); shading interp; colormap jet;
@@ -123,13 +125,13 @@ camlight right;
 
 %%
 % angle in degrees
-horizontal_rotation = 15; 
-vertical_rotation = 30;
-step_size = 5; 
-num_frame = 180/step_size+1; % 25;
-light_handle = lightangle(0, 0);
 
 if save_image
+    horizontal_rotation = 15; 
+    vertical_rotation = 30;
+    step_size = 5; 
+    num_frame = 180/step_size+1; % 25;
+    light_handle = lightangle(0, 0);
     for i = 1:num_frame
         %for j = 1:2,
            % if j ==1,
