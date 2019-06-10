@@ -40,11 +40,11 @@ temp = version;
 %     tt = temp(12:16);
 % end
 % if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
-if contains(temp,'R2018')||contains(temp, 'R2017')||contains(temp, 'R2016')
+if ~isempty(strfind(temp,'R2018'))||~isempty(strfind(temp, 'R2017'))||~isempty(strfind(temp, 'R2016'))
     bw_image = imbinarize(im, threshold*brightness_factor);
 % elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
-elseif contains(temp, 'R2015')||contains(temp, 'R2014')||contains(temp, 'R2013')||...
-        contains(temp, 'R2012')
+elseif ~isempty(strfind(temp, 'R2015'))||~isempty(strfind(temp, 'R2014'))||~isempty(strfind(temp, 'R2013'))||...
+        ~isempty(strfind(temp, 'R2012'))
     bw_image = im2bw(im, threshold*brightness_factor);
 else 
     disp('Function get_cell_edge warning: ');
