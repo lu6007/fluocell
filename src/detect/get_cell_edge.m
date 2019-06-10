@@ -34,22 +34,23 @@ end
 
 temp = version;
 % Kathy 08/16/2017, make compatible with Windows MATLAB R2013
-if length(temp)>=19
-    tt = temp(15:19);
-else
-    tt = temp(12:16);
-end
-if strcmp(tt,'R2019')||strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
+% if length(temp)>=19
+%     tt = temp(15:19);
+% else
+%     tt = temp(12:16);
+% end
+% if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
+if contains(temp,'R2018')||contains(temp, 'R2017')||contains(temp, 'R2016')
     bw_image = imbinarize(im, threshold*brightness_factor);
-elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
-        strcmp(tt, 'R2012')
+% elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
+elseif contains(temp, 'R2015')||contains(temp, 'R2014')||contains(temp, 'R2013')||...
+        contains(temp, 'R2012')
     bw_image = im2bw(im, threshold*brightness_factor);
 else 
     disp('Function get_cell_edge warning: ');
     disp('MATLAB version not in the range 2012-2018.');
-    disp(['Need to add: ', tt, ' into the function. ']);
 end
-clear temp tt;
+clear temp;
 % get rid of objects with size less than min_area
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
