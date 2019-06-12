@@ -32,7 +32,7 @@ if ~threshold
     threshold = my_graythresh(im);
 end
 
-temp = version;
+% temp = version;
 % Kathy 08/16/2017, make compatible with Windows MATLAB R2013
 % if length(temp)>=19
 %     tt = temp(15:19);
@@ -40,17 +40,27 @@ temp = version;
 %     tt = temp(12:16);
 % end
 % if strcmp(tt,'R2018')||strcmp(tt, 'R2017')||strcmp(tt, 'R2016')
-if ~isempty(strfind(temp,'R2018'))||~isempty(strfind(temp, 'R2017'))||~isempty(strfind(temp, 'R2016'))
-    bw_image = imbinarize(im, threshold*brightness_factor);
+% if ~isempty(strfind(temp,'R2018'))||~isempty(strfind(temp, 'R2017'))||~isempty(strfind(temp, 'R2016'))
+%     bw_image = imbinarize(im, threshold*brightness_factor);
 % elseif strcmp(tt, 'R2015')||strcmp(tt, 'R2014')||strcmp(tt, 'R2013')||...
-elseif ~isempty(strfind(temp, 'R2015'))||~isempty(strfind(temp, 'R2014'))||~isempty(strfind(temp, 'R2013'))||...
-        ~isempty(strfind(temp, 'R2012'))
-    bw_image = im2bw(im, threshold*brightness_factor);
-else 
-    disp('Function get_cell_edge warning: ');
-    disp('MATLAB version not in the range 2012-2018.');
+% elseif ~isempty(strfind(temp, 'R2015'))||~isempty(strfind(temp, 'R2014'))||~isempty(strfind(temp, 'R2013'))||...
+%         ~isempty(strfind(temp, 'R2012'))
+%       bw_image = im2bw(im, threshold*brightness_factor);
+% else 
+%       disp('Function get_cell_edge warning: ');
+%       disp('MATLAB version not in the range 2012-current.');
+% end
+% clear temp;
+try        
+    bw_image = imbinarize(im, threshold*brightness_factor);
+catch
+    try
+        bw_image = im2bw(im, threshold*brightness_factor);
+    catch
+        disp('Function get_cell_edge warning: ');
+        disp('MATLAB version not in the range 2012-current.');
+    end
 end
-clear temp;
 % get rid of objects with size less than min_area
 bw_image_open = bwareaopen(bw_image, min_area);
 clear bw_image; bw_image = bw_image_open; clear bw_image_open;
