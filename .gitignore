@@ -8,3 +8,5 @@ src/gui/java/hs_err_pid652.log
 doc/~$e Fluocell User's Guide.docx
 
 *.log
+*.DS_Store
+
