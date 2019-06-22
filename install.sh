@@ -33,19 +33,20 @@ echo $PATHDEF_FILE
 # cp $PATHDEF_FILE $PATHDEF_FILE.copy if there is not already a copy
 if [ ! -f $PATHDEF_FILE.copy ] ; then
     cp $PATHDEF_FILE $PATHDEF_FILE.copy
+    # \\ escape \, \  to escape space
+    declare -a arr=("src/api" "src/detect" "src/post" "src/pre" "src/track" "src/utility"\
+    "src/vis" "app" "contrib/simpletracker" "app/polarity" "app/fa_analysis" "app/quantify")
+    for i in "${arr[@]}"
+    do
+        sed "/BEGIN ENTRIES/a\\ 
+        \ \ \ \ \ '$FLUOCELL_PATH/$i:', ...\\
+        " $PATHDEF_FILE > $MATLAB_PATH/toolbox/local/pathdef2.m 
+        cp $MATLAB_PATH/toolbox/local/pathdef2.m $PATHDEF_FILE
+    done
 else
     echo "$PATHDEF_FILE.copy already exists. "
+    echo "Do not modify the file $PATHDEF_FILE. "
 fi 
-# \\ escape \, \  to escape space
-declare -a arr=("src/api" "src/detect" "src/post" "src/pre" "src/track" "src/utility"\
-"src/vis" "app" "contrib/simpletracker" "app/polarity" "app/fa_analysis" "app/quantify")
-for i in "${arr[@]}"
-do
-    sed "/BEGIN ENTRIES/a\\ 
-    \ \ \ \ \ '$FLUOCELL_PATH/$i:', ...\\
-    " $PATHDEF_FILE > $MATLAB_PATH/toolbox/local/pathdef2.m 
-    cp $MATLAB_PATH/toolbox/local/pathdef2.m $PATHDEF_FILE
-done
 
 
 
