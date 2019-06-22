@@ -28,9 +28,14 @@ $EXECUTABLE_PATH/mac-default.property > $EXECUTABLE_PATH/default.property
 # 3. Link MATLAB to fluocell (add fluocell source path to MATLAB)
 # pathdef.m 
 PATHDEF_FILE=$MATLAB_PATH/toolbox/local/pathdef.m
-# cp $PATHDEF_FILE $PATHDEF_FILE.copy
-echo "3. Link MATLAB to fluocell (add fluocell paths to MATLAB pathdef.m). "
-echo $PATHDEF_FILE "."
+echo "3. Link MATLAB to fluocell (add fluocell paths to MATLAB pathdef.m)... "
+echo $PATHDEF_FILE 
+# cp $PATHDEF_FILE $PATHDEF_FILE.copy if there is not already a copy
+if [ ! -f $PATHDEF_FILE.copy ] ; then
+    cp $PATHDEF_FILE $PATHDEF_FILE.copy
+else
+    echo "$PATHDEF_FILE.copy already exists. "
+fi 
 # \\ escape \, \  to escape space
 declare -a arr=("src/api" "src/detect" "src/post" "src/pre" "src/track" "src/utility"\
 "src/vis" "app" "contrib/simpletracker" "app/polarity" "app/fa_analysis" "app/quantify")
