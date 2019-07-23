@@ -1,5 +1,9 @@
 #!/bin/bash
-# Initialize (Only tested for Mac 06/22/2019 Kathy Lu, shaoying.lu@gmail.com)
+# Installation script for fluocell
+# Requires bash
+# Tested on Mac 6/22/2019
+# Author: Kathy Lu, shaoying.lu@gmail.com
+# Initialize 
 FLUOCELL_PATH=/Applications/Fluocell/fluocell
 MATLAB_PATH=/Applications/MATLAB_R2017a.app
 echo "Running install.sh"
