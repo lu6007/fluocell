@@ -14,11 +14,14 @@ switch magnification
       factor = 1/2.56;
     case 60 % chien lab 60x confocal/frap
         % factor = 1/3.84; 3.84 pixels = 1 um
-        factor = 0.114;
-    case 100
+        factor = 0.391; % after 8/2019 % before used 0.114, why? 
+    case 98
       %100 times, 60 pixels = 4 um
-      %factor = 4.0/60.0; % used before 2011
-      factor = 1/6.4; % updated on 7/21/2017 now 1/6.28 
+      factor = 4.0/60.0; % used before 2011
+    case 99
+      factor = 1/6.4; % 2011-7/21/2017  
+    case 100
+        factor = 1/6.28; % updated on 7/21/2017 now 1/6.28 
 end
 p = p_old*factor;
 return;
