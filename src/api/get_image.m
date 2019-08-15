@@ -35,7 +35,7 @@ end
 %     end
     % - Shannon 8/23/2016
 num_matching = length(regexp(data.first_file, data.index_pattern{1}));
-if num_matching>0
+if num_matching>0 && ~new_first_file
     data.file{1} = regexprep(data.first_file, data.index_pattern{1}, ...
         index_str, num_matching);
 end

@@ -4,7 +4,7 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 % Email: shaoying.lu@gmail.com
 
-function [fa_bw, fa_bd, im_filt]= detect_focal_adhesion(im_fa, varargin)
+function [fa_bw, fa_bd, im_filt, total_pax_intensity]= detect_focal_adhesion(im_fa, varargin)
     parameter_name = {'mask_with_cell', 'cell_bw', 'filter_size',...
         'min_area','need_high_pass_filter', 'min_water',...
         'normalize', 'ref_pax_intensity'};
@@ -15,26 +15,28 @@ function [fa_bw, fa_bd, im_filt]= detect_focal_adhesion(im_fa, varargin)
         parse_parameter(parameter_name, default_value, varargin);
     connection = 8;
     % Calculate total intensity
-    if mask_with_cell,
+    if mask_with_cell
         total_pax_intensity = sum(sum(double(im_fa).*double(cell_bw)));
     else
         total_pax_intensity = sum(sum(double(im_fa)));
-    end;
+    end
+%     fprintf('\nFunction detect_focal_adhesion(): total_pax_intensity = %d ---\n', ...
+%         total_pax_intensity); 
     %total_pax_intensity
-    if normalize,
+    if normalize
         im_fa = double(im_fa)/total_pax_intensity*ref_pax_intensity;
-    end;    
+    end   
     % High pass filter
-    if need_high_pass_filter,
+    if need_high_pass_filter
         im_filt = high_pass_filter(im_fa, filter_size, 'method',1);
     else
         im_filt = im_fa;
-    end;
+    end
     %figure; imagesc(im_fa);
-    if mask_with_cell,
+    if mask_with_cell
         temp = im_filt.*double(cell_bw); clear im_filt;
         im_filt = temp; clear temp;
-    end;
+    end
     
 %     min_im = min(min(im_filt));
 %     if min_im<0,
