@@ -192,9 +192,11 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             second_channel_im = data.im{1};
             figure(data.f(1)); imagesc(second_channel_im); 
             axis off; my_title('Intensity',data.index, 'data', data);
+            colormap jet; 
             data.im{2}  = preprocess(data.im{1}, data); 
             figure(data.f(2)); my_imagesc(data.im{2}, 'data', data); 
             axis off; my_title('Processed',data.index, 'data', data);
+            colormap jet;
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
                 data = get_boundary(data.im{2}, data); 
@@ -268,7 +270,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
     end
 else % not if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
     disp('Function update_figure warning: ');
-    disp('Please load the images or check the range of index.')
+    disp('Please load the images or check the value of index.')
 end % if isfield(data, 'im'),
 return;
 

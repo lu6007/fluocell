@@ -2,10 +2,11 @@
 % if has_yfp, get_cell_bw can be called before get_fa_label
 % if ~has_yfp, get_fa_label needs to be called before get_cell_bw.
 
-% Copyright: Shaoying Lu and Yingxiao Wang 2011
+% Copyright: Shaoying Lu and Yingxiao Wang
+% Email: shaoying.lu@gmail.com
 
-function [fa_label im_fa]= get_fa_label(cell_bw, im_fa, method, varargin)
-if method ==1, % high pass filter
+function [fa_label, im_fa]= get_fa_label(cell_bw, im_fa, method, varargin)
+if method ==1 % high pass filter
     parameter_name = {'fa', 'algorithm', 'mask_with_cell', 'ref_pax_intensity'};
     default_value = {[],'segmentation', 1, 50000000};
     [fa, algorithm, mask_with_cell, ref_pax_intensity] = ...
@@ -15,17 +16,17 @@ if method ==1, % high pass filter
 
     % Normalized the FA images with total_pax_intensity
     if mask_with_cell
-        total_pax_intensity = sum(sum(double(im_fa).*double(cell_bw)))
+        total_pax_intensity = sum(sum(double(im_fa).*double(cell_bw)));
     else
-        total_pax_intensity = sum(sum(double(im_fa)))
-    end;
+        total_pax_intensity = sum(sum(double(im_fa)));
+    end
     im_fa = double(im_fa)/total_pax_intensity*ref_pax_intensity;
     % High pass filter
     im_fa = high_pass_filter(im_fa, fa.filter_size);
     %figure; imagesc(im_fa);
     if mask_with_cell
         im_fa = im_fa.*double(cell_bw);
-    end;
+    end
     % Here we use either the water algorithm or regular segmentation
     switch algorithm
         case 'water'
@@ -35,7 +36,7 @@ if method ==1, % high pass filter
         case 'segmentation'
             % Regular segmentation
             fa_label = fa_segment(im_fa, fa.min_water, fa.single_min_area);
-    end;
+    end
 elseif method ==2  % tophat highpass filter
     parameter_name = {'mask_with_cell', 'filter_size', 'threshold', 'min_area'};
     default_value = {1, 61, 30, 5};
@@ -53,8 +54,8 @@ elseif method ==2  % tophat highpass filter
         clear im_fa;
         im_fa = temp; 
         clear temp;
-    end;
+    end
     fa_label= fa_segment(im_fa, threshold, min_area);   
-end;
+end
 return;
 

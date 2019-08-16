@@ -29,6 +29,9 @@ if isfield(data,'bg_bw')
     data = rmfield(data,'bg_bw');
     data = rmfield(data,'bg_poly');
 end
+if isfield(data,'bg_value')
+    data = rmfield(data, 'bg_value');
+end
 if isfield(data,'rectangle')
     data = rmfield(data,'rectangle');
 end
