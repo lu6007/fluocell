@@ -30,15 +30,21 @@
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 
 function exp=excel_read_curve(file_name, varargin)
-parameter_name = {'method'};
-default_value = {1};
-method = parse_parameter(parameter_name, default_value, varargin);
+parameter_name = {'method', 'sheet_name'};
+default_value = {1, ''};
+[method, sheet_name] = parse_parameter(parameter_name, default_value, varargin);
 
 % The Name of the sheets describes the types of experiments
-[~, sheet_name] = xlsfinfo(file_name); 
-num_sheet = length(sheet_name);
+if isempty(sheet_name)
+    [~, sheet_name] = xlsfinfo(file_name); 
+    num_sheet = length(sheet_name);
+else
+    num_sheet = 1; 
+    temp = {sheet_name}; clear sheet_name;
+    sheet_name = temp;
+end
 exp = cell(num_sheet, 1);
-for i = 1:num_sheet
+for i = 1:num_sheet   
     % only reads the numerical values
     data = xlsread(file_name, sheet_name{i});
     switch method

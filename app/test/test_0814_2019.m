@@ -2,8 +2,8 @@ function [time, value] = test_0814_2019()
 % for Piezo1+25Yoda1
 dish_cell = {'dish5 25Yoda1', 1; 'dish5 25Yoda1', 5; 'dish5 25Yoda1', 52; 'dish5 25Yoda1', 7; ... %1-4
     'dish1 25Yoda1', 1; ... % 5
-    'dish2 25Yoda1', 1; 'dish2 25Yoda1', 12; 'dish2 25Yoda1', 3; 'dish2 25Yoda1', 4}; % 6
-ii = 4; 
+    'dish2 25Yoda1', 1; 'dish2 25Yoda1', 12; 'dish2 25Yoda1', 3; 'dish2 25Yoda1', 4}; % 6-9
+ii = 7; 
 
 % % for Piezo1+0.5Yoda1
 % dish_cell = {'dish3 0.5Yoda1', 1; 'dish3 0.5Yoda1', 2; 'dish3 0.5Yoda1', 3; ... % 1-3
@@ -57,12 +57,11 @@ switch dish
         switch cell_pos
             case 1
                 % do nothing
-            case 4
-                data.brightness_factor = 0.4; 
-            case {5, 7}
+            case {4, 7}
+                data.brightness_factor = 0.6; 
                 data.path = regexprep(data.path, 'p1', ['p', pos]);
-                data.prefix=regexprep(data.prefix, 's1', ['s', pos]);
-            case {52}
+                data.prefix=regexprep(data.prefix, 's1', ['s', pos(1)]);
+            case {5, 52}
                 data.path = regexprep(data.path, 'p1', ['p', pos]);
                 data.prefix=regexprep(data.prefix, 's1', ['s', pos(1)]);
         end
@@ -206,6 +205,7 @@ fprintf('Choose a faned region on the cell. \n');
 fprintf('Function detect_focal_adhesion(): Normalized against photobleach. \n');
 fprintf('The total FA intensity in the fan region within the outer layer of the cell ');
 fprintf('was quantified. \n\n'); 
+fprintf('The real imaging time was recovered from data. \n\n');
 
 for i =  (1:num_frame)
     data.index = image_index(i);
@@ -215,8 +215,10 @@ for i =  (1:num_frame)
     end
     data = get_image(data, new_first_file);
     data = update_figure(data);
+    % divide cell into data.num_roi layers. 
     [~, label_layer] = divide_layer(data.cell_bw, data.num_roi, 'method',2, ...
             'xylabel', 'normal');
+    % detect focal adhesions
     [fa_bw, ~, im_filt, total_pax_intensity] = detect_focal_adhesion(data.im{2}, ...
         'mask_with_cell', mask_with_cell, ...
         'cell_bw', data.cell_bw, 'need_high_pass_filter', 1, 'filter_size', filter_size, ...
@@ -231,11 +233,14 @@ for i =  (1:num_frame)
             'min_area', min_area, ...
             'min_water', min_water, 'normalize', 1, 'ref_pax_intensity', ref_pax_intensity);
     end
+    % define fan region
     last_file = (i==num_frame);
     [fan_bw, ~, ~] = get_fan(1, im_filt, data.cell_bw, strcat(data.output_path, 'fan.mat'), ...
         'draw_figure', new_first_file||last_file); 
+    % quanify in the outer layer, in focal adhesions, and in the fan region
     temp = im_filt.*(label_layer ==1).*fa_bw.*fan_bw;
     total_intensity(i) = sum(sum(temp)); 
+    % real imaging time
     time(i) = get_time(data.file{1}, 'method', 2); 
     clear temp;
     pause(0.1); 
