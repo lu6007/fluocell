@@ -1,16 +1,36 @@
+% function my = my_function()
+%     % Change the following line to the location of your data.
+%     % Close the folder name with '/'
+%     my.root = '/Users/kathylu/Documents/sof/data/quanty_dataset_2/';
+%     my.pause = @my_pause;
+%     my.dir = @my_dir;
+%     %
+%     my.get_value_before = @get_value_before;
+%     my.get_time_interp = @get_time_interp;
+%     my.normalize_time_value_array = @normalize_time_value_array;
+%     my.interpolate_time_value_array = @interpolate_time_value_array;
+%     %
+%     my.statistic_test = @statistic_test;
+%     my.multiple_compare = @multiple_compare; 
+%     my.get_derivative = @get_derivative;
+%     my.get_area_ratio = @get_area_ratio;
+% return
+
+% Copyright: Shaoying Lu, email: shaoying.lu@gmail.com 
 function my = my_function()
-    % Change the following line to the location of your quanty_dataset_2.
+    % Change the following line to the location of your data.
     % Close the folder name with '/'
     my.root = '/Users/kathylu/Documents/sof/data/quanty_dataset_2/';
     my.pause = @my_pause;
     my.dir = @my_dir;
     %
-    my.get_value_norm = @get_value_norm;
-    my.get_value_before = @get_value_norm;
-    my.normalize_time_value_array = @normalize_time_value_array;
+    my.get_value_before = @get_value_before;
     my.get_time_interp = @get_time_interp;
+    my.normalize_time_value_array = @normalize_time_value_array;
     my.interpolate_time_value_array = @interpolate_time_value_array;
+    %
     my.statistic_test = @statistic_test;
+    my.multiple_compare = @multiple_compare; 
     my.get_derivative = @get_derivative;
     my.get_area_ratio = @get_area_ratio;
 return
@@ -50,35 +70,28 @@ function list = my_dir(p)
     list = temp; clear temp; 
 return
 
-% function value_before = my_get_value_norm(time, value)
+% function value_before = my_get_value_before(time, value)
 % Find average value for time between -15 min and 0 min
-function value_norm = get_value_norm(norm_index, value)
-    value_norm = nanmean(value(norm_index))';
-    if isnan(value_norm) 
-        % find the first non-nan value and use that to normalize
+function value_before = get_value_before(time, value)
+    before_index = (time>=-15) & (time<=0); 
+    value_before = nanmean(value(before_index))';
+    if isnan(value_before) 
+        % find the first non-nan value 
        ii = find(~isnan(value),1); 
-       value_norm = value(ii);
+       value_before = value(ii);
     end
 return
 
 % function norm_ratio_array = normalize_time_value_array(time_array, ratio_array )
 % Calculated normalized ratio array
-function norm_value_array = normalize_time_value_array(time_array, value_array, varargin)
-
-    para_name = {'time_bound'};
-    default_v = {[-15 0]};
-    time_bound = parse_parameter(para_name, default_v, varargin);
-    
+function norm_value_array = normalize_time_value_array(time_array, value_array)
     [num_frame, num_cell] = size(time_array);
     norm_value_array = nan(num_frame, num_cell);
-    time_index = @(time, bound) (time>=bound(1)) & (time<=bound(2));
     for j = 1:num_cell
         value = value_array(:,j);
-        time = time_array(:, j);
-        norm_index = time_index(time, time_bound);
-        value_norm = get_value_norm(norm_index, value);
-        norm_value_array(:,j) = value/value_norm;
-        clear value time norm_index;
+        value_before = get_value_before(time_array(:,j), value);
+        norm_value_array(:,j) = value/value_before;
+        clear value;
     end
 return
 
@@ -92,19 +105,22 @@ function time_interp = get_time_interp(time_array, varargin)
     time_bound = parse_parameter(para_name, default_value, varargin);
     
     if isempty(time_bound)   
-        time_bound = [max(min(time_array)), min(max(time_array))]; 
+        jj = 1;
+        first_time_point = time_array(jj,end); % extract the first point time of image data
+        while isnan(first_time_point) 
+            jj = jj+1;
+            first_time_point = time_array(jj,1); 
+        end
+        jj = 0;
+        last_time_point = time_array(end-jj,1); % extract the last time point of image data
+        while isnan(last_time_point)
+            jj = jj+1;
+            last_time_point = time_array(end-jj, jj);
+        end
+        time_bound = [ceil(first_time_point), floor(last_time_point)];
     end % if isempty(time_bound)
     
-    t_step = 0.5; 
-    % time_interp = [time_bound(1):t_step:0, 0.1:0.1:10, 10.5:t_step:time_bound(2)]';
-    if time_bound(1)<=t_step/5 
-        time_interp = [time_bound(1):t_step:0, t_step/5:t_step/5:t_step*20, ...
-            t_step*21:t_step:time_bound(2)]';
-    elseif time_bound(1)<=t_step*20
-        time_interp = [time_bound(1):t_step/5:t_step*20, t_step*21:t_step:time_bound(2)]';
-    else
-        time_interp = (time_bound(1):t_step:time_bound(2))';
-    end        
+    time_interp = [time_bound(1):0.5:0, 0.1:0.1:10, 10.5:0.5:time_bound(2)]';
 return
 
 % function interp_value_array = interpolate_time_value_array(time_array, value_array,...
@@ -164,6 +180,35 @@ fprintf('n1 = %d, mean-SEM: %f +/- %f; \n', stat.x.size, stat.x.average, stat.x.
 fprintf('n2 = %d, mean-SEM: %f +/- %f. \n\n', stat.y.size, stat.y.average, stat.y.standard_error);
 return
 
+% function mutiple_compare(data, tag)
+% This function can be directly called from command line. 
+%
+% Input: data is a cell of column vectors including the data values.
+%        tag is a cell of strings containg the name of each data component.
+%        The length of data should be the same as the length of tag. 
+% 
+% Example: 
+% >> fi = cell(4,1);
+% Next copy data from an excel file to fi in the workspace
+% >> tag = {'NR', 'NR+GEM', 'R100', 'R100+GEM'};
+% >> my_func = my_function()
+% >> my_func.multiple_compare(fi, tag);
+%
+% This funciton uses the Bonferroni multiple comparison test of means at 
+% 95% confidence interval, which is provided by the multcompare function in the
+% MATLAB statistics toolbox (The MathWorks, Natick, MA).
+function multiple_compare(data, tag)
+    n = length(data);
+    data_tag = cell(n, 1);
+    new_tag = pad(tag);
+    for i = 1:n
+        data_tag{i} = get_tag(data{i}, new_tag{i});
+    end
+    data_vec = cat(1, data{:}); clear data;
+    tag_vec = cat(1, data_tag{:}); clear tag; 
+    multiple_comparison(data_vec, tag_vec);
+return
+
 % function [max_deriv, max_i, min_deriv, min_i] = get_derivative(t, y)
 function [max_deriv, max_i, min_deriv, min_i] = get_derivative(t, y)
 first_deriv = gradient(y, t).*(t>0); %??? 
@@ -182,11 +227,29 @@ if isempty(min_deriv) || min_deriv >=0
 end
 return
 
+% function area_ratio = get_area_ratio(t, y, varargin)
+% parameter_name = {'time_threshold', 'time_span'};
+% default_value = {15, 15}; % unit: {min, min} % Area ratio is a measure of transient index
+% This is also area under curve (AUC) normalized by peak values and time
+% span used for calculation. 
+% The AUC was calculated during [0 time_span] min after the signal peaked. 
+% It is required that the time course peaked within time_th min. 
+%
+% The normalized AUC is calculated my_function.get_area_ratio
+% with the input of "time" and "normalized_ratio-1" from single cells. 
+% Its values represent the stability of the time courses. 
+% normal_auc = 0.5 indicates linear decrease to the basal level from peak within 15 min.
+% normal_auc = 1.0 indicates stable signals after reaching peak.
+% The values can also be NaN or negative: (1) normal_auc = NaN : the time course 
+% did not reach peak before time_th (min); (2) normal_auc < 0 : the time courese quickly decreased to less than 0 before
+% time_span (min). 
+%
 % function area_ratio = get_area_ratio(t, y)
 % Area ratio is a measure of transient index
-function area_ratio = get_area_ratio(t, y)
-time_th = 15; % min
-time_span = 15; % min
+function area_ratio = get_area_ratio(t, y, varargin)
+parameter_name = {'time_threshold', 'time_span'};
+default_value = {15, 15}; % unit: {min, min} 
+[time_th, time_span] = parse_parameter(parameter_name, default_value, varargin);
 max_y_95 = prctile(y, 95, 1);
 max_i_95 = find(y>=max_y_95, 1);
 if t(max_i_95)>=time_th
@@ -196,7 +259,5 @@ end
 t95 = t(max_i_95);
 index = (t>=t95)&(t<=t95+time_span);
 area_curve = trapz(t(index), y(index));
-area_ratio = area_curve/max_y_95*time_span;
+area_ratio = area_curve/max_y_95/time_span;
 return
-
-
