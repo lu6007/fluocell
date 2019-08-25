@@ -1,9 +1,30 @@
+% function [time, value] = test_0814_2019()
+% Quantifying paxillin-GFP intensity for Yijia's Adavanced Science paper. 
+% The detection method of FA locations based on the GFP fluorescence intensity (FI) images 
+% was as previously described (Lu et al. 2014 Scientific reports). In brief, the image analysis 
+% for focal adhesion was conducted using our customized software fluocell developed in MATLAB. 
+% The source code of fluocell is published at Github (https://github.com/lu6007/fluocell ). 
+% All the images were background-subtracted and smoothed using a median-filter with a window 
+% size of 3 × 3 pixels. The GFP-paxillin images were used to compute the masks of the cells. 
+% The cell masks were then divided into four layers with the outer layer representing the 
+% lamellipodium region. After that, a fan-shaped region was selected in the first image of 
+% the video sequence, to identify the location of active lamellipodia (Fig. S7A and S7B). 
+% The interception of this fan region and the outer layer of the cell mask were utilized for 
+% all the images in the sequence to represent the active lamellipodium region of interest (ROI). 
+% As such, the paxillin-GFP images were processed with high-pass filter which removed diffusive 
+% cytosolic background (Fig. S7B) and a threshold value was used to detected paxillin-labelled 
+% focal adhesions in the filtered image. Total FI of the detected paxillin focal adhesions were 
+% quantified in the ROI over time and normalized such that the average value before treatment 
+% was 1. The normalized time courses of total FI were then collected for further analysis and 
+% statistical comparison. 
+
+% Copyright: Shaoying Lu, shaoyinglu@gmail.com 
 function [time, value] = test_0814_2019()
 % for Piezo1+25Yoda1
 dish_cell = {'dish5 25Yoda1', 1; 'dish5 25Yoda1', 5; 'dish5 25Yoda1', 52; 'dish5 25Yoda1', 7; ... %1-4
     'dish1 25Yoda1', 1; ... % 5
     'dish2 25Yoda1', 1; 'dish2 25Yoda1', 12; 'dish2 25Yoda1', 3; 'dish2 25Yoda1', 4}; % 6-9
-ii = 7; 
+ii = 4; 
 
 % % for Piezo1+0.5Yoda1
 % dish_cell = {'dish3 0.5Yoda1', 1; 'dish3 0.5Yoda1', 2; 'dish3 0.5Yoda1', 3; ... % 1-3
@@ -184,7 +205,7 @@ if ~exist(data.output_path, 'dir')
     fprintf('\nFunction test_0814_2019(): make dir %s\n------', data.output_path);
 end
 
-min_water = 2000;
+min_water = 1000;
 min_area = 20;
 filter_size = 51; 
 image_index = data.image_index;
@@ -193,6 +214,7 @@ time = zeros(num_frame, 1);
 total_intensity = zeros(num_frame, 1);
 ref_pax_intensity = 1;
 mask_with_cell = 1;
+fprintf('\nFunction get_fa_time_course(): min_water = %d\n', min_water);
 
 fprintf('\nFunction get_fa_time course(): \n')
 fprintf('Use high pass filter to remove diffusive background. \n');
@@ -220,15 +242,15 @@ for i =  (1:num_frame)
             'xylabel', 'normal');
     % detect focal adhesions
     [fa_bw, ~, im_filt, total_pax_intensity] = detect_focal_adhesion(data.im{2}, ...
-        'mask_with_cell', mask_with_cell, ...
-        'cell_bw', data.cell_bw, 'need_high_pass_filter', 1, 'filter_size', filter_size, ...
-        'min_area', min_area, ...
-        'min_water', min_water, 'normalize', 1, 'ref_pax_intensity', ref_pax_intensity);
+    'mask_with_cell', mask_with_cell, ...
+    'cell_bw', data.cell_bw, 'need_high_pass_filter', 1, 'filter_size', filter_size, ...
+    'min_area', min_area, ...
+    'min_water', min_water, 'normalize', 1, 'ref_pax_intensity', ref_pax_intensity);
     if new_first_file
         ref_pax_intensity = total_pax_intensity; 
         fprintf('\nFunction test_0814_2019(): ref_pax_intensity = %d ---\n', ...
             ref_pax_intensity); 
-        [fa_bw, ~, im_filt, ~] = detect_focal_adhesion(data.im{2}, 'mask_with_cell', 1, ...
+        [fa_bw, fa_bd, im_filt, ~] = detect_focal_adhesion(data.im{2}, 'mask_with_cell', 1, ...
             'cell_bw', data.cell_bw, 'need_high_pass_filter', 1, 'filter_size', filter_size, ...
             'min_area', min_area, ...
             'min_water', min_water, 'normalize', 1, 'ref_pax_intensity', ref_pax_intensity);
@@ -237,6 +259,12 @@ for i =  (1:num_frame)
     last_file = (i==num_frame);
     [fan_bw, ~, ~] = get_fan(1, im_filt, data.cell_bw, strcat(data.output_path, 'fan.mat'), ...
         'draw_figure', new_first_file||last_file); 
+    if new_first_file
+        figure(3); hold on;
+        for j = 1:size(fa_bd, 1)
+            plot(fa_bd{j}(:,2), fa_bd{j}(:,1), 'k-');
+        end
+    end
     % quanify in the outer layer, in focal adhesions, and in the fan region
     temp = im_filt.*(label_layer ==1).*fa_bw.*fan_bw;
     total_intensity(i) = sum(sum(temp)); 
