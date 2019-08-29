@@ -1,4 +1,8 @@
-% function [fa_label im_fa]= detect_focal_adhesion(im_fa, varargin)
+% function [fa_bw, fa_bd, im_filt, total_pax_intensity]= detect_focal_adhesion(im_fa, varargin)
+%     parameter_name = {'mask_with_cell', 'cell_bw', 'filter_size',...
+%         'min_area','need_high_pass_filter', 'min_water',...
+%         'normalize', 'ref_pax_intensity'};
+%     default_value = {0, [], 61, 10, 1,100,1, 1,5000000};
 % algorithm: 'water', 'segmentation'
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
