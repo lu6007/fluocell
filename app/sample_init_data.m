@@ -1,7 +1,33 @@
-% initialize data  for the various applications.
+% initialize data for the various applications.
 function data = sample_init_data(name, function_name)
-% replace the root variable in line 4 with the location of fluocell_data/ folder
-root = '/Users/kathylu/Documents/sof/data/fluocell_sample/';
+global fluocell_data_root; 
+if isempty(fluocell_data_root)
+    %%% replace root value here %%%
+    root = '/Users/kathylu/Documents/sof/data/fluocell_sample/temp/';
+    %%% 
+else 
+    root = fluocell_data_root;
+    fprintf('\nfunction sample_init_data() --- \n')
+    fprintf('  set root to %s ... \n', root);
+end
+if ~exist(root, 'dir')
+    %fprintf('\n----------- \n');
+    fprintf('\nfunction sample_init_data() --- \n')
+    fprintf('  the root variable needs to be changed to the folder of fluocell sample data. \n');
+    fprintf('Please select in the pop-up window... \n');
+    temp = uigetdir(); 
+    root = strcat(temp, '/');
+    fprintf('root = %s\n', root);
+    fprintf('******\n');
+    fprintf('For future convenience, please copy and paste the root value into sample_init_data(). \n');
+    fprintf('******\n');
+    fprintf('----------- \n');
+end 
+if isempty(fluocell_data_root)
+    fluocell_data_root = root; 
+    fprintf('Set fluocell_data_root to %s ... \n', root);
+end
+
 switch name
     case 'src_pax'
         % General parameters
