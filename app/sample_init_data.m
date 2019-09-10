@@ -3,7 +3,7 @@ function data = sample_init_data(name, function_name)
 global fluocell_data_root; 
 if isempty(fluocell_data_root)
     %%% replace root value here %%%
-    root = '/Users/kathylu/Documents/sof/data/fluocell_sample/temp/';
+    root = '/Users/kathylu/Documents/sof/data/fluocell_sample/';
     %%% 
 else 
     root = fluocell_data_root;
@@ -11,7 +11,6 @@ else
     fprintf('  set root to %s ... \n', root);
 end
 if ~exist(root, 'dir')
-    %fprintf('\n----------- \n');
     fprintf('\nfunction sample_init_data() --- \n')
     fprintf('  the root variable needs to be changed to the folder of fluocell sample data. \n');
     fprintf('Please select in the pop-up window... \n');
