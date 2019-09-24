@@ -18,6 +18,29 @@ data = res.data;
 data.output_path = strcat(p,'output/');
 
 save_data = 0;
+% backward compatibility, 8/30/2019
+if isfield(data, 'cell_size') 
+    if iscell(data.cell_size) && isrow(data.cell_size{1})
+        num_object = length(data.cell_size);
+        temp = cell(num_object, 1);
+        for i = 1:num_object
+            temp{i} = data.cell_size{i}';
+        end
+        data = rmfield(data, 'cell_size');
+        data.cell_size = temp; clear temp
+        %
+        temp = data.channel1_bg';
+        data = rmfield(data, 'channel1_bg');
+        data.channel1_bg = temp; clear temp;
+        % 
+        temp = data. channel2_bg';
+        data = rmfield(data, 'channel2_bg'); 
+        data.channel2_bg = temp; clear temp;
+        %
+        save_data = 1;
+    end
+end
+
 % backward compatibility, 6/23/2017 --- Kathy
 if strcmp(data.protocol, 'FRET') && length(data.f) <3
   data.f(3) = figure; 
