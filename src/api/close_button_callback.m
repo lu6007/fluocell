@@ -17,7 +17,9 @@ return;
 function data = close_figure(data)
 if isfield(data, 'f')
     for i = 1:data.num_figures
-        close(data.f(i));
+        if ishghandle(data.f(i))
+            close(data.f(i));
+        end
     end
     data = rmfield(data,'f');
 end
