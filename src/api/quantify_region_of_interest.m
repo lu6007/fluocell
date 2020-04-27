@@ -140,7 +140,8 @@ end
 %% Modified the following for the requirement of min_intensity
 if isfield(data, 'enable_min_intensity') && data.min_intensity == 1
     disp('quantify_region_of_interest(): data.enable_min_intensity == 1');
-    disp('Require the intensity values to be data.intensity_bound(1) or higher.');
+    fprintf('Require the intensity values to be %d or higher.\n', ...
+        data.intensity_bound(1));
     min_intensity = data.intensity_bound(1);
 else
     min_intensity = 0;

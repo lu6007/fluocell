@@ -41,10 +41,10 @@ for i = 1:2:num_varargin
             varargout{j} = varargin{i+1};
             parameter_recognized = 1;
             break;
-        elseif strcmpi(varargin{i}, 'verbose')
-            verbose = varargin{i+1};
-            parameter_recognized = 1;
-            break;
+%         elseif strcmpi(varargin{i}, 'verbose')
+%             verbose = varargin{i+1};
+%             parameter_recognized = 1;
+%             break;
         end % if
 
     end % for j
