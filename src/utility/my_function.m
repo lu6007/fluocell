@@ -176,8 +176,8 @@ stat.y.average = mean(y);
 stat.y.standard_error = std(y)/sqrt(n2);
 fprintf('Compare %s,\n', group);
 fprintf('p-value = %e, method: %s; \n', p, method);
-fprintf('n1 = %d, mean-SEM: %f +/- %f; \n', stat.x.size, stat.x.average, stat.x.standard_error);
-fprintf('n2 = %d, mean-SEM: %f +/- %f. \n\n', stat.y.size, stat.y.average, stat.y.standard_error);
+fprintf('n1 = %d, mean+/-SEM: %f +/- %f; \n', stat.x.size, stat.x.average, stat.x.standard_error);
+fprintf('n2 = %d, mean+/-SEM: %f +/- %f. \n\n', stat.y.size, stat.y.average, stat.y.standard_error);
 return
 
 % function mutiple_compare(data, tag)

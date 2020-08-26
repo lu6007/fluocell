@@ -1,4 +1,4 @@
-% function experiment=excel_read_curve(file_name)
+% function exp = excel_read_curve(file_name)
 % parameter_name = {'method'};
 % default_value = {[1]};
 %
