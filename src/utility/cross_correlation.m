@@ -8,7 +8,7 @@
 % tt and cc are column vectors.
 % shift x and y to the mean values.
 % cc(m) = sum(x(n)y(n+m));
-% Note this definite is reversed in the Lag Time compared 
+% Note this definition is reversed in the Lag Time compared 
 % to the MATLAB function xcorr(). The vectors x and y are
 % shifted to zero and normalized in the function. 
 %
