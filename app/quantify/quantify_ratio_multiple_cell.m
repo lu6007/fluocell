@@ -5,9 +5,9 @@
 % by manual selection or automatic detection. 
 % Output: intensity_value, ratio_value
 % intensity_value : 
-% Column 1 - channel 1 intensity
-% Column 2 - channel 2 intensity
-% Column 3 - channel 3 intensity
+% Column 1 - channel 1 average intensity
+% Column 2 - channel 2 average intensity
+% Column 3 - channel 3 average intensity
 %
 % Example: 
 % >> data = quantify_ratio_init_data('sample');
@@ -36,7 +36,7 @@ end
 %
 qfun = quantify_fun();
 max_num_cell = 1000;
-detect_type = 4; % combine channels 1 and 2 for detection
+detect_type = 4; % 1-use channel 1 for detection; 4; % combine channels 1 and 2 for detection
 
 
 num_image = length(data.image_index);
@@ -65,8 +65,8 @@ for i = 1:num_image
     if ~exist(strcat(data.path, 'output/'), 'dir')
         mkdir(strcat(data.path, 'output/'));
     end
-    %temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
-    temp = temp2;
+    temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
+    % temp = temp2;
     if isfield(data, 'subtract_background') && data.subtract_background
         data.bg_bw = get_background(temp, bg_file, 'method', data.subtract_background); clear temp;
     end
@@ -95,12 +95,23 @@ for i = 1:num_image
     
     % im_detect is the image used for detection. 
     im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
+    % Show the ratio image in a grid
+    %%% Kathy 10/7/2020
+    % temp = ratio_im;
+    % type = 1;
+    temp = im{2};
+    type = 2;
+    %%%
     if isfield(data, 'bg_bw') 
-        display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
-    % display_boundary(data.bg_bw, 'im', im{2}, 'line_color', 'r', 'new_figure', 0, 'type', 2);
+        display_boundary(data.bg_bw, 'im', temp, 'line_color', 'r', 'new_figure', 0, 'type', type);
     else
-        display_boundary([], 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'display', 2);
+        display_boundary([], 'im', temp, 'line_color', 'r', 'new_figure', 0, 'type', type);
     end
+    colormap jet; 
+    if type == 2
+        caxis(data.intensity_bound);
+    end
+    clear temp;
        
     %%% 
     if manual_select
@@ -129,13 +140,23 @@ for i = 1:num_image
         clear bw_image bw_image_open bd temp; 
     end % if manual_select
     clear temp;
-    % display ob
+    % display the detected cells
     if max(max(label))>0
         display_boundary(label, 'im', [], 'color', 'w', 'show_label', 0, 'new_figure', 0);
     end 
    
+    %%% Kathy 10/7/
+    % Erode 6 pixels since 6.28 pixels = 1 um
+    % The diameter of a sigle cell is about 100 pixels = 15.92 um
+    % se = strel('diamond', 6);
     for j = 1:num_roi
-        mask = double(label==j);
+        temp1 = double(label==j);
+        mask = temp1; 
+%         %%% Kathy 10/7/2020 % dilate mask for a fixed number of pixels here
+%         % The width of the strip is 6. 
+%         temp2 = imerode(temp1, se); 
+%         mask = temp1 & (~temp2);
+%         %%%
         area = sum(sum(mask));
         rr = sum(sum(ratio.*mask))/area;
         fi1 = sum(sum(im{1}.*mask))/area;
@@ -167,14 +188,16 @@ for i = 1:num_image
     end
     clear roi_poly roi_bw file im ratio ratio_im mask;
     title(strcat('Intensity Ratio - ', index_i));
-    
 end % for i = 1:num_image
+
 temp = intensity_value; clear intensity_value;
 intensity_value = temp(1:num_cell,:); clear temp;
 temp = ratio_value; clear ratio_value;
 ratio_value = temp(1:num_cell, :); clear temp;
-my_figure; hist(ratio_value(:,1), 20); 
-xlabel('Ratio'); ylabel('Count'); 
+% my_figure; hist(ratio_value(:,1), 20); 
+% xlabel('Ratio'); ylabel('Count'); 
+my_figure; hist(intensity_value(:, 2), 20);
+xlabel('Channel 2 Intensity'); ylabel('Count');
 
 %
 if save_result

@@ -2,6 +2,7 @@
 % Perform the preprocess steps including
 % median_filter, subtract_background,
 % rotate_image, and crop_image.
+% Input: im is of the class uint16, output: new_im is of class double
 %
 % Example:
 % data.median_filter = 1;
@@ -53,6 +54,7 @@ bg_value = parse_parameter(para_name, default_value, varargin);
             end
             clear im; im = max(im_sub, 0); clear im_sub; %remove any negatives if they occured
         end
+        
         if isfield(data, 'rotate_image') && data.rotate_image
             im_rot = imrotate(im, data.angle);
             clear im; im = im_rot; clear im_rot;
@@ -80,7 +82,11 @@ bg_value = parse_parameter(para_name, default_value, varargin);
             im = temp; clear temp;
         end
         
-        new_im = im;
+        if isa(im, 'double')
+            new_im = im;
+        else
+            new_im = double(im);
+        end
         clear im;
 return;
 

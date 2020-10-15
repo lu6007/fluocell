@@ -4,6 +4,9 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
 function data=get_boundary(im, data)
+% There is another function called get_boundary() in the utrack package. So
+% if there is a confusion in MATLAB, the fluocell package need to be put on the top of the
+% search path of MATLAB
 show_figure = (isfield(data, 'show_figure') && data.show_figure) || ~isfield(data, 'show_figure');
 
 if isfield(data, 'need_apply_mask')&& data.need_apply_mask
