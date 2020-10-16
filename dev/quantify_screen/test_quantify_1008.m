@@ -1,6 +1,11 @@
-% test_quantify_1008
+% Script test_quantify_1008.m
+% Quantifying channel 2 fluorescnec intensity for Longwei's project
+% Channel 1 was used for detection. The detected masks are applied 
+% on channel 2 to quantify the average fluorescence intensity. 
+
 %% The first experiment
-qs_func = quantify_screen('get_function');
+qs_func = quantify_screen();
+my_func = my_function; 
 
 % Quantify a simple experiment
 exp_name = '0828_ac7'; 
@@ -21,12 +26,11 @@ repeat_data.load_result = 1;
 my_figure; histogram(intensity(:,2));
 aa = axis;
 axis([0 10000 aa(3) aa(4)]);
-title(qs_func.get_latex_string(exp_name));
+title(my_func.get_latex_string(exp_name));
 
 %% Compare different quantification results
 group_name = {'Y493'; 'pLAT'}; 
 num_group = size(group_name, 2);
-my_func = my_function; 
 for i = 1:num_group
     group_data =init_data_function(group_name{i}, 'type', 'group_compare');
     group_data.init_data_function = init_data_function;

@@ -1,6 +1,8 @@
 % test_quantify_screen
 %% Sample
-qs_func = quantify_screen('get_function');
+% Initialize the quantification functions
+qs_func = quantify_screen();
+my_func = my_function();
 
 % Quantify a simple experiment
 exp_name = 'ac7'; 
@@ -19,9 +21,7 @@ repeat_data.load_result = 1;
 [~, ratio] = qs_func.collect_simple_repeat(repeat_data);
 %
 my_figure; histogram(ratio);
-% aa = axis;
-% axis([0 10000 aa(3) aa(4)]);
-title(qs_func.get_latex_string(exp_name));
+title(my_func.get_latex_string(exp_name));
 
 %% Compare different quantification results
 group_name = 'sample';
@@ -30,6 +30,5 @@ group_data.init_data_function = init_data_function;
 group_data.load_result = 1; 
 [intensity, ratio] = qs_func.group_compare(group_data);
 % statistical test
-my_fun = my_function;
-my_fun.multiple_compare(ratio, group_data.name_string);
+my_func.multiple_compare(ratio, group_data.name_string);
 

@@ -5,6 +5,9 @@
 %     my.pause = @my_pause;
 %     my.dir = @my_dir;
 %     %
+%     my.copy_file = @copy_file;
+%     my.get_latex_string = @get_latex_string; 
+%     %
 %     my.get_value_before = @get_value_before;
 %     my.get_time_interp = @get_time_interp;
 %     my.normalize_time_value_array = @normalize_time_value_array;
@@ -24,6 +27,9 @@ function my = my_function()
     my.pause = @my_pause;
     my.dir = @my_dir;
     %
+    my.copy_file = @copy_file;
+    my.get_latex_string = @get_latex_string; 
+    %
     my.get_value_before = @get_value_before;
     my.get_time_interp = @get_time_interp;
     my.normalize_time_value_array = @normalize_time_value_array;
@@ -31,6 +37,7 @@ function my = my_function()
     %
     my.statistic_test = @statistic_test;
     my.multiple_compare = @multiple_compare; 
+    %
     my.get_derivative = @get_derivative;
     my.get_area_ratio = @get_area_ratio;
 return
@@ -260,4 +267,21 @@ t95 = t(max_i_95);
 index = (t>=t95)&(t<=t95+time_span);
 area_curve = trapz(t(index), y(index));
 area_ratio = area_curve/max_y_95/time_span;
+return
+
+% cd /Volumes/KathyWD2TB/data/2017/charlotte_0814/0914/0823_pretreat/3
+% copy_file('p%d/*t4*', (1:20)', 'output/time_point');
+function copy_file(source_pattern, source_index, destination)
+for i = source_index'
+    source = sprintf(source_pattern, i);
+    copyfile(source, destination);
+end
+return
+
+% function new_str = get_latex_string(str)
+% Convert a string to a latex-compatible format
+% The input can be either a str or a cell of strings
+% The output is the same type as the input
+function new_str = get_latex_string(str)
+new_str = regexprep(str, '\_', '\\_');
 return
