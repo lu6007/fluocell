@@ -1,40 +1,42 @@
 % function [test_function, intensity, ratio] = quantify_screen(varargin)
-% para_name = {'exp_name', 'fun_type', 'num_repeat'};
+% para_name = {'exp_name', 'type', 'num_repeat'};
 % default_value = {'', 'copy_file', 1};
 % 1. Quantify individual dataset (requires fluocell_dataset_2)
 % >> [~, intensity, ratio] = quantify_screen();
 % or, 
 % >> exp_name = '0828_ac7';
-% >> [~, intensity, ratio] = quantify_screen('exp_name', exp_name, 'fun_type', 'quantify', ...
+% >> [~, intensity, ratio] = quantify_screen('exp_name', exp_name, 'type', 'quantify', ...
 % >>     'init_data_function', @quantify_init_data);
 %
 % 2. Collect_simple_repeat
 % >> exp_name = 'AC7';
 % >> [~, intensity, ratio] = quantify_screen('exp_name', exp_name, ...
-% 'fun_type', 'collect_simple_repeat', 'num_repeat', 1, 'load_result', 1, ...
+% 'type', 'collect_simple_repeat', 'num_repeat', 1, 'load_result', 1, ...
 %     'init_data_function', @quantify_init_data);
 %
 % 3. Compare the results
-% >> [~, intensity, ratio] = quantify_screen('fun_type', 'group_compare', ...
+% >> [~, intensity, ratio] = quantify_screen('type', 'group_compare', ...
 %     'init_data_function', @init_data_1008, 'load_result', 1);
 %
-% 4. Copy files: set fun_type = 'copy_file'
+% 4. Copy files: set type = 'copy_file'
 
-function [test_function, intensity, ratio] = quantify_screen(varargin)
-para_name = {'exp_name', 'fun_type', 'num_repeat', 'init_data_function', 'load_result'};
-default_value = {'0828_ac7', 'quantify', 1, @quantify_init_data, 0};
-[exp_name, fun_type, num_repeat, init_data_function, load_result]= ...
+function [qs_function, intensity, ratio] = quantify_screen(type, varargin)
+para_name = {'exp_name', 'num_repeat', 'init_data_function', 'load_result'};
+default_value = {'0828_ac7', 1, @quantify_init_data, 0};
+[exp_name, num_repeat, init_data_function, load_result]= ...
     parse_parameter(para_name, default_value, varargin);
 
-test_function.copy_file = @copy_file;
-test_function.get_latex_string = @get_latex_string; 
-test_function.quantify_multiple_cell = @quantify_ratio_multiple_cell;
-test_function.collect_simple_repeat = @collect_simple_repeat;
-test_function.group_compare = @group_compare; 
+qs_function.copy_file = @copy_file;
+qs_function.get_latex_string = @get_latex_string; 
+qs_function.quantify_multiple_cell = @quantify_ratio_multiple_cell;
+qs_function.collect_simple_repeat = @collect_simple_repeat;
+qs_function.group_compare = @group_compare; 
 %
-switch fun_type
+switch type
 %     case 'copy_file'
 %         return;
+    case 'get_function'
+        return;
     case 'quantify'
         data = init_data_function(exp_name);
         [intensity, ratio] = quantify_ratio_multiple_cell(data, ...
@@ -54,7 +56,7 @@ switch fun_type
     case 'group_compare'
         % group_name = 'Y394' or 'pLAT' 
         group_name = exp_name; clear exp_name; 
-        group_data = init_data_function(group_name, 'type', fun_type);
+        group_data = init_data_function(group_name, 'type', type);
         group_data.init_data_function = init_data_function;
         group_data.load_result = load_result; 
         [intensity, ratio] = group_compare(group_data); 
@@ -76,8 +78,8 @@ function [intensity, ratio] = collect_simple_repeat(repeat_data)
     column_head = {'intensity', 'ratio'};
     for i = 1:num_repeat
         exp_name_i = strcat(exp_name, num2str(i));
-        [~, value{i,1}, value{i,2}] = quantify_screen('exp_name', exp_name_i, ...
-            'fun_type', 'quantify', 'init_data_function', init_data_function, ...
+        [~, value{i,1}, value{i,2}] = quantify_screen('quantify', ...
+            'exp_name', exp_name_i, 'init_data_function', init_data_function, ...
             'load_result', load_result, 'save_result', 1);
     end
     exp = cell2struct(value, column_head, 2);

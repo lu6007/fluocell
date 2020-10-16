@@ -1,9 +1,9 @@
 function data = init_data_1008(exp_name, varargin)
 para_name = {'type'};
 default_value = {'quantify'};
-data_type = parse_parameter(para_name, default_value, varargin);
+type = parse_parameter(para_name, default_value, varargin);
 
-switch data_type
+switch type
     case 'group_compare'
         group_name = exp_name;
         switch group_name
