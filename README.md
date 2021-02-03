@@ -13,11 +13,11 @@ diffusion-corrected FRET imaging.
 2. Lu S et al. 2011 PLoS ONE, Computational analysis of the spatiotemporal coordination of polarized PI3K and Rac1 activities 
 in micro-patterned live cells.
 
-Tested in operation systems: 
-  Windows 10 64 bit
-  MacOS 10, 11.1 64 bit
-Requires Java 15.0.2 or similar versions
-Requires MATLAB, tested in MATLAB 2013-2019
+Tested with operation systems: 
+  Windows 10, 64 bit
+  MacOS 10, 11.1, 64 bit
+Requires Java 8.0 - 15.0 or similar versions
+Requires MATLAB, tested in MATLAB 2013-2019 
 
 Email Contact Shaoying (Kathy) Lu : shaoying.lu@gmail.com
 
