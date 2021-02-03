@@ -1,4 +1,4 @@
-# fluocell
+# fluocell-current
 Fluocell: A Software Package for Analysis and Visualization of Ratiometric Fluorescence Image of Live Cells
 
 Fluocell is a software package for the analysis and visualization of fluorescence images of live cells, with applications in  migration and cancer invasion. The main package contains a visualization and quantification tool for fluorescence intensity and FRET ratio images. Optional modules of diffusion analysis and polarity analysis can be obtained upon request. This package is mainly written in MATLAB. It is being developed by a group of researchers in the "Molecular Engineering for Single Cell 
@@ -12,6 +12,12 @@ Citations for publication:
 diffusion-corrected FRET imaging. 
 2. Lu S et al. 2011 PLoS ONE, Computational analysis of the spatiotemporal coordination of polarized PI3K and Rac1 activities 
 in micro-patterned live cells.
+
+Tested in operation systems: 
+  Windows 10 64 bit
+  MacOS 10, 11.1 64 bit
+Requires Java 15.0.2 or similar versions
+Requires MATLAB, tested in MATLAB 2013-2019
 
 Email Contact Shaoying (Kathy) Lu : shaoying.lu@gmail.com
 
