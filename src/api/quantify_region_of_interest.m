@@ -158,7 +158,7 @@ for i = 1 : num_object
         data.ratio{i}(ii, j) = compute_average_value(ratio, mask);
         data.channel1{i}(ii, j) = compute_average_value(cfp, mask);
         data.channel2{i}(ii, j) = compute_average_value(yfp, mask);
-        clear mask; 
+        clear mask, bw; 
     end
 end; clear i j
 %%
