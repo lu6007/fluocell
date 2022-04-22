@@ -979,6 +979,7 @@ public class fluocellUI extends javax.swing.JFrame {
         try {
             proxy.setVariable("crop_image", cropImage.isSelected());
             proxy.eval("fluocell_data.crop_image = crop_image;");
+            proxy.eval("fluocell_data.keep_axis = 0;");
         } catch (MatlabInvocationException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         }

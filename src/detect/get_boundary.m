@@ -69,11 +69,14 @@ end
 
 if show_figure
     hold on;
-    % Draw background
-    if isfield(data, 'subtract_background') && data.subtract_background 
-        bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
-        plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
-    end 
+
+    % Need to comment this due to the incompatability when the image is
+    % cropped
+%     % Draw background
+%     if isfield(data, 'subtract_background') && data.subtract_background 
+%         bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
+%         plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
+%     end 
     % Draw detected cells
     for n = 1 : length(data.cell_bd)
         plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',lw);

@@ -189,14 +189,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             clear first_channel_im second_channel_im ratio_im;
 
        case 'Intensity'
-            second_channel_im = data.im{1};
-            figure(data.f(1)); imagesc(second_channel_im); 
+            figure(data.f(1)); imagesc(data.im{1}); 
             axis off; my_title('Intensity',data.index, 'data', data);
             colormap jet; 
             data.im{2}  = preprocess(data.im{1}, data); 
             figure(data.f(2)); my_imagesc(data.im{2}, 'data', data); 
             axis off; my_title('Processed',data.index, 'data', data);
-            colormap jet;
+            % colormap jet;
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
                 data = get_boundary(data.im{2}, data); 
@@ -210,7 +209,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
              my_func.save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
              clear second_channel_im;
         case 'Intensity-DIC'
-            figure(data.f(1)); my_imagesc(data.im{1}); 
+            figure(data.f(1)); imagesc(data.im{1}); 
             axis off; my_title('Intensity',data.index, 'data', data);
             figure(data.f(2)); 
             my_imagesc(data.im{2});
@@ -219,7 +218,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.im{3} = preprocess(data.im{1}, data); 
             figure(data.f(3));
             my_imagesc(data.im{3}, 'data', data);
-            imagesc(data.im{3}); caxis(data.intensity_bound);
+            % imagesc(data.im{3}); caxis(data.intensity_bound);
             axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data,'quantify_roi') && data.quantify_roi
@@ -234,6 +233,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
              end
                 
     end %switch data.protocol
+    if isfield(data, 'keep_axis')
+        data.keep_axis = 1; 
+    end
     
     % Lexie on 03/02/2015
     % Draw the background region
@@ -281,22 +283,29 @@ para_name = {'data'};
 para_default = {[]};
 data = parse_parameter(para_name, para_default, varargin);
 temp = caxis; 
-if (temp(1)==0 && temp(2) ==1) 
+if (temp(1)==0 && temp(2) ==1) % when the figure is intialized
+    keep_cmap = 0;
     keep_axis = 0;
-elseif ~isempty(data) && isfield(data, 'crop_image') && data.crop_image
-    keep_axis = 0;
+elseif ~isempty(data) && isfield(data, 'keep_axis') 
+    keep_cmap = 1;
+    keep_axis = data.keep_axis;
 else
+    keep_cmap = 1;
     keep_axis = 1;
 end
 axis_vector = axis; % needed for keeping the zoom-in and out
 this_colormap = colormap(gca); 
 clf;
-if ~keep_axis
-    imagesc(im); 
-else
+
+if keep_cmap
     imagesc(im, temp);
+    colormap(this_colormap);
+else
+    imagesc(im);
+    colormap jet; 
+end
+if keep_axis
     axis(axis_vector);
-    colormap(this_colormap); 
 end
 return;
 

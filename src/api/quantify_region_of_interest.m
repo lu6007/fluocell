@@ -76,6 +76,11 @@ switch data.quantify_roi
                 roi_bw{i} = roi_bw{i}.*data.mask;
             end
         end
+        if isfield(data,'crop_image') && data.crop_image
+            for i = 1:num_roi
+                roi_bw{i} = imcrop(roi_bw{i}, data.rectangle);
+            end
+        end
     case 2 % move roi while tracking cell
         % use the centroid of the cell to track rois
         prop = regionprops(obj{1});
@@ -158,30 +163,41 @@ for i = 1 : num_object
         data.ratio{i}(ii, j) = compute_average_value(ratio, mask);
         data.channel1{i}(ii, j) = compute_average_value(cfp, mask);
         data.channel2{i}(ii, j) = compute_average_value(yfp, mask);
-        clear mask, bw; 
+        clear mask; 
     end
 end; clear i j
 %%
     
 % quantify background
 if isfield(data, 'subtract_background') && data.subtract_background
+    % Note that in the Intensity protocol im{1} and im{2} are of difference
+    % sizes
+    size_difference = max(abs(size(data.im{2})-size(data.bg_bw)));
     switch data.subtract_background
 %         case 0 
 %             bg_value1 = 0;
 %             bg_value2 = 0;
         case {1, 2}
             bg_value1 = compute_average_value(data.im{1}, data.bg_bw);
-            bg_value2 = compute_average_value(data.im{2}, data.bg_bw);
+            if ~size_difference
+                bg_value2 = compute_average_value(data.im{2}, data.bg_bw);
+            end
         case 3
             bg_value1 = data.bg_value(1);
-            bg_value2 = data.bg_value(2);
+            if ~size_difference
+                bg_value2 = data.bg_value(2);
+            end
         case 4
             fun = get_my_function(); 
             bg_value1 = fun.get_image_percentile(data.im{1}, 50);
-            bg_value2 = fun.get_image_percentile(data.im{2}, 50);
+            if ~size_difference
+                bg_value2 = fun.get_image_percentile(data.im{2}, 50);
+            end
     end
     data.channel1_bg(data.index) = bg_value1;
-    data.channel2_bg(data.index) = bg_value2;
+    if ~size_difference
+        data.channel2_bg(data.index) = bg_value2;
+    end
 end
 
 

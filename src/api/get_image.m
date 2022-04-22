@@ -100,7 +100,7 @@ elseif isfield(data, 'crop_image') && ~data.crop_image...
 elseif isfield(data, 'crop_image') && data.crop_image...
         && isfield(data, 'rectangle')
     load(strcat(data.output_path, 'rectangle.mat'));
-    data.rectange = rect;
+    data.rectangle = rect;
     clear rect
     temp = imcrop(im, data.rectangle); clear im;
     im = temp; clear temp;
