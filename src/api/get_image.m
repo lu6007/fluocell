@@ -99,7 +99,7 @@ elseif isfield(data, 'crop_image') && ~data.crop_image...
     data = rmfield(data, 'rectangle');
 elseif isfield(data, 'crop_image') && data.crop_image...
         && isfield(data, 'rectangle')
-    load(strcat(data.output_path, 'rectangle.mat'));
+    load(strcat(data.output_path, 'rectangle.mat'), 'rect');
     data.rectangle = rect;
     clear rect
     temp = imcrop(im, data.rectangle); clear im;
@@ -157,18 +157,6 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
             data.channel1_bg = nan*ones(num_frame, 1);
             data.channel2_bg = nan*ones(num_frame, 1);
     end
-    
-%     Remove following cropping, which has been done already
-%     Yuxin 11/16/2017
-%     % if there is a cropped image, load the image and ROI on the cropped
-%     % one, Lexie on 02/20/2015
-%     if isfield(data, 'crop_image') && data.crop_image
-%         if ~isfield(data,'rectangle')
-%             data.rectangle = get_rectangle(im, strcat(data.path, 'output/rectangle.mat'));
-%         end
-%         im_crop = imcrop(im, data.rectangle);clear im; 
-%         im = im_crop; clear im_crop;
-%     end
     
     % Load the ROIs
     if ~isfield(data,'roi_bw') && (data.quantify_roi ==1 || data.quantify_roi ==2)

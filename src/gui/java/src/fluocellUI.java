@@ -921,7 +921,7 @@ public class fluocellUI extends javax.swing.JFrame {
             proxy.setVariable("quantification_str", comboBoxQuantification.getSelectedItem() );
             proxy.eval("fluocell_data.quantify_roi = str2double(quantification_str(1));");
 
-            proxy.eval("fluocell_data.index = 1;");
+            // proxy.eval("fluocell_data.index = 1;");
             proxy.setVariable("default_path", default_path);
             proxy.eval("fluocell_data.path = default_path;");
                 
@@ -940,7 +940,16 @@ public class fluocellUI extends javax.swing.JFrame {
                 proxy.eval("fluocell_data = get_image(fluocell_data, 1);");
                 proxy.eval("fluocell_data = update_figure(fluocell_data);");
                   
-                indexSpinner.setValue(1);
+                // Find numbers from strings in MATLAB
+                // proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, '\d*', 'Match');");
+                proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, " + 
+                        "\'\\d*\', " + "\'Match\');");
+                proxy.eval("index = str2num(temp{1});");
+                // Spinner.setValue() does not automatically update fluocell_data.index
+                proxy.eval("fluocell_data.index = index;"); 
+                double index = ((double[]) proxy.getVariable("index"))[0];
+                indexSpinner.setValue((int) index); 
+
                     
                 proxy.setVariable("intensity_text", intensity.getText());
                 proxy.eval("eval(strcat('fluocell_data.intensity_bound = ', intensity_text, ';'));");
@@ -1055,6 +1064,15 @@ public class fluocellUI extends javax.swing.JFrame {
             String pattern = timeFrame.getText();
             proxy.setVariable("image_index_pattern", pattern);
             proxy.eval("fluocell_data.index_pattern = eval(image_index_pattern);");
+            // Find numbers from strings in MATLAB
+            // proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, '\d*', 'Match');");
+            proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, " + 
+                    "\'\\d*\', " + "\'Match\');");
+            proxy.eval("index = str2num(temp{1});");
+            proxy.eval("fluocell_data.index = index;");
+            double index = ((double[]) proxy.getVariable("index"))[0];
+            indexSpinner.setValue((int) index); 
+            
         } catch (MatlabInvocationException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1159,7 +1177,11 @@ public class fluocellUI extends javax.swing.JFrame {
             proxy.eval("image_index_pattern = eval(temp);"); 
             proxy.eval("clear temp"); 
             proxy.eval("fluocell_data.index_pattern = image_index_pattern;");
-            proxy.eval("index = str2num(image_index_pattern{1});");
+            // Find numbers from strings in MATLAB
+            // proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, '\d*', 'Match');");
+            proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, " + 
+                    "\'\\d*\', " + "\'Match\');");
+            proxy.eval("index = str2num(temp{1});");
             proxy.eval("fluocell_data.index = index;"); 
             double index = ((double[]) proxy.getVariable("index"))[0];
             indexSpinner.setValue((int) index); 
