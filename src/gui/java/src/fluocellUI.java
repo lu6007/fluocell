@@ -1,5 +1,5 @@
 /*
- * Fluocell Java interface (test)
+ * Fluocell Java interface 
  * 
  */
 package my.fluocell;
