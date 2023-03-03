@@ -42,7 +42,7 @@ end
 
 if exist(data.file{1}, 'file')
     im = imread(data.file{1});
-    if strcat(data.protocol, 'FRET-Split-View')
+    if strcmp(data.protocol, 'FRET-Split-View')
         temp = im;
         im = temp(1:512, :); 
         clear temp;
