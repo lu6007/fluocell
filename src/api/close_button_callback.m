@@ -66,4 +66,8 @@ end
 if isfield(data, 'frame_with_track')
     data = rmfield(data,'frame_with_track'); 
 end
+% For alignment
+if isfield(data, 'shift')
+    data = rmfield(data, 'shift');
+end
 return;

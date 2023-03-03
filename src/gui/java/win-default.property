@@ -8,3 +8,7 @@ secondChannelPattern=fret
 thirdChannelPattern=w3mCherry
 defaultDataLocation=D\:\\sof\\fluocell_4.3\\data\\tracking_ex\\
 fourthChannelPattern=w4DIC1
+quantification=0 - None
+protocol=Intensity
+applyMedianFilter=true
+subtractBackground=2 - Auto

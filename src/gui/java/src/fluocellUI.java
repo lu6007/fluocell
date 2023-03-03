@@ -1,5 +1,5 @@
 /*
- * Fluocell Java interface
+ * Fluocell Java interface 
  * 
  */
 package my.fluocell;
@@ -462,7 +462,7 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
 
-        protocol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FRET", "FRET-Intensity", "FRET-Intensity-2", "FRET-DIC", "FRET-Intensity-DIC", "Ratio", "Intensity", "Intensity-DIC", "FLIM", "STED" }));
+        protocol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FRET", "FRET-Intensity", "FRET-Intensity-2", "FRET-DIC", "FRET-Intensity-DIC", "FRET-Split-View", "Ratio", "Intensity", "Intensity-DIC", "FLIM", "STED" }));
         protocol.setPreferredSize(new java.awt.Dimension(100, 20));
         protocol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -839,8 +839,6 @@ public class fluocellUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        processingOption.getAccessibleContext().setAccessibleName("Processing Option");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -921,7 +919,7 @@ public class fluocellUI extends javax.swing.JFrame {
             proxy.setVariable("quantification_str", comboBoxQuantification.getSelectedItem() );
             proxy.eval("fluocell_data.quantify_roi = str2double(quantification_str(1));");
 
-            proxy.eval("fluocell_data.index = 1;");
+            // proxy.eval("fluocell_data.index = 1;");
             proxy.setVariable("default_path", default_path);
             proxy.eval("fluocell_data.path = default_path;");
                 
@@ -940,7 +938,16 @@ public class fluocellUI extends javax.swing.JFrame {
                 proxy.eval("fluocell_data = get_image(fluocell_data, 1);");
                 proxy.eval("fluocell_data = update_figure(fluocell_data);");
                   
-                indexSpinner.setValue(1);
+                // Find numbers from strings in MATLAB
+                // proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, '\d*', 'Match');");
+                proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, " + 
+                        "\'\\d*\', " + "\'Match\');");
+                proxy.eval("index = str2num(temp{1});");
+                // Spinner.setValue() does not automatically update fluocell_data.index
+                proxy.eval("fluocell_data.index = index;"); 
+                double index = ((double[]) proxy.getVariable("index"))[0];
+                indexSpinner.setValue((int) index); 
+
                     
                 proxy.setVariable("intensity_text", intensity.getText());
                 proxy.eval("eval(strcat('fluocell_data.intensity_bound = ', intensity_text, ';'));");
@@ -979,6 +986,7 @@ public class fluocellUI extends javax.swing.JFrame {
         try {
             proxy.setVariable("crop_image", cropImage.isSelected());
             proxy.eval("fluocell_data.crop_image = crop_image;");
+            proxy.eval("fluocell_data.keep_axis = 0;");
         } catch (MatlabInvocationException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1054,6 +1062,15 @@ public class fluocellUI extends javax.swing.JFrame {
             String pattern = timeFrame.getText();
             proxy.setVariable("image_index_pattern", pattern);
             proxy.eval("fluocell_data.index_pattern = eval(image_index_pattern);");
+            // Find numbers from strings in MATLAB
+            // proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, '\d*', 'Match');");
+            proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, " + 
+                    "\'\\d*\', " + "\'Match\');");
+            proxy.eval("index = str2num(temp{1});");
+            proxy.eval("fluocell_data.index = index;");
+            double index = ((double[]) proxy.getVariable("index"))[0];
+            indexSpinner.setValue((int) index); 
+            
         } catch (MatlabInvocationException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1152,11 +1169,23 @@ public class fluocellUI extends javax.swing.JFrame {
                     factory = new MatlabProxyFactory(options);
                 }
             }
+            
             proxy = factory.getProxy();
-            proxy.setVariable("image_index_pattern", imageIndexPattern);
-            proxy.eval("fluocell_data.index_pattern = eval(image_index_pattern);");
-            proxy.setVariable("protocol", protocolValue);
-            proxy.eval("fluocell_data.protocol = protocol;");
+            proxy.setVariable("temp", imageIndexPattern);
+            proxy.eval("image_index_pattern = eval(temp);"); 
+            proxy.eval("clear temp"); 
+            proxy.eval("fluocell_data.index_pattern = image_index_pattern;");
+            // Find numbers from strings in MATLAB
+            // proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, '\d*', 'Match');");
+            proxy.eval("temp = regexp(fluocell_data.index_pattern{1}, " + 
+                    "\'\\d*\', " + "\'Match\');");
+            proxy.eval("index = str2num(temp{1});");
+            proxy.eval("fluocell_data.index = index;"); 
+            double index = ((double[]) proxy.getVariable("index"))[0];
+            indexSpinner.setValue((int) index); 
+            
+            protocol.setSelectedItem(protocolValue);
+            
             proxy.setVariable("fourth_channel_pattern", fourthChannelPattern);
             proxy.eval("fluocell_data.channel_pattern{4} = fourth_channel_pattern;");
             proxy.setVariable("third_channel_pattern", thirdChannelPattern);
@@ -1165,10 +1194,23 @@ public class fluocellUI extends javax.swing.JFrame {
             proxy.eval("fluocell_data.channel_pattern{2} = second_channel_pattern;");
             proxy.setVariable("first_channel_pattern", firstChannelPattern);
             proxy.eval("fluocell_data.channel_pattern{1} = first_channel_pattern;");
+            
+            comboBoxSubtractBackground.setSelectedItem(subtractBackgroundStr);            
+            comboBoxQuantification.setSelectedItem(quantificationStr);
+            
+            boolean applyMedianFilterSelect = Boolean.parseBoolean(applyMedianFilter);
+            applyFilter.setSelected(applyMedianFilterSelect); 
+            // check box does not listen to the setSelected() function
+            // Need to use ItemListener instead of ActionListener
+            proxy.setVariable("apply_median_filter", applyMedianFilterSelect);
+            proxy.eval("fluocell_data.median_filter = apply_median_filter;");
+
+            
             if (default_path==null)
                 default_path = "./";
             proxy.setVariable("default_path", default_path);
             proxy.eval("fluocell_data.path = default_path;");
+            
         } catch (MatlabInvocationException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MatlabConnectionException ex) {
@@ -1320,8 +1362,13 @@ public class fluocellUI extends javax.swing.JFrame {
             fretRatio.setText(fretRatioValue);
 //            drivenFactorValue = default_read.getProperty("drivenFactorValue");
 //            drivenFactor.setText(drivenFactorValue);
-            protocolValue = (String) protocol.getSelectedItem();
-            //comboBoxQuantificationValue = (String) comboBoxQuantification.getSelectedItem();
+            protocolValue = default_read.getProperty("protocol");
+            // Need to run this after MATLAB is intialized
+            // protocol.setSelectedItem(protocolValue);
+            subtractBackgroundStr = default_read.getProperty("subtractBackground");
+            quantificationStr = default_read.getProperty("quantification");
+            applyMedianFilter = default_read.getProperty("applyMedianFilter");
+            
             matlabLocation = default_read.getProperty("matlablocation");
             // read default_path = defaultDataLocation
             // set the variable in matlab
@@ -1348,6 +1395,16 @@ public class fluocellUI extends javax.swing.JFrame {
 //            default_write.setProperty("drivenFactorValue",drivenFactor.getText());
             default_write.setProperty("defaultDataLocation", default_path);
             default_write.setProperty("matlablocation", matlabLocation);
+            default_write.setProperty("protocol", (String) protocol.getSelectedItem());
+            subtractBackgroundStr = (String) comboBoxSubtractBackground.getSelectedItem(); 
+            default_write.setProperty("subtractBackground", subtractBackgroundStr);
+            quantificationStr = (String) comboBoxQuantification.getSelectedItem();
+            default_write.setProperty("quantification", quantificationStr);
+            if(applyFilter.isSelected())
+                default_write.setProperty("applyMedianFilter", "true");
+            else
+                default_write.setProperty("applyMedianFilter", "false");
+            
             default_write.store(new FileOutputStream("default.property"), null);
         } catch (IOException ex) {
             Logger.getLogger(fluocellUI.class.getName()).log(Level.SEVERE, null, ex);
@@ -1420,6 +1477,9 @@ public class fluocellUI extends javax.swing.JFrame {
     String drivenFactorValue;
     String matlabLocation;
     String protocolValue;
+    String subtractBackgroundStr; 
+    String quantificationStr; 
+    String applyMedianFilter;
     // Determine operating system
     String OS = System.getProperty("os.name").toLowerCase();
     

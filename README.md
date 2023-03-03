@@ -19,5 +19,7 @@ Tested with operation systems:
 Requires Java 8.0 - 15.0 or similar versions
 Requires MATLAB, tested in MATLAB 2013-2019 
 
+For starters, the Fluocell User's Guide is in the doc/ folder. The installation guide is under the section "Installation and Usage". After installation, please go through the whole "User's Guide" to get familiar with Fluocell (This takes about 4-8 hours). Then you may go ahead and try with your own data. 
+
 Email Contact Shaoying (Kathy) Lu : shaoying.lu@gmail.com
 

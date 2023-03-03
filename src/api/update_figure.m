@@ -1,7 +1,11 @@
 % function data = update_figure(data)
+% This is called in the java UI function fluocellUI.java, in the 
+% following sequence:
+% proxy.eval("fluocell_data = init_figure(fluocell_data);");
+% proxy.eval("fluocell_data = get_image(fluocell_data, 1);");
+% proxy.eval("fluocell_data = update_figure(fluocell_data);");
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
-
 function data= update_figure(data)
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 my_func = get_my_function();
@@ -51,7 +55,6 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 %             first_channel_im = double(im1).*double(mask_smooth);
 %             second_channel_im = double(im2).*double(mask_smooth);
 %             clear mask_smooth im1 im2; 
-
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
@@ -170,6 +173,32 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             figure(data.f(3)); 
             my_func.save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
 		 clear im_3;
+         
+      case 'FRET-Split-View'
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            temp = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            if ~isfield(data, 'shift') 
+                data.shift = my_func.get_shift_align(first_channel_im, temp);
+                disp('Function update_figure: ')
+                disp('use the first image in time to calcualte data.shift for alignment ...')
+            end
+            second_channel_im = imtranslate(temp, data.shift, 'FillValues', 0);
+            
+            % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
+            [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
+                data.file{2}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
+            data.im{3} = ratio_im;
+            
+            % Lexie on 3/2/2015
+            if show_figure_option
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
+            end
+
+            clear first_channel_im second_channel_im ratio_im;            
 
       case 'STED'
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
@@ -189,14 +218,13 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             clear first_channel_im second_channel_im ratio_im;
 
        case 'Intensity'
-            second_channel_im = data.im{1};
-            figure(data.f(1)); imagesc(second_channel_im); 
+            figure(data.f(1)); imagesc(data.im{1}); 
             axis off; my_title('Intensity',data.index, 'data', data);
             colormap jet; 
             data.im{2}  = preprocess(data.im{1}, data); 
             figure(data.f(2)); my_imagesc(data.im{2}, 'data', data); 
             axis off; my_title('Processed',data.index, 'data', data);
-            colormap jet;
+            % colormap jet;
 
             if isfield(data, 'show_detected_boundary') && data.show_detected_boundary
                 data = get_boundary(data.im{2}, data); 
@@ -210,7 +238,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
              my_func.save_image(data, data.file{2}, data.im{2}, caxis, 'my_color_map', 'jet');
              clear second_channel_im;
         case 'Intensity-DIC'
-            figure(data.f(1)); my_imagesc(data.im{1}); 
+            figure(data.f(1)); imagesc(data.im{1}); 
             axis off; my_title('Intensity',data.index, 'data', data);
             figure(data.f(2)); 
             my_imagesc(data.im{2});
@@ -219,7 +247,7 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             data.im{3} = preprocess(data.im{1}, data); 
             figure(data.f(3));
             my_imagesc(data.im{3}, 'data', data);
-            imagesc(data.im{3}); caxis(data.intensity_bound);
+            % imagesc(data.im{3}); caxis(data.intensity_bound);
             axis off; my_title('Processed',data.index, 'data', data);
 
             if isfield(data,'quantify_roi') && data.quantify_roi
@@ -234,6 +262,9 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
              end
                 
     end %switch data.protocol
+    if isfield(data, 'keep_axis')
+        data.keep_axis = 1; 
+    end
     
     % Lexie on 03/02/2015
     % Draw the background region
@@ -281,22 +312,29 @@ para_name = {'data'};
 para_default = {[]};
 data = parse_parameter(para_name, para_default, varargin);
 temp = caxis; 
-if (temp(1)==0 && temp(2) ==1) 
+if (temp(1)==0 && temp(2) ==1) % when the figure is intialized
+    keep_cmap = 0;
     keep_axis = 0;
-elseif ~isempty(data) && isfield(data, 'crop_image') && data.crop_image
-    keep_axis = 0;
+elseif ~isempty(data) && isfield(data, 'keep_axis') 
+    keep_cmap = 1;
+    keep_axis = data.keep_axis;
 else
+    keep_cmap = 1;
     keep_axis = 1;
 end
 axis_vector = axis; % needed for keeping the zoom-in and out
 this_colormap = colormap(gca); 
 clf;
-if ~keep_axis
-    imagesc(im); 
-else
+
+if keep_cmap
     imagesc(im, temp);
+    colormap(this_colormap);
+else
+    imagesc(im);
+    colormap jet; 
+end
+if keep_axis
     axis(axis_vector);
-    colormap(this_colormap); 
 end
 return;
 

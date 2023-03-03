@@ -18,6 +18,9 @@ fun.get_compute_ratio_function = @get_compute_ratio_function;
 %
 fun.get_R_square = @get_R_square;
 %
+fun.get_shift_align = @get_shift_align;
+
+%
 function_handle = fun;
 end
 
@@ -119,5 +122,21 @@ y_residual = y-y_fit;
 SS_residual = sum(y_residual.^2);
 SS_total = sum(length(y)-1)*var(y);
 R_square = 1-SS_residual/SS_total;
+end
+
+% function shift = im_align_get_shift(im1, im2)
+% Spatially align im1 and im2 from splitview system.
+% Find the shift in 2D such that im2 can be aligned with
+% im1 in 2D with the function imtranslate
+% >> imtranslate(im2, shift, 'FillValues', 0);
+function shift = get_shift_align(im1, im2)
+% cross correlation
+cc_matrix = normxcorr2(im1, im2);
+% index of max of cross correlation matrix
+[i_row, i_col] =find(cc_matrix ==max(cc_matrix(:))); % row and column
+clear cc_matrix
+% shift direction
+shift0 = - [i_row, i_col]+size(im2);
+shift = [shift0(2), shift0(1)];
 end
 

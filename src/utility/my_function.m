@@ -1,22 +1,3 @@
-% function my = my_function()
-%     % Change the following line to the location of your data.
-%     % Close the folder name with '/'
-%     my.root = '/Users/kathylu/Documents/sof/data/quanty_dataset_2/';
-%     my.pause = @my_pause;
-%     my.dir = @my_dir;
-%     %
-%     my.get_value_before = @get_value_before;
-%     my.get_time_interp = @get_time_interp;
-%     my.normalize_time_value_array = @normalize_time_value_array;
-%     my.interpolate_time_value_array = @interpolate_time_value_array;
-%     %
-%     my.statistic_test = @statistic_test;
-%     my.multiple_compare = @multiple_compare; 
-%     my.get_derivative = @get_derivative;
-%     my.get_area_ratio = @get_area_ratio;
-% return
-
-% Copyright: Shaoying Lu, email: shaoying.lu@gmail.com 
 function my = my_function()
     % Change the following line to the location of your data.
     % Close the folder name with '/'
@@ -24,13 +5,12 @@ function my = my_function()
     my.pause = @my_pause;
     my.dir = @my_dir;
     %
-    my.get_value_before = @get_value_before;
-    my.get_time_interp = @get_time_interp;
+    my.get_value_norm = @get_value_norm;
+    my.get_value_before = @get_value_norm;
     my.normalize_time_value_array = @normalize_time_value_array;
     my.interpolate_time_value_array = @interpolate_time_value_array;
     %
     my.statistic_test = @statistic_test;
-    my.multiple_compare = @multiple_compare; 
     my.get_derivative = @get_derivative;
     my.get_area_ratio = @get_area_ratio;
 return
@@ -227,23 +207,6 @@ if isempty(min_deriv) || min_deriv >=0
 end
 return
 
-% function area_ratio = get_area_ratio(t, y, varargin)
-% parameter_name = {'time_threshold', 'time_span'};
-% default_value = {15, 15}; % unit: {min, min} % Area ratio is a measure of transient index
-% This is also area under curve (AUC) normalized by peak values and time
-% span used for calculation. 
-% The AUC was calculated during [0 time_span] min after the signal peaked. 
-% It is required that the time course peaked within time_th min. 
-%
-% The normalized AUC is calculated my_function.get_area_ratio
-% with the input of "time" and "normalized_ratio-1" from single cells. 
-% Its values represent the stability of the time courses. 
-% normal_auc = 0.5 indicates linear decrease to the basal level from peak within 15 min.
-% normal_auc = 1.0 indicates stable signals after reaching peak.
-% The values can also be NaN or negative: (1) normal_auc = NaN : the time course 
-% did not reach peak before time_th (min); (2) normal_auc < 0 : the time courese quickly decreased to less than 0 before
-% time_span (min). 
-%
 % function area_ratio = get_area_ratio(t, y)
 % Area ratio is a measure of transient index
 function area_ratio = get_area_ratio(t, y, varargin)
@@ -261,3 +224,5 @@ index = (t>=t95)&(t<=t95+time_span);
 area_curve = trapz(t(index), y(index));
 area_ratio = area_curve/max_y_95/time_span;
 return
+
+

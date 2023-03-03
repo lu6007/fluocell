@@ -42,6 +42,11 @@ end
 
 if exist(data.file{1}, 'file')
     im = imread(data.file{1});
+    if strcmp(data.protocol, 'FRET-Split-View')
+        temp = im;
+        im = temp(1:512, :); 
+        clear temp;
+    end
 else
     data.im{1} = [];
     return;
@@ -99,8 +104,8 @@ elseif isfield(data, 'crop_image') && ~data.crop_image...
     data = rmfield(data, 'rectangle');
 elseif isfield(data, 'crop_image') && data.crop_image...
         && isfield(data, 'rectangle')
-    load(strcat(data.output_path, 'rectangle.mat'));
-    data.rectange = rect;
+    load(strcat(data.output_path, 'rectangle.mat'), 'rect');
+    data.rectangle = rect;
     clear rect
     temp = imcrop(im, data.rectangle); clear im;
     im = temp; clear temp;
@@ -157,18 +162,6 @@ if isfield(data, 'quantify_roi') && (data.quantify_roi >=1)
             data.channel1_bg = nan*ones(num_frame, 1);
             data.channel2_bg = nan*ones(num_frame, 1);
     end
-    
-%     Remove following cropping, which has been done already
-%     Yuxin 11/16/2017
-%     % if there is a cropped image, load the image and ROI on the cropped
-%     % one, Lexie on 02/20/2015
-%     if isfield(data, 'crop_image') && data.crop_image
-%         if ~isfield(data,'rectangle')
-%             data.rectangle = get_rectangle(im, strcat(data.path, 'output/rectangle.mat'));
-%         end
-%         im_crop = imcrop(im, data.rectangle);clear im; 
-%         im = im_crop; clear im_crop;
-%     end
     
     % Load the ROIs
     if ~isfield(data,'roi_bw') && (data.quantify_roi ==1 || data.quantify_roi ==2)
@@ -330,13 +323,22 @@ switch data.protocol
         for i = 1:2
             data.im{i} = my_imread(data.file{i}, data);
         end
+    case 'FRET-Split-View'
+        temp = my_imread(data.file{1}, data);
+        data.im{1} = temp(1:512, :);
+        data.im{2} = temp(513:1024, :);
+        clear temp
+        % ratio_image_file and file_type
+        fret_file = get_fret_file(data, data.file{1});
+        data.file{2} = strcat(fret_file, '.', 'tiff');
+        data.file{3} = 'tiff';
 end
 
 % Calculate background_value from the first image
 if new_first_file
     num_int_channel = 1;
     switch data.protocol
-        case {'FRET', 'Ratio', 'FRET-DIC', 'FLIM'}
+        case {'FRET', 'Ratio', 'FRET-DIC', 'FLIM','FRET-Split-View'}
             num_int_channel = 2;
         case {'FRET-Intensity', 'FRET-Intensity-DIC'}
             num_int_channel = 3;
@@ -352,7 +354,12 @@ if new_first_file
             [~, ~, data.bg_value(i)] = get_background(data.im{i}, bg_file, 'method', data.subtract_background);
         end
     end
-end
+    disp('Function get_image: calculate data.bg_value from the first images.')
+    % Calculate shift for align split view
+    if strcmp(data.protocol, 'FRET-Split-View')
+        disp('im{1} is the top half and im{2} is the bottom half.')
+    end
+end % if new_first_file
 
 return;
 

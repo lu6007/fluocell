@@ -4,6 +4,9 @@
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2014
 function data=get_boundary(im, data)
+% There is another function called get_boundary() in the utrack package. So
+% if there is a confusion in MATLAB, the fluocell package need to be put on the top of the
+% search path of MATLAB
 show_figure = (isfield(data, 'show_figure') && data.show_figure) || ~isfield(data, 'show_figure');
 
 if isfield(data, 'need_apply_mask')&& data.need_apply_mask
@@ -66,11 +69,14 @@ end
 
 if show_figure
     hold on;
-    % Draw background
-    if isfield(data, 'subtract_background') && data.subtract_background 
-        bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
-        plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
-    end 
+
+    % Need to comment this due to the incompatability when the image is
+    % cropped
+%     % Draw background
+%     if isfield(data, 'subtract_background') && data.subtract_background 
+%         bg_bd = bwboundaries(data.bg_bw, 8, 'noholes');
+%         plot(bg_bd{1}(:,2), bg_bd{1}(:,1), 'r', 'LineWidth', 2);
+%     end 
     % Draw detected cells
     for n = 1 : length(data.cell_bd)
         plot(data.cell_bd{n}(:,2),data.cell_bd{n}(:,1),'r', 'LineWidth',lw);

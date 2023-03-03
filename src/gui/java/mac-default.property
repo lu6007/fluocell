@@ -1,21 +1,14 @@
-#Wed Jul 27 10:18:59 PDT 2016
-
-matlablocation=/Applications/MATLAB_R2016a.app/bin/matlab
-
-imageIndexPattern={'t1', 't%d'}
-
-firstChannelPattern=cfp
-
-intensityValue=[1 400]
-
-fretRatioValue=[0.5 1.5]
-
-secondChannelPattern=fret
-
-thirdChannelPattern=w3mCherry
-
-defaultDataLocation=/Users/kevinli/Desktop/fluocell-current/app/fluocell_sample/
-
-drivenFactorValue=
-
-fourthChannelPattern=w4DIC1
+#Thu Apr 21 13:11:32 PDT 2022
+intensityValue=[0 40]
+quantification=0 - None
+fourthChannelPattern=c4z
+matlablocation=/Applications/MATLAB_R2019b.app/bin/matlab
+imageIndexPattern={'307', '%03d'}
+fretRatioValue=[0.6 1.4]
+protocol=Intensity
+applyMedianFilter=true
+firstChannelPattern=12
+subtractBackground=2 - Auto
+secondChannelPattern=c2z
+thirdChannelPattern=c3z
+defaultDataLocation=/Users/kathylu/Google Drive/data/share/2021_adam/0209/FRAP_HeLa_EGFR_PDGFR/1_EG_before/cell-8/

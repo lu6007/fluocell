@@ -76,6 +76,13 @@ switch data.quantify_roi
                 roi_bw{i} = roi_bw{i}.*data.mask;
             end
         end
+        % Kathy 04/22/2022: The roi_bw was defined on preprocessed images and should have the
+        % same sizes as the final image. So cropping should not be needed. 
+%         if isfield(data,'crop_image') && data.crop_image
+%             for i = 1:num_roi
+%                 roi_bw{i} = imcrop(roi_bw{i}, data.rectangle);
+%             end
+%         end
     case 2 % move roi while tracking cell
         % use the centroid of the cell to track rois
         prop = regionprops(obj{1});
@@ -123,7 +130,7 @@ end
 data.time(data.index,1) = data.index;
 data.time(data.index,2) = get_time(data.file{1}, 'method',2);
 if(data.index > 50 && data.time(data.index, 2) < data.time(data.index-1,2))
-    disp('Quqntify_region_of_interest(): ');
+    disp('Quantify_region_of_interest(): ');
     disp('Automatically fixing the time variable if imaging past midnight.');
     data.time(data.index,2) = data.time(data.index,2) + 1440; %1440 min = whole day
 end
@@ -132,7 +139,12 @@ end
 % provide option for displaying figure, Lexie in 03/06/2015
 if (isfield(data, 'show_figure') && data.show_figure == 1)...
         || ~isfield(data, 'show_figure')
-    figure(data.f(1)); hold on;
+    switch data.protocol
+        case {'FRET', 'FRET-Intensity', 'FRET-Intensity-2', 'FRET-DIC', 'FRET-Intensity-DIC', 'Ratio'}
+            figure(data.f(1)); hold on;
+        case {'Intenisty', 'Intensity-DIC'}
+            figure(data.f(2)); hold on;
+    end
     roi_file = strcat(data.output_path, 'roi.mat');
     draw_polygon(gca, roi_poly, 'red', roi_file, 'type', roi_type);
 end
@@ -154,6 +166,11 @@ for i = 1 : num_object
             ii = data.index;
         end
         % Require all intensity to be min_intensity or higher
+        if size(cfp,1)~= size(roi_bw{j,i},1) || size(cfp,2)~=size(roi_bw{j,i},2)
+            fprintf('Error quantify_region_of_interest: The image size is not compatible \n');
+            fprintf('with the roi_bw size. Need to close figures and remove roi.mat file \n');
+            return; 
+        end
         mask = (cfp>= min_intensity) & (yfp>= min_intensity)& roi_bw{j,i};
         data.ratio{i}(ii, j) = compute_average_value(ratio, mask);
         data.channel1{i}(ii, j) = compute_average_value(cfp, mask);
@@ -165,23 +182,34 @@ end; clear i j
     
 % quantify background
 if isfield(data, 'subtract_background') && data.subtract_background
+    % Note that in the Intensity protocol im{1} and im{2} are of difference
+    % sizes
+    size_difference = max(abs(size(data.im{2})-size(data.bg_bw)));
     switch data.subtract_background
 %         case 0 
 %             bg_value1 = 0;
 %             bg_value2 = 0;
         case {1, 2}
             bg_value1 = compute_average_value(data.im{1}, data.bg_bw);
-            bg_value2 = compute_average_value(data.im{2}, data.bg_bw);
+            if ~size_difference
+                bg_value2 = compute_average_value(data.im{2}, data.bg_bw);
+            end
         case 3
             bg_value1 = data.bg_value(1);
-            bg_value2 = data.bg_value(2);
+            if ~size_difference
+                bg_value2 = data.bg_value(2);
+            end
         case 4
             fun = get_my_function(); 
             bg_value1 = fun.get_image_percentile(data.im{1}, 50);
-            bg_value2 = fun.get_image_percentile(data.im{2}, 50);
+            if ~size_difference
+                bg_value2 = fun.get_image_percentile(data.im{2}, 50);
+            end
     end
     data.channel1_bg(data.index) = bg_value1;
-    data.channel2_bg(data.index) = bg_value2;
+    if ~size_difference
+        data.channel2_bg(data.index) = bg_value2;
+    end
 end
 
 
