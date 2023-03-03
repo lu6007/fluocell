@@ -34,9 +34,10 @@ if exist(result_file, 'file') && load_result
 end
 
 %
+my_fun = get_my_function();
 qfun = quantify_fun();
 max_num_cell = 1000;
-detect_type = 4; % 1-use channel 1 for detection; 4; % combine channels 1 and 2 for detection
+detect_type = 4; % 1-use channel 1 for detection; 4; % combine channels 1 and 2 for detection (default ch1 + ch2)
 
 
 num_image = length(data.image_index);
@@ -51,20 +52,37 @@ ratio_value = inf*ones(max_num_cell,1);
 
 % Protocol: 'FRET-Intensity-DIC'; 
 % file{1} - FI 1; 2 - FI 2 ;  3- FI 3, 4- DIC
+if isfield(data,'protocol')
+    protocol = data.protocol;
+else
+    protocol = 'FRET-Intensity-DIC';
+end
+    
 num_cell  = 0;
 file = cell(4,1);
 im = cell(4,1);
 for i = 1:num_image
-    index_i = sprintf(data.index_pattern{2}, data.image_index(i));
+    image_index = data.image_index(i);
+    index_i = sprintf(data.index_pattern{2}, image_index);
     % Load image and calulate ratio
     file{1} = regexprep(data.first_file, data.index_pattern{1}, index_i);
-    temp1 = imread(strcat(data.path, file{1}));
     bg_file = strcat(data.path, 'output/background_', index_i, '.mat');
-    file{2} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{2});
-    temp2 = imread(strcat(data.path, file{2}));
     if ~exist(strcat(data.path, 'output/'), 'dir')
         mkdir(strcat(data.path, 'output/'));
     end
+    
+    switch protocol
+        case {'FRET', 'FRET-Intensity', 'FRET-Intensity-DIC'}
+            temp1 = imread(strcat(data.path, file{1}));
+            file{2} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{2});
+            temp2 = imread(strcat(data.path, file{2}));
+        case 'FRET-Split-View'
+            temp = imread(strcat(data.path, file{1}));
+            temp1 = temp(1:512, :);
+            temp2 = temp(513:1024, :);
+            clear temp;
+    end
+
     temp = qfun.get_image_detect({temp1, temp2}, data, 'type', detect_type);
     % temp = temp2;
     if isfield(data, 'subtract_background') && data.subtract_background
@@ -72,6 +90,16 @@ for i = 1:num_image
     end
     im{1} = preprocess(temp1, data); clear temp1;
     im{2} = preprocess(temp2, data); clear temp2;
+    %%% Now need to align the images in the x- and y-directions %%%
+    if strcmp(protocol, 'FRET-Split-View')
+        if ~exist('shift', 'var')
+            shift = my_fun.get_shift_align(im{1}, im{2});
+        end
+        temp = im{2};
+        im{2} = imtranslate(temp, shift, 'FillValues', 0);
+        clear temp;     
+    end
+    
     ratio = compute_ratio(im{1}, im{2});
     % ratio_im
     ratio_im = get_imd_image(ratio, max(im{1}, im{2}), ...
@@ -91,17 +119,17 @@ for i = 1:num_image
         my_figure;
         tight_subplot(2, 4, [.01 .01], [.01 .01], [.01 .01]); hold on;
     end
-    subplot(2,4, i8); % hold on;
+    subplot(2,4,i8); % hold on;
     
     % im_detect is the image used for detection. 
     im_detect = qfun.get_image_detect(im, data, 'type', detect_type);
     % Show the ratio image in a grid
     %%% Kathy 10/7/2020
-    % temp = ratio_im;
-    % type = 1;
-    temp = im{2};
-    type = 2;
-    %%%
+    temp = ratio_im;
+    type = 1;
+%     temp = im{2};
+%     type = 2;
+%     %%%
     if isfield(data, 'bg_bw') 
         display_boundary(data.bg_bw, 'im', temp, 'line_color', 'r', 'new_figure', 0, 'type', type);
     else
@@ -116,22 +144,21 @@ for i = 1:num_image
     %%% 
     if manual_select
         % temp = uint16(temp);
-        num_roi = 1; 
+        num_roi = data.num_roi(i); 
         display_text=strcat('Please Select : ',...
             num2str(num_roi), ' Regions of Interest');
-        roi_file = strcat(p, 'output\ROI', '_', image_index, '.mat');
+        roi_file = strcat(data.path, 'output/ROI', '_', num2str(image_index), '.mat');
         [roi_bw, ~] = get_polygon(im_detect, roi_file, display_text, ...
             'num_polygon', num_roi);
-        [~, label] = bwboundaries (roi_bw, 8, 'noholes');
+        label = zeros(size(roi_bw{1}));
+        for j = 1:num_roi
+            label = label + j.*roi_bw{j};
+        end
     else % Automatic detection
         % for the watershed method to work, need to replace "graythresh" by
         % "detect_cell" 
         threshold = graythresh(im_detect);
-        if strcmp(version, 'R2017')||strcmp(version, 'R2018')
-            bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
-        else % older versions
-            bw_image = im2bw(im_detect, threshold*data.brightness_factor);
-        end
+        bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
 % % %%% Modify here 11/3/2016 %%%
 % %         bw_image = (im_detect>15000); 
         bw_image_open = bwareaopen(bw_image, data.min_area);
@@ -164,7 +191,6 @@ for i = 1:num_image
         if add_channel
             fi3 = sum(sum(im{3}.*mask))/area;
         end
-        % max_ratio = 10.0;
         % min_intensity = 500;
         % if rr<max_ratio && fi1>= min_intensity && fi2>= min_intensity ,
         % A cell is detected if FRET > 15000
@@ -190,14 +216,18 @@ for i = 1:num_image
     title(strcat('Intensity Ratio - ', index_i));
 end % for i = 1:num_image
 
-temp = intensity_value; clear intensity_value;
-intensity_value = temp(1:num_cell,:); clear temp;
-temp = ratio_value; clear ratio_value;
-ratio_value = temp(1:num_cell, :); clear temp;
-% my_figure; hist(ratio_value(:,1), 20); 
-% xlabel('Ratio'); ylabel('Count'); 
-my_figure; hist(intensity_value(:, 2), 20);
-xlabel('Channel 2 Intensity'); ylabel('Count');
+if isfield(data, 'max_ratio')
+    max_ratio = data.max_ratio;
+    index = (ratio_value<=max_ratio);
+    temp = intensity_value; clear intensity_value;
+    intensity_value = temp(index,:); clear temp;
+    temp = ratio_value; clear ratio_value;
+    ratio_value = temp(index, :); clear temp;
+%     my_figure; histogram(ratio_value(:,1));
+%     xlabel('Ratio'); ylabel('Count'); 
+    % % my_figure; histogram(intensity_value(:,2), 20);
+    % xlabel('Channel 2 Intensity'); ylabel('Count');
+end 
 
 %
 if save_result

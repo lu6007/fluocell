@@ -1,7 +1,11 @@
 % function data = update_figure(data)
+% This is called in the java UI function fluocellUI.java, in the 
+% following sequence:
+% proxy.eval("fluocell_data = init_figure(fluocell_data);");
+% proxy.eval("fluocell_data = get_image(fluocell_data, 1);");
+% proxy.eval("fluocell_data = update_figure(fluocell_data);");
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
-
 function data= update_figure(data)
 show_figure_option = ~isfield(data, 'show_figure') || data.show_figure;
 my_func = get_my_function();
@@ -51,7 +55,6 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
 %             first_channel_im = double(im1).*double(mask_smooth);
 %             second_channel_im = double(im2).*double(mask_smooth);
 %             clear mask_smooth im1 im2; 
-
 
             % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
             [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
@@ -170,6 +173,32 @@ if isfield(data, 'im') && ~isempty(data.im{1}) && isfield(data, 'f')
             figure(data.f(3)); 
             my_func.save_image(data, data.file{7}, im_3, caxis, 'my_color_map', 'jet');
 		 clear im_3;
+         
+      case 'FRET-Split-View'
+            first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));
+            temp = preprocess(data.im{2}, data, 'bg_value', bg_value(2));
+            if ~isfield(data, 'shift') 
+                data.shift = my_func.get_shift_align(first_channel_im, temp);
+                disp('Function update_figure: ')
+                disp('use the first image in time to calcualte data.shift for alignment ...')
+            end
+            second_channel_im = imtranslate(temp, data.shift, 'FillValues', 0);
+            
+            % data.file{3}-> ratio_im -> data.im{3} -> data.f(1)
+            [data, ratio_im] = update_ratio_image(first_channel_im, second_channel_im, data,...
+                data.file{2}, data.f(1), ...
+                'this_frame_with_track', frame_with_track_i);
+            data.im{3} = ratio_im;
+            
+            % Lexie on 3/2/2015
+            if show_figure_option
+                figure(data.f(2)); my_imagesc(first_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{1}, data.index, 'data', data);
+                figure(data.f(3)); my_imagesc(second_channel_im); % clf was included in my_imagesc
+                axis off; my_title(data.channel_pattern{2}, data.index, 'data', data);
+            end
+
+            clear first_channel_im second_channel_im ratio_im;            
 
       case 'STED'
             first_channel_im = preprocess(data.im{1}, data, 'bg_value', bg_value(1));

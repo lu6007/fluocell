@@ -462,7 +462,7 @@ public class fluocellUI extends javax.swing.JFrame {
             }
         });
 
-        protocol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FRET", "FRET-Intensity", "FRET-Intensity-2", "FRET-DIC", "FRET-Intensity-DIC", "Ratio", "Intensity", "Intensity-DIC", "FLIM", "STED" }));
+        protocol.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "FRET", "FRET-Intensity", "FRET-Intensity-2", "FRET-DIC", "FRET-Intensity-DIC", "FRET-Split-View", "Ratio", "Intensity", "Intensity-DIC", "FLIM", "STED" }));
         protocol.setPreferredSize(new java.awt.Dimension(100, 20));
         protocol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -838,8 +838,6 @@ public class fluocellUI extends javax.swing.JFrame {
                         .addComponent(processingOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        processingOption.getAccessibleContext().setAccessibleName("Processing Option");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

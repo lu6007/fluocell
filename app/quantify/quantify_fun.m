@@ -14,6 +14,7 @@
 % of im1:im2 = alpha, trying to enhance the ratio of
 % image for use and minize the chance of getting the result
 % image oversturated
+%
 function qfun = quantify_fun()
 qfun.get_image_detect = @get_image_detect; 
 qfun.sum_image = @sum_image;
@@ -44,3 +45,4 @@ else % alpha>1
     im_new = im1/alpha + im2;
 end
 return;
+

@@ -1,9 +1,53 @@
+% 
+% function data = quantify_ratio_init_data(exp_name)
+% Quantify ratio values for many cells in image slides
+% Example: 
+% data = quantify_ratio_init_data('sample');
+% [intensity, ratio] = quantify_ratio_multiple_cell(data);
 function data = quantify_ratio_init_data(exp_name)
 % root = 'E:/data/2016/binbin_0217/';
 % root = '/Volumes/KathyWD2TB/data/2017/yanmin_0525/';
-root = '/Volumes/KathyWD2TB/data/2017/molly_0606/';
+% root = '/Volumes/KathyWD2TB/data/2017/molly_0606/';
+root = '/Users/kathylu/';
 switch exp_name
     case 'sample'
+        data.path = strcat(root, ...
+            "Documents/sof/data/fluocell_dataset2/quantify/AC7/");
+        data.first_file = '11.001'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'001', '%03d'};
+        data.channel_pattern= {'11.', '12.'}; 
+        data.detection = 'auto';
+        data.image_index =[1;2];
+        data.intensity_bound = [0 10000];
+        data.ratio_bound = [2 6];
+        data.brightness_factor = 1.2;
+        data.min_area = 1000;
+        data.alpha = 1.0; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 1;
+        data.median_filter = 1;    
+    case 'h3k9_0'
+        data.path = strcat(root, ...
+            'Google Drive/data/share/0203_2023_fazlur/0222/');
+        data.protocol = 'FRET-Split-View';
+        data.first_file = '1.tif'; % FRET channel
+        % 1 - FRET; 2 - CFP; 
+        data.index_pattern = {'1.tif', '%d.tif'};
+        % data.channel_pattern= {'11.', '12.'}; 
+        data.detection = 'manual'; % 'auto'
+        data.image_index =[1;6];
+        data.num_roi = [2;1];
+        data.intensity_bound = [2 10];
+        data.ratio_bound = [0 3];
+%         data.brightness_factor = 0.8;
+%         data.min_area = 1000;
+%         data.alpha = 1.0; % average ratio between channels 1 and 2. 
+        % 
+        data.subtract_background = 2; % Automatic background
+        data.median_filter = 1;   
+        data.max_ratio = 20.0;
+    case 'sample_old'
         data.path = 'D:/sof/data/fluocell_dataset2/quantify/1/';
         data.first_file = 'H3K921.002'; % FRET channel
         % 1 - FRET; 2 - CFP; 

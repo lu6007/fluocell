@@ -42,6 +42,11 @@ end
 
 if exist(data.file{1}, 'file')
     im = imread(data.file{1});
+    if strcat(data.protocol, 'FRET-Split-View')
+        temp = im;
+        im = temp(1:512, :); 
+        clear temp;
+    end
 else
     data.im{1} = [];
     return;
@@ -318,13 +323,22 @@ switch data.protocol
         for i = 1:2
             data.im{i} = my_imread(data.file{i}, data);
         end
+    case 'FRET-Split-View'
+        temp = my_imread(data.file{1}, data);
+        data.im{1} = temp(1:512, :);
+        data.im{2} = temp(513:1024, :);
+        clear temp
+        % ratio_image_file and file_type
+        fret_file = get_fret_file(data, data.file{1});
+        data.file{2} = strcat(fret_file, '.', 'tiff');
+        data.file{3} = 'tiff';
 end
 
 % Calculate background_value from the first image
 if new_first_file
     num_int_channel = 1;
     switch data.protocol
-        case {'FRET', 'Ratio', 'FRET-DIC', 'FLIM'}
+        case {'FRET', 'Ratio', 'FRET-DIC', 'FLIM','FRET-Split-View'}
             num_int_channel = 2;
         case {'FRET-Intensity', 'FRET-Intensity-DIC'}
             num_int_channel = 3;
@@ -340,7 +354,12 @@ if new_first_file
             [~, ~, data.bg_value(i)] = get_background(data.im{i}, bg_file, 'method', data.subtract_background);
         end
     end
-end
+    disp('Function get_image: calculate data.bg_value from the first images.')
+    % Calculate shift for align split view
+    if strcmp(data.protocol, 'FRET-Split-View')
+        disp('im{1} is the top half and im{2} is the bottom half.')
+    end
+end % if new_first_file
 
 return;
 

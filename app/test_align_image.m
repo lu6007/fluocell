@@ -17,12 +17,9 @@ data = get_image(data, 1);
 data = update_figure(data);
 fret = preprocess(data.im{1}, data);
 cfp = preprocess(data.im{2}, data);
-% cross correlation
-cc_matrix = normxcorr2(fret, cfp);
-% index of max of cross correlation matrix
-[i_row, i_col] =find(cc_matrix ==max(cc_matrix(:))); % row and column
-% shift direction
-shift = - [i_row, i_col]+size(cfp);
+my_fun = get_my_function();
+shift = my_fun.get_shift_align(fret, cfp);
+
 clear fret cfp cc_matrix;
 
 for i = data.image_index'
@@ -32,8 +29,7 @@ for i = data.image_index'
     fret = preprocess(data.im{1}, data);
     cfp = preprocess(data.im{2}, data);
     % image translation
-    % i_row and shift(2) give the x-axis; i_col and shift(1) give the y-axis.  
-    new_cfp = imtranslate(cfp, [shift(2) shift(1)], 'FillValues', 0);
+    new_cfp = imtranslate(cfp, shift, 'FillValues', 0);
     ratio = get_imd_image(fret./new_cfp, fret+new_cfp, 'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
     figure(3); imshow(ratio);
     

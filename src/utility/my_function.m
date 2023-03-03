@@ -236,7 +236,9 @@ return
 
 % function area_ratio = get_area_ratio(t, y, varargin)
 % parameter_name = {'time_threshold', 'time_span'};
-% default_value = {15, 15}; % unit: {min, min} % Area ratio is a measure of transient index
+% default_value = {15, 15}; % unit: {min, min} 
+% Area ratio is a measure of transient index
+
 % This is also area under curve (AUC) normalized by peak values and time
 % span used for calculation. 
 % The AUC was calculated during [0 time_span] min after the signal peaked. 
