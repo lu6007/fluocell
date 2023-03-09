@@ -27,7 +27,7 @@ switch exp_name
         % 
         data.subtract_background = 1;
         data.median_filter = 1;    
-    case 'h3k9_0'
+    case 'h3k9_0' % For Fazlur
         data.path = strcat(root, ...
             'Google Drive/data/share/0203_2023_fazlur/0222/');
         data.protocol = 'FRET-Split-View';
