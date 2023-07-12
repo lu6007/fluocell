@@ -1,20 +1,20 @@
 % function [bd, bw, label] = detect_cell(im, varargin)
 % parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor',...
 %     'multiple_object', 'min_area', 'segment_method'};
-% default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
+% default_value = {'otsu',1, 9, 1.0, 0, 500, 0};
 % 
 
 % Copyright: Shaoying Lu and Yingxiao Wang 2011
 function [bd, bw, label] = detect_cell(im, varargin)
 parameter_name = {'method', 'with_smoothing', 'smoothing_factor','brightness_factor',...
     'multiple_object', 'min_area', 'segment_method'};
-default_value = {'atsu',1, 9, 1.0, 0, 500, 0};
+default_value = {'otsu',1, 9, 1.0, 0, 500, 0};
 [method, with_smoothing, smoothing_factor, brightness_factor, multiple_object, ...
     min_area, segment_method] = parse_parameter(parameter_name, default_value, varargin);
 
 %
 switch method
-    case 'atsu'
+    case 'otsu'
         pn = {'threshold','mask_bw','show_figure'};
         dv = {0,[], 0};
         [~, mask_bw, show_figure] = parse_parameter(pn,dv, varargin);

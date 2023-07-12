@@ -1,5 +1,5 @@
 % For the fluorescent image of membrane targeted biosensors 
-% such as lyn-Src biosensor, we can just use Atsu's method to find cell edge.
+% such as lyn-Src biosensor, we can just use Otsu's method to find cell edge.
 % Right now this program only detect one cell.
 % function [bd, bw] =cell_edge_thresh(img, varargin);
 
@@ -13,9 +13,9 @@ default_value = {1.0, 2, 0, []};
 
 img = uint16(img);
   
-if ~threshold,
+if ~threshold
     threshold = my_graythresh(img);
-end;
+end
 
 bw_image = im2bw( img, threshold*brightness_factor);
 % bw_image = edge(img,'sobel');

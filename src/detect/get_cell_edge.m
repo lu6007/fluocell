@@ -1,5 +1,5 @@
 % For the fluorescent image of membrane targeted biosensors 
-% such as lyn-Src biosensor, we can just use Atsu's method to find cell edge.
+% such as lyn-Src biosensor, we can just use Otsu's method to find cell edge.
 % function [bd, bw] = get_cell_edge(im, brightness_factor);
 % Output: bd is a cell and bw is a logical image/matrix. 
 

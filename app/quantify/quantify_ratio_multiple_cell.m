@@ -3,7 +3,7 @@
 % para_default = {0, 0, 0};
 % allows the quantification of many cells per image
 % by manual selection or automatic detection. 
-% Output: intensity_value, ratio_value
+% Output: intensity_value, ratio_value: (channel 1 image)./(channel 2 image)
 % intensity_value : 
 % Column 1 - channel 1 average intensity
 % Column 2 - channel 2 average intensity
@@ -23,7 +23,7 @@ function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, var
 para_name = {'add_channel','load_result', 'save_result', 'detect_type'};
 para_default = {0, 0, 0, 4};
 [add_channel, load_result, save_result, detect_type] = parse_parameter(para_name, para_default, varargin);
-% detect_type: 1-use channel 1 for detection; 4; % combine channels 1 and 2 for detection (default ch1 + ch2)
+% detect_type: i-use channel i for detection; 4; % combine channels 1 and 2 for detection (default ch1 + ch2)
 
 % Load file
 result_file = strcat(data.path, 'output/result.mat');
@@ -87,8 +87,8 @@ for i = 1:num_image
     end
     im{1} = preprocess(temp1, data); clear temp1;
     im{2} = preprocess(temp2, data); clear temp2;
-    %%% Now need to align the images in the x- and y-directions %%%
     if strcmp(protocol, 'FRET-Split-View')
+        %%% Now need to align the images in the x- and y-directions %%%
         if ~exist('shift', 'var')
             shift = my_fun.get_shift_align(im{1}, im{2});
         end
@@ -97,51 +97,53 @@ for i = 1:num_image
         clear temp2;     
     end
     
-    ratio = compute_ratio(im{1}, im{2});
     % ratio_im
+    ratio = compute_ratio(im{1}, im{2});
     ratio_im = get_imd_image(ratio, max(im{1}, im{2}), ...
             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-    
-%     % ratio_im
-    temp = qfun.get_image_detect(im, data, 'type', detect_type);
-    im_detect = uint8(preprocess(temp, data)); 
-%     ratio_im = get_imd_image(ratio, im_detect, ...
-%             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-%     clear temp;
-        
+            
     if add_channel % add 1 additional channel
         file{3} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{3});
         temp = imread(strcat(data.path, file{3}));
         im{3} = preprocess(temp,data); clear temp;
     end
     
-    i8 = mod(i,8);
-    if i8 == 0
-        i8 = 8;
-    end 
-    if i8 == 1
-        my_figure;
-        tight_subplot(2, 4, [.01 .01], [.01 .01], [.01 .01]); hold on;
-    end
-    subplot(2,4,i8); % hold on;
-    
+    % im_detect
+    temp = qfun.get_image_detect(im, data, 'type', detect_type);
+    im_detect = uint8(preprocess(temp, data)); 
+    clear temp;
+
     % Show the ratio image in a grid
-    %%% Kathy 10/7/2020
-    type = 1;
-%     temp = im{2};
-%     type = 2;
-%     %%%
-    if isfield(data, 'bg_bw') 
-        display_boundary(data.bg_bw, 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'type', type);
+    if num_image>1
+        i8 = mod(i,8);
+        if i8 == 0
+            i8 = 8;
+        end 
+        if i8 == 1
+            my_figure;
+            tight_subplot(2, 4, [.01 .01], [.01 .01], [.01 .01]); hold on;
+        end
+        subplot(2,4,i8); % hold on;
     else
-        display_boundary([], 'im', ratio_im, 'line_color', 'r', 'new_figure', 0, 'type', type);
+        my_figure; hold on
     end
-    colormap jet; 
+    
+    %%% Kathy 10/7/2020
+%     type = 1;
+%     this_im = ratio_im
+    type = 2;
+    this_im = im{3}; 
+
+    if isfield(data, 'bg_bw') 
+        display_boundary(data.bg_bw, 'im', this_im, 'line_color', 'r', 'new_figure', 0, 'type', type);
+    else
+        display_boundary([], 'im', this_im, 'line_color', 'r', 'new_figure', 0, 'type', type);
+    end
     if type == 2
+        colormap jet;
         caxis(data.intensity_bound);
     end
-    clear temp;
-       
+        
     %%% 
     if manual_select
         % temp = uint16(temp);
@@ -160,20 +162,18 @@ for i = 1:num_image
         % "detect_cell" 
         threshold = graythresh(im_detect);
         bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
-% % %%% Modify here 11/3/2016 %%%
-% %         bw_image = (im_detect>15000); 
         bw_image_open = bwareaopen(bw_image, data.min_area);
         [bd, label] = bwboundaries(bw_image_open,8,'noholes');
         num_roi = length(bd);
         clear bw_image bw_image_open bd temp; 
-    end % if manual_select
+    end % if manual_select else 
     clear temp;
     % display the detected cells
     if max(max(label))>0
         display_boundary(label, 'im', [], 'color', 'w', 'show_label', 0, 'new_figure', 0);
     end 
    
-    %%% Kathy 10/7/
+    %%% Kathy 10/7
     % Erode 6 pixels since 6.28 pixels = 1 um
     % The diameter of a sigle cell is about 100 pixels = 15.92 um
     % se = strel('diamond', 6);
