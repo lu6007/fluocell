@@ -36,7 +36,7 @@ try
     bw_image = imbinarize(im, threshold*brightness_factor);
 catch
     try
-        bw_image = im2bw(im, threshold*brightness_factor);
+        bw_image = imbinarize(im, threshold*brightness_factor);
     catch
         disp('Function get_cell_edge warning: ');
         disp('MATLAB version not in the range 2012-current.');

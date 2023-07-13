@@ -1,7 +1,7 @@
 % function [level em] = my_graythresh(I)
 
 % Copyright: Kaiwen Zhang, Shaoying Lu and Yingxiao Wang 2013
-function [level em] = my_graythresh(I)
+function [level, em] = my_graythresh(I)
 
 % One input argument required.
 %iptchecknargin(1,1,nargin,mfilename);
@@ -35,7 +35,8 @@ if ~isempty(I)
   if isfinite_maxval
     idx = mean(find(sigma_b_squared == maxval));
     % Normalize the threshold to the range [0, 1].
-    level = (idx - 1) / (num_bins - 1);
+    level = (idx - 1) / (num_bins - 1); 
+    % the result should be divided into im<=level and im>level
   else
     level = 0.0;
   end

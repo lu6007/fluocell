@@ -160,7 +160,8 @@ for i = 1:num_image
     else % Automatic detection
         % for the watershed method to work, need to replace "graythresh" by
         % "detect_cell" 
-        threshold = graythresh(im_detect);
+
+        threshold = my_graythresh(im_detect);
         bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
         bw_image_open = bwareaopen(bw_image, data.min_area);
         [bd, label] = bwboundaries(bw_image_open,8,'noholes');
