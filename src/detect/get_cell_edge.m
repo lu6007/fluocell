@@ -14,10 +14,10 @@ default_value = {1.0, 500, 0, [], 0};
 [brightness_factor, min_area, threshold, mask_bw, multiple_object]...
     = parse_parameter(parameter_name, default_value, varargin);
 
-% for molly's data, Lexie on 10/15/2015
-if multiple_object
-    threshold = my_graythresh(uint16(im));
-end
+% % for molly's data, Lexie on 10/15/2015
+% if multiple_object
+%     threshold = my_graythresh(uint16(im));
+% end
 
 if ~isempty(mask_bw)
     temp = double(im).*double(mask_bw); clear im;

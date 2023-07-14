@@ -43,6 +43,18 @@ switch method
         [rad_y, wf, bf] = parse_parameter(p, d, varargin);        
         bd = get_cell_edge_local(im, 'rad_y',...
             rad_y,'width_factor',wf,'brightness_factor',bf);
+    
+%     case 'gradient' % Use Otsu's method on pixels with gradient>1000
+%         gradient = imgradient(im,'prewitt');
+%         index = find(gradient>1000);
+% %         [count,x] = histogram(im(index));
+% %         T = otsuthresh(count);
+% %         th = min(x)+T*(max(x)-min(x)); 
+%         th = my_graythresh(im(index));
+%         bf = brightness_factor; % bf = 0.2
+%         [bd, bw, th] = get_cell_edge(im, 'brightness_factor', bf, ...
+%             'multiple_object', multiple_object,'min_area', min_area);
+
 end
 
 %Checks if any objects were detected. -SJL 7/7/2017

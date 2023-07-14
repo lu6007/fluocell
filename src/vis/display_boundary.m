@@ -1,5 +1,5 @@
 % function display_boundary(bw, vargain)
-% Display the boundary of the bw image.
+% Display the boundary of the bw image, or bw = label, a label matrix
 % Detect and display the boundary of the bw image
 %     parameter_name = {'im', 'show_label', 'color', 'new_figure'};
 %     parameter_default = {[], 0, 'r', 1};
@@ -24,12 +24,15 @@ function display_boundary(bw, varargin)
     
     hold on; 
 
-    
     if isempty(bw) 
         return;
     end
     
-    bd = bwboundaries(bw, 8, 'noholes');
+    bd_nohole = bwboundaries(bw, 8, 'noholes');
+    bd = bwboundaries(bw, 8);
+    if length(bd_nohole)~=length(bd)
+        disp('function display_boundary: bd = bwboundaries(bw, 8);')
+    end
     num_object = length(bd);
     for j = 1:num_object
         plot(bd{j}(:,2), bd{j}(:,1), 'Color', cr);

@@ -20,9 +20,9 @@
 % Copyright: Shaoying Lu 2015-2023
 % shaoying.lu@gmail.com
 function [intensity_value, ratio_value] = quantify_ratio_multiple_cell(data, varargin)
-para_name = {'add_channel','load_result', 'save_result', 'detect_type'};
-para_default = {0, 0, 0, 4};
-[add_channel, load_result, save_result, detect_type] = parse_parameter(para_name, para_default, varargin);
+para_name = {'add_channel','load_result', 'save_result', 'detect_type', 'image_grid'};
+para_default = {0, 0, 0, 4, 1};
+[add_channel, load_result, save_result, detect_type, image_grid] = parse_parameter(para_name, para_default, varargin);
 % detect_type: i-use channel i for detection; 4; % combine channels 1 and 2 for detection (default ch1 + ch2)
 
 % Load file
@@ -40,12 +40,12 @@ qfun = quantify_fun();
 max_num_cell = 1000;
 
 num_image = length(data.image_index);
-switch data.detection
-    case 'manual'
-        manual_select = 1;
-    case 'auto'
-        manual_select = 0;
-end
+% switch data.detection
+%     case 'manual'
+%         manual_select = 1;
+%     case 'auto'
+%         manual_select = 0;
+% end
 intensity_value = inf*ones(max_num_cell,4);
 ratio_value = inf*ones(max_num_cell,1);
 
@@ -96,12 +96,7 @@ for i = 1:num_image
         im{2} = imtranslate(temp2, shift, 'FillValues', 0);
         clear temp2;     
     end
-    
-    % ratio_im
-    ratio = compute_ratio(im{1}, im{2});
-    ratio_im = get_imd_image(ratio, max(im{1}, im{2}), ...
-            'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
-            
+                
     if add_channel % add 1 additional channel
         file{3} = regexprep(file{1}, data.channel_pattern{1}, data.channel_pattern{3});
         temp = imread(strcat(data.path, file{3}));
@@ -110,11 +105,12 @@ for i = 1:num_image
     
     % im_detect
     temp = qfun.get_image_detect(im, data, 'type', detect_type);
-    im_detect = uint8(preprocess(temp, data)); 
+    % im_detect = uint8(preprocess(temp, data)); 
+    im_detect = uint16(preprocess(temp, data));
     clear temp;
 
     % Show the ratio image in a grid
-    if num_image>1
+    if image_grid
         i8 = mod(i,8);
         if i8 == 0
             i8 = 8;
@@ -129,6 +125,10 @@ for i = 1:num_image
     end
     
     %%% Kathy 10/7/2020
+    % ratio_im
+    ratio = compute_ratio(im{1}, im{2});
+%     ratio_im = get_imd_image(ratio, max(im{1}, im{2}), ...
+%             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
 %     type = 1;
 %     this_im = ratio_im
     type = 2;
@@ -145,29 +145,43 @@ for i = 1:num_image
     end
         
     %%% 
-    if manual_select
-        % temp = uint16(temp);
-        num_roi = data.num_roi(i); 
-        display_text=strcat('Please Select : ',...
-            num2str(num_roi), ' Regions of Interest');
-        roi_file = strcat(data.path, 'output/ROI', '_', num2str(image_index), '.mat');
-        [roi_bw, ~] = get_polygon(im_detect, roi_file, display_text, ...
-            'num_polygon', num_roi);
-        label = zeros(size(roi_bw{1}));
-        for j = 1:num_roi
-            label = label + j.*roi_bw{j};
-        end
-    else % Automatic detection
-        % for the watershed method to work, need to replace "graythresh" by
-        % "detect_cell" 
+    switch data.detection
+        case 'manual'
+            % temp = uint16(temp);
+            num_roi = data.num_roi(i); 
+            display_text=strcat('Please Select : ',...
+                num2str(num_roi), ' Regions of Interest');
+            roi_file = strcat(data.path, 'output/ROI', '_', num2str(image_index), '.mat');
+            [roi_bw, ~] = get_polygon(im_detect, roi_file, display_text, ...
+                'num_polygon', num_roi);
+            label = zeros(size(roi_bw{1}));
+            for j = 1:num_roi
+                label = label + j.*roi_bw{j};
+            end
+        case 'auto' % Automatic detection
+            % for the watershed method to work, need to replace "graythresh" by
+            % "detect_cell" 
 
-        threshold = my_graythresh(im_detect);
-        bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
-        bw_image_open = bwareaopen(bw_image, data.min_area);
-        [bd, label] = bwboundaries(bw_image_open,8,'noholes');
-        num_roi = length(bd);
-        clear bw_image bw_image_open bd temp; 
-    end % if manual_select else 
+            threshold = my_graythresh(im_detect);
+            bw_image = imbinarize(im_detect, threshold*data.brightness_factor);
+            bw_image_open = bwareaopen(bw_image, data.min_area);
+            [bd, label] = bwboundaries(bw_image_open,8,'noholes');
+            num_roi = length(bd);
+            clear bw_image bw_image_open bd; 
+        case 'auto gradient' % Use Otsu's threshold on gradient >99.9 percentile
+            gradient = imgradient(im_detect,'prewitt');
+            g = prctile(gradient(:), 99);
+            index = (gradient(:)>g);
+            v_detect = im_detect(index);
+            v_min = min(v_detect);
+            T = my_graythresh(v_detect);
+            th = v_min+T*(max(v_detect)-v_min)*data.brightness_factor;
+            bw_image = (im_detect>th);
+            bw_image_open = bwareaopen(bw_image, data.min_area);
+            [bd, label] = bwboundaries(bw_image_open,8,'noholes');
+            num_roi = length(bd);
+            clear bw_image bw_image_open bd; 
+    end % switch data.detection 
     clear temp;
     % display the detected cells
     if max(max(label))>0
