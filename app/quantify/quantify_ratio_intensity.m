@@ -1,5 +1,9 @@
 % function [intensity, ratio] = quantify_ratio_intensity(exp_name)
 % based on the function quantify_gfp_mcherry_cfp
+% 
+% >> exp_name = 'test'; % or >> exp_name = 'test2';
+% >> [intensity, ratio] = quantify_ratio_intensity(exp_name);
+% The output can be found in intensity and ratio
 function [intensity, ratio] = quantify_ratio_intensity(exp_name)
 load_result = 0;
 %
