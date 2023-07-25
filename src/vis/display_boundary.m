@@ -30,9 +30,9 @@ function display_boundary(bw, varargin)
     
     bd_nohole = bwboundaries(bw, 8, 'noholes');
     bd = bwboundaries(bw, 8);
-    if length(bd_nohole)~=length(bd)
-        disp('function display_boundary: bd = bwboundaries(bw, 8);')
-    end
+%     if length(bd_nohole)~=length(bd)
+%         disp('function display_boundary: bd = bwboundaries(bw, 8);')
+%     end
     num_object = length(bd);
     for j = 1:num_object
         plot(bd{j}(:,2), bd{j}(:,1), 'Color', cr);
@@ -41,6 +41,6 @@ function display_boundary(bw, varargin)
     if show_label
         prop = regionprops(bw,'Centroid');
         cc = cat(1, prop.Centroid);
-        text(cc(:,1), cc(:,2), num2str((1:num_object)'), 'Color', cr);
+        text(cc(:,1), cc(:,2), num2str((1:length(bd_nohole))'), 'Color', cr);
     end
 return;

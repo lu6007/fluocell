@@ -10,8 +10,10 @@ load_result = 0;
 data = this_init_data(exp_name);
 detect_channel = 3; % Use channel 3 for detection
 [intensity, ratio] = quantify_ratio_multiple_cell(data, 'load_result', load_result, ...
-    'save_result', 0, 'add_channel', 1, 'detect_type', detect_channel, 'image_grid', 0);
+    'save_result', 0, 'add_channel', 1, 'detect_type', detect_channel, 'image_grid', 0, 'verbose',0);
 index_array = (ratio>=1 & ratio<=10 & intensity(:,detect_channel)>10);
+disp('quantify_ratio_intensity:')
+disp('Screen cells with: (ratio>=1 & ratio<=10 & intensity(:,detect_channel)>10)');
 % index_array = true(size(ratio));
 % index_array = (intensity(:, detect_channel)>10); 
 temp = ratio(index_array); clear ratio;

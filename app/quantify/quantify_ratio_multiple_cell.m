@@ -25,9 +25,11 @@ para_default = {0, 0, 0, 4, 1};
 [add_channel, load_result, save_result, detect_type, image_grid] = parse_parameter(para_name, para_default, varargin);
 % detect_type: i-use channel i for detection; 4; % combine channels 1 and 2 for detection (default ch1 + ch2)
 
+disp('Running function quantify_ratio_multiple_cell() ...');
 % Load file
 result_file = strcat(data.path, 'output/result.mat');
 if exist(result_file, 'file') && load_result
+    disp('load result ...');
     res = load(result_file);
     intensity_value = res.intensity_value;
     ratio_value = res.ratio_value;
@@ -57,12 +59,14 @@ else
     protocol = 'FRET-Intensity-DIC';
 end
     
+fprintf('loop through %d images ... \n', num_image);
 num_cell  = 0;
 file = cell(4,1);
 im = cell(4,1);
 for i = 1:num_image
     image_index = data.image_index(i);
     index_i = sprintf(data.index_pattern{2}, image_index);
+    fprintf('image_index = %d ;',image_index);
     % Load image and calulate ratio
     file{1} = regexprep(data.first_file, data.index_pattern{1}, index_i);
     bg_file = strcat(data.path, 'output/background_', index_i, '.mat');
@@ -131,13 +135,13 @@ for i = 1:num_image
 %             'ratio_bound', data.ratio_bound, 'intensity_bound', data.intensity_bound);
 %     type = 1;
 %     this_im = ratio_im
-    type = 2;
+    type = 2; % use an intensity image for displaying detected boundary
     this_im = im{3}; 
 
     if isfield(data, 'bg_bw') 
-        display_boundary(data.bg_bw, 'im', this_im, 'line_color', 'r', 'new_figure', 0, 'type', type);
+        display_boundary(data.bg_bw, 'im', this_im, 'color', 'r', 'new_figure', 0, 'type', type);
     else
-        display_boundary([], 'im', this_im, 'line_color', 'r', 'new_figure', 0, 'type', type);
+        display_boundary([], 'im', this_im, 'color', 'r', 'new_figure', 0, 'type', type);
     end
     if type == 2
         colormap jet;
@@ -168,7 +172,8 @@ for i = 1:num_image
             [bd, label] = bwboundaries(bw_image_open,8,'noholes');
             num_roi = length(bd);
             clear bw_image bw_image_open bd; 
-        case 'auto gradient' % Use Otsu's threshold on gradient >99.9 percentile
+        case 'auto gradient' 
+            % Automatically use Otsu's threshold on gradient > 99 percentile
             gradient = imgradient(im_detect,'prewitt');
             g = prctile(gradient(:), 99);
             index = (gradient(:)>g);
@@ -185,13 +190,14 @@ for i = 1:num_image
     clear temp;
     % display the detected cells
     if max(max(label))>0
-        display_boundary(label, 'im', [], 'color', 'w', 'show_label', 0, 'new_figure', 0);
+        display_boundary(label, 'im', [], 'color', 'w', 'show_label', 1, 'new_figure', 0);
     end 
    
     %%% Kathy 10/7
     % Erode 6 pixels since 6.28 pixels = 1 um
     % The diameter of a sigle cell is about 100 pixels = 15.92 um
     % se = strel('diamond', 6);
+    fprintf('num_roi = %d \n', num_roi);
     for j = 1:num_roi
         temp1 = double(label==j);
         mask = temp1; 
@@ -204,8 +210,13 @@ for i = 1:num_image
         rr = sum(sum(ratio.*mask))/area;
         fi1 = sum(sum(im{1}.*mask))/area;
         fi2 = sum(sum(im{2}.*mask))/area;
+        fprintf('%d: ratio = %f, channel 1 int = %f, channel 2 int = %f, ', ...
+            j, rr, fi1, fi2);
         if add_channel
             fi3 = sum(sum(im{3}.*mask))/area;
+            fprintf('channel 3 int = %f \n', fi3);
+        else
+            fprintf('\n');
         end
         % min_intensity = 500;
         % if rr<max_ratio && fi1>= min_intensity && fi2>= min_intensity ,
@@ -229,7 +240,12 @@ for i = 1:num_image
         clear mask;
     end
     clear roi_poly roi_bw file im ratio ratio_im mask;
-    title(strcat('Intensity Ratio - ', index_i));
+    if type == 2
+        title(strcat('Intensity - ', index_i));
+    else % type == 1
+        title(strcat('Ratio - ', index_i));
+    end
+    % fprintf('\n')
 end % for i = 1:num_image
 
 if isfield(data, 'max_ratio')

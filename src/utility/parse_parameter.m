@@ -41,33 +41,33 @@ for i = 1:2:num_varargin
             varargout{j} = varargin{i+1};
             parameter_recognized = 1;
             break;
-%         elseif strcmpi(varargin{i}, 'verbose')
-%             verbose = varargin{i+1};
-%             parameter_recognized = 1;
-%             break;
+        elseif strcmpi(varargin{i}, 'verbose')
+            verbose = varargin{i+1};
+            parameter_recognized = 1;
+            break;
         end % if
 
     end % for j
 
     % Kathy: 03/08/2019, this part needs to be uncommented and tested
-%     if ~parameter_recognized
-%         disp('Parse_parameter: Unrecognized parameter!');
-%         disp(varargin{i});
-%         dbstack(1)
-%         success = 0;
-%     end
+    if ~parameter_recognized
+        disp('Parse_parameter: Unrecognized parameter!');
+        disp(varargin{i});
+        dbstack(1)
+        success = 0;
+    end
 end
 
 % Should switch to a print_parameter function interface
 if verbose
     dbstack(1)
-    fprintf('Parameters: \n\n'); 
+    fprintf('Parameters: \n'); 
     for j = 1:num_parameter
         fprintf('%s = ', parameter_name{j}); disp(varargout{j}); 
     end
-    fprintf('%s = ', 'verbose'); disp(verbose);
-    fprintf('Function parse_parameter() changed implementation 04/04/2019 \n');
-    fprintf('In the future, use the print_parameter function instead. \n');
+    % fprintf('%s = ', 'verbose'); disp(verbose);
+    % fprintf('Function parse_parameter() changed implementation 04/04/2019 ');
+    % fprintf('In the future, use the print_parameter function instead. \n');
 end
 
 varargout{num_parameter+1} = success;
